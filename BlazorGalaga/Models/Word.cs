@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace BlazorAnimate.Models
+namespace BlazorGalaga.Models
 {
     public class Word
     {

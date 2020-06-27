@@ -1,4 +1,35 @@
 ﻿<Properties StartupConfiguration="{202B6679-81B6-4D6C-83B3-0DC9DE1151AC}|Default">
-  <MonoDevelop.Ide.ItemProperties.BlazorGalaga FirstBuild="True" />
+  <MonoDevelop.Ide.ItemProperties.BlazorGalaga PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/wwwroot/index.html">
+    <Files>
+      <File FileName="BlazorGalaga/Pages/Index.razor" Line="14" Column="26" />
+      <File FileName="BlazorGalaga/_Imports.razor" Line="16" Column="21" />
+      <File FileName="BlazorGalaga/Models/Word.cs" Line="14" Column="1" />
+      <File FileName="BlazorGalaga/Services/WordService.cs" Line="17" Column="1" />
+      <File FileName="BlazorGalaga/Models/Animation.cs" Line="12" Column="9" />
+      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="48" Column="2" />
+      <File FileName="BlazorGalaga/Program.cs" Line="8" Column="48" />
+      <File FileName="BlazorGalaga/wwwroot/index.html" Line="12" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="BlazorGalaga" expanded="True">
+            <Node name="BlazorGalaga" expanded="True">
+              <Node name="Services" expanded="True" />
+              <Node name="wwwroot" expanded="True">
+                <Node name="index.html" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

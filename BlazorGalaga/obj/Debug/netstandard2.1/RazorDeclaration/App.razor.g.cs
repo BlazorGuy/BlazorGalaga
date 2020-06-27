@@ -76,6 +76,55 @@ using BlazorGalaga.Shared;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 10 "/Users/bcollins/Projects/BlazorGalaga/BlazorGalaga/_Imports.razor"
+using Blazor.Extensions.Canvas;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 11 "/Users/bcollins/Projects/BlazorGalaga/BlazorGalaga/_Imports.razor"
+using Blazor.Extensions.Canvas.Canvas2D;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 12 "/Users/bcollins/Projects/BlazorGalaga/BlazorGalaga/_Imports.razor"
+using Blazor.Extensions;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 13 "/Users/bcollins/Projects/BlazorGalaga/BlazorGalaga/_Imports.razor"
+using Blazor.Extensions.Canvas.WebGL;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 14 "/Users/bcollins/Projects/BlazorGalaga/BlazorGalaga/_Imports.razor"
+using System.Drawing;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 15 "/Users/bcollins/Projects/BlazorGalaga/BlazorGalaga/_Imports.razor"
+using BlazorGalaga.Services;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 16 "/Users/bcollins/Projects/BlazorGalaga/BlazorGalaga/_Imports.razor"
+using BlazorGalaga.Models;
+
+#line default
+#line hidden
+#nullable disable
     public partial class App : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998

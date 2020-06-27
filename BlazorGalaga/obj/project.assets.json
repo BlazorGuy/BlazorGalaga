@@ -2,6 +2,26 @@
   "version": 3,
   "targets": {
     ".NETStandard,Version=v2.1": {
+      "Blazor.Extensions.Canvas/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components.Web": "3.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Blazor.Extensions.Canvas.JS.dll": {},
+          "lib/netstandard2.0/Blazor.Extensions.Canvas.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Blazor.Extensions.Canvas.JS.dll": {},
+          "lib/netstandard2.0/Blazor.Extensions.Canvas.dll": {}
+        },
+        "build": {
+          "buildTransitive/Blazor.Extensions.Canvas.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/Blazor.Extensions.Canvas.props": {}
+        }
+      },
       "Microsoft.AspNetCore.Authorization/3.1.3": {
         "type": "package",
         "dependencies": {
@@ -434,6 +454,25 @@
     }
   },
   "libraries": {
+    "Blazor.Extensions.Canvas/1.0.0": {
+      "sha512": "p7/T1oo8ct8kPNH7jIzZycPe15CJHhjW5P680RoJS2VRThqbnV0+Mgu+M2Ve3b1d47gOyvQeaZQ3zrL+zQArGg==",
+      "type": "package",
+      "path": "blazor.extensions.canvas/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "blazor.extensions.canvas.1.0.0.nupkg.sha512",
+        "blazor.extensions.canvas.nuspec",
+        "build/Blazor.Extensions.Canvas.props",
+        "build/Microsoft.AspNetCore.StaticWebAssets.props",
+        "buildMultiTargeting/Blazor.Extensions.Canvas.props",
+        "buildTransitive/Blazor.Extensions.Canvas.props",
+        "lib/netstandard2.0/Blazor.Extensions.Canvas.JS.dll",
+        "lib/netstandard2.0/Blazor.Extensions.Canvas.dll",
+        "lib/netstandard2.0/Blazor.Extensions.Canvas.pdb",
+        "staticwebassets/blazor.extensions.canvas.js"
+      ]
+    },
     "Microsoft.AspNetCore.Authorization/3.1.3": {
       "sha512": "ujHcZtQJcloThrt7NFQtUU9wqM1RsiItSQTz+W9yKyGrsWQyNnQY+lJvpUCVHzOqaQrxKRV4AHdUxtGquQPTcg==",
       "type": "package",
@@ -1444,6 +1483,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.1": [
+      "Blazor.Extensions.Canvas >= 1.0.0",
       "Microsoft.AspNetCore.Components.WebAssembly >= 3.2.0",
       "Microsoft.AspNetCore.Components.WebAssembly.Build >= 3.2.0",
       "Microsoft.AspNetCore.Components.WebAssembly.DevServer >= 3.2.0",
@@ -1485,6 +1525,10 @@
     "frameworks": {
       "netstandard2.1": {
         "dependencies": {
+          "Blazor.Extensions.Canvas": {
+            "target": "Package",
+            "version": "[1.0.0, )"
+          },
           "Microsoft.AspNetCore.Components.WebAssembly": {
             "target": "Package",
             "version": "[3.2.0, )"

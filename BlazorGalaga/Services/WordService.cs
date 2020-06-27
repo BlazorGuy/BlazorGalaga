@@ -1,8 +1,8 @@
 ﻿using System;
 using Blazor.Extensions.Canvas.Canvas2D;
-using BlazorAnimate.Models;
+using BlazorGalaga.Models;
 
-namespace BlazorAnimate.Services
+namespace BlazorGalaga.Services
 {
     public class WordService
     {

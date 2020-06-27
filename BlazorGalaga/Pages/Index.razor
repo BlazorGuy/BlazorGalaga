@@ -1,7 +1,130 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+@inject BezierCurveService bcs;
+@inject AnimationService animationservice;
 
-Welcome to your new app.
+<BECanvas Width="700" Height="600" @ref="_canvasReference"></BECanvas>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@code{
+    private Canvas2DContext ctx;
+    private List<Animation> Animations = new List<Animation>();
+
+    protected BECanvasComponent _canvasReference;
+
+    private int fps = 60;
+    private bool drawpath = false;
+    private bool loopback = false;
+    private string backgroundcolor = "#454545";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        ctx = await _canvasReference.CreateCanvas2DAsync();
+
+        var animation = new Animation();
+        var animation_l = new Animation();
+        var animation_r = new Animation();
+
+        animation_l.Speed = 1.1F;
+        animation_r.Speed = 1.5F;
+
+        animation.Words.Add(new Word()
+        {
+            TextString = "B",
+            Path = new BezierCurve()
+            {
+                StartPoint = new PointF(10, 300),
+                ControlPoint1 = new PointF(-10, 164),
+                ControlPoint2 = new PointF(245, 166),
+                EndPoint = new PointF(235, 300)
+            },
+            DrawPath = drawpath
+        });
+
+        animation.Words.Add(new Word()
+        {
+            TextString = "rowser",
+            Path = new BezierCurve()
+            {
+                StartPoint = new PointF(35, 300),
+                ControlPoint1 = new PointF(35, 300),
+                ControlPoint2 = new PointF(35, 300),
+                EndPoint = new PointF(35, 900)
+            },
+            DrawPath = drawpath
+        });
+
+        animation_r.Words.Add(new Word()
+        {
+            TextString = "R",
+            Path = new BezierCurve()
+            {
+                StartPoint = new PointF(350, 300),
+                ControlPoint1 = new PointF(350, 300),
+                ControlPoint2 = new PointF(350, 300),
+                EndPoint = new PointF(350, 900)
+            },
+            DrawPath = drawpath,
+        });
+
+        animation.Words.Add(new Word()
+        {
+            TextString = "azor",
+            Path = new BezierCurve()
+            {
+                StartPoint = new PointF(370, 300),
+                ControlPoint1 = new PointF(350, 300),
+                ControlPoint2 = new PointF(350, 300),
+                EndPoint = new PointF(295, 300)
+            },
+            DrawPath = drawpath,
+        });
+
+        animation_l.Words.Add(new Word()
+        {
+            TextString = "l",
+            Path = new BezierCurve()
+            {
+                StartPoint = new PointF(800, 900),
+                ControlPoint1 = new PointF(-10, 164),
+                ControlPoint2 = new PointF(245, 166),
+                EndPoint = new PointF(280, 300)
+            },
+            DrawPath = drawpath,
+        });
+
+        Animations.Add(animation);
+        Animations.Add(animation_l);
+        Animations.Add(animation_r);
+
+        await SetInterval(() => animate(), TimeSpan.FromMilliseconds(1000 / fps));
+
+    }
+
+    public static async Task SetInterval(Action action, TimeSpan timeout)
+    {
+        await Task.Delay(timeout).ConfigureAwait(false);
+
+        action();
+
+        await SetInterval(action, timeout);
+    }
+
+
+
+    async void animate()
+    {
+        // redraw path
+        await ctx.ClearRectAsync(0, 0, 700, 600);
+        await ctx.SetFillStyleAsync(backgroundcolor);
+        await ctx.FillRectAsync(0, 0, 700, 600);
+        await ctx.SetLineWidthAsync(5);
+
+        foreach (Animation a in Animations)
+        {
+            animationservice.Animate(a, loopback);
+            animationservice.Draw(ctx, a);
+        }
+    }
+
+
+}

@@ -15,6 +15,7 @@
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <Import Project="$(NuGetPackageRoot)microsoft.aspnetcore.components.webassembly.runtime/3.2.0/build/netstandard1.0/Microsoft.AspNetCore.Components.WebAssembly.Runtime.props" Condition="Exists('$(NuGetPackageRoot)microsoft.aspnetcore.components.webassembly.runtime/3.2.0/build/netstandard1.0/Microsoft.AspNetCore.Components.WebAssembly.Runtime.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.aspnetcore.components.webassembly.build/3.2.0/build/netstandard1.0/Microsoft.AspNetCore.Components.WebAssembly.Build.props" Condition="Exists('$(NuGetPackageRoot)microsoft.aspnetcore.components.webassembly.build/3.2.0/build/netstandard1.0/Microsoft.AspNetCore.Components.WebAssembly.Build.props')" />
+    <Import Project="$(NuGetPackageRoot)blazor.extensions.canvas/1.0.0/buildTransitive/Blazor.Extensions.Canvas.props" Condition="Exists('$(NuGetPackageRoot)blazor.extensions.canvas/1.0.0/buildTransitive/Blazor.Extensions.Canvas.props')" />
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <PkgMicrosoft_AspNetCore_Components_WebAssembly_Runtime Condition=" '$(PkgMicrosoft_AspNetCore_Components_WebAssembly_Runtime)' == '' ">/Users/bcollins/.nuget/packages/microsoft.aspnetcore.components.webassembly.runtime/3.2.0</PkgMicrosoft_AspNetCore_Components_WebAssembly_Runtime>
