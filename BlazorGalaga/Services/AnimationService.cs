@@ -11,10 +11,10 @@ namespace BlazorGalaga.Services
         private BezierCurveService bezierCurveService;
         private SpriteService spriteService;
 
-        public AnimationService(IServiceProvider serviceProvider)
+        public AnimationService(BezierCurveService bcs, SpriteService ss)
         {
-            bezierCurveService = (BezierCurveService)serviceProvider.GetService(typeof(BezierCurveService));
-            spriteService = (SpriteService)serviceProvider.GetService(typeof(SpriteService));
+            bezierCurveService = bcs;
+            spriteService = ss;
         }
 
         public void Animate(Animation animation, bool loopback = false)

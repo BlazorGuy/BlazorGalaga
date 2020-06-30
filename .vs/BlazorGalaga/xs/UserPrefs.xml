@@ -1,14 +1,15 @@
 ﻿<Properties StartupConfiguration="{202B6679-81B6-4D6C-83B3-0DC9DE1151AC}|Default">
   <MonoDevelop.Ide.ItemProperties.BlazorGalaga PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Pages/Index.razor.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Program.cs">
     <Files>
-      <File FileName="BlazorGalaga/Services/SpriteService.cs" Line="23" Column="10" />
-      <File FileName="BlazorGalaga/Pages/Index.razor.cs" Line="63" Column="27" />
-      <File FileName="BlazorGalaga/Services/AnimationService.cs" />
+      <File FileName="BlazorGalaga/Services/SpriteService.cs" Line="27" Column="1" />
+      <File FileName="BlazorGalaga/Pages/Index.razor.cs" Line="42" Column="55" />
+      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="31" Column="41" />
       <File FileName="BlazorGalaga/Models/Ship.cs" />
       <File FileName="BlazorGalaga/Interfaces/IAnimatable.cs" />
       <File FileName="BlazorGalaga/Models/Sprite.cs" />
       <File FileName="BlazorGalaga/Models/Animation.cs" />
+      <File FileName="BlazorGalaga/Program.cs" Line="24" Column="61" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -17,11 +18,11 @@
             <Node name="BlazorGalaga" expanded="True">
               <Node name="Models" expanded="True" />
               <Node name="Pages" expanded="True">
-                <Node name="Index.razor" expanded="True">
-                  <Node name="Index.razor.cs" selected="True" />
-                </Node>
+                <Node name="Index.razor" expanded="True" />
               </Node>
               <Node name="Properties" expanded="True" />
+              <Node name="Services" expanded="True" />
+              <Node name="Program.cs" selected="True" />
             </Node>
           </Node>
         </State>
@@ -31,9 +32,7 @@
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/bcollins/Projects/BlazorGalaga/BlazorGalaga/Pages/Index.razor.cs" relfile="BlazorGalaga/Pages/Index.razor.cs" line="62" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>
