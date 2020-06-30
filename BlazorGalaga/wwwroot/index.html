@@ -23,3 +23,56 @@
 </body>
 
 </html>
+
+<script>
+
+    window.resizeCanvas = function() {
+
+        var canvas = document.querySelector('canvas');
+        var ctx = canvas.getContext('2d');
+
+        //very important to make the pixels look crisp
+        ctx.imageSmoothingEnabled = false;
+
+        var game = {
+            canvas: canvas,
+            width: 672,
+            height: 944
+        };
+
+        var newGameWidth, newGameHeight;
+
+        // Get the dimensions of the viewport
+        var viewport = {
+            width: window.innerWidth,
+            height: window.innerHeight
+        };
+
+        // Determine game size
+        const ratio = game.height / game.width;
+        const viewportRatio = viewport.height / viewport.width;
+
+        if (ratio > viewportRatio) {
+            newGameHeight = viewport.height;
+            newGameWidth = newGameHeight * game.width / game.height;
+        } else {
+            newGameWidth = viewport.width;
+            newGameHeight = newGameWidth * game.height / game.width;
+        }
+
+        game.canvas.style.width = newGameWidth + "px";
+        game.canvas.style.height = newGameHeight + "px";
+
+        var paddingX = (viewport.width - newGameWidth) / 2;
+        var paddingY = (viewport.height - newGameHeight) / 2;
+        var margin = paddingY + "px " + paddingX + "px";
+
+        // Set the new margin of the game so it will be centered
+        game.canvas.style.margin = margin;
+
+        return { Width: newGameWidth, Height: newGameHeight, Ratio: ratio, ViewportRatio: viewportRatio};
+
+    };
+
+
+</script>

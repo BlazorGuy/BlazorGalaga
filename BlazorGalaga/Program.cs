@@ -18,10 +18,11 @@ namespace BlazorGalaga
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
 
-            builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-            builder.Services.AddTransient(sp => new BezierCurveService());
-            builder.Services.AddTransient(sp => new WordService());
-            builder.Services.AddTransient(sp => new AnimationService(builder.Services.BuildServiceProvider()));
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            builder.Services.AddScoped<BezierCurveService>();
+            builder.Services.AddScoped(sp => new AnimationService(builder.Services.BuildServiceProvider()));
+            builder.Services.AddScoped<BrowserService>();
+            builder.Services.AddScoped<SpriteService>();
 
             await builder.Build().RunAsync();
         }

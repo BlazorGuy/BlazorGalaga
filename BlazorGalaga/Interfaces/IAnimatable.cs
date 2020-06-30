@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Drawing;
+using BlazorGalaga.Models;
+using static BlazorGalaga.Models.Sprite;
+
 namespace BlazorGalaga.Interfaces
 {
-    public class IAnimatable
+    public interface IAnimatable 
     {
-        public IAnimatable()
-        {
-        }
+        public PointF Location { get; set; }
+        public BezierCurve Path { get; set; }
+        public bool DrawPath { get; set; }
+        public Sprite Sprite { get; set; }
     }
 }

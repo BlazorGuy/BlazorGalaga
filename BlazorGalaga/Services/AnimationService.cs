@@ -6,13 +6,15 @@ namespace BlazorGalaga.Services
 {
     public class AnimationService
     {
+        public Canvas2DContext CanvasCtx { get; set; }
+
         private BezierCurveService bezierCurveService;
-        private WordService wordService;
+        private SpriteService spriteService;
 
         public AnimationService(IServiceProvider serviceProvider)
         {
             bezierCurveService = (BezierCurveService)serviceProvider.GetService(typeof(BezierCurveService));
-            wordService = (WordService)serviceProvider.GetService(typeof(WordService));
+            spriteService = (SpriteService)serviceProvider.GetService(typeof(SpriteService));
         }
 
         public void Animate(Animation animation, bool loopback = false)
@@ -32,16 +34,18 @@ namespace BlazorGalaga.Services
 
         }
 
-        public void Draw(Canvas2DContext ctx,Animation animation)
+        public void Draw(Animation animation)
         {
-            foreach (Word word in animation.Words)
+            foreach(var animatable in animation.Animatables)
             {
-                if (word.Path != null)
+                if (animatable.Path != null)
                 {
-                    word.Location = bezierCurveService.getCubicBezierXYatPercent(word.Path, animation.Percent);
-                    if (word.DrawPath) bezierCurveService.DrawCurve(ctx, word.Path);
+                    animatable.Location = bezierCurveService.getCubicBezierXYatPercent(animatable.Path, animation.Percent);
+                    if (animatable.DrawPath) bezierCurveService.DrawCurve(CanvasCtx, animatable.Path);
                 }
-                wordService.DrawText(ctx, word);
+
+                if (animatable.Sprite!=null)
+                    spriteService.DrawSprite(animatable.Sprite);
             }
         }
     }
