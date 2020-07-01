@@ -14,10 +14,24 @@ namespace BlazorGalaga.Services
         public async void DrawCurve(Canvas2DContext ctx, BezierCurve curve)
         {
             await ctx.BeginPathAsync();
+            await ctx.SetLineWidthAsync(2);
             await ctx.MoveToAsync(curve.StartPoint.X, curve.StartPoint.Y);
             await ctx.BezierCurveToAsync(curve.ControlPoint1.X,curve.ControlPoint1.Y,curve.ControlPoint2.X, curve.ControlPoint2.Y,curve.EndPoint.X,curve.EndPoint.Y);
-            await ctx.SetStrokeStyleAsync("blue");
+            await ctx.SetStrokeStyleAsync("white");
             await ctx.StrokeAsync();
+        }
+
+        //for strait lines
+        public PointF getLineXYatPercent(BezierCurve curve, float percent)
+        {
+            percent = percent / 100;
+
+            var dx = curve.EndPoint.X - curve.StartPoint.X;
+            var dy = curve.EndPoint.Y - curve.StartPoint.Y;
+            var X = curve.StartPoint.X + dx * percent;
+            var Y = curve.StartPoint.Y + dy * percent;
+
+            return new PointF(X, Y);
         }
 
         public PointF getCubicBezierXYatPercent(BezierCurve curve, float percent)

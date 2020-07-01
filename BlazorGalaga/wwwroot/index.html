@@ -26,6 +26,13 @@
 
 <script>
 
+    document.addEventListener('keydown', KeyPressed);
+
+    function KeyPressed(e) {
+        DotNet.invokeMethodAsync('BlazorGalaga', 'OnKeyDown', e.code);
+        e.preventDefault();
+    }
+
     window.resizeCanvas = function() {
 
         var canvas = document.querySelector('canvas');

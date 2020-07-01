@@ -10,6 +10,7 @@ namespace BlazorGalaga.Models
         public BezierCurve Path { get; set; }
         public bool DrawPath { get; set; }
         public Sprite Sprite { get; set; }
+        public bool PathIsLine { get; set; }
 
         public Ship() 
         {

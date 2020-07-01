@@ -1,25 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Threading.Tasks;
 using Blazor.Extensions;
 using Blazor.Extensions.Canvas.Canvas2D;
 using BlazorGalaga.Models;
 using BlazorGalaga.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace BlazorGalaga.Pages
 {
     public partial class Index: ComponentBase
     {
         private Canvas2DContext ctx;
-        private List<Animation> Animations = new List<Animation>();
 
         protected BECanvasComponent _canvasReference;
         protected ElementReference spriteSheet;
 
         private int fps = 60;
-        private string backgroundcolor = "#454545";
-        private CansvasDimension dimensions = new CansvasDimension();
+        private CanvasDimension dimensions = new CanvasDimension();
 
         [Inject]
         public BezierCurveService bezierCurveService { get; set; }
@@ -30,6 +30,12 @@ namespace BlazorGalaga.Pages
         [Inject]
         public SpriteService spriteService { get; set; }
 
+        [JSInvokable("OnKeyDown")]
+        public static void OnKeyDown(string keycode)
+        {
+            Console.WriteLine(keycode);
+        }
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
 
@@ -38,11 +44,14 @@ namespace BlazorGalaga.Pages
             spriteService.CanvasCtx = ctx;
             spriteService.SpriteSheet = spriteSheet;
 
-            var shipAnimation = new Animation();
-            shipAnimation.Animatables.Add(new Ship());
+            animationService.CanvasCtx = ctx;
+
+            dimensions = await browserService.ResizeCanvas();
 
 
-            Animations.Add(shipAnimation);
+            animationService.InitSprites(dimensions);
+
+           
 
             await SetInterval(() => Animate(), TimeSpan.FromMilliseconds(1000 / fps));
 
@@ -54,22 +63,18 @@ namespace BlazorGalaga.Pages
 
             action();
 
-            //await SetInterval(action, timeout);
+            await SetInterval(action, timeout);
         }
 
         async void Animate()
         {
             dimensions = await browserService.ResizeCanvas();
-            // redraw path
 
-            await ctx.ClearRectAsync(0, 0, (int)dimensions.Width, (int)dimensions.Height);
-            await ctx.SetFillStyleAsync(backgroundcolor);
-            await ctx.FillRectAsync(0, 0, (int)dimensions.Width, (int)dimensions.Height);
-            await ctx.SetLineWidthAsync(5);
+            await animationService.ResetCanvas(dimensions);
 
-            foreach (Animation a in Animations)
+            foreach (Animation a in animationService.Animations)
             {
-                animationService.Animate(a, false);
+                animationService.Animate(a, true);
                 animationService.Draw(a);
             }
         }

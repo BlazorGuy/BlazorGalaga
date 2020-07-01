@@ -13,13 +13,17 @@ namespace BlazorGalaga.Services
             _js = js;
         }
 
-        public async Task<CansvasDimension> ResizeCanvas()
+        public async Task<CanvasDimension> ResizeCanvas()
         {
-            return await _js.InvokeAsync<CansvasDimension>("resizeCanvas");
+            return await _js.InvokeAsync<CanvasDimension>("resizeCanvas");
+        }
+        public async Task<CanvasDimension> KeyPress()
+        {
+            return await _js.InvokeAsync<CanvasDimension>("keyPress");
         }
     }
 
-    public class CansvasDimension
+    public class CanvasDimension
     {
         public double Width { get; set; }
         public double Height { get; set; }

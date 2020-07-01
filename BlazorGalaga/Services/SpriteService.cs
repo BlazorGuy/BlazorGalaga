@@ -4,6 +4,7 @@ using Blazor.Extensions.Canvas;
 using Blazor.Extensions.Canvas.Canvas2D;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace BlazorGalaga.Services
 {
@@ -19,7 +20,7 @@ namespace BlazorGalaga.Services
             
         }
 
-        public async void DrawSprite(Sprite sprite)
+        public async void DrawSprite(Sprite sprite, PointF location)
         {
             SetSpriteInfoBySpriteType(sprite);
 
@@ -29,8 +30,8 @@ namespace BlazorGalaga.Services
                 sprite.SpriteSheetRect.Y, //source y
                 sprite.SpriteSheetRect.Width, //source width
                 sprite.SpriteSheetRect.Height, //source height
-                sprite.SpriteDestRect.X, //dest x
-                sprite.SpriteDestRect.Y, //dest y
+                location.X, //dest x
+                location.Y, //dest y
                 sprite.SpriteDestRect.Width,//dest width
                 sprite.SpriteDestRect.Height //dest height
             );

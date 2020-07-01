@@ -1,28 +1,30 @@
 ﻿<Properties StartupConfiguration="{202B6679-81B6-4D6C-83B3-0DC9DE1151AC}|Default">
   <MonoDevelop.Ide.ItemProperties.BlazorGalaga PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Services/BrowserService.cs">
     <Files>
-      <File FileName="BlazorGalaga/Services/SpriteService.cs" Line="27" Column="1" />
-      <File FileName="BlazorGalaga/Pages/Index.razor.cs" Line="42" Column="55" />
-      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="31" Column="41" />
-      <File FileName="BlazorGalaga/Models/Ship.cs" />
-      <File FileName="BlazorGalaga/Interfaces/IAnimatable.cs" />
-      <File FileName="BlazorGalaga/Models/Sprite.cs" />
-      <File FileName="BlazorGalaga/Models/Animation.cs" />
-      <File FileName="BlazorGalaga/Program.cs" Line="24" Column="61" />
+      <File FileName="BlazorGalaga/Services/SpriteService.cs" Line="21" Column="10" />
+      <File FileName="BlazorGalaga/Pages/Index.razor.cs" Line="87" Column="1" />
+      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="11" Column="15" />
+      <File FileName="BlazorGalaga/Models/Ship.cs" Line="19" Column="6" />
+      <File FileName="BlazorGalaga/Interfaces/IAnimatable.cs" Line="14" Column="31" />
+      <File FileName="BlazorGalaga/Services/BrowserService.cs" Line="22" Column="47" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="BlazorGalaga" expanded="True">
             <Node name="BlazorGalaga" expanded="True">
+              <Node name="Interfaces" expanded="True" />
               <Node name="Models" expanded="True" />
               <Node name="Pages" expanded="True">
                 <Node name="Index.razor" expanded="True" />
               </Node>
               <Node name="Properties" expanded="True" />
-              <Node name="Services" expanded="True" />
-              <Node name="Program.cs" selected="True" />
+              <Node name="Services" expanded="True">
+                <Node name="BrowserService.cs" selected="True" />
+              </Node>
+              <Node name="Shared" expanded="True" />
+              <Node name="wwwroot" expanded="True" />
             </Node>
           </Node>
         </State>
