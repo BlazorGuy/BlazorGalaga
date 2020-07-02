@@ -26,14 +26,17 @@
 
 <script>
 
-    document.addEventListener('keydown', KeyPressed);
-
-    function KeyPressed(e) {
+    document.addEventListener("keydown", function (e) {
         DotNet.invokeMethodAsync('BlazorGalaga', 'OnKeyDown', e.code);
-        e.preventDefault();
-    }
+    });
+    document.addEventListener("keyup", function (e) {
+        DotNet.invokeMethodAsync('BlazorGalaga', 'OnKeyUp', e.code);
+    });
 
-    window.resizeCanvas = function() {
+    window.addEventListener("resize", resizeCanvas);
+
+
+    function resizeCanvas(){
 
         var canvas = document.querySelector('canvas');
         var ctx = canvas.getContext('2d');
@@ -42,7 +45,7 @@
         ctx.imageSmoothingEnabled = false;
 
         var game = {
-            canvas: canvas,
+            canvas: document.getElementById("theCanvas"),
             width: 672,
             height: 944
         };
@@ -76,8 +79,6 @@
 
         // Set the new margin of the game so it will be centered
         game.canvas.style.margin = margin;
-
-        return { Width: newGameWidth, Height: newGameHeight, Ratio: ratio, ViewportRatio: viewportRatio};
 
     };
 

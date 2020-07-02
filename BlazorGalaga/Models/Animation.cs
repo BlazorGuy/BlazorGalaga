@@ -10,6 +10,7 @@ namespace BlazorGalaga.Models
         public float Percent { get; set; }
         public float Speed { get; set; }
         public List<IAnimatable> Animatables { get; set; }
+        public bool LoopBack { get; set; }
 
         public Animation()
         {

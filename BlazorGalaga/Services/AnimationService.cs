@@ -21,17 +21,17 @@ namespace BlazorGalaga.Services
             spriteService = ss;
         }
 
-        public void InitSprites(CanvasDimension canvasdimension)
+        public void InitAnimations()
         {
-            var shipAnimation = new Animation() { Speed = 2 };
+            var shipAnimation = new Animation() { Speed = 0 };
             var ship = new Ship()
             {
                 Path = new BezierCurve()
                 {
-                    StartPoint = new PointF(0, 0),
-                    EndPoint = new PointF((int)canvasdimension.Width - 100, 0),
-                    ControlPoint1 = new PointF(0, 0),
-                    ControlPoint2 = new PointF(0, 0)
+                    StartPoint = new PointF(0, Constants.UnscaledBrowserSize.Height - 50),
+                    EndPoint = new PointF(Constants.UnscaledBrowserSize.Width - 100, Constants.UnscaledBrowserSize.Height - 50),
+                    ControlPoint1 = new PointF(0, Constants.UnscaledBrowserSize.Height - 50),
+                    ControlPoint2 = new PointF(0, Constants.UnscaledBrowserSize.Height - 50)
                 },
                 DrawPath = true,
                 PathIsLine = true,
@@ -41,26 +41,26 @@ namespace BlazorGalaga.Services
 
         }
 
-        public async Task ResetCanvas(CanvasDimension canvasdimension)
+        public async Task ResetCanvas()
         {
-            await CanvasCtx.ClearRectAsync(0, 0, (int)canvasdimension.Width, (int)canvasdimension.Height);
-            await CanvasCtx.SetFillStyleAsync("#454545");
-            await CanvasCtx.FillRectAsync(0, 0, (int)canvasdimension.Width, (int)canvasdimension.Height);
+            await CanvasCtx.ClearRectAsync(0, 0, Constants.UnscaledBrowserSize.Width, Constants.UnscaledBrowserSize.Height);
+            await CanvasCtx.SetFillStyleAsync("#000000");
+            await CanvasCtx.FillRectAsync(0, 0, Constants.UnscaledBrowserSize.Width, Constants.UnscaledBrowserSize.Height);
         }
 
-        public void Animate(Animation animation, bool loopback = false)
+        public void Animate(Animation animation)
         {
             animation.Percent += animation.Speed;
 
             if (animation.Percent < 0)
             {
                 animation.Percent = 0;
-                if (loopback) animation.Speed *= -1;
+                if (animation.LoopBack) animation.Speed *= -1;
             }
             else if (animation.Percent > 100)
             {
                 animation.Percent = 100;
-                if (loopback) animation.Speed *= -1;
+                if (animation.LoopBack) animation.Speed *= -1;
             };
 
         }

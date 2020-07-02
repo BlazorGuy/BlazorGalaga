@@ -30,8 +30,8 @@ namespace BlazorGalaga.Services
                 sprite.SpriteSheetRect.Y, //source y
                 sprite.SpriteSheetRect.Width, //source width
                 sprite.SpriteSheetRect.Height, //source height
-                location.X, //dest x
-                location.Y, //dest y
+                (int)location.X, //dest x convert to int to avoid weird clipping of drawings
+                (int)location.Y, //dest y
                 sprite.SpriteDestRect.Width,//dest width
                 sprite.SpriteDestRect.Height //dest height
             );
@@ -46,7 +46,7 @@ namespace BlazorGalaga.Services
             switch (sprite.SpriteType)
             {
                 case Sprite.SpriteTypes.Ship:
-                    sprite.SpriteSheetRect = new System.Drawing.RectangleF(107.7F,0, 17, 17);
+                    sprite.SpriteSheetRect = new System.Drawing.RectangleF(109,1, 16, 16);
                     sprite.SpriteDestRect = new System.Drawing.RectangleF(0, 0, SPRITE_DEST_WIDTH, SPRITE_DEST_HEIGHT);
                     break;
             }
