@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using Blazor.Extensions.Canvas.Canvas2D;
+using BlazorGalaga.Interfaces;
 using BlazorGalaga.Models;
 
 namespace BlazorGalaga.Services
@@ -21,10 +22,20 @@ namespace BlazorGalaga.Services
             await ctx.StrokeAsync();
         }
 
+        public float GetRotationAngleAlongPath(IAnimatable animatable)
+        {
+            double dx = animatable.PevLocation.X - animatable.NextLocation.X;
+            double dy = animatable.PevLocation.Y - animatable.NextLocation.Y;
+            double angrad = Math.Atan2(dy, dx);
+            double angdeg = angrad * 180.0f / Math.PI;
+
+            return (float)angdeg;
+        }
+
         //for strait lines
         public PointF getLineXYatPercent(BezierCurve curve, float percent)
         {
-            percent = percent / 100;
+            percent /= 100;
 
             var dx = curve.EndPoint.X - curve.StartPoint.X;
             var dy = curve.EndPoint.Y - curve.StartPoint.Y;
@@ -37,7 +48,7 @@ namespace BlazorGalaga.Services
         public PointF getCubicBezierXYatPercent(BezierCurve curve, float percent)
         {
 
-            percent = percent / 100;
+            percent /= 100;
 
             var x = CubicN(percent, curve.StartPoint.X, curve.ControlPoint1.X, curve.ControlPoint2.X, curve.EndPoint.X);
             var y = CubicN(percent, curve.StartPoint.Y, curve.ControlPoint1.Y, curve.ControlPoint2.Y, curve.EndPoint.Y);

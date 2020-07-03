@@ -24,18 +24,36 @@ namespace BlazorGalaga.Services
 
         public void InitAnimations()
         {
+
+            var bugAnimation = new Animation() { Speed = 1, LoopBack = true };
+            var bug = new Bug()
+            {
+                Path = new BezierCurve()
+                {
+                    StartPoint = new PointF(Constants.CanvasSize.Width, Constants.CanvasSize.Height),
+                    EndPoint = new PointF(Constants.CanvasSize.Width / 2, Constants.CanvasSize.Height / 2),
+                    ControlPoint1 = new PointF(0, Constants.CanvasSize.Height / 2),
+                    ControlPoint2 = new PointF(Constants.CanvasSize.Width / 2, 0)
+                },
+                DrawPath = false,
+                RotateAlongPath = true
+            };
+            bugAnimation.Animatables.Add(bug);
+            Animations.Add(bugAnimation);
+
             var shipAnimation = new Animation() { Speed = 0 };
             var ship = new Ship()
             {
                 Path = new BezierCurve()
                 {
-                    StartPoint = new PointF(0, Constants.CanvasSize.Height-Constants.SpriteDestSize.Height),
-                    EndPoint = new PointF(Constants.CanvasSize.Width-Constants.SpriteDestSize.Width, 900),
+                    StartPoint = new PointF(0, Constants.CanvasSize.Height - Constants.SpriteDestSize.Height),
+                    EndPoint = new PointF(Constants.CanvasSize.Width - Constants.SpriteDestSize.Width, Constants.CanvasSize.Height - Constants.SpriteDestSize.Height),
                     ControlPoint1 = new PointF(0, Constants.CanvasSize.Height - Constants.SpriteDestSize.Height),
                     ControlPoint2 = new PointF(0, Constants.CanvasSize.Height - Constants.SpriteDestSize.Height)
                 },
                 DrawPath = false,
                 PathIsLine = true,
+                RotateAlongPath = false
             };
             shipAnimation.Animatables.Add(ship);
             Animations.Add(shipAnimation);
@@ -73,14 +91,25 @@ namespace BlazorGalaga.Services
                 if (animatable.Path != null)
                 {
                     if (animatable.PathIsLine)
-                        animatable.Location = bezierCurveService.getLineXYatPercent(animatable.Path, animation.Percent); 
+                    {
+                        animatable.PevLocation = bezierCurveService.getLineXYatPercent(animatable.Path, animation.Percent - animation.Speed);
+                        animatable.Location = bezierCurveService.getLineXYatPercent(animatable.Path, animation.Percent);
+                        animatable.NextLocation = bezierCurveService.getLineXYatPercent(animatable.Path, animation.Percent + animation.Speed);
+                    }
                     else
+                    {
+                        animatable.PevLocation = bezierCurveService.getCubicBezierXYatPercent(animatable.Path, animation.Percent - animation.Speed);
                         animatable.Location = bezierCurveService.getCubicBezierXYatPercent(animatable.Path, animation.Percent);
+                        animatable.NextLocation = bezierCurveService.getCubicBezierXYatPercent(animatable.Path, animation.Percent + animation.Speed);
+                    }
                     if (animatable.DrawPath) bezierCurveService.DrawCurve(CanvasCtx, animatable.Path);
                 }
 
-                if (animatable.Sprite!=null)
-                    spriteService.DrawSprite(animatable.Sprite,animatable.Location);
+                if (animatable.Sprite != null)
+                {
+                    var rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
+                    spriteService.DrawSprite(animatable.Sprite, animatable.Location, animatable.RotateAlongPath ? rotation : 0);
+                }
             }
         }
     }

@@ -21,10 +21,16 @@ namespace BlazorGalaga.Services
             
         }
 
-        public async void DrawSprite(Sprite sprite, PointF location)
+        public async void DrawSprite(Sprite sprite, PointF location, float rotationangle)
         {
+            Console.WriteLine(rotationangle);
+
             if (!sprite.IsInitialized)
                 SetSpriteInfoBySpriteType(sprite);
+
+            await CanvasCtx.SaveAsync();
+            await CanvasCtx.TranslateAsync(location.X, location.Y);
+            await CanvasCtx.RotateAsync((float)((rotationangle + sprite.InitialRotationOffset) * Math.PI / 180));
 
             await CanvasCtx.DrawImageAsync(
                 SpriteSheet,
@@ -32,11 +38,13 @@ namespace BlazorGalaga.Services
                 sprite.SpriteSheetRect.Y, //source y
                 sprite.SpriteSheetRect.Width, //source width
                 sprite.SpriteSheetRect.Height, //source height
-                (int)location.X, //dest x convert to int to avoid weird clipping of drawings
-                (int)location.Y, //dest y
+                (int)sprite.SpriteDestRect.Width / 2 * -1, //dest x
+                (int)sprite.SpriteDestRect.Height / 2 * -1, //dest y
                 sprite.SpriteDestRect.Width,//dest width
                 sprite.SpriteDestRect.Height //dest height
             );
+
+            await CanvasCtx.RestoreAsync();
         }
 
         private void SetSpriteInfoBySpriteType(Sprite sprite)
@@ -49,8 +57,9 @@ namespace BlazorGalaga.Services
                     sprite.SpriteDestRect = new System.Drawing.RectangleF(0, 0, Constants.SpriteDestSize.Width, Constants.SpriteDestSize.Height);
                     break;
                 case Sprite.SpriteTypes.BlueBug:
-                    sprite.SpriteSheetRect = new System.Drawing.RectangleF(109, 92, 16, 16);
+                    sprite.SpriteSheetRect = new System.Drawing.RectangleF(109, 91, 16, 16);
                     sprite.SpriteDestRect = new System.Drawing.RectangleF(0, 0, Constants.SpriteDestSize.Width, Constants.SpriteDestSize.Height);
+                    sprite.InitialRotationOffset = -90;
                     break;
             }
 

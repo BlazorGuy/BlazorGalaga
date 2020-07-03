@@ -15,6 +15,7 @@ namespace BlazorGalaga.Models
         public RectangleF SpriteDestRect { get; set; }
         public SpriteTypes SpriteType { get; set; }
         public bool IsInitialized { get; set; }
+        public float InitialRotationOffset { get; set; }
 
         public Sprite(SpriteTypes spritetype)
         {

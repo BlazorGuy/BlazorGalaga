@@ -4,7 +4,7 @@ using BlazorGalaga.Interfaces;
 
 namespace BlazorGalaga.Models
 {
-    public class Ship : IAnimatable
+    public class Bug : IAnimatable
     {
         public PointF Location { get; set; }
         public PointF PevLocation { get; set; }
@@ -15,9 +15,9 @@ namespace BlazorGalaga.Models
         public bool PathIsLine { get; set; }
         public bool RotateAlongPath { get; set; }
 
-        public Ship() 
+        public Bug()
         {
-            Sprite = new Sprite(Sprite.SpriteTypes.Ship);
+            Sprite = new Sprite(Sprite.SpriteTypes.BlueBug);
         }
     }
 }
