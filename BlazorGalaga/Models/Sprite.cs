@@ -7,12 +7,14 @@ namespace BlazorGalaga.Models
     {
         public enum SpriteTypes
         {
-            Ship
+            Ship,
+            BlueBug
         }
 
         public RectangleF SpriteSheetRect { get; set; }
         public RectangleF SpriteDestRect { get; set; }
         public SpriteTypes SpriteType { get; set; }
+        public bool IsInitialized { get; set; }
 
         public Sprite(SpriteTypes spritetype)
         {

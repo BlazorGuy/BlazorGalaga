@@ -7,6 +7,7 @@ using Blazor.Extensions;
 using Blazor.Extensions.Canvas.Canvas2D;
 using BlazorGalaga.Models;
 using BlazorGalaga.Services;
+using BlazorGalaga.Static;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
@@ -15,13 +16,11 @@ namespace BlazorGalaga.Pages
     public partial class Index: ComponentBase
     {
         private Canvas2DContext ctx;
+        private static bool stopAnimating = false;
 
         protected BECanvasComponent _canvasReference;
         protected ElementReference spriteSheet;
 
-        private int fps = 60;
-        private static string keydown;
-        private static bool ignorenextkeyup;
         private static Animation shipAnimation;
 
         [Inject]
@@ -32,27 +31,6 @@ namespace BlazorGalaga.Pages
         public BrowserService browserService { get; set; }
         [Inject]
         public SpriteService spriteService { get; set; }
-
-        [JSInvokable("OnKeyDown")]
-        public static void OnKeyDown(string keycode)
-        {
-            Console.WriteLine("KeyDown: " + keycode);
-
-            if ((keydown == "ArrowLeft" && keycode == "ArrowRight") ||
-                (keydown == "ArrowRight" && keycode == "ArrowLeft")) ignorenextkeyup = true;
-
-            keydown = keycode;
-        }
-
-        [JSInvokable("OnKeyUp")]
-        public static void OnKeyUp(string keycode)
-        {
-            Console.WriteLine("KeyUp: " + keycode);
-            if (ignorenextkeyup)
-                ignorenextkeyup = false;
-            else
-                keydown = "";
-        }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -68,13 +46,13 @@ namespace BlazorGalaga.Pages
 
             shipAnimation = animationService.Animations.FirstOrDefault(
                 a=>a.Animatables.Any(
-                        b=>b.Sprite.SpriteType== Sprite.SpriteTypes.Ship
+                        b=>b.Sprite.SpriteType == Sprite.SpriteTypes.Ship
                     )
                 );
 
             await browserService.ResizeCanvas();
 
-            await SetInterval(() => Animate(), TimeSpan.FromMilliseconds(1000 / fps));
+            await SetInterval(() => Animate(), TimeSpan.FromMilliseconds(1000 / Constants.FPS));
 
         }
 
@@ -84,30 +62,29 @@ namespace BlazorGalaga.Pages
 
             action();
 
-            await SetInterval(action, timeout);
+            if(!stopAnimating)
+                await SetInterval(action, timeout);
         }
 
         async void Animate()
         {
-            await animationService.ResetCanvas();
+            try
+            {
+                await animationService.ResetCanvas();
 
-            if (keydown == "ArrowLeft")
-            {
-                shipAnimation.Speed = -2;
-            }
-            if (keydown == "ArrowRight")
-            {
-                shipAnimation.Speed = 2;
-            }
-            if (keydown == "")
-            {
-                shipAnimation.Speed = 0;
-            }
+                KeyBoardHelper.ControlShip(shipAnimation);
 
-            foreach (Animation a in animationService.Animations)
+                foreach (Animation a in animationService.Animations)
+                {
+                    animationService.Animate(a);
+                    animationService.Draw(a);
+                }
+            }
+            catch(Exception ex)
             {
-                animationService.Animate(a);
-                animationService.Draw(a);
+                stopAnimating = true;
+                Console.WriteLine(ex.StackTrace);
+                throw ex;
             }
         }
     }

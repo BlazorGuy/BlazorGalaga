@@ -5,6 +5,7 @@ using Blazor.Extensions.Canvas.Canvas2D;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Drawing;
+using BlazorGalaga.Static;
 
 namespace BlazorGalaga.Services
 {
@@ -22,7 +23,8 @@ namespace BlazorGalaga.Services
 
         public async void DrawSprite(Sprite sprite, PointF location)
         {
-            SetSpriteInfoBySpriteType(sprite);
+            if (!sprite.IsInitialized)
+                SetSpriteInfoBySpriteType(sprite);
 
             await CanvasCtx.DrawImageAsync(
                 SpriteSheet,
@@ -39,17 +41,20 @@ namespace BlazorGalaga.Services
 
         private void SetSpriteInfoBySpriteType(Sprite sprite)
         {
-            //standard sprite constants
-            const int SPRITE_DEST_WIDTH = 45;
-            const int SPRITE_DEST_HEIGHT = 32;
 
             switch (sprite.SpriteType)
             {
                 case Sprite.SpriteTypes.Ship:
                     sprite.SpriteSheetRect = new System.Drawing.RectangleF(109,1, 16, 16);
-                    sprite.SpriteDestRect = new System.Drawing.RectangleF(0, 0, SPRITE_DEST_WIDTH, SPRITE_DEST_HEIGHT);
+                    sprite.SpriteDestRect = new System.Drawing.RectangleF(0, 0, Constants.SpriteDestSize.Width, Constants.SpriteDestSize.Height);
+                    break;
+                case Sprite.SpriteTypes.BlueBug:
+                    sprite.SpriteSheetRect = new System.Drawing.RectangleF(109, 92, 16, 16);
+                    sprite.SpriteDestRect = new System.Drawing.RectangleF(0, 0, Constants.SpriteDestSize.Width, Constants.SpriteDestSize.Height);
                     break;
             }
+
+            sprite.IsInitialized = true;
         }
 
     }

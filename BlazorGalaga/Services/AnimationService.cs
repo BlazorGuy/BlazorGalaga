@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Threading.Tasks;
 using Blazor.Extensions.Canvas.Canvas2D;
 using BlazorGalaga.Models;
+using BlazorGalaga.Static;
 
 namespace BlazorGalaga.Services
 {
@@ -28,12 +29,12 @@ namespace BlazorGalaga.Services
             {
                 Path = new BezierCurve()
                 {
-                    StartPoint = new PointF(0, Constants.UnscaledBrowserSize.Height - 50),
-                    EndPoint = new PointF(Constants.UnscaledBrowserSize.Width - 100, Constants.UnscaledBrowserSize.Height - 50),
-                    ControlPoint1 = new PointF(0, Constants.UnscaledBrowserSize.Height - 50),
-                    ControlPoint2 = new PointF(0, Constants.UnscaledBrowserSize.Height - 50)
+                    StartPoint = new PointF(0, Constants.CanvasSize.Height-Constants.SpriteDestSize.Height),
+                    EndPoint = new PointF(Constants.CanvasSize.Width-Constants.SpriteDestSize.Width, 900),
+                    ControlPoint1 = new PointF(0, Constants.CanvasSize.Height - Constants.SpriteDestSize.Height),
+                    ControlPoint2 = new PointF(0, Constants.CanvasSize.Height - Constants.SpriteDestSize.Height)
                 },
-                DrawPath = true,
+                DrawPath = false,
                 PathIsLine = true,
             };
             shipAnimation.Animatables.Add(ship);
@@ -43,9 +44,9 @@ namespace BlazorGalaga.Services
 
         public async Task ResetCanvas()
         {
-            await CanvasCtx.ClearRectAsync(0, 0, Constants.UnscaledBrowserSize.Width, Constants.UnscaledBrowserSize.Height);
+            await CanvasCtx.ClearRectAsync(0, 0, Constants.CanvasSize.Width, Constants.CanvasSize.Height);
             await CanvasCtx.SetFillStyleAsync("#000000");
-            await CanvasCtx.FillRectAsync(0, 0, Constants.UnscaledBrowserSize.Width, Constants.UnscaledBrowserSize.Height);
+            await CanvasCtx.FillRectAsync(0, 0, Constants.CanvasSize.Width, Constants.CanvasSize.Height);
         }
 
         public void Animate(Animation animation)
