@@ -107,14 +107,11 @@ namespace BlazorGalaga.Services
             {
                 if (animatable.Paths != null)
                 {
-                    foreach (BezierCurve path in animatable.Paths)
+                    foreach (BezierCurve path in animatable.Paths.OrderBy(a=>a.StartPercent))
                     {
-                        if (animation.Percent <= (path.StartPercent + path.PercentageOfPath))
+                        if (animation.Percent >= path.StartPercent && (animation.Percent < (path.StartPercent + path.PercentageOfPath)))
                         {
-                            Console.WriteLine("animation.Percent:" + animation.Percent + " Path.PercentageOfPath: " + path.PercentageOfPath);
-                            var animationpercent = (animation.Percent / path.PercentageOfPath) * 100;
-                            Console.WriteLine("animationpercent: " + animationpercent);
-                            Console.WriteLine("Path.StartPercent: " + path.StartPercent);
+                            var animationpercent = ((animation.Percent - path.StartPercent) / path.PercentageOfPath) * 100;
 
                             if (animatable.PathIsLine)
                             {
@@ -128,10 +125,6 @@ namespace BlazorGalaga.Services
                                 animatable.Location = bezierCurveService.getCubicBezierXYatPercent(path, animationpercent);
                                 animatable.NextLocation = bezierCurveService.getCubicBezierXYatPercent(path, animationpercent + animation.Speed);
                             }
-                        }
-                        else
-                        {
-                            Console.WriteLine("Skipped: Path.StartPercent: " + path.StartPercent + ",Path.PercentageOfPath: " + path.PercentageOfPath);
                         }
                         if (animatable.DrawPath) bezierCurveService.DrawCurve(CanvasCtx, path);
                     }
