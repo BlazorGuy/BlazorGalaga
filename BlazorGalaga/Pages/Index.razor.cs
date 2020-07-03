@@ -62,7 +62,7 @@ namespace BlazorGalaga.Pages
 
             action();
 
-            if(!stopAnimating)
+            if (!stopAnimating)
                 await SetInterval(action, timeout);
         }
 

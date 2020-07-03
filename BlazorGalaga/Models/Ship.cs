@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using BlazorGalaga.Interfaces;
 
@@ -9,7 +10,7 @@ namespace BlazorGalaga.Models
         public PointF Location { get; set; }
         public PointF PevLocation { get; set; }
         public PointF NextLocation { get; set; }
-        public BezierCurve Path { get; set; }
+        public List<BezierCurve> Paths { get; set; }
         public bool DrawPath { get; set; }
         public Sprite Sprite { get; set; }
         public bool PathIsLine { get; set; }

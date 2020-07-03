@@ -23,8 +23,6 @@ namespace BlazorGalaga.Services
 
         public async void DrawSprite(Sprite sprite, PointF location, float rotationangle)
         {
-            Console.WriteLine(rotationangle);
-
             if (!sprite.IsInitialized)
                 SetSpriteInfoBySpriteType(sprite);
 
