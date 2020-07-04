@@ -1,13 +1,13 @@
 ﻿<Properties StartupConfiguration="{202B6679-81B6-4D6C-83B3-0DC9DE1151AC}|Default">
   <MonoDevelop.Ide.ItemProperties.BlazorGalaga PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Services/AnimationService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Services/BezierCurveService.cs">
     <Files>
-      <File FileName="BlazorGalaga/Pages/Index.razor.cs" Line="67" Column="10" />
-      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="123" Column="141" />
+      <File FileName="BlazorGalaga/Pages/Index.razor.cs" Line="26" Column="67" />
+      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="34" Column="58" />
       <File FileName="BlazorGalaga/Models/Bug.cs" Line="25" Column="1" />
       <File FileName="BlazorGalaga/Models/Ship.cs" Line="25" Column="1" />
       <File FileName="BlazorGalaga/Services/BezierCurveService.cs" Line="45" Column="1" />
-      <File FileName="BlazorGalaga/Models/BezierCurve.cs" Line="9" Column="50" />
+      <File FileName="BlazorGalaga/wwwroot/index.html" Line="54" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -20,7 +20,7 @@
                 <Node name="Index.razor" expanded="True" />
               </Node>
               <Node name="Services" expanded="True">
-                <Node name="AnimationService.cs" selected="True" />
+                <Node name="BezierCurveService.cs" selected="True" />
               </Node>
               <Node name="Static" expanded="True" />
               <Node name="wwwroot" expanded="True" />
@@ -41,9 +41,7 @@
     <String>/Users/bcollins/Projects/BlazorGalaga/BlazorGalaga/bin/Debug/netstandard2.1/wwwroot/_framework/_bin</String>
   </Debugger.DebugSourceFolders>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/bcollins/Projects/BlazorGalaga/BlazorGalaga/Pages/Index.razor.cs" relfile="BlazorGalaga/Pages/Index.razor.cs" line="39" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

@@ -16,7 +16,6 @@ namespace BlazorGalaga.Pages
     public partial class Index: ComponentBase
     {
         private Canvas2DContext ctx;
-        private static bool stopAnimating = false;
 
         protected BECanvasComponent _canvasReference;
         protected ElementReference spriteSheet;
@@ -28,9 +27,9 @@ namespace BlazorGalaga.Pages
         [Inject]
         public AnimationService animationService { get; set; }
         [Inject]
-        public BrowserService browserService { get; set; }
-        [Inject]
         public SpriteService spriteService { get; set; }
+        [Inject]
+        public IJSRuntime JsRuntime { get; set; }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -50,42 +49,23 @@ namespace BlazorGalaga.Pages
                     )
                 );
 
-            await browserService.ResizeCanvas();
-
-            await SetInterval(() => Animate(), TimeSpan.FromMilliseconds(1000 / Constants.FPS));
+            await JsRuntime.InvokeAsync<object>("initFromBlazor", DotNetObjectReference.Create(this));
 
         }
 
-        public static async Task SetInterval(Action action, TimeSpan timeout)
+        [JSInvokable]
+        public async ValueTask GameLoop()
         {
-            await Task.Delay(timeout).ConfigureAwait(false);
+            await animationService.ResetCanvas();
 
-            action();
+            KeyBoardHelper.ControlShip(shipAnimation);
 
-            if (!stopAnimating)
-                await SetInterval(action, timeout);
-        }
-
-        async void Animate()
-        {
-            try
+            foreach (Animation a in animationService.Animations)
             {
-                await animationService.ResetCanvas();
-
-                KeyBoardHelper.ControlShip(shipAnimation);
-
-                foreach (Animation a in animationService.Animations)
-                {
-                    animationService.Animate(a);
-                    animationService.Draw(a);
-                }
-            }
-            catch(Exception ex)
-            {
-                stopAnimating = true;
-                Console.WriteLine(ex.StackTrace);
-                throw ex;
+                animationService.Animate(a);
+                animationService.Draw(a);
             }
         }
+
     }
 }

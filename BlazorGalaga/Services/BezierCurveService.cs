@@ -21,19 +21,18 @@ namespace BlazorGalaga.Services
             await ctx.SetStrokeStyleAsync("white");
             await ctx.StrokeAsync();
 
-            await ctx.BeginPathAsync();
-            await ctx.SetLineWidthAsync(2);
-            await ctx.MoveToAsync(curve.ControlPoint1.X, curve.ControlPoint1.Y);
-            await ctx.LineToAsync(curve.StartPoint.X, curve.StartPoint.Y);
-            await ctx.SetStrokeStyleAsync("yellow");
-            await ctx.StrokeAsync();
+            //await ctx.BeginPathAsync();
+            //await ctx.MoveToAsync(curve.ControlPoint1.X, curve.ControlPoint1.Y);
+            //await ctx.LineToAsync(curve.StartPoint.X, curve.StartPoint.Y);
+            //await ctx.SetStrokeStyleAsync("yellow");
+            //await ctx.StrokeAsync();
 
-            await ctx.BeginPathAsync();
-            await ctx.SetLineWidthAsync(2);
-            await ctx.MoveToAsync(curve.ControlPoint2.X, curve.ControlPoint2.Y);
-            await ctx.LineToAsync(curve.EndPoint.X, curve.EndPoint.Y);
-            await ctx.SetStrokeStyleAsync("yellow");
-            await ctx.StrokeAsync();
+            //await ctx.BeginPathAsync();
+            //await ctx.MoveToAsync(curve.ControlPoint2.X, curve.ControlPoint2.Y);
+            //await ctx.LineToAsync(curve.EndPoint.X, curve.EndPoint.Y);
+            //await ctx.SetStrokeStyleAsync("yellow");
+            //await ctx.StrokeAsync();
+
         }
 
         public float GetRotationAngleAlongPath(IAnimatable animatable)

@@ -20,7 +20,6 @@ namespace BlazorGalaga
 
             builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddSingleton<BezierCurveService>();
-            builder.Services.AddSingleton<BrowserService>();
             builder.Services.AddSingleton<SpriteService>();
             builder.Services.AddSingleton(x =>
                 new AnimationService(

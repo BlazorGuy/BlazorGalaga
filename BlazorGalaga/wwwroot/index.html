@@ -35,6 +35,28 @@
 
     window.addEventListener("resize", resizeCanvas);
 
+    window.initFromBlazor = (instance) => {
+
+        resizeCanvas();
+
+        window.instance = instance;
+
+        window.requestAnimationFrame(gameLoop);
+
+    };
+
+    let framesPerSecond = 60;
+
+    function gameLoop() {
+        setTimeout(function () {
+
+            window.requestAnimationFrame(gameLoop);
+
+            window.instance.invokeMethodAsync('GameLoop');
+
+        }, 1000 / framesPerSecond);
+    }
+
     function resizeCanvas(){
 
         var canvas = document.querySelector('canvas');

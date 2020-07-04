@@ -45,7 +45,16 @@ namespace BlazorGalaga.Services
                 ControlPoint1 = new PointF(w / 2 - 10, h / 4),
                 ControlPoint2 = new PointF(w - (w / 4), h / 4),
                 StartPercent = 50,
-                PercentageOfPath = 50
+                PercentageOfPath = 25
+            });
+            paths.Add(new BezierCurve()
+            {
+                StartPoint = new PointF(0, 10),
+                EndPoint = new PointF(100, 300),
+                ControlPoint1 = new PointF(w / 2 - 10, h / 4),
+                ControlPoint2 = new PointF(w - (w / 4), h / 4),
+                StartPercent = 75,
+                PercentageOfPath = 25
             });
             var bug = new Bug()
             {
@@ -56,24 +65,24 @@ namespace BlazorGalaga.Services
             bugAnimation.Animatables.Add(bug);
             Animations.Add(bugAnimation);
 
-            //var shipAnimation = new Animation() { Speed = 0 };
-            //List<BezierCurve> paths2 = new List<BezierCurve>();
-            //paths2.Add(new BezierCurve()
-            //{
-            //    StartPoint = new PointF(0, Constants.CanvasSize.Height - Constants.SpriteDestSize.Height),
-            //    EndPoint = new PointF(Constants.CanvasSize.Width - Constants.SpriteDestSize.Width, Constants.CanvasSize.Height - Constants.SpriteDestSize.Height),
-            //    ControlPoint1 = new PointF(0, Constants.CanvasSize.Height - Constants.SpriteDestSize.Height),
-            //    ControlPoint2 = new PointF(0, Constants.CanvasSize.Height - Constants.SpriteDestSize.Height)
-            //});
-            //var ship = new Ship()
-            //{
-            //    Paths = paths2,
-            //    DrawPath = false,
-            //    PathIsLine = true,
-            //    RotateAlongPath = false
-            //};
-            //shipAnimation.Animatables.Add(ship);
-            //Animations.Add(shipAnimation);
+            var shipAnimation = new Animation() { Speed = 0 };
+            List<BezierCurve> paths2 = new List<BezierCurve>();
+            paths2.Add(new BezierCurve()
+            {
+                StartPoint = new PointF(0, Constants.CanvasSize.Height - Constants.SpriteDestSize.Height),
+                EndPoint = new PointF(Constants.CanvasSize.Width - Constants.SpriteDestSize.Width, Constants.CanvasSize.Height - Constants.SpriteDestSize.Height),
+                ControlPoint1 = new PointF(0, Constants.CanvasSize.Height - Constants.SpriteDestSize.Height),
+                ControlPoint2 = new PointF(0, Constants.CanvasSize.Height - Constants.SpriteDestSize.Height)
+            });
+            var ship = new Ship()
+            {
+                Paths = paths2,
+                DrawPath = false,
+                PathIsLine = true,
+                RotateAlongPath = false
+            };
+            shipAnimation.Animatables.Add(ship);
+            Animations.Add(shipAnimation);
 
         }
 
@@ -103,7 +112,9 @@ namespace BlazorGalaga.Services
 
         public void Draw(Animation animation)
         {
-            foreach(var animatable in animation.Animatables)
+            //http://jsfiddle.net/m1erickson/LumMX/
+
+            foreach (var animatable in animation.Animatables)
             {
                 if (animatable.Paths != null)
                 {
