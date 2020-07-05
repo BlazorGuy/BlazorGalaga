@@ -42,6 +42,7 @@ namespace BlazorGalaga.Pages
             animationService.CanvasCtx = ctx;
 
             animationService.InitAnimations();
+            //animationService.ComputePathPoints();
 
             shipAnimation = animationService.Animations.FirstOrDefault(
                 a=>a.Animatables.Any(
@@ -53,18 +54,25 @@ namespace BlazorGalaga.Pages
 
         }
 
+        bool exit;
+
         [JSInvokable]
         public async ValueTask GameLoop()
         {
+            if (exit) return;
+
             await animationService.ResetCanvas();
 
-            KeyBoardHelper.ControlShip(shipAnimation);
+            animationService.ComputePathPoints();
+            exit = true;
 
-            foreach (Animation a in animationService.Animations)
-            {
-                animationService.Animate(a);
-                animationService.Draw(a);
-            }
+            //KeyBoardHelper.ControlShip(shipAnimation);
+
+            //foreach (Animation a in animationService.Animations)
+            //{
+            //    animationService.Animate(a);
+            //    animationService.Draw(a);
+            //}
         }
 
     }

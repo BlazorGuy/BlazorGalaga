@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using Blazor.Extensions.Canvas.Canvas2D;
 using BlazorGalaga.Interfaces;
@@ -21,6 +22,11 @@ namespace BlazorGalaga.Services
             await ctx.SetStrokeStyleAsync("white");
             await ctx.StrokeAsync();
 
+            await ctx.BeginPathAsync();
+            await ctx.SetFillStyleAsync("yellow");
+            await ctx.ArcAsync(curve.EndPoint.X, curve.EndPoint.Y, 5, 0, Math.PI*2);
+            await ctx.FillAsync();
+
             //await ctx.BeginPathAsync();
             //await ctx.MoveToAsync(curve.ControlPoint1.X, curve.ControlPoint1.Y);
             //await ctx.LineToAsync(curve.StartPoint.X, curve.StartPoint.Y);
@@ -33,6 +39,37 @@ namespace BlazorGalaga.Services
             //await ctx.SetStrokeStyleAsync("yellow");
             //await ctx.StrokeAsync();
 
+        }
+
+        public List<PointF> GetEvenlyDistributedPathPointsByLength(List<PointF> points, float segmentLength)
+        {
+            List<float> lengths = new List<float>();
+
+            lengths.Add(0);
+
+            for (var i = 1; i < points.Count; i++)
+            {
+                var dx = points[i].X - points[i - 1].X;
+                var dy = points[i].Y - points[i - 1].Y;
+                lengths.Add(MathF.Sqrt(dx * dx + dy * dy));
+            }
+
+            var accumLength = segmentLength;
+            var nextLength = segmentLength;
+            List<PointF> sPoints = new List<PointF>();
+
+            sPoints.Add(new PointF(points[0].X, points[0].Y));
+
+            for (var i = 1; i < lengths.Count; i++)
+            {
+                accumLength += lengths[i];
+                if (accumLength >= nextLength)
+                {
+                    sPoints.Add(new PointF(points[i].X, points[i].Y));
+                    nextLength += segmentLength;
+                }
+            }
+            return sPoints;
         }
 
         public float GetRotationAngleAlongPath(IAnimatable animatable)
@@ -58,23 +95,30 @@ namespace BlazorGalaga.Services
             return new PointF(X, Y);
         }
 
-        public PointF getCubicBezierXYatPercent(BezierCurve curve, float percent)
+        public PointF getQuadraticBezierXYatPercent(BezierCurve curve, float percent)
         {
-
-            percent /= 100;
-
-            var x = CubicN(percent, curve.StartPoint.X, curve.ControlPoint1.X, curve.ControlPoint2.X, curve.EndPoint.X);
-            var y = CubicN(percent, curve.StartPoint.Y, curve.ControlPoint1.Y, curve.ControlPoint2.Y, curve.EndPoint.Y);
+            var x = MathF.Pow(1 - percent, 2) * curve.StartPoint.X + 2 * (1 - percent) * percent * curve.ControlPoint1.X + MathF.Pow(percent, 2) * curve.EndPoint.X;
+            var y = MathF.Pow(1 - percent, 2) * curve.StartPoint.Y + 2 * (1 - percent) * percent * curve.ControlPoint1.Y + MathF.Pow(percent, 2) * curve.EndPoint.Y;
 
             return new PointF(x, y);
         }
 
-        // cubic helper formula at percent distance
-        private float CubicN(float percent, float a, float b, float c, float d)
+        public PointF getCubicBezierXYatPercent(BezierCurve curve, float percent)
         {
-            var t2 = percent * percent;
-            var t3 = t2 * percent;
-            return a + (-a * 3 + percent * (3 * a - a * percent)) * percent + (3 * b + percent * (-6 * b + b * 3 * percent)) * percent + (c * 3 - c * 3 * percent) * t2 + d * t3;
+            percent /= 100;
+
+            var x = CubicPoint(percent, curve.StartPoint.X, curve.ControlPoint1.X, curve.ControlPoint2.X, curve.EndPoint.X);
+            var y = CubicPoint(percent, curve.StartPoint.Y, curve.ControlPoint1.Y, curve.ControlPoint2.Y, curve.EndPoint.Y);
+
+            return new PointF(x,y);
+        }
+
+        private float CubicPoint(float percent, float p1, float p2, float p3, float p4)
+        {
+            var b = (1 - percent);
+            return MathF.Pow(b, 3) * p1 + 3 * MathF.Pow(b, 2)
+                * percent * p2 + 3 * b * MathF.Pow(percent, 2)
+                * p3 + MathF.Pow(percent, 3) * p4;
         }
     }
 }
