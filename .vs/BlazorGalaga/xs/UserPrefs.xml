@@ -1,12 +1,12 @@
 ﻿<Properties StartupConfiguration="{202B6679-81B6-4D6C-83B3-0DC9DE1151AC}|Default">
   <MonoDevelop.Ide.ItemProperties.BlazorGalaga PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Models/Animation.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Static/KeyBoardHelper.cs">
     <Files>
-      <File FileName="BlazorGalaga/Pages/Index.razor.cs" Line="63" Column="50" />
-      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="141" Column="39" />
-      <File FileName="BlazorGalaga/Services/BezierCurveService.cs" Line="74" Column="23" />
-      <File FileName="BlazorGalaga/Static/BugFactory.cs" Line="52" Column="31" />
-      <File FileName="BlazorGalaga/Models/Animation.cs" Line="15" Column="27" />
+      <File FileName="BlazorGalaga/Pages/Index.razor.cs" Line="58" Column="39" />
+      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="28" Column="24" />
+      <File FileName="BlazorGalaga/Services/BezierCurveService.cs" Line="52" Column="44" />
+      <File FileName="BlazorGalaga/Static/BugFactory.cs" Line="54" Column="1" />
+      <File FileName="BlazorGalaga/Static/KeyBoardHelper.cs" Line="33" Column="83" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -14,9 +14,7 @@
           <Node name="BlazorGalaga" expanded="True">
             <Node name="BlazorGalaga" expanded="True">
               <Node name="Interfaces" expanded="True" />
-              <Node name="Models" expanded="True">
-                <Node name="Animation.cs" selected="True" />
-              </Node>
+              <Node name="Models" expanded="True" />
               <Node name="Pages" expanded="True">
                 <Node name="Index.razor" expanded="True" />
               </Node>

@@ -11,7 +11,7 @@ namespace BlazorGalaga.Services
 {
     public class AnimationService
     {
-        public List<Animation> Animations = new List<Animation>();
+        public List<Animatable> Animatables = new List<Animatable>();
         public Canvas2DContext CanvasCtx { get; set; }
 
         private BezierCurveService bezierCurveService;
@@ -25,7 +25,7 @@ namespace BlazorGalaga.Services
 
         public void InitAnimations()
         {
-            Animations.AddRange(BugFactory.CreateAnimation_BugIntro1());
+            Animatables.AddRange(BugFactory.CreateAnimation_BugIntro1());
 
             //var shipAnimation = new Animation() { Speed = 0 };
             //List<BezierCurve> paths2 = new List<BezierCurve>();
@@ -55,49 +55,73 @@ namespace BlazorGalaga.Services
             await CanvasCtx.FillRectAsync(0, 0, Constants.CanvasSize.Width, Constants.CanvasSize.Height);
         }
 
-        public void Animate(Animation animation)
+        public void Animate(Animatable animatable)
         {
-            if (animation.StartDelay > 0)
-            {
-                animation.StartDelay -= animation.Speed;
-                return;
-            }
 
-            animation.Percent += animation.Speed;
+            if (animatable.CurPathPointIndex > 0)
+                animatable.PevLocation = animatable.PathPoints[animatable.CurPathPointIndex - 1];
 
-            if (animation.Percent < 0)
+            animatable.Location = animatable.PathPoints[animatable.CurPathPointIndex];
+
+            if (animatable.CurPathPointIndex < animatable.PathPoints.Count)
+                animatable.NextLocation = animatable.PathPoints[animatable.CurPathPointIndex + 1];
+
+            animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
+
+            animatable.CurPathPointIndex += animatable.Speed;
+
+            if (animatable.CurPathPointIndex > animatable.PathPoints.Count-1)
             {
-                animation.Percent = 0;
-                if (animation.LoopBack) animation.Speed *= -1;
+                //this stops the animation
+                animatable.CurPathPointIndex -= animatable.Speed;
+                if (animatable.LoopBack) animatable.Speed *= -1;
             }
-            else if (animation.Percent > 100)
+            if (animatable.CurPathPointIndex < 0)
             {
-                animation.Percent = 100;
-                if (animation.LoopBack) animation.Speed *= -1;
-            };
+                //this stops the animation
+                animatable.CurPathPointIndex = 0;
+                if (animatable.LoopBack) animatable.Speed *= -1;
+            }
 
         }
 
         public void ComputePathPoints()
         {
-            foreach (var animation in Animations) {
-                foreach (var animatable in animation.Animatables)
+            int pointgranularity = 1; //the lower the more granular 
+
+            foreach (var animatable in Animatables)
+            {
+                if (animatable.Paths != null)
                 {
-                    if (animatable.Paths != null)
+                    foreach (BezierCurve path in animatable.Paths)
                     {
-                        foreach (BezierCurve path in animatable.Paths.OrderBy(a => a.StartPercent))
+                        bezierCurveService.DrawCurve(CanvasCtx, path);
+                        for (var percent = 0F; percent <= 100; percent+=.1F)
                         {
-                            bezierCurveService.DrawCurve(CanvasCtx, path);
-                            for (var percent = 0F; percent <= 100; percent+=.1F)
-                            {
-                                var point = bezierCurveService.getCubicBezierXYatPercent(path, percent);
-                                animation.PathPoints.Add(point);
-                            }
+                            var point = bezierCurveService.getCubicBezierXYatPercent(path, percent);
+                            animatable.PathPoints.Add(point);
                         }
                     }
+                    animatable.PathPoints = bezierCurveService.GetEvenlyDistributedPathPointsByLength(animatable.PathPoints, pointgranularity);
                 }
-                animation.PathPoints = bezierCurveService.GetEvenlyDistributedPathPointsByLength(animation.PathPoints, 10);
-                foreach (var p in animation.PathPoints)
+            }
+        }
+
+        public void Draw(Animatable animatable)
+        {
+            //http://jsfiddle.net/m1erickson/LumMX/
+
+            spriteService.DrawSprite(animatable.Sprite, animatable.Location, animatable.RotateAlongPath ? animatable.Rotation : 0);
+
+            if (animatable.DrawPath)
+            {
+                foreach(BezierCurve path in animatable.Paths)
+                    bezierCurveService.DrawCurve(CanvasCtx, path);
+            }
+
+            if (animatable.DrawPathPoints)
+            {
+                foreach (var p in animatable.PathPoints)
                 {
                     CanvasCtx.BeginPathAsync();
                     CanvasCtx.SetFillStyleAsync("yellow");
@@ -106,45 +130,7 @@ namespace BlazorGalaga.Services
                     CanvasCtx.ClosePathAsync();
                 }
             }
-        }
-
-        public void Draw(Animation animation)
-        {
-            //http://jsfiddle.net/m1erickson/LumMX/
-
-            foreach (var animatable in animation.Animatables)
-            {
-                if (animatable.Paths != null)
-                {
-                    foreach (BezierCurve path in animatable.Paths.OrderBy(a => a.StartPercent))
-                    {
-                        if (animation.Percent >= path.StartPercent && (animation.Percent < (path.StartPercent + path.PercentageOfPath)))
-                        {
-                            var animationpercent = ((animation.Percent - path.StartPercent) / path.PercentageOfPath) * 100;
-
-                            if (animatable.PathIsLine)
-                            {
-                                animatable.PevLocation = bezierCurveService.getLineXYatPercent(path, animationpercent - animation.Speed);
-                                animatable.Location = bezierCurveService.getLineXYatPercent(path, animationpercent);
-                                animatable.NextLocation = bezierCurveService.getLineXYatPercent(path, animationpercent + animation.Speed);
-                            }
-                            else
-                            {
-                                animatable.PevLocation = bezierCurveService.getCubicBezierXYatPercent(path, animationpercent - animation.Speed);
-                                animatable.Location = bezierCurveService.getCubicBezierXYatPercent(path, animationpercent);
-                                animatable.NextLocation = bezierCurveService.getCubicBezierXYatPercent(path, animationpercent + animation.Speed);
-                            }
-                        }
-                        if (animatable.DrawPath) bezierCurveService.DrawCurve(CanvasCtx, path);
-                    }
-                }
-
-                if (animatable.Sprite != null)
-                {
-                    var rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
-                    spriteService.DrawSprite(animatable.Sprite, animatable.Location, animatable.RotateAlongPath ? rotation : 0);
-                }
-            }
+            
         }
     }
 }

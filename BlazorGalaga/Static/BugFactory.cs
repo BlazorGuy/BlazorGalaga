@@ -8,19 +8,19 @@ namespace BlazorGalaga.Static
 {
     public static class BugFactory
     {
-        public static List<Animation> CreateAnimation_BugIntro1()
+        public static List<Animatable> CreateAnimation_BugIntro1()
         {
-            List<Animation> animations = new List<Animation>();
+            List<Animatable> animatables = new List<Animatable>();
 
             for (int i = 0; i <= 4; i+=5)
             {
-                animations.Add(CreateAnimatable_BugIntro1(i));
+                animatables.Add(CreateAnimatable_BugIntro1(i));
             }
 
-            return animations;
+            return animatables;
         }
 
-        public static Animation CreateAnimatable_BugIntro1(int startdelay)
+        public static Animatable CreateAnimatable_BugIntro1(int startdelay)
         {
             var w = Constants.CanvasSize.Width;
             var h = Constants.CanvasSize.Height;
@@ -33,8 +33,6 @@ namespace BlazorGalaga.Static
                 EndPoint = new PointF(w - (w / 4), h / 2),
                 ControlPoint1 = new PointF(w / 2 - 10, h / 4),
                 ControlPoint2 = new PointF(w - (w / 4), h / 4),
-                StartPercent = 0,
-                PercentageOfPath = 50
             });
 
             paths.Add(new BezierCurve()
@@ -43,25 +41,18 @@ namespace BlazorGalaga.Static
                 EndPoint = new PointF(w - (w / 4), h / 5),
                 ControlPoint1 = new PointF(w - (w / 4), h - 100),
                 ControlPoint2 = new PointF(100, h - 100),
-                StartPercent = 50,
-                PercentageOfPath = 50
             });
 
             var bug = new Bug()
             {
                 Paths = paths,
-                DrawPath = true,
+                DrawPath = false,
                 RotateAlongPath = true,
+                Speed=10,
+                LoopBack = true
             };
 
-            var bugAnimation = new Animation() {
-                Speed = 1,
-                LoopBack = false,
-                StartDelay = startdelay
-            };
-
-            bugAnimation.Animatables.Add(bug);
-            return bugAnimation;
+            return bug;
 
         }
     }

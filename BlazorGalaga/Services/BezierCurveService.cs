@@ -41,6 +41,18 @@ namespace BlazorGalaga.Services
 
         }
 
+        public async void DrawPathPoints(Canvas2DContext ctx,List<PointF> points)
+        {
+            foreach (var p in points)
+            {
+                await ctx.BeginPathAsync();
+                await ctx.SetFillStyleAsync("yellow");
+                await ctx.ArcAsync(p.X, p.Y, 3, 0, Math.PI * 2);
+                await ctx.FillAsync();
+                await ctx.ClosePathAsync();
+            }
+        }
+
         public List<PointF> GetEvenlyDistributedPathPointsByLength(List<PointF> points, float segmentLength)
         {
             List<float> lengths = new List<float>();

@@ -5,17 +5,8 @@ using BlazorGalaga.Interfaces;
 
 namespace BlazorGalaga.Models
 {
-    public class Bug : IAnimatable
+    public class Bug : Animatable, IAnimatable
     {
-        public PointF Location { get; set; }
-        public PointF PevLocation { get; set; }
-        public PointF NextLocation { get; set; }
-        public List<BezierCurve> Paths { get; set; }
-        public bool DrawPath { get; set; }
-        public Sprite Sprite { get; set; }
-        public bool PathIsLine { get; set; }
-        public bool RotateAlongPath { get; set; }
-
         public Bug()
         {
             Sprite = new Sprite(Sprite.SpriteTypes.BlueBug);

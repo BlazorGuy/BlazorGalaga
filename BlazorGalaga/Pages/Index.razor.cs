@@ -20,7 +20,7 @@ namespace BlazorGalaga.Pages
         protected BECanvasComponent _canvasReference;
         protected ElementReference spriteSheet;
 
-        private static Animation shipAnimation;
+        private static Animatable shipAnimatable;
 
         [Inject]
         public BezierCurveService bezierCurveService { get; set; }
@@ -42,37 +42,26 @@ namespace BlazorGalaga.Pages
             animationService.CanvasCtx = ctx;
 
             animationService.InitAnimations();
-            //animationService.ComputePathPoints();
+            animationService.ComputePathPoints();
 
-            shipAnimation = animationService.Animations.FirstOrDefault(
-                a=>a.Animatables.Any(
-                        b=>b.Sprite.SpriteType == Sprite.SpriteTypes.Ship
-                    )
-                );
+            shipAnimatable = animationService.Animatables.FirstOrDefault(a => a.Sprite.SpriteType == Sprite.SpriteTypes.Ship);
 
             await JsRuntime.InvokeAsync<object>("initFromBlazor", DotNetObjectReference.Create(this));
 
         }
 
-        bool exit;
-
         [JSInvokable]
         public async ValueTask GameLoop()
         {
-            if (exit) return;
-
             await animationService.ResetCanvas();
 
-            animationService.ComputePathPoints();
-            exit = true;
+            KeyBoardHelper.ControlShip(shipAnimatable);
 
-            //KeyBoardHelper.ControlShip(shipAnimation);
-
-            //foreach (Animation a in animationService.Animations)
-            //{
-            //    animationService.Animate(a);
-            //    animationService.Draw(a);
-            //}
+            foreach (Animatable a in animationService.Animatables)
+            {
+                animationService.Animate(a);
+                animationService.Draw(a);
+            }
         }
 
     }
