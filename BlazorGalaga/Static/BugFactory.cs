@@ -8,9 +8,9 @@ namespace BlazorGalaga.Static
 {
     public static class BugFactory
     {
-        public static List<Animatable> CreateAnimation_BugIntro1()
+        public static List<IAnimatable> CreateAnimation_BugIntro1()
         {
-            List<Animatable> animatables = new List<Animatable>();
+            List<IAnimatable> animatables = new List<IAnimatable>();
 
             for (int i = 0; i <= 4; i+=5)
             {
@@ -20,7 +20,7 @@ namespace BlazorGalaga.Static
             return animatables;
         }
 
-        public static Animatable CreateAnimatable_BugIntro1(int startdelay)
+        public static IAnimatable CreateAnimatable_BugIntro1(int startdelay)
         {
             var w = Constants.CanvasSize.Width;
             var h = Constants.CanvasSize.Height;

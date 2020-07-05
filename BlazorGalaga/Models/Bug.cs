@@ -5,7 +5,7 @@ using BlazorGalaga.Interfaces;
 
 namespace BlazorGalaga.Models
 {
-    public class Bug : Animatable, IAnimatable
+    public class Bug : AnimatableBase
     {
         public Bug()
         {

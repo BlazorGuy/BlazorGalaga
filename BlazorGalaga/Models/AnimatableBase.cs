@@ -5,7 +5,7 @@ using BlazorGalaga.Interfaces;
 
 namespace BlazorGalaga.Models
 {
-    public class Animatable : IAnimatable
+    public abstract class AnimatableBase : IAnimatable
     {
         public PointF Location { get; set; }
         public PointF PevLocation { get; set; }
@@ -22,7 +22,7 @@ namespace BlazorGalaga.Models
         public int Speed { get; set; }
         public bool LoopBack { get; set; }
 
-        public Animatable()
+        public AnimatableBase()
         {
             PathPoints = new List<PointF>();
         }

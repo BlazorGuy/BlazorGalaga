@@ -5,7 +5,7 @@ using BlazorGalaga.Interfaces;
 
 namespace BlazorGalaga.Models
 {
-    public class Ship : Animatable, IAnimatable
+    public class Ship : AnimatableBase
     {
         public Ship() 
         {

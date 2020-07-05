@@ -6,12 +6,13 @@ using Blazor.Extensions.Canvas.Canvas2D;
 using BlazorGalaga.Models;
 using BlazorGalaga.Static;
 using System.Linq;
+using BlazorGalaga.Interfaces;
 
 namespace BlazorGalaga.Services
 {
     public class AnimationService
     {
-        public List<Animatable> Animatables = new List<Animatable>();
+        public List<IAnimatable> Animatables = new List<IAnimatable>();
         public Canvas2DContext CanvasCtx { get; set; }
 
         private BezierCurveService bezierCurveService;
@@ -55,7 +56,7 @@ namespace BlazorGalaga.Services
             await CanvasCtx.FillRectAsync(0, 0, Constants.CanvasSize.Width, Constants.CanvasSize.Height);
         }
 
-        public void Animate(Animatable animatable)
+        public void Animate(IAnimatable animatable)
         {
 
             if (animatable.CurPathPointIndex > 0)
@@ -107,7 +108,7 @@ namespace BlazorGalaga.Services
             }
         }
 
-        public void Draw(Animatable animatable)
+        public void Draw(IAnimatable animatable)
         {
             //http://jsfiddle.net/m1erickson/LumMX/
 
@@ -121,14 +122,7 @@ namespace BlazorGalaga.Services
 
             if (animatable.DrawPathPoints)
             {
-                foreach (var p in animatable.PathPoints)
-                {
-                    CanvasCtx.BeginPathAsync();
-                    CanvasCtx.SetFillStyleAsync("yellow");
-                    CanvasCtx.ArcAsync(p.X, p.Y, 3, 0, Math.PI * 2);
-                    CanvasCtx.FillAsync();
-                    CanvasCtx.ClosePathAsync();
-                }
+                bezierCurveService.DrawPathPoints(CanvasCtx, animatable.PathPoints);
             }
             
         }

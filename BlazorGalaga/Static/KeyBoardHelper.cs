@@ -39,17 +39,17 @@ namespace BlazorGalaga.Static
             }
         }
 
-        public static void ControlShip(Animatable shipanimatable)
+        public static void ControlShip(Ship ship)
         {
 
             if (KeyDown == Constants.ArrowLeft)
-                shipanimatable.Speed = Constants.ShipMoveSpeed * -1;
+                ship.Speed = Constants.ShipMoveSpeed * -1;
 
             if (KeyDown == Constants.ArrowRight)
-                shipanimatable.Speed = Constants.ShipMoveSpeed;
+                ship.Speed = Constants.ShipMoveSpeed;
 
             if (KeyDown == string.Empty)
-                shipanimatable.Speed = 0;
+                ship.Speed = 0;
         }
     }
 }
