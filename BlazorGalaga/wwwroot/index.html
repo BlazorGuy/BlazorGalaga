@@ -45,16 +45,18 @@
 
     };
 
-    let framesPerSecond = 60;
+    //let framesPerSecond = 60;
 
     function gameLoop() {
-        setTimeout(function () {
+        window.requestAnimationFrame(gameLoop);
+        window.instance.invokeMethodAsync('GameLoop');
+        //setTimeout(function () {
 
-            window.requestAnimationFrame(gameLoop);
+        //    window.requestAnimationFrame(gameLoop);
 
-            window.instance.invokeMethodAsync('GameLoop');
+        //    window.instance.invokeMethodAsync('GameLoop');
 
-        }, 1000 / framesPerSecond);
+        //}, 1000 / framesPerSecond);
     }
 
     function resizeCanvas(){

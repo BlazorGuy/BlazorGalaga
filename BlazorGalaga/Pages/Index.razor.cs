@@ -18,8 +18,6 @@ namespace BlazorGalaga.Pages
     public partial class Index: ComponentBase
     {
         private Canvas2DContext ctx;
-        private long framesRendered = 0;
-        private Stopwatch timer = new Stopwatch();
 
         protected BECanvasComponent _canvasReference;
         protected ElementReference spriteSheet;
@@ -57,25 +55,17 @@ namespace BlazorGalaga.Pages
         [JSInvokable]
         public async ValueTask GameLoop()
         {
-            framesRendered += 1;
-            if (!timer.IsRunning) timer.Start();
+            Utils.LogFPS();
 
-            if (timer.ElapsedMilliseconds>=1000)
+            await animationService.ResetCanvas();
+
+            KeyBoardHelper.ControlShip(ship);
+
+            foreach (IAnimatable a in animationService.Animatables)
             {
-                Console.WriteLine("FPS: " + framesRendered);
-                framesRendered = 0;
-                timer.Restart();
+                animationService.Animate(a);
+                animationService.Draw(a);
             }
-
-            //await animationService.ResetCanvas();
-
-            //KeyBoardHelper.ControlShip(ship);
-
-            //foreach (IAnimatable a in animationService.Animatables)
-            //{
-            //    animationService.Animate(a);
-            //    animationService.Draw(a);
-            //}
         }
 
     }

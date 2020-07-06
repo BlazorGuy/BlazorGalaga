@@ -52,8 +52,8 @@ namespace BlazorGalaga.Services
         public async Task ResetCanvas()
         {
             await CanvasCtx.ClearRectAsync(0, 0, Constants.CanvasSize.Width, Constants.CanvasSize.Height);
-            await CanvasCtx.SetFillStyleAsync("#000000");
-            await CanvasCtx.FillRectAsync(0, 0, Constants.CanvasSize.Width, Constants.CanvasSize.Height);
+            //await CanvasCtx.SetFillStyleAsync("#000000");
+            //await CanvasCtx.FillRectAsync(0, 0, Constants.CanvasSize.Width, Constants.CanvasSize.Height);
         }
 
         public void Animate(IAnimatable animatable)
