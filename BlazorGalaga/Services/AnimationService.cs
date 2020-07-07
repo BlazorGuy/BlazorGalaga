@@ -116,7 +116,10 @@ namespace BlazorGalaga.Services
         public void Draw()
         {
 
+            spriteService.CanvasCtx.BeginBatchAsync();
+
             foreach (IAnimatable animatable in Animatables) {
+
                 spriteService.DrawSprite(animatable.Sprite, animatable.Location, animatable.RotateAlongPath ? animatable.Rotation : 0);
 
                 if (animatable.DrawPath)
@@ -136,7 +139,8 @@ namespace BlazorGalaga.Services
                     bezierCurveService.DrawPathPoints(CanvasCtx, animatable.PathPoints);
                 }
             }
-            
+
+            spriteService.CanvasCtx.EndBatchAsync();
         }
     }
 }

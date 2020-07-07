@@ -44,6 +44,7 @@ namespace BlazorGalaga.Pages
             bufferctx = await _canvasReference.CreateCanvas2DAsync();
 
             spriteService.CanvasCtx = ctx;
+            spriteService.BufferCanvasCtx = bufferctx;
             spriteService.SpriteSheet = spriteSheet;
 
             animationService.CanvasCtx = ctx;
