@@ -56,34 +56,34 @@ namespace BlazorGalaga.Services
             //await CanvasCtx.FillRectAsync(0, 0, Constants.CanvasSize.Width, Constants.CanvasSize.Height);
         }
 
-        public void Animate(IAnimatable animatable)
+        public void Animate()
         {
+            foreach (IAnimatable animatable in Animatables) {
+                if (animatable.CurPathPointIndex > 0)
+                    animatable.PevLocation = animatable.PathPoints[animatable.CurPathPointIndex - 1];
 
-            if (animatable.CurPathPointIndex > 0)
-                animatable.PevLocation = animatable.PathPoints[animatable.CurPathPointIndex - 1];
+                animatable.Location = animatable.PathPoints[animatable.CurPathPointIndex];
 
-            animatable.Location = animatable.PathPoints[animatable.CurPathPointIndex];
+                if (animatable.CurPathPointIndex < animatable.PathPoints.Count)
+                    animatable.NextLocation = animatable.PathPoints[animatable.CurPathPointIndex + 1];
 
-            if (animatable.CurPathPointIndex < animatable.PathPoints.Count)
-                animatable.NextLocation = animatable.PathPoints[animatable.CurPathPointIndex + 1];
+                animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
 
-            animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
+                animatable.CurPathPointIndex += animatable.Speed;
 
-            animatable.CurPathPointIndex += animatable.Speed;
-
-            if (animatable.CurPathPointIndex > animatable.PathPoints.Count-1)
-            {
-                //this stops the animation
-                animatable.CurPathPointIndex -= animatable.Speed;
-                if (animatable.LoopBack) animatable.Speed *= -1;
+                if (animatable.CurPathPointIndex > animatable.PathPoints.Count - 1)
+                {
+                    //this stops the animation
+                    animatable.CurPathPointIndex -= animatable.Speed;
+                    if (animatable.LoopBack) animatable.Speed *= -1;
+                }
+                if (animatable.CurPathPointIndex < 0)
+                {
+                    //this stops the animation
+                    animatable.CurPathPointIndex = 0;
+                    if (animatable.LoopBack) animatable.Speed *= -1;
+                }
             }
-            if (animatable.CurPathPointIndex < 0)
-            {
-                //this stops the animation
-                animatable.CurPathPointIndex = 0;
-                if (animatable.LoopBack) animatable.Speed *= -1;
-            }
-
         }
 
         public void ComputePathPoints()
@@ -108,21 +108,22 @@ namespace BlazorGalaga.Services
             }
         }
 
-        public void Draw(IAnimatable animatable)
+        public void Draw()
         {
-            //http://jsfiddle.net/m1erickson/LumMX/
 
-            spriteService.DrawSprite(animatable.Sprite, animatable.Location, animatable.RotateAlongPath ? animatable.Rotation : 0);
+            foreach (IAnimatable animatable in Animatables) {
+                spriteService.DrawSprite(animatable.Sprite, animatable.Location, animatable.RotateAlongPath ? animatable.Rotation : 0);
 
-            if (animatable.DrawPath)
-            {
-                foreach(BezierCurve path in animatable.Paths)
-                    bezierCurveService.DrawCurve(CanvasCtx, path);
-            }
+                if (animatable.DrawPath)
+                {
+                    foreach (BezierCurve path in animatable.Paths)
+                        bezierCurveService.DrawCurve(CanvasCtx, path);
+                }
 
-            if (animatable.DrawPathPoints)
-            {
-                bezierCurveService.DrawPathPoints(CanvasCtx, animatable.PathPoints);
+                if (animatable.DrawPathPoints)
+                {
+                    bezierCurveService.DrawPathPoints(CanvasCtx, animatable.PathPoints);
+                }
             }
             
         }

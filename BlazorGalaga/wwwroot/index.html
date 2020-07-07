@@ -45,6 +45,10 @@
 
     };
 
+    window.logDiagnosticInfo = function(diagnosticinfo) {
+        document.getElementById("divDiagnostics").innerHTML = diagnosticinfo;
+    }
+
     //let framesPerSecond = 60;
 
     function gameLoop() {

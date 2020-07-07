@@ -17,7 +17,10 @@ namespace BlazorGalaga.Pages
 {
     public partial class Index: ComponentBase
     {
+        public string DiagnosticInfo = "";
+
         private Canvas2DContext ctx;
+        private bool stopGameLoop;
 
         protected BECanvasComponent _canvasReference;
         protected ElementReference spriteSheet;
@@ -35,7 +38,6 @@ namespace BlazorGalaga.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-
             ctx = await _canvasReference.CreateCanvas2DAsync();
 
             spriteService.CanvasCtx = ctx;
@@ -52,19 +54,50 @@ namespace BlazorGalaga.Pages
 
         }
 
+        private DateTime lastTime = DateTime.Now;
+        private int updateInterval = 600;
+
         [JSInvokable]
-        public async ValueTask GameLoop()
+        public async void GameLoop()
         {
-            Utils.LogFPS();
+            if (stopGameLoop) return;
 
-            await animationService.ResetCanvas();
-
-            KeyBoardHelper.ControlShip(ship);
-
-            foreach (IAnimatable a in animationService.Animatables)
+            try
             {
-                animationService.Animate(a);
-                animationService.Draw(a);
+                await JsRuntime.InvokeAsync<object>("logDiagnosticInfo", Utils.DiagnosticInfo);
+
+
+
+                var currentTime = DateTime.Now;
+
+                if ((currentTime - lastTime).TotalMilliseconds > 16)
+                {
+                    lastTime = currentTime; //we're too far behind, catch up
+                }
+                int updatesNeeded = (int)(currentTime - lastTime).TotalMilliseconds / updateInterval;
+                Utils.dOut("updatesNeeded", updatesNeeded);
+                for (int i = 0; i < updatesNeeded; i++)
+                {
+                    animationService.Animate();
+                    lastTime.AddMilliseconds(updateInterval);
+                }
+                animationService.Draw();
+
+
+
+
+                Utils.LogFPS();
+
+                await animationService.ResetCanvas();
+
+                KeyBoardHelper.ControlShip(ship);
+            }
+            catch (Exception ex)
+            {
+                stopGameLoop = true;
+                Utils.dOut("Exception", ex.Message + "<br/>" + ex.StackTrace);
+                await JsRuntime.InvokeAsync<object>("logDiagnosticInfo", Utils.DiagnosticInfo);
+                throw ex;
             }
         }
 
