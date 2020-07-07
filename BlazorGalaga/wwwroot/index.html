@@ -51,9 +51,9 @@
 
     //let framesPerSecond = 60;
 
-    function gameLoop() {
+    function gameLoop(timeStamp) {
         window.requestAnimationFrame(gameLoop);
-        window.instance.invokeMethodAsync('GameLoop');
+        window.instance.invokeMethodAsync('GameLoop', timeStamp);
         //setTimeout(function () {
 
         //    window.requestAnimationFrame(gameLoop);

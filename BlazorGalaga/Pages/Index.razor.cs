@@ -54,11 +54,12 @@ namespace BlazorGalaga.Pages
 
         }
 
-        private DateTime lastTime = DateTime.Now;
-        private int updateInterval = 600;
+        private int targetTicksPerFrame = (1000 / 60);
+        private float delta;
+        private float lastTimeStamp;
 
         [JSInvokable]
-        public async void GameLoop()
+        public async void GameLoop(float timeStamp)
         {
             if (stopGameLoop) return;
 
@@ -66,25 +67,17 @@ namespace BlazorGalaga.Pages
             {
                 await JsRuntime.InvokeAsync<object>("logDiagnosticInfo", Utils.DiagnosticInfo);
 
+                delta += (int)(timeStamp - lastTimeStamp);
+                lastTimeStamp = timeStamp;
 
-
-                var currentTime = DateTime.Now;
-
-                if ((currentTime - lastTime).TotalMilliseconds > 16)
+                Utils.dOut("delta", delta);
+                while(delta >= targetTicksPerFrame)
                 {
-                    lastTime = currentTime; //we're too far behind, catch up
-                }
-                int updatesNeeded = (int)(currentTime - lastTime).TotalMilliseconds / updateInterval;
-                Utils.dOut("updatesNeeded", updatesNeeded);
-                for (int i = 0; i < updatesNeeded; i++)
-                {
+                    await animationService.ResetCanvas();
                     animationService.Animate();
-                    lastTime.AddMilliseconds(updateInterval);
+                    animationService.Draw();
+                    delta -= targetTicksPerFrame;
                 }
-                animationService.Draw();
-
-
-
 
                 Utils.LogFPS();
 
