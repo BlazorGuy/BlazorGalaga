@@ -12,6 +12,7 @@ namespace BlazorGalaga.Services
     public class SpriteService
     {
         public Canvas2DContext CanvasCtx { get; set; }
+        public Canvas2DContext BufferCanvasCtx { get; set; }
         public ElementReference SpriteSheet { get; set; }
         public List<Sprite> Sprites = new List<Sprite>();
 

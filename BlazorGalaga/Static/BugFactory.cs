@@ -12,9 +12,9 @@ namespace BlazorGalaga.Static
         {
             List<IAnimatable> animatables = new List<IAnimatable>();
 
-            for (int i = 0; i <= 4; i+=5)
+            for (int i = 0; i <= 7; i++)
             {
-                animatables.Add(CreateAnimatable_BugIntro1(i));
+                animatables.Add(CreateAnimatable_BugIntro1(i*60));
             }
 
             return animatables;
@@ -46,10 +46,12 @@ namespace BlazorGalaga.Static
             var bug = new Bug()
             {
                 Paths = paths,
-                DrawPath = false,
+                //DrawPath = true,
+                //DrawControlLines = true,
                 RotateAlongPath = true,
                 Speed=10,
-                LoopBack = true
+                LoopBack = true,
+                StartDelay = startdelay
             };
 
             return bug;

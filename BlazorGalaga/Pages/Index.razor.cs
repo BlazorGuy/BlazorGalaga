@@ -20,9 +20,11 @@ namespace BlazorGalaga.Pages
         public string DiagnosticInfo = "";
 
         private Canvas2DContext ctx;
+        private Canvas2DContext bufferctx;
         private bool stopGameLoop;
 
         protected BECanvasComponent _canvasReference;
+        protected BECanvasComponent _buffercanvasReference;
         protected ElementReference spriteSheet;
 
         private static Ship ship;
@@ -39,6 +41,7 @@ namespace BlazorGalaga.Pages
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             ctx = await _canvasReference.CreateCanvas2DAsync();
+            bufferctx = await _canvasReference.CreateCanvas2DAsync();
 
             spriteService.CanvasCtx = ctx;
             spriteService.SpriteSheet = spriteSheet;
@@ -67,6 +70,7 @@ namespace BlazorGalaga.Pages
             {
                 await JsRuntime.InvokeAsync<object>("logDiagnosticInfo", Utils.DiagnosticInfo);
 
+                //Start Animation Logic
                 delta += (int)(timeStamp - lastTimeStamp);
                 lastTimeStamp = timeStamp;
 
@@ -78,10 +82,9 @@ namespace BlazorGalaga.Pages
                     animationService.Draw();
                     delta -= targetTicksPerFrame;
                 }
+                //End Animation Logic
 
                 Utils.LogFPS();
-
-                await animationService.ResetCanvas();
 
                 KeyBoardHelper.ControlShip(ship);
             }

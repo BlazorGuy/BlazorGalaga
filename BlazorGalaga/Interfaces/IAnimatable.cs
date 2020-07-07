@@ -22,6 +22,8 @@ namespace BlazorGalaga.Interfaces
         public float Rotation { get; set; }
         public int Speed { get; set; }
         public bool LoopBack { get; set; }
+        public bool DrawControlLines { get; set; }
+        public int StartDelay { get; set; }
 
     }
 }

@@ -24,6 +24,5 @@
     <Folder Include="Models\" />
     <Folder Include="Services\" />
     <Folder Include="Interfaces\" />
-    <Folder Include="Static\" />
   </ItemGroup>
 </Project>

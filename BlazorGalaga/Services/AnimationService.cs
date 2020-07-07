@@ -59,6 +59,11 @@ namespace BlazorGalaga.Services
         public void Animate()
         {
             foreach (IAnimatable animatable in Animatables) {
+                if (animatable.StartDelay > 0)
+                {
+                    animatable.CurPathPointIndex = animatable.StartDelay;
+                    animatable.StartDelay = 0;
+                }
                 if (animatable.CurPathPointIndex > 0)
                     animatable.PevLocation = animatable.PathPoints[animatable.CurPathPointIndex - 1];
 
@@ -118,6 +123,12 @@ namespace BlazorGalaga.Services
                 {
                     foreach (BezierCurve path in animatable.Paths)
                         bezierCurveService.DrawCurve(CanvasCtx, path);
+                }
+
+                if (animatable.DrawControlLines)
+                {
+                    foreach (BezierCurve path in animatable.Paths)
+                        bezierCurveService.DrawCurveControlLines(CanvasCtx, path);
                 }
 
                 if (animatable.DrawPathPoints)
