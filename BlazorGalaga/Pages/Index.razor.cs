@@ -78,7 +78,6 @@ namespace BlazorGalaga.Pages
                 Utils.dOut("delta", delta);
                 while(delta >= targetTicksPerFrame)
                 {
-                    await animationService.ResetCanvas();
                     animationService.Animate();
                     animationService.Draw();
                     delta -= targetTicksPerFrame;

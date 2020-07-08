@@ -1491,30 +1491,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\bcollins\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "/Users/bcollins/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\BlazorGalaga.csproj",
+      "projectUniqueName": "/Users/bcollins/Projects/BlazorGalaga/BlazorGalaga/BlazorGalaga.csproj",
       "projectName": "BlazorGalaga",
-      "projectPath": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\BlazorGalaga.csproj",
-      "packagesPath": "C:\\Users\\bcollins\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\",
+      "projectPath": "/Users/bcollins/Projects/BlazorGalaga/BlazorGalaga/BlazorGalaga.csproj",
+      "packagesPath": "/Users/bcollins/.nuget/packages/",
+      "outputPath": "/Users/bcollins/Projects/BlazorGalaga/BlazorGalaga/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\bcollins\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/bcollins/.config/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netstandard2.1"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -1569,7 +1563,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.301/RuntimeIdentifierGraph.json"
       }
     }
   }

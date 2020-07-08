@@ -46,8 +46,8 @@ namespace BlazorGalaga.Static
             var bug = new Bug()
             {
                 Paths = paths,
-                //DrawPath = true,
-                //DrawControlLines = true,
+                DrawPath = true,
+                DrawControlLines = true,
                 RotateAlongPath = true,
                 Speed=10,
                 LoopBack = true,

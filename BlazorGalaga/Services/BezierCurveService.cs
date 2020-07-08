@@ -25,7 +25,7 @@ namespace BlazorGalaga.Services
 
             await ctx.BeginPathAsync();
             await ctx.SetFillStyleAsync("yellow");
-            await ctx.ArcAsync(curve.EndPoint.X, curve.EndPoint.Y, 5, 0, Math.PI*2);
+            await ctx.ArcAsync(curve.EndPoint.X, curve.EndPoint.Y, 5, 0, Math.PI * 2);
             await ctx.FillAsync();
 
         }
