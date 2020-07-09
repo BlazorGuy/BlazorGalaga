@@ -47,8 +47,6 @@ namespace BlazorGalaga.Pages
             spriteService.BufferCanvasCtx = bufferctx;
             spriteService.SpriteSheet = spriteSheet;
 
-            animationService.CanvasCtx = ctx;
-
             animationService.InitAnimations();
             animationService.ComputePathPoints();
 
@@ -62,8 +60,14 @@ namespace BlazorGalaga.Pages
         private float delta;
         private float lastTimeStamp;
 
+        public class GameLoopObject
+        {
+            public float timestamp { get; set; }
+            public bool editcurveschecked { get; set; }
+        }
+
         [JSInvokable]
-        public async void GameLoop(float timeStamp)
+        public async void GameLoop(GameLoopObject glo)
         {
             if (stopGameLoop) return;
 
@@ -71,22 +75,41 @@ namespace BlazorGalaga.Pages
             {
                 await JsRuntime.InvokeAsync<object>("logDiagnosticInfo", Utils.DiagnosticInfo);
 
+                var timeStamp = glo.timestamp;
+
                 //Start Animation Logic
                 delta += (int)(timeStamp - lastTimeStamp);
                 lastTimeStamp = timeStamp;
 
                 Utils.dOut("delta", delta);
-                while(delta >= targetTicksPerFrame)
+                while (delta >= targetTicksPerFrame)
                 {
                     animationService.Animate();
-                    animationService.Draw();
                     delta -= targetTicksPerFrame;
                 }
+                animationService.Draw();
                 //End Animation Logic
+
 
                 Utils.LogFPS();
 
-                CurveHelper.EditCurves(animationService);
+                if (glo.editcurveschecked)
+                {
+                    CurveEditorHelper.EditCurves(animationService);
+                    foreach (var animatable in animationService.Animatables)
+                    {
+                        animatable.DrawControlLines = true;
+                        animatable.DrawPath = true;
+                    }
+                }
+                else
+                {
+                    foreach(var animatable in animationService.Animatables)
+                    {
+                        animatable.DrawControlLines = false;
+                        animatable.DrawPath = false;
+                    }
+                }
 
                 KeyBoardHelper.ControlShip(ship);
             }

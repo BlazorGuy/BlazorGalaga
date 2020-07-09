@@ -43,11 +43,19 @@ namespace BlazorGalaga.Static
                 ControlPoint2 = new PointF(100, h - 100),
             });
 
+            paths.Add(new BezierCurve()
+            {
+                StartPoint = new PointF(w - (w / 4), h / 2),
+                EndPoint = new PointF(100, 188),
+                ControlPoint1 = new PointF(w - (w / 4), h - 100),
+                ControlPoint2 = new PointF(100, h - 100),
+            });
+
             var bug = new Bug()
             {
                 Paths = paths,
-                DrawPath = true,
-                DrawControlLines = true,
+                //DrawPath = true,
+                //DrawControlLines = true,
                 RotateAlongPath = true,
                 Speed=10,
                 LoopBack = true,

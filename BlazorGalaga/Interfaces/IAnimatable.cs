@@ -14,7 +14,6 @@ namespace BlazorGalaga.Interfaces
         public List<BezierCurve> Paths { get; set; }
         public bool RotateAlongPath { get; set; }
         public bool DrawPath { get; set; }
-        public bool DrawPathPoints { get; set; }
         public Sprite Sprite { get; set; }
         public bool PathIsLine { get; set; }
         public List<PointF> PathPoints { get; set; }

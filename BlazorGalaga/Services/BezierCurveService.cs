@@ -17,19 +17,19 @@ namespace BlazorGalaga.Services
         public async void DrawCurve(Canvas2DContext ctx, BezierCurve curve)
         {
             await ctx.BeginPathAsync();
-            await ctx.SetLineWidthAsync(2);
+            //await ctx.SetLineWidthAsync(2);
             await ctx.MoveToAsync(curve.StartPoint.X, curve.StartPoint.Y);
             await ctx.BezierCurveToAsync(curve.ControlPoint1.X,curve.ControlPoint1.Y,curve.ControlPoint2.X, curve.ControlPoint2.Y,curve.EndPoint.X,curve.EndPoint.Y);
-            await ctx.SetStrokeStyleAsync("white");
+            //await ctx.SetStrokeStyleAsync("white");
             await ctx.StrokeAsync();
 
             await ctx.BeginPathAsync();
-            await ctx.SetFillStyleAsync("yellow");
+            //await ctx.SetFillStyleAsync("yellow");
             await ctx.ArcAsync(curve.StartPoint.X, curve.StartPoint.Y, 5, 0, Math.PI * 2);
             await ctx.FillAsync();
 
             await ctx.BeginPathAsync();
-            await ctx.SetFillStyleAsync("yellow");
+            //await ctx.SetFillStyleAsync("yellow");
             await ctx.ArcAsync(curve.EndPoint.X, curve.EndPoint.Y, 5, 0, Math.PI * 2);
             await ctx.FillAsync();
 
@@ -41,36 +41,24 @@ namespace BlazorGalaga.Services
             await ctx.BeginPathAsync();
             await ctx.MoveToAsync(curve.ControlPoint1.X, curve.ControlPoint1.Y);
             await ctx.LineToAsync(curve.StartPoint.X, curve.StartPoint.Y);
-            await ctx.SetStrokeStyleAsync("red");
+            //await ctx.SetStrokeStyleAsync("red");
             await ctx.StrokeAsync();
 
             await ctx.BeginPathAsync();
-            await ctx.SetFillStyleAsync("yellow");
+            //await ctx.SetFillStyleAsync("yellow");
             await ctx.ArcAsync(curve.ControlPoint1.X, curve.ControlPoint1.Y, 5, 0, Math.PI * 2);
             await ctx.FillAsync();
 
             await ctx.BeginPathAsync();
             await ctx.MoveToAsync(curve.ControlPoint2.X, curve.ControlPoint2.Y);
             await ctx.LineToAsync(curve.EndPoint.X, curve.EndPoint.Y);
-            await ctx.SetStrokeStyleAsync("red");
+            //await ctx.SetStrokeStyleAsync("red");
             await ctx.StrokeAsync();
 
             await ctx.BeginPathAsync();
-            await ctx.SetFillStyleAsync("yellow");
+           // await ctx.SetFillStyleAsync("yellow");
             await ctx.ArcAsync(curve.ControlPoint2.X, curve.ControlPoint2.Y, 5, 0, Math.PI * 2);
             await ctx.FillAsync();
-        }
-
-        public async void DrawPathPoints(Canvas2DContext ctx,List<PointF> points)
-        {
-            foreach (var p in points)
-            {
-                await ctx.BeginPathAsync();
-                await ctx.SetFillStyleAsync("yellow");
-                await ctx.ArcAsync(p.X, p.Y, 3, 0, Math.PI * 2);
-                await ctx.FillAsync();
-                await ctx.ClosePathAsync();
-            }
         }
 
         public List<PointF> GetEvenlyDistributedPathPointsByLength(List<PointF> points, float segmentLength)

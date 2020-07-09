@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace BlazorGalaga.Static
 {
-    public static class CurveHelper
+    public static class CurveEditorHelper
     {
         private static bool isDraggingCurve;
 

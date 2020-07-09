@@ -13,7 +13,6 @@ namespace BlazorGalaga.Services
     public class AnimationService
     {
         public List<IAnimatable> Animatables = new List<IAnimatable>();
-        public Canvas2DContext CanvasCtx { get; set; }
 
         private BezierCurveService bezierCurveService;
         private SpriteService spriteService;
@@ -45,59 +44,60 @@ namespace BlazorGalaga.Services
             };
             Animatables.Add(ship);
 
+            spriteService.CanvasCtx.SetStrokeStyleAsync("white");
+            spriteService.CanvasCtx.SetFillStyleAsync("yellow");
+            spriteService.CanvasCtx.SetLineWidthAsync(2);
         }
 
-        public void ResetCanvas()
+        public void ResetCanvas(Canvas2DContext ctx)
         {
-            CanvasCtx.ClearRectAsync(0, 0, Constants.CanvasSize.Width, Constants.CanvasSize.Height);
-            //await CanvasCtx.SetFillStyleAsync("#000000");
-            //await CanvasCtx.FillRectAsync(0, 0, Constants.CanvasSize.Width, Constants.CanvasSize.Height);
+            ctx.ClearRectAsync(0, 0, Constants.CanvasSize.Width, Constants.CanvasSize.Height);
         }
 
         public void Animate()
         {
+            foreach (IAnimatable animatable in Animatables)
+            {
 
-                foreach (IAnimatable animatable in Animatables)
+                if (animatable.StartDelay > 0)
                 {
+                    animatable.CurPathPointIndex = animatable.StartDelay;
+                    animatable.StartDelay = 0;
+                }
 
-                    if (animatable.StartDelay > 0)
-                    {
-                        animatable.CurPathPointIndex = animatable.StartDelay;
-                        animatable.StartDelay = 0;
-                    }
+                try
+                {
+                    if (animatable.CurPathPointIndex - 1 > 0 && animatable.CurPathPointIndex - 1 < animatable.PathPoints.Count)
+                        animatable.PevLocation = animatable.PathPoints[animatable.CurPathPointIndex - 1];
 
-                    try
-                    {
-                        if (animatable.CurPathPointIndex > 0 && animatable.CurPathPointIndex < animatable.PathPoints.Count)
-                            animatable.PevLocation = animatable.PathPoints[animatable.CurPathPointIndex - 1];
-
+                    if (animatable.CurPathPointIndex > 0 && animatable.CurPathPointIndex  < animatable.PathPoints.Count)
                         animatable.Location = animatable.PathPoints[animatable.CurPathPointIndex];
 
-                        if (animatable.CurPathPointIndex < animatable.PathPoints.Count)
-                            animatable.NextLocation = animatable.PathPoints[animatable.CurPathPointIndex + 1];
-                    }
-                    catch (Exception ex)
-                    {
-                        Utils.dOut("Animation Error", ex.Message + "<br/>" + ex.StackTrace);
-                    }
-
-                    animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
-
-                    animatable.CurPathPointIndex += animatable.Speed;
-
-                    if (animatable.CurPathPointIndex > animatable.PathPoints.Count - 1)
-                    {
-                        //this stops the animation
-                        animatable.CurPathPointIndex -= animatable.Speed;
-                        if (animatable.LoopBack) animatable.Speed *= -1;
-                    }
-                    if (animatable.CurPathPointIndex < 0)
-                    {
-                        //this stops the animation
-                        animatable.CurPathPointIndex = 0;
-                        if (animatable.LoopBack) animatable.Speed *= -1;
-                    }
+                    if (animatable.CurPathPointIndex + 1 > 0 && animatable.CurPathPointIndex + 1 < animatable.PathPoints.Count)
+                        animatable.NextLocation = animatable.PathPoints[animatable.CurPathPointIndex + 1];
                 }
+                catch (Exception ex)
+                {
+                    Utils.dOut("Animation Error", ex.Message + "<br/>" + ex.StackTrace + "<br/>" + " animatable.CurPathPointIndex: " + animatable.CurPathPointIndex + " animatable.PathPoints.Count: " + animatable.PathPoints.Count);
+                }
+
+                animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
+
+                animatable.CurPathPointIndex += animatable.Speed;
+
+                if (animatable.CurPathPointIndex > animatable.PathPoints.Count - 1)
+                {
+                    //this stops the animation
+                    animatable.CurPathPointIndex -= animatable.Speed;
+                    if (animatable.LoopBack) animatable.Speed *= -1;
+                }
+                if (animatable.CurPathPointIndex < 0)
+                {
+                    //this stops the animation
+                    animatable.CurPathPointIndex = 0;
+                    if (animatable.LoopBack) animatable.Speed *= -1;
+                }
+            }
 
         }
 
@@ -132,27 +132,18 @@ namespace BlazorGalaga.Services
 
             spriteService.CanvasCtx.BeginBatchAsync();
 
-            ResetCanvas();
+            ResetCanvas(spriteService.CanvasCtx);
 
             foreach (IAnimatable animatable in Animatables) {
 
                 spriteService.DrawSprite(animatable.Sprite, animatable.Location, animatable.RotateAlongPath ? animatable.Rotation : 0);
 
-                if (animatable.DrawPath)
+                foreach (BezierCurve path in animatable.Paths)
                 {
-                    foreach (BezierCurve path in animatable.Paths)
-                        bezierCurveService.DrawCurve(CanvasCtx, path);
-                }
-
-                if (animatable.DrawControlLines)
-                {
-                    foreach (BezierCurve path in animatable.Paths)
-                        bezierCurveService.DrawCurveControlLines(CanvasCtx, path);
-                }
-
-                if (animatable.DrawPathPoints)
-                {
-                    bezierCurveService.DrawPathPoints(CanvasCtx, animatable.PathPoints);
+                    if (animatable.DrawPath)
+                        bezierCurveService.DrawCurve(spriteService.CanvasCtx, path);
+                    if (animatable.DrawControlLines)
+                        bezierCurveService.DrawCurveControlLines(spriteService.CanvasCtx, path);
                 }
             }
 

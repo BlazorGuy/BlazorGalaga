@@ -77,8 +77,17 @@
     //let framesPerSecond = 60;
 
     function gameLoop(timeStamp) {
+
         window.requestAnimationFrame(gameLoop);
-        window.instance.invokeMethodAsync('GameLoop', timeStamp);
+
+        var editcurveschecked = document.getElementById('EditCurves').checked;
+
+        var gameloopobject = {
+            editcurveschecked: editcurveschecked,
+            timestamp: timeStamp
+        };
+
+        window.instance.invokeMethodAsync('GameLoop', gameloopobject);
         //setTimeout(function () {
 
         //    window.requestAnimationFrame(gameLoop);

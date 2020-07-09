@@ -12,7 +12,6 @@ namespace BlazorGalaga.Models
         public PointF NextLocation { get; set; }
         public List<BezierCurve> Paths { get; set; }
         public bool DrawPath { get; set; }
-        public bool DrawPathPoints { get; set; }
         public Sprite Sprite { get; set; }
         public bool PathIsLine { get; set; }
         public bool RotateAlongPath { get; set; }
