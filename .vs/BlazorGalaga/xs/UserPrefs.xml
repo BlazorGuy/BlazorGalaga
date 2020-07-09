@@ -1,15 +1,15 @@
 ﻿<Properties StartupConfiguration="{202B6679-81B6-4D6C-83B3-0DC9DE1151AC}|New">
   <MonoDevelop.Ide.ItemProperties.BlazorGalaga PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Services/BezierCurveService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Pages/Index.razor">
     <Files>
-      <File FileName="BlazorGalaga/Pages/Index.razor.cs" Line="82" Column="42" />
-      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="35" Column="102" />
-      <File FileName="BlazorGalaga/Static/BugFactory.cs" Line="50" Column="41" />
-      <File FileName="BlazorGalaga/Static/Utils.cs" Line="48" Column="49" />
-      <File FileName="BlazorGalaga/wwwroot/index.html" Line="54" Column="35" />
-      <File FileName="BlazorGalaga/Program.cs" Line="31" Column="1" />
-      <File FileName="BlazorGalaga/Static/KeyBoardHelper.cs" Line="41" Column="1" />
-      <File FileName="BlazorGalaga/Services/BezierCurveService.cs" Line="1" Column="1" />
+      <File FileName="BlazorGalaga/Pages/Index.razor.cs" Line="85" Column="38" />
+      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="112" Column="21" />
+      <File FileName="BlazorGalaga/Static/BugFactory.cs" Line="38" Column="40" />
+      <File FileName="BlazorGalaga/Static/MouseHelper.cs" Line="16" Column="52" />
+      <File FileName="BlazorGalaga/Services/BezierCurveService.cs" Line="60" Column="74" />
+      <File FileName="BlazorGalaga/Static/Utils.cs" Line="63" Column="10" />
+      <File FileName="BlazorGalaga/Static/CurveHelper.cs" Line="20" Column="22" />
+      <File FileName="BlazorGalaga/Pages/Index.razor" Line="25" Column="6" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -19,12 +19,10 @@
               <Node name="Interfaces" expanded="True" />
               <Node name="Models" expanded="True" />
               <Node name="Pages" expanded="True">
-                <Node name="Index.razor" expanded="True" />
+                <Node name="Index.razor" expanded="True" selected="True" />
               </Node>
               <Node name="Properties" expanded="True" />
-              <Node name="Services" expanded="True">
-                <Node name="BezierCurveService.cs" selected="True" />
-              </Node>
+              <Node name="Services" expanded="True" />
               <Node name="Static" expanded="True" />
               <Node name="wwwroot" expanded="True" />
             </Node>

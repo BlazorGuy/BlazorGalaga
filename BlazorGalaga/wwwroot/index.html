@@ -43,7 +43,32 @@
 
         window.requestAnimationFrame(gameLoop);
 
+
+        var canvas = document.querySelector('canvas');
+        var ctx = canvas.getContext('2d');
+
+        canvas.addEventListener("mousemove", function (e) {
+            var pos = getMousePos(canvas, e);
+            DotNet.invokeMethodAsync('BlazorGalaga', 'OnMouseMove', pos);
+        });
+        canvas.addEventListener("mousedown", function (e) {
+            DotNet.invokeMethodAsync('BlazorGalaga', 'OnMouseDown');
+        });
+        canvas.addEventListener("mouseup", function (e) {
+            DotNet.invokeMethodAsync('BlazorGalaga', 'OnMouseUp');
+        });
     };
+
+    function getMousePos(canvas, evt) {
+        var rect = canvas.getBoundingClientRect(), // abs. size of element
+            scaleX = canvas.width / rect.width,    // relationship bitmap vs. element for X
+            scaleY = canvas.height / rect.height;  // relationship bitmap vs. element for Y
+
+        return {
+            x: (evt.clientX - rect.left) * scaleX,   // scale mouse coordinates after they have
+            y: (evt.clientY - rect.top) * scaleY     // been adjusted to be relative to element
+        }
+    }
 
     window.logDiagnosticInfo = function(diagnosticinfo) {
         document.getElementById("divDiagnostics").innerHTML = diagnosticinfo;

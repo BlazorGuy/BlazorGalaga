@@ -25,6 +25,11 @@ namespace BlazorGalaga.Services
 
             await ctx.BeginPathAsync();
             await ctx.SetFillStyleAsync("yellow");
+            await ctx.ArcAsync(curve.StartPoint.X, curve.StartPoint.Y, 5, 0, Math.PI * 2);
+            await ctx.FillAsync();
+
+            await ctx.BeginPathAsync();
+            await ctx.SetFillStyleAsync("yellow");
             await ctx.ArcAsync(curve.EndPoint.X, curve.EndPoint.Y, 5, 0, Math.PI * 2);
             await ctx.FillAsync();
 
@@ -40,10 +45,20 @@ namespace BlazorGalaga.Services
             await ctx.StrokeAsync();
 
             await ctx.BeginPathAsync();
+            await ctx.SetFillStyleAsync("yellow");
+            await ctx.ArcAsync(curve.ControlPoint1.X, curve.ControlPoint1.Y, 5, 0, Math.PI * 2);
+            await ctx.FillAsync();
+
+            await ctx.BeginPathAsync();
             await ctx.MoveToAsync(curve.ControlPoint2.X, curve.ControlPoint2.Y);
             await ctx.LineToAsync(curve.EndPoint.X, curve.EndPoint.Y);
             await ctx.SetStrokeStyleAsync("red");
             await ctx.StrokeAsync();
+
+            await ctx.BeginPathAsync();
+            await ctx.SetFillStyleAsync("yellow");
+            await ctx.ArcAsync(curve.ControlPoint2.X, curve.ControlPoint2.Y, 5, 0, Math.PI * 2);
+            await ctx.FillAsync();
         }
 
         public async void DrawPathPoints(Canvas2DContext ctx,List<PointF> points)

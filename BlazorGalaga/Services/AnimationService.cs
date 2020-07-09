@@ -68,7 +68,7 @@ namespace BlazorGalaga.Services
 
                     try
                     {
-                        if (animatable.CurPathPointIndex > 0)
+                        if (animatable.CurPathPointIndex > 0 && animatable.CurPathPointIndex < animatable.PathPoints.Count)
                             animatable.PevLocation = animatable.PathPoints[animatable.CurPathPointIndex - 1];
 
                         animatable.Location = animatable.PathPoints[animatable.CurPathPointIndex];
@@ -109,6 +109,7 @@ namespace BlazorGalaga.Services
             {
                 if (animatable.Paths != null)
                 {
+                    animatable.PathPoints = new List<PointF>();
                     foreach (BezierCurve path in animatable.Paths)
                     {
                         for (var percent = 0F; percent <= 100; percent+=.01F)

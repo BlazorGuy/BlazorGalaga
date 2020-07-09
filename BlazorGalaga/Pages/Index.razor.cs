@@ -86,6 +86,8 @@ namespace BlazorGalaga.Pages
 
                 Utils.LogFPS();
 
+                CurveHelper.EditCurves(animationService);
+
                 KeyBoardHelper.ControlShip(ship);
             }
             catch (Exception ex)

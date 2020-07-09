@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
@@ -40,6 +41,11 @@ namespace BlazorGalaga.Static
                 dOuts.FirstOrDefault(a => a.Key == key).Value = value.ToString();
             else
                 dOuts.Add(new dOutInfo() { Key = key, Value = value.ToString() });
+        }
+
+        public static double GetDistance(PointF point1, PointF point2)
+        {
+            return Math.Sqrt(Math.Pow((point2.X - point1.X), 2) + Math.Pow((point2.Y - point1.Y), 2));
         }
 
         public static void LogFPS()

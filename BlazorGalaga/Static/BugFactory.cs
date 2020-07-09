@@ -12,7 +12,7 @@ namespace BlazorGalaga.Static
         {
             List<IAnimatable> animatables = new List<IAnimatable>();
 
-            for (int i = 0; i <= 7; i++)
+            for (int i = 0; i < 1; i++)
             {
                 animatables.Add(CreateAnimatable_BugIntro1(i*60));
             }
@@ -29,7 +29,7 @@ namespace BlazorGalaga.Static
 
             paths.Add(new BezierCurve()
             {
-                StartPoint = new PointF(w / 2 - 10, -16),
+                StartPoint = new PointF(10, 10),
                 EndPoint = new PointF(w - (w / 4), h / 2),
                 ControlPoint1 = new PointF(w / 2 - 10, h / 4),
                 ControlPoint2 = new PointF(w - (w / 4), h / 4),
@@ -38,7 +38,7 @@ namespace BlazorGalaga.Static
             paths.Add(new BezierCurve()
             {
                 StartPoint = new PointF(w - (w / 4), h / 2),
-                EndPoint = new PointF(w - (w / 4), h / 5),
+                EndPoint = new PointF(502,188),
                 ControlPoint1 = new PointF(w - (w / 4), h - 100),
                 ControlPoint2 = new PointF(100, h - 100),
             });
