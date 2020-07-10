@@ -31,9 +31,9 @@ namespace BlazorGalaga.Models.Paths
             paths.Add(new BezierCurve()
             {
                 StartPoint = new PointF(446.0345F, 655.3584F),
-                ControlPoint1 = new PointF(372.6905F, 559.5388F),
-                ControlPoint2 = new PointF(395.1669F, 553.6241F),
-                EndPoint = new PointF(278.053F, 228.3108F)
+                ControlPoint1 = new PointF(421.8319F, 640.6024F),
+                ControlPoint2 = new PointF(386.291F, 580.7897F),
+                EndPoint = new PointF(375.0219F, 521.8439F)
             });
 
 

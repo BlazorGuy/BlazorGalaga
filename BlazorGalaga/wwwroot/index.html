@@ -57,6 +57,10 @@
         canvas.addEventListener("mouseup", function (e) {
             DotNet.invokeMethodAsync('BlazorGalaga', 'OnMouseUp');
         });
+
+        document.getElementById("btnAddPath").addEventListener('oclick', function (e) {
+            addPath = true;
+        });
     };
 
     function getMousePos(canvas, evt) {
@@ -74,6 +78,7 @@
         document.getElementById("divDiagnostics").innerHTML = diagnosticinfo;
     }
 
+    let addPath = false;
     //let framesPerSecond = 60;
 
     function gameLoop(timeStamp) {
@@ -86,8 +91,11 @@
         var gameloopobject = {
             editcurveschecked: editcurveschecked,
             timestamp: timeStamp,
-            pauseanimation: pauseanimation
+            pauseanimation: pauseanimation,
+            addpath: addPath
         };
+
+        addPath = false;
 
         window.instance.invokeMethodAsync('GameLoop', gameloopobject);
         //setTimeout(function () {

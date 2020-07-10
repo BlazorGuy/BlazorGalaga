@@ -58,7 +58,6 @@ namespace BlazorGalaga.Services
         {
             foreach (IAnimatable animatable in Animatables)
             {
-
                 if (animatable.StartDelay > 0)
                 {
                     animatable.CurPathPointIndex = animatable.StartDelay;
@@ -84,6 +83,15 @@ namespace BlazorGalaga.Services
                 animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
 
                 animatable.CurPathPointIndex += animatable.Speed;
+
+                if (animatable.Sprite.SpriteType != Sprite.SpriteTypes.Ship)
+                {
+                    Utils.dOut("animatable.Speed", animatable.Speed);
+                    Utils.dOut("animatable.CurPathPointIndex", animatable.CurPathPointIndex);
+                    Utils.dOut("animatable.PathPoints.Count", animatable.PathPoints.Count);
+                    Console.WriteLine(animatable.CurPathPointIndex);
+                }
+
 
                 if (animatable.CurPathPointIndex > animatable.PathPoints.Count - 1)
                 {
@@ -137,6 +145,8 @@ namespace BlazorGalaga.Services
             foreach (IAnimatable animatable in Animatables) {
 
                 spriteService.DrawSprite(animatable.Sprite, animatable.Location, animatable.RotateAlongPath ? animatable.Rotation : 0);
+
+                //bezierCurveService.DrawGrid(spriteService.CanvasCtx);
 
                 foreach (BezierCurve path in animatable.Paths)
                 {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Blazor.Extensions.Canvas.Canvas2D;
 using BlazorGalaga.Interfaces;
 using BlazorGalaga.Models;
@@ -12,6 +13,41 @@ namespace BlazorGalaga.Services
     {
         public BezierCurveService()
         {
+        }
+
+        public async void DrawGrid(Canvas2DContext ctx)
+        {
+            var enemygrid = new EnemyGrid();
+
+            await ctx.BeginPathAsync();
+            enemygrid.GridPoints.Where(a => a.Row == 1).ToList().ForEach(async a => {
+                await ctx.ArcAsync(a.Point.X, a.Point.Y, 5, 0, Math.PI * 2);
+            });
+            await ctx.FillAsync();
+
+            await ctx.BeginPathAsync();
+            enemygrid.GridPoints.Where(a => a.Row == 2).ToList().ForEach(async a => {
+                await ctx.ArcAsync(a.Point.X, a.Point.Y, 5, 0, Math.PI * 2);
+            });
+            await ctx.FillAsync();
+
+            await ctx.BeginPathAsync();
+            enemygrid.GridPoints.Where(a => a.Row == 3).ToList().ForEach(async a => {
+                await ctx.ArcAsync(a.Point.X, a.Point.Y, 5, 0, Math.PI * 2);
+            });
+            await ctx.FillAsync();
+
+            await ctx.BeginPathAsync();
+            enemygrid.GridPoints.Where(a => a.Row == 4).ToList().ForEach(async a => {
+                await ctx.ArcAsync(a.Point.X, a.Point.Y, 5, 0, Math.PI * 2);
+            });
+            await ctx.FillAsync();
+            await ctx.BeginPathAsync();
+            enemygrid.GridPoints.Where(a => a.Row == 5).ToList().ForEach(async a => {
+                await ctx.ArcAsync(a.Point.X, a.Point.Y, 5, 0, Math.PI * 2);
+            });
+            await ctx.FillAsync();
+
         }
 
         public async void DrawCurve(Canvas2DContext ctx, BezierCurve curve)

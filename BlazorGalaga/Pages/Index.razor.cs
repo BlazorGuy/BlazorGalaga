@@ -65,12 +65,17 @@ namespace BlazorGalaga.Pages
             public float timestamp { get; set; }
             public bool editcurveschecked { get; set; }
             public bool pauseanimation { get; set; }
+            public bool addpath { get; set; }
         }
 
         [JSInvokable]
         public async void GameLoop(GameLoopObject glo)
         {
-            if (stopGameLoop || glo.pauseanimation) return;
+            if (stopGameLoop || glo.pauseanimation)
+            {
+                lastTimeStamp = glo.timestamp;
+                return;
+            }
 
             try
             {
@@ -91,26 +96,14 @@ namespace BlazorGalaga.Pages
                 animationService.Draw();
                 //End Animation Logic
 
+                //Start Curve Editor Logic
+                if (glo.editcurveschecked)
+                    CurveEditorHelper.EditCurves(animationService,glo);
+                else
+                    CurveEditorHelper.DisableLines(animationService);
+                //End Curve Editor Logic
 
                 Utils.LogFPS();
-
-                if (glo.editcurveschecked)
-                {
-                    CurveEditorHelper.EditCurves(animationService);
-                    foreach (var animatable in animationService.Animatables)
-                    {
-                        animatable.DrawControlLines = true;
-                        animatable.DrawPath = true;
-                    }
-                }
-                else
-                {
-                    foreach(var animatable in animationService.Animatables)
-                    {
-                        animatable.DrawControlLines = false;
-                        animatable.DrawPath = false;
-                    }
-                }
 
                 KeyBoardHelper.ControlShip(ship);
             }

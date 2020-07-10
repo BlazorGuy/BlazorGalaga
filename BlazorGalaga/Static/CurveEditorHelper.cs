@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using BlazorGalaga.Interfaces;
 using BlazorGalaga.Services;
 using Microsoft.AspNetCore.Components;
+using static BlazorGalaga.Pages.Index;
+using BlazorGalaga.Models;
+using System.Linq;
 
 namespace BlazorGalaga.Static
 {
@@ -10,11 +15,36 @@ namespace BlazorGalaga.Static
     {
         private static bool isDraggingCurve;
 
-        public static void EditCurves(AnimationService animationService)
+        public static void DisableLines(AnimationService animationService)
         {
+            foreach (var animatable in animationService.Animatables)
+            {
+                animatable.DrawControlLines = false;
+                animatable.DrawPath = false;
+            }
+        }
+
+        public static void EditCurves(AnimationService animationService, GameLoopObject glo)
+        {
+            foreach (var animatable in animationService.Animatables.Where(a => a.Sprite.SpriteType != Sprite.SpriteTypes.Ship))
+            {
+                animatable.DrawControlLines = true;
+                animatable.DrawPath = true;
+            }
+
+            if (glo.addpath)
+            {
+                animationService.Animatables[0].Paths.Add(new BezierCurve() {
+                    StartPoint = new PointF(10,10),
+                    EndPoint = new PointF(10,100),
+                    ControlPoint1 = new PointF(10,50),
+                    ControlPoint2 = new PointF(30,30)
+                });
+            }
+
             if (MouseHelper.MouseIsDown)
             {
-                foreach (var animatable in animationService.Animatables)
+                foreach (var animatable in animationService.Animatables.Where(a=>a.Sprite.SpriteType != Sprite.SpriteTypes.Ship))
                 {
                     foreach (var path in animatable.Paths)
                     {
@@ -55,7 +85,7 @@ namespace BlazorGalaga.Static
                 isDraggingCurve = false;
                 animationService.ComputePathPoints();
                 string curvedata="";
-                foreach (var animatable in animationService.Animatables)
+                foreach (var animatable in animationService.Animatables.Where(a => a.Sprite.SpriteType != Sprite.SpriteTypes.Ship))
                 {
                     foreach (var path in animatable.Paths)
                     {
