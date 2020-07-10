@@ -64,12 +64,13 @@ namespace BlazorGalaga.Pages
         {
             public float timestamp { get; set; }
             public bool editcurveschecked { get; set; }
+            public bool pauseanimation { get; set; }
         }
 
         [JSInvokable]
         public async void GameLoop(GameLoopObject glo)
         {
-            if (stopGameLoop) return;
+            if (stopGameLoop || glo.pauseanimation) return;
 
             try
             {

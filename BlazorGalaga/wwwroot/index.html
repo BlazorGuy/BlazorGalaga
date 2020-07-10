@@ -81,10 +81,12 @@
         window.requestAnimationFrame(gameLoop);
 
         var editcurveschecked = document.getElementById('EditCurves').checked;
+        var pauseanimation = document.getElementById('PauseAnimation').checked;
 
         var gameloopobject = {
             editcurveschecked: editcurveschecked,
-            timestamp: timeStamp
+            timestamp: timeStamp,
+            pauseanimation: pauseanimation
         };
 
         window.instance.invokeMethodAsync('GameLoop', gameloopobject);

@@ -25,5 +25,6 @@
     <Folder Include="Models\" />
     <Folder Include="Services\" />
     <Folder Include="Interfaces\" />
+    <Folder Include="Models\Paths\" />
   </ItemGroup>
 </Project>
