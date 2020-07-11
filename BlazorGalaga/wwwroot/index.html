@@ -58,8 +58,11 @@
             DotNet.invokeMethodAsync('BlazorGalaga', 'OnMouseUp');
         });
 
-        document.getElementById("btnAddPath").addEventListener('oclick', function (e) {
+        document.getElementById("btnAddPath").addEventListener('click', function (e) {
             addPath = true;
+        });
+        document.getElementById("btnResetAnimation").addEventListener('click', function (e) {
+            resetAnimation = true;
         });
     };
 
@@ -79,6 +82,7 @@
     }
 
     let addPath = false;
+    let resetAnimation = false;
     //let framesPerSecond = 60;
 
     function gameLoop(timeStamp) {
@@ -92,12 +96,15 @@
             editcurveschecked: editcurveschecked,
             timestamp: timeStamp,
             pauseanimation: pauseanimation,
-            addpath: addPath
+            addpath: addPath,
+            resetanimation: resetAnimation
         };
 
-        addPath = false;
-
         window.instance.invokeMethodAsync('GameLoop', gameloopobject);
+
+        addPath = false;
+        resetAnimation = false;
+
         //setTimeout(function () {
 
         //    window.requestAnimationFrame(gameLoop);

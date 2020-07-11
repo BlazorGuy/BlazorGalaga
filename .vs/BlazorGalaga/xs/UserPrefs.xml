@@ -1,28 +1,31 @@
 ﻿<Properties StartupConfiguration="{202B6679-81B6-4D6C-83B3-0DC9DE1151AC}|New">
   <MonoDevelop.Ide.ItemProperties.BlazorGalaga PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Models/Paths/Intro1.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Static/CurveEditorHelper.cs">
     <Files>
-      <File FileName="BlazorGalaga/Pages/Index.razor.cs" Line="73" Column="51" />
-      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="74" Column="99" />
-      <File FileName="BlazorGalaga/Static/BugFactory.cs" Line="34" Column="54" />
-      <File FileName="BlazorGalaga/Static/MouseHelper.cs" />
-      <File FileName="BlazorGalaga/Services/BezierCurveService.cs" Line="60" Column="74" />
-      <File FileName="BlazorGalaga/Static/Utils.cs" />
-      <File FileName="BlazorGalaga/Pages/Index.razor" Line="37" Column="11" />
-      <File FileName="BlazorGalaga/Static/CurveEditorHelper.cs" Line="76" Column="1" />
-      <File FileName="BlazorGalaga/wwwroot/index.html" Line="89" Column="43" />
-      <File FileName="BlazorGalaga/Models/Paths/Intro1.cs" Line="4" Column="26" />
+      <File FileName="BlazorGalaga/Models/Paths/Intro1.cs" Line="17" Column="14" IsPinned="True" />
+      <File FileName="BlazorGalaga/Models/Paths/Intro2.cs" Line="18" Column="53" />
+      <File FileName="BlazorGalaga/Pages/Index.razor.cs" Line="39" Column="50" />
+      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="24" Column="10" />
+      <File FileName="BlazorGalaga/Static/BugFactory.cs" Line="31" Column="31" />
+      <File FileName="BlazorGalaga/wwwroot/index.html" Line="100" Column="27" />
+      <File FileName="BlazorGalaga/Pages/Index.razor" Line="43" Column="60" />
+      <File FileName="BlazorGalaga/Static/CurveEditorHelper.cs" Line="20" Column="85" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="BlazorGalaga" expanded="True">
             <Node name="BlazorGalaga" expanded="True">
-              <Node name="Models" expanded="True">
-                <Node name="Paths" expanded="True">
-                  <Node name="Intro1.cs" selected="True" />
-                </Node>
+              <Node name="Interfaces" expanded="True" />
+              <Node name="Models" expanded="True" />
+              <Node name="Pages" expanded="True">
+                <Node name="Index.razor" expanded="True" />
               </Node>
+              <Node name="Services" expanded="True" />
+              <Node name="Static" expanded="True">
+                <Node name="CurveEditorHelper.cs" selected="True" />
+              </Node>
+              <Node name="wwwroot" expanded="True" />
             </Node>
           </Node>
         </State>

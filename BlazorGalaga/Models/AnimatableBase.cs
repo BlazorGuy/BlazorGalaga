@@ -7,6 +7,7 @@ namespace BlazorGalaga.Models
 {
     public abstract class AnimatableBase : IAnimatable
     {
+        public int Index { get; set; }
         public PointF Location { get; set; }
         public PointF PevLocation { get; set; }
         public PointF NextLocation { get; set; }
@@ -21,6 +22,7 @@ namespace BlazorGalaga.Models
         public int Speed { get; set; }
         public bool LoopBack { get; set; }
         public bool DrawControlLines { get; set; }
+        public bool Started { get; set; }
 
         public int StartDelay { get; set; }
 

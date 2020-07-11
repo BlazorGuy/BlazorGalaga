@@ -15,6 +15,14 @@ namespace BlazorGalaga.Static
     {
         private static bool isDraggingCurve;
 
+        public static void ResetAnimation(AnimationService animationService)
+        {
+            foreach (var animatable in animationService.Animatables.Where(a=>a.Sprite.SpriteType!= Sprite.SpriteTypes.Ship))
+            {
+                animatable.CurPathPointIndex = animatable.StartDelay;
+            }
+        }
+
         public static void DisableLines(AnimationService animationService)
         {
             foreach (var animatable in animationService.Animatables)

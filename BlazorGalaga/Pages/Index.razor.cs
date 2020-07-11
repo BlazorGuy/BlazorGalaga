@@ -51,6 +51,7 @@ namespace BlazorGalaga.Pages
             animationService.ComputePathPoints();
 
             ship = (Ship)animationService.Animatables.FirstOrDefault(a => a.Sprite.SpriteType == Sprite.SpriteTypes.Ship);
+            ship.CurPathPointIndex = (int)ship.PathPoints.Count / 2;
 
             await JsRuntime.InvokeAsync<object>("initFromBlazor", DotNetObjectReference.Create(this));
 
@@ -66,6 +67,7 @@ namespace BlazorGalaga.Pages
             public bool editcurveschecked { get; set; }
             public bool pauseanimation { get; set; }
             public bool addpath { get; set; }
+            public bool resetanimation { get; set; }
         }
 
         [JSInvokable]
@@ -101,6 +103,7 @@ namespace BlazorGalaga.Pages
                     CurveEditorHelper.EditCurves(animationService,glo);
                 else
                     CurveEditorHelper.DisableLines(animationService);
+                if (glo.resetanimation) CurveEditorHelper.ResetAnimation(animationService);
                 //End Curve Editor Logic
 
                 Utils.LogFPS();

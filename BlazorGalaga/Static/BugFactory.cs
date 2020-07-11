@@ -15,25 +15,35 @@ namespace BlazorGalaga.Static
             List<IAnimatable> animatables = new List<IAnimatable>();
 
             for (int i = 0; i < 4; i++)
-            {
-                animatables.Add(CreateAnimatable_BugIntro1(i));
-            }
+                animatables.Add(CreateAnimatable_BugIntro1(i, i * Constants.BugIntroSpacing, new Intro1()));
+
+            for (int i = 0; i < 4; i++)
+                animatables.Add(CreateAnimatable_BugIntro1(i+4, i * Constants.BugIntroSpacing, new Intro2()));
 
             return animatables;
         }
 
-        public static IAnimatable CreateAnimatable_BugIntro1(int index)
+        public static IAnimatable CreateAnimatable_BugIntro1(int index, int startdelay, IIntro intro)
         {
 
             var bug = new Bug()
             {
-                Paths = Intro1.GetPaths(),
+                Index = index,
+                Paths = intro.GetPaths(),
                 RotateAlongPath = true,
-                Speed=10,
-                //LoopBack = true,
-                StartDelay = index * 60,
+                Speed = Constants.BugIntroSpeed,
+                StartDelay = startdelay,
             };
 
+            //add an offscreen path to make the bug fly in from off screen
+            bug.Paths.Insert(0, new BezierCurve() {
+                StartPoint = new PointF(bug.Paths[0].StartPoint.X,bug.Paths[0].StartPoint.Y - 400),
+                EndPoint = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y),
+                ControlPoint1 = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y - 400),
+                ControlPoint2 = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y)
+            });
+
+            //add the bugs destination path from the enemy grid
             bug.Paths.Add(GetGridPath(bug.Paths[bug.Paths.Count-1].EndPoint,index));
 
             return bug;
@@ -57,6 +67,18 @@ namespace BlazorGalaga.Static
                     break;
                 case 3:
                     endpoint = enemyGrid.GetPointByRowCol(2, 5);
+                    break;
+                case 4:
+                    endpoint = enemyGrid.GetPointByRowCol(5, 5);
+                    break;
+                case 5:
+                    endpoint = enemyGrid.GetPointByRowCol(5, 6);
+                    break;
+                case 6:
+                    endpoint = enemyGrid.GetPointByRowCol(4, 5);
+                    break;
+                case 7:
+                    endpoint = enemyGrid.GetPointByRowCol(4, 6);
                     break;
             }
 

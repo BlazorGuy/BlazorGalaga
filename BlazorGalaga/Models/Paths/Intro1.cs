@@ -2,19 +2,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using BlazorGalaga.Interfaces;
 
 namespace BlazorGalaga.Models.Paths
 {
-    public static class Intro1 
+    public class Intro1 : IIntro
     {
-        public static List<BezierCurve> GetPaths()
+        public List<BezierCurve> GetPaths()
         {
 
             List<BezierCurve> paths = new List<BezierCurve>();
 
             paths.Add(new BezierCurve()
             {
-                StartPoint = new PointF(195.2452F, 8.280702F),
+                StartPoint = new PointF(195.2452F, 0),
                 ControlPoint1 = new PointF(192.8793F, 139.589F),
                 ControlPoint2 = new PointF(514.6467F, 434.1454F),
                 EndPoint = new PointF(558.4166F, 476.7318F)
@@ -35,7 +36,6 @@ namespace BlazorGalaga.Models.Paths
                 ControlPoint2 = new PointF(386.291F, 580.7897F),
                 EndPoint = new PointF(375.0219F, 521.8439F)
             });
-
 
             return paths;
         }

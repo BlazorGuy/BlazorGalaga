@@ -30,10 +30,8 @@ namespace BlazorGalaga.Services
             List<BezierCurve> paths = new List<BezierCurve>();
             paths.Add(new BezierCurve()
             {
-                StartPoint = new PointF(Constants.SpriteDestSize.Width/2, Constants.CanvasSize.Height - Constants.SpriteDestSize.Height),
-                EndPoint = new PointF(Constants.CanvasSize.Width - (Constants.SpriteDestSize.Width/2), Constants.CanvasSize.Height - Constants.SpriteDestSize.Height),
-                ControlPoint1 = new PointF(0, Constants.CanvasSize.Height - Constants.SpriteDestSize.Height),
-                ControlPoint2 = new PointF(0, Constants.CanvasSize.Height - Constants.SpriteDestSize.Height)
+                StartPoint = new PointF(Constants.SpriteDestSize.Width/2, Constants.CanvasSize.Height - (Constants.SpriteDestSize.Height *2)),
+                EndPoint = new PointF(Constants.CanvasSize.Width - (Constants.SpriteDestSize.Width/2), Constants.CanvasSize.Height - (Constants.SpriteDestSize.Height * 2)),
             });
             var ship = new Ship()
             {
@@ -58,10 +56,10 @@ namespace BlazorGalaga.Services
         {
             foreach (IAnimatable animatable in Animatables)
             {
-                if (animatable.StartDelay > 0)
+                if (animatable.StartDelay > 0 && !animatable.Started)
                 {
                     animatable.CurPathPointIndex = animatable.StartDelay;
-                    animatable.StartDelay = 0;
+                    animatable.Started = true;
                 }
 
                 try
@@ -83,15 +81,6 @@ namespace BlazorGalaga.Services
                 animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
 
                 animatable.CurPathPointIndex += animatable.Speed;
-
-                if (animatable.Sprite.SpriteType != Sprite.SpriteTypes.Ship)
-                {
-                    Utils.dOut("animatable.Speed", animatable.Speed);
-                    Utils.dOut("animatable.CurPathPointIndex", animatable.CurPathPointIndex);
-                    Utils.dOut("animatable.PathPoints.Count", animatable.PathPoints.Count);
-                    Console.WriteLine(animatable.CurPathPointIndex);
-                }
-
 
                 if (animatable.CurPathPointIndex > animatable.PathPoints.Count - 1)
                 {

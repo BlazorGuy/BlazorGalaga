@@ -14,7 +14,7 @@ namespace BlazorGalaga.Static
         [JSInvokable("OnKeyDown")]
         public static void OnKeyDown(string keycode)
         {
-            Console.WriteLine("KeyDown: " + keycode);
+            Utils.dOut("KeyDown",keycode);
 
             if (keycode == Constants.ArrowLeft || keycode == Constants.ArrowRight)
             {
@@ -28,7 +28,7 @@ namespace BlazorGalaga.Static
         [JSInvokable("OnKeyUp")]
         public static void OnKeyUp(string keycode)
         {
-            Console.WriteLine("KeyUp: " + keycode);
+            Utils.dOut("KeyUp", keycode);
 
             if (keycode == Constants.ArrowLeft || keycode == Constants.ArrowRight)
             {

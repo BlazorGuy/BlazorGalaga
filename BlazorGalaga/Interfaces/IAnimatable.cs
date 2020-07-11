@@ -8,6 +8,7 @@ namespace BlazorGalaga.Interfaces
 {
     public interface IAnimatable 
     {
+        public int Index { get; set; }
         public PointF Location { get; set; }
         public PointF PevLocation { get; set; }
         public PointF NextLocation { get; set; }
@@ -23,6 +24,7 @@ namespace BlazorGalaga.Interfaces
         public bool LoopBack { get; set; }
         public bool DrawControlLines { get; set; }
         public int StartDelay { get; set; }
+        public bool Started { get; set; }
 
     }
 }
