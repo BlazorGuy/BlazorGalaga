@@ -1,12 +1,15 @@
 ﻿<Properties StartupConfiguration="{202B6679-81B6-4D6C-83B3-0DC9DE1151AC}|New">
   <MonoDevelop.Ide.ItemProperties.BlazorGalaga PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Services/GameService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Services/AnimationService.cs">
     <Files>
-      <File FileName="BlazorGalaga/Models/Paths/Intro2.cs" Line="18" Column="53" />
-      <File FileName="BlazorGalaga/Pages/Index.razor.cs" Line="98" Column="50" />
-      <File FileName="BlazorGalaga/Static/BugFactory.cs" Line="41" Column="32" />
-      <File FileName="BlazorGalaga/Services/LevelService.cs" Line="59" Column="1" />
-      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="81" Column="52" />
+      <File FileName="BlazorGalaga/Pages/Index.razor.cs" Line="56" Column="50" />
+      <File FileName="BlazorGalaga/Static/BugFactory.cs" Line="206" Column="27" />
+      <File FileName="BlazorGalaga/Services/LevelService.cs" Line="39" Column="96" />
+      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="64" Column="70" />
+      <File FileName="BlazorGalaga/Services/SpriteService.cs" Line="44" Column="53" />
+      <File FileName="BlazorGalaga/wwwroot/index.html" Line="103" Column="49" />
+      <File FileName="BlazorGalaga/Pages/Index.razor" Line="25" Column="31" />
+      <File FileName="BlazorGalaga/Interfaces/IAnimatable.cs" Line="31" Column="6" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -14,16 +17,15 @@
           <Node name="BlazorGalaga" expanded="True">
             <Node name="BlazorGalaga" expanded="True">
               <Node name="Interfaces" expanded="True" />
-              <Node name="Models" expanded="True">
-                <Node name="Paths" expanded="True" />
-              </Node>
+              <Node name="Models" expanded="True" />
               <Node name="Pages" expanded="True">
                 <Node name="Index.razor" expanded="True" />
               </Node>
               <Node name="Services" expanded="True">
-                <Node name="GameService.cs" selected="True" />
+                <Node name="AnimationService.cs" selected="True" />
               </Node>
               <Node name="Static" expanded="True" />
+              <Node name="wwwroot" expanded="True" />
             </Node>
           </Node>
         </State>

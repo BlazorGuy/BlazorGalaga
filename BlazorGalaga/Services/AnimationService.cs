@@ -16,6 +16,7 @@ namespace BlazorGalaga.Services
 
         private BezierCurveService bezierCurveService;
         private SpriteService spriteService;
+        private long AnimationCount = 0;
 
         public AnimationService(BezierCurveService bcs, SpriteService ss)
         {
@@ -55,19 +56,21 @@ namespace BlazorGalaga.Services
                 }
 
                 animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
-
                 animatable.CurPathPointIndex += animatable.Speed;
+                animatable.IsMoving = true;
 
                 if (animatable.CurPathPointIndex > animatable.PathPoints.Count - 1)
                 {
                     //this stops the animation
                     animatable.CurPathPointIndex -= animatable.Speed;
+                    animatable.IsMoving = false;
                     if (animatable.LoopBack) animatable.Speed *= -1;
                 }
                 if (animatable.CurPathPointIndex < 0)
                 {
                     //this stops the animation
                     animatable.CurPathPointIndex = 0;
+                    animatable.IsMoving = false;
                     if (animatable.LoopBack) animatable.Speed *= -1;
                 }
             }
@@ -102,6 +105,7 @@ namespace BlazorGalaga.Services
 
         public void Draw()
         {
+            AnimationCount += 1;
 
             spriteService.CanvasCtx.BeginBatchAsync();
 
@@ -109,7 +113,8 @@ namespace BlazorGalaga.Services
 
             foreach (IAnimatable animatable in Animatables.Where(a=>a.Started)) {
 
-                spriteService.DrawSprite(animatable.Sprite, animatable.Location, animatable.RotateAlongPath ? animatable.Rotation : 0);
+                if(animatable.IsMoving || (!animatable.IsMoving && AnimationCount % 2==0))
+                    spriteService.DrawSprite(animatable.Sprite, animatable.Location, animatable.RotateAlongPath ? animatable.Rotation : 0);
 
                 //bezierCurveService.DrawGrid(spriteService.CanvasCtx);
 

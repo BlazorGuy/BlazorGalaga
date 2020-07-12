@@ -32,8 +32,11 @@ namespace BlazorGalaga.Services
                     //levelInitialized = true;
                     //return;
 
+                    //creates two top down bug lines of 4 each, these enter at the same time
                     animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(1));
+                    //creates two side bug lines of 8 each, these enter one after the other
                     animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(2));
+                    //creates two top down bug lines of 8 each, these enter one after the other
                     animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(3));
                     animationService.ComputePathPoints();
 

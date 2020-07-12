@@ -17,15 +17,21 @@ namespace BlazorGalaga.Services
         public List<Sprite> Sprites = new List<Sprite>();
 
 
-        public void Init()
+        public async void Init()
         {
-            CanvasCtx.SetStrokeStyleAsync("white");
-            CanvasCtx.SetFillStyleAsync("yellow");
-            CanvasCtx.SetLineWidthAsync(2);
+            await CanvasCtx.SetStrokeStyleAsync("white");
+            await CanvasCtx.SetFillStyleAsync("yellow");
+            await CanvasCtx.SetLineWidthAsync(2);
+
+            await BufferCanvasCtx.DrawImageAsync(
+                SpriteSheet, 0, 0
+            );
+
         }
 
         public async void DrawSprite(Sprite sprite, PointF location, float rotationangle)
         {
+
             if (!sprite.IsInitialized)
                 SetSpriteInfoBySpriteType(sprite);
 
@@ -34,7 +40,7 @@ namespace BlazorGalaga.Services
             await CanvasCtx.RotateAsync((float)((rotationangle + sprite.InitialRotationOffset) * Math.PI / 180));
 
             await CanvasCtx.DrawImageAsync(
-                SpriteSheet,
+                BufferCanvasCtx.Canvas,
                 sprite.SpriteSheetRect.X, //source x
                 sprite.SpriteSheetRect.Y, //source y
                 sprite.SpriteSheetRect.Width, //source width
@@ -54,12 +60,12 @@ namespace BlazorGalaga.Services
             switch (sprite.SpriteType)
             {
                 case Sprite.SpriteTypes.Ship:
-                    sprite.SpriteSheetRect = new System.Drawing.RectangleF(109,1, 16, 16);
-                    sprite.SpriteDestRect = new System.Drawing.RectangleF(0, 0, Constants.SpriteDestSize.Width, Constants.SpriteDestSize.Height);
+                    sprite.SpriteSheetRect = new RectangleF(109,1, 16, 16);
+                    sprite.SpriteDestRect = new  RectangleF(0, 0, Constants.SpriteDestSize.Width, Constants.SpriteDestSize.Height);
                     break;
                 case Sprite.SpriteTypes.BlueBug:
-                    sprite.SpriteSheetRect = new System.Drawing.RectangleF(109, 91, 16, 16);
-                    sprite.SpriteDestRect = new System.Drawing.RectangleF(0, 0, Constants.SpriteDestSize.Width, Constants.SpriteDestSize.Height);
+                    sprite.SpriteSheetRect = new RectangleF(109, 91, 16, 16);
+                    sprite.SpriteDestRect = new RectangleF(0, 0, Constants.SpriteDestSize.Width, Constants.SpriteDestSize.Height);
                     sprite.InitialRotationOffset = -90;
                     break;
             }

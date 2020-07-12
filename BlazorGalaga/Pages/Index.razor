@@ -16,13 +16,18 @@
         padding: 0px !important;
     }
 
-    canvas {
+    #theCanvas canvas {
         /*        background-image: url("assets/background.png");*/
         background-color: black;
         display: block;
         width: 100%;
         height: 100%;
         /* position: fixed; */
+    }
+
+    #divBufferCanvas canvas {
+        background-color: black;
+        display:block;
     }
 
     body {
@@ -47,13 +52,13 @@
 <div id="divDiagnostics" style="position:absolute;left:15px;top:190px;width:300px;height:400px;background-color:lightgray;padding:5px;font-size:10px;font-size:10px;overflow:scroll">
 </div>
 
+<div id="divBufferCanvas" style="position:absolute;left:1100px;top:15px;opacity:1">
+    <BECanvas Width="460" Height="300" @ref="_buffercanvasReference"></BECanvas>
+</div>
+
 <div id="theCanvas" style="position: fixed; opacity: 1; background-color: aqua; width: 100%; height: 100%;">
     <BECanvas Width="672" Height="944" @ref="_canvasReference"></BECanvas>
 </div>
 
-<img style="display:none" @ref="spriteSheet" src="Assets/spritesheet.png" />
-
-<div style="position:absolute;left:-5000px">
-    <BECanvas Width="672" Height="944" @ref="_buffercanvasReference"></BECanvas>
-</div>
+<img id="imgSpriteSheet" style="display:none" @ref="spriteSheet" src="Assets/spritesheet.png" />
 

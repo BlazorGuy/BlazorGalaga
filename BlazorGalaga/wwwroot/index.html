@@ -44,8 +44,7 @@
         window.requestAnimationFrame(gameLoop);
 
 
-        var canvas = document.querySelector('canvas');
-        var ctx = canvas.getContext('2d');
+        var canvas = document.querySelector('#theCanvas canvas');
 
         canvas.addEventListener("mousemove", function (e) {
             var pos = getMousePos(canvas, e);
@@ -63,6 +62,9 @@
         });
         document.getElementById("btnResetAnimation").addEventListener('click', function (e) {
             resetAnimation = true;
+        });
+        document.getElementById("imgSpriteSheet").addEventListener('load', function (e) {
+            spriteSheetLoaded = true;
         });
     };
 
@@ -83,7 +85,7 @@
 
     let addPath = false;
     let resetAnimation = false;
-    //let framesPerSecond = 60;
+    let spriteSheetLoaded = false;
 
     function gameLoop(timeStamp) {
 
@@ -97,26 +99,19 @@
             timestamp: timeStamp,
             pauseanimation: pauseanimation,
             addpath: addPath,
-            resetanimation: resetAnimation
+            resetanimation: resetAnimation,
+            spritesheetloaded: spriteSheetLoaded
         };
 
         window.instance.invokeMethodAsync('GameLoop', gameloopobject);
 
         addPath = false;
         resetAnimation = false;
-
-        //setTimeout(function () {
-
-        //    window.requestAnimationFrame(gameLoop);
-
-        //    window.instance.invokeMethodAsync('GameLoop');
-
-        //}, 1000 / framesPerSecond);
     }
 
     function resizeCanvas(){
 
-        var canvas = document.querySelector('canvas');
+        var canvas = document.querySelector('#theCanvas canvas');
         var ctx = canvas.getContext('2d');
 
         //very important to make the pixels look crisp

@@ -20,6 +20,7 @@ namespace BlazorGalaga.Pages
         public string DiagnosticInfo = "";
 
         private Canvas2DContext ctx;
+        private Canvas2DContext bctx;
         private bool stopGameLoop;
 
         protected BECanvasComponent _canvasReference;
@@ -42,8 +43,17 @@ namespace BlazorGalaga.Pages
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             ctx = await _canvasReference.CreateCanvas2DAsync();
+            bctx = await _buffercanvasReference.CreateCanvas2DAsync();
+
+            await JsRuntime.InvokeAsync<object>("initFromBlazor", DotNetObjectReference.Create(this));
+
+        }
+
+        private void SpriteSheetLoaded()
+        {
 
             spriteService.CanvasCtx = ctx;
+            spriteService.BufferCanvasCtx = bctx;
             spriteService.SpriteSheet = spriteSheet;
             spriteService.Init();
 
@@ -52,9 +62,6 @@ namespace BlazorGalaga.Pages
 
             ship = (Ship)animationService.Animatables.FirstOrDefault(a => a.Sprite.SpriteType == Sprite.SpriteTypes.Ship);
             ship.CurPathPointIndex = (int)ship.PathPoints.Count / 2;
-
-            await JsRuntime.InvokeAsync<object>("initFromBlazor", DotNetObjectReference.Create(this));
-
         }
 
         private int targetTicksPerFrame = (1000 / 60);
@@ -68,6 +75,7 @@ namespace BlazorGalaga.Pages
             public bool pauseanimation { get; set; }
             public bool addpath { get; set; }
             public bool resetanimation { get; set; }
+            public bool spritesheetloaded { get; set; }
         }
 
         [JSInvokable]
@@ -82,6 +90,14 @@ namespace BlazorGalaga.Pages
             try
             {
                 await JsRuntime.InvokeAsync<object>("logDiagnosticInfo", Utils.DiagnosticInfo);
+
+                if (spriteService.CanvasCtx == null)
+                {
+                    if (glo.spritesheetloaded)
+                        SpriteSheetLoaded();
+                    else
+                        return;
+                }
 
                 var timeStamp = glo.timestamp;
 

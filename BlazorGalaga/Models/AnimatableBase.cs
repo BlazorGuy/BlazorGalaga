@@ -24,6 +24,7 @@ namespace BlazorGalaga.Models
         public bool DrawControlLines { get; set; }
         public bool Started { get; set; }
         public bool StartDelayStarted { get; set; }
+        public bool IsMoving { get; set; }
 
         public int StartDelay { get; set; }
 

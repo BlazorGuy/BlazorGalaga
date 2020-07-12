@@ -26,6 +26,7 @@ namespace BlazorGalaga.Interfaces
         public int StartDelay { get; set; }
         public bool StartDelayStarted { get; set; }
         public bool Started { get; set; }
+        public bool IsMoving { get; set; }
 
     }
 }
