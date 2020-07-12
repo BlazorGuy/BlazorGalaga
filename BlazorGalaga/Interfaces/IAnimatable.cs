@@ -24,6 +24,7 @@ namespace BlazorGalaga.Interfaces
         public bool LoopBack { get; set; }
         public bool DrawControlLines { get; set; }
         public int StartDelay { get; set; }
+        public bool StartDelayStarted { get; set; }
         public bool Started { get; set; }
 
     }

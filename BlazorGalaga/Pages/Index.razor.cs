@@ -20,7 +20,6 @@ namespace BlazorGalaga.Pages
         public string DiagnosticInfo = "";
 
         private Canvas2DContext ctx;
-        private Canvas2DContext bufferctx;
         private bool stopGameLoop;
 
         protected BECanvasComponent _canvasReference;
@@ -36,19 +35,20 @@ namespace BlazorGalaga.Pages
         [Inject]
         public SpriteService spriteService { get; set; }
         [Inject]
+        public GameService gameService { get; set; }
+        [Inject]
         public IJSRuntime JsRuntime { get; set; }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             ctx = await _canvasReference.CreateCanvas2DAsync();
-            bufferctx = await _canvasReference.CreateCanvas2DAsync();
 
             spriteService.CanvasCtx = ctx;
-            spriteService.BufferCanvasCtx = bufferctx;
             spriteService.SpriteSheet = spriteSheet;
+            spriteService.Init();
 
-            animationService.InitAnimations();
-            animationService.ComputePathPoints();
+            gameService.animationService = animationService;
+            gameService.Init();
 
             ship = (Ship)animationService.Animatables.FirstOrDefault(a => a.Sprite.SpriteType == Sprite.SpriteTypes.Ship);
             ship.CurPathPointIndex = (int)ship.PathPoints.Count / 2;
@@ -85,6 +85,8 @@ namespace BlazorGalaga.Pages
 
                 var timeStamp = glo.timestamp;
 
+                gameService.Process();
+
                 //Start Animation Logic
                 delta += (int)(timeStamp - lastTimeStamp);
                 lastTimeStamp = timeStamp;
@@ -113,7 +115,7 @@ namespace BlazorGalaga.Pages
             catch (Exception ex)
             {
                 stopGameLoop = true;
-                Utils.dOut("Exception", ex.Message + "<br/>" + ex.StackTrace);
+                Utils.dOut("<p style=\"color: red\">Exception", ex.Message + "</p><br/>" + ex.StackTrace);
                 await JsRuntime.InvokeAsync<object>("logDiagnosticInfo", Utils.DiagnosticInfo);
                 throw ex;
             }

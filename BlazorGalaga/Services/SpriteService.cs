@@ -17,9 +17,11 @@ namespace BlazorGalaga.Services
         public List<Sprite> Sprites = new List<Sprite>();
 
 
-        public SpriteService()
+        public void Init()
         {
-            
+            CanvasCtx.SetStrokeStyleAsync("white");
+            CanvasCtx.SetFillStyleAsync("yellow");
+            CanvasCtx.SetLineWidthAsync(2);
         }
 
         public async void DrawSprite(Sprite sprite, PointF location, float rotationangle)

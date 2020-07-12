@@ -23,30 +23,6 @@ namespace BlazorGalaga.Services
             spriteService = ss;
         }
 
-        public void InitAnimations()
-        {
-            Animatables.AddRange(BugFactory.CreateAnimation_BugIntro1());
-
-            List<BezierCurve> paths = new List<BezierCurve>();
-            paths.Add(new BezierCurve()
-            {
-                StartPoint = new PointF(Constants.SpriteDestSize.Width/2, Constants.CanvasSize.Height - (Constants.SpriteDestSize.Height *2)),
-                EndPoint = new PointF(Constants.CanvasSize.Width - (Constants.SpriteDestSize.Width/2), Constants.CanvasSize.Height - (Constants.SpriteDestSize.Height * 2)),
-            });
-            var ship = new Ship()
-            {
-                Paths = paths,
-                DrawPath = false,
-                PathIsLine = true,
-                RotateAlongPath = false,
-            };
-            Animatables.Add(ship);
-
-            spriteService.CanvasCtx.SetStrokeStyleAsync("white");
-            spriteService.CanvasCtx.SetFillStyleAsync("yellow");
-            spriteService.CanvasCtx.SetLineWidthAsync(2);
-        }
-
         public void ResetCanvas(Canvas2DContext ctx)
         {
             ctx.ClearRectAsync(0, 0, Constants.CanvasSize.Width, Constants.CanvasSize.Height);
@@ -54,12 +30,12 @@ namespace BlazorGalaga.Services
 
         public void Animate()
         {
-            foreach (IAnimatable animatable in Animatables)
+            foreach (IAnimatable animatable in Animatables.Where(a=>a.Started))
             {
-                if (animatable.StartDelay > 0 && !animatable.Started)
+                if (animatable.StartDelay > 0 && !animatable.StartDelayStarted)
                 {
                     animatable.CurPathPointIndex = animatable.StartDelay;
-                    animatable.Started = true;
+                    animatable.StartDelayStarted = true;
                 }
 
                 try
@@ -131,7 +107,7 @@ namespace BlazorGalaga.Services
 
             ResetCanvas(spriteService.CanvasCtx);
 
-            foreach (IAnimatable animatable in Animatables) {
+            foreach (IAnimatable animatable in Animatables.Where(a=>a.Started)) {
 
                 spriteService.DrawSprite(animatable.Sprite, animatable.Location, animatable.RotateAlongPath ? animatable.Rotation : 0);
 

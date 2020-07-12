@@ -1,15 +1,12 @@
 ﻿<Properties StartupConfiguration="{202B6679-81B6-4D6C-83B3-0DC9DE1151AC}|New">
   <MonoDevelop.Ide.ItemProperties.BlazorGalaga PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Static/CurveEditorHelper.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Services/GameService.cs">
     <Files>
-      <File FileName="BlazorGalaga/Models/Paths/Intro1.cs" Line="17" Column="14" IsPinned="True" />
       <File FileName="BlazorGalaga/Models/Paths/Intro2.cs" Line="18" Column="53" />
-      <File FileName="BlazorGalaga/Pages/Index.razor.cs" Line="39" Column="50" />
-      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="24" Column="10" />
-      <File FileName="BlazorGalaga/Static/BugFactory.cs" Line="31" Column="31" />
-      <File FileName="BlazorGalaga/wwwroot/index.html" Line="100" Column="27" />
-      <File FileName="BlazorGalaga/Pages/Index.razor" Line="43" Column="60" />
-      <File FileName="BlazorGalaga/Static/CurveEditorHelper.cs" Line="20" Column="85" />
+      <File FileName="BlazorGalaga/Pages/Index.razor.cs" Line="98" Column="50" />
+      <File FileName="BlazorGalaga/Static/BugFactory.cs" Line="41" Column="32" />
+      <File FileName="BlazorGalaga/Services/LevelService.cs" Line="59" Column="1" />
+      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="81" Column="52" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -17,15 +14,16 @@
           <Node name="BlazorGalaga" expanded="True">
             <Node name="BlazorGalaga" expanded="True">
               <Node name="Interfaces" expanded="True" />
-              <Node name="Models" expanded="True" />
+              <Node name="Models" expanded="True">
+                <Node name="Paths" expanded="True" />
+              </Node>
               <Node name="Pages" expanded="True">
                 <Node name="Index.razor" expanded="True" />
               </Node>
-              <Node name="Services" expanded="True" />
-              <Node name="Static" expanded="True">
-                <Node name="CurveEditorHelper.cs" selected="True" />
+              <Node name="Services" expanded="True">
+                <Node name="GameService.cs" selected="True" />
               </Node>
-              <Node name="wwwroot" expanded="True" />
+              <Node name="Static" expanded="True" />
             </Node>
           </Node>
         </State>

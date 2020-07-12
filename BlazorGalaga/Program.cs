@@ -27,7 +27,7 @@ namespace BlazorGalaga
                     x.GetRequiredService<SpriteService>()
                     )
                 );
-
+            builder.Services.AddSingleton<GameService>();
 
             await builder.Build().RunAsync();
         }
