@@ -60,7 +60,7 @@ namespace BlazorGalaga.Services
                         animationService.Animatables.Where(a => a.Index >= 24 && a.Index < 32).ToList().ForEach(a => a.Started = true);
                     });
 
-                    Task.Delay(19000).ContinueWith((task) =>
+                    Task.Delay(18000).ContinueWith((task) =>
                     {
                         animationService.Animatables.Where(a => a.Index >= 32 && a.Index < 40).ToList().ForEach(a => a.Started = true);
                     });

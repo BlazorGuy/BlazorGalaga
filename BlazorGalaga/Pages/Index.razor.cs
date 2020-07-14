@@ -19,12 +19,14 @@ namespace BlazorGalaga.Pages
     {
         public string DiagnosticInfo = "";
 
-        private Canvas2DContext ctx;
-        private Canvas2DContext bctx;
+        private Canvas2DContext DynamicCtx;
+        private Canvas2DContext StaticCtx;
+        private Canvas2DContext BufferCtx;
         private bool stopGameLoop;
 
-        protected BECanvasComponent _canvasReference;
-        protected BECanvasComponent _buffercanvasReference;
+        protected BECanvasComponent StaticCanvas;
+        protected BECanvasComponent DynamicCanvas;
+        protected BECanvasComponent BufferCanvas;
         protected ElementReference spriteSheet;
 
         private static Ship ship;
@@ -42,18 +44,19 @@ namespace BlazorGalaga.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            ctx = await _canvasReference.CreateCanvas2DAsync();
-            bctx = await _buffercanvasReference.CreateCanvas2DAsync();
+            DynamicCtx = await DynamicCanvas.CreateCanvas2DAsync();
+            StaticCtx = await StaticCanvas.CreateCanvas2DAsync();
+            BufferCtx = await BufferCanvas.CreateCanvas2DAsync();
 
             await JsRuntime.InvokeAsync<object>("initFromBlazor", DotNetObjectReference.Create(this));
-
         }
 
         private void SpriteSheetLoaded()
         {
 
-            spriteService.CanvasCtx = ctx;
-            spriteService.BufferCanvasCtx = bctx;
+            spriteService.DynamicCtx = DynamicCtx;
+            spriteService.StaticCtx = StaticCtx;
+            spriteService.BufferCtx = BufferCtx;
             spriteService.SpriteSheet = spriteSheet;
             spriteService.Init();
 
@@ -62,6 +65,7 @@ namespace BlazorGalaga.Pages
 
             ship = (Ship)animationService.Animatables.FirstOrDefault(a => a.Sprite.SpriteType == Sprite.SpriteTypes.Ship);
             ship.CurPathPointIndex = (int)ship.PathPoints.Count / 2;
+
         }
 
         private int targetTicksPerFrame = (1000 / 60);
@@ -78,6 +82,8 @@ namespace BlazorGalaga.Pages
             public bool spritesheetloaded { get; set; }
         }
 
+        private long loopCount = 0;
+
         [JSInvokable]
         public async void GameLoop(GameLoopObject glo)
         {
@@ -91,7 +97,9 @@ namespace BlazorGalaga.Pages
             {
                 await JsRuntime.InvokeAsync<object>("logDiagnosticInfo", Utils.DiagnosticInfo);
 
-                if (spriteService.CanvasCtx == null)
+                loopCount++;
+
+                if (spriteService.DynamicCtx == null)
                 {
                     if (glo.spritesheetloaded)
                         SpriteSheetLoaded();
@@ -113,7 +121,8 @@ namespace BlazorGalaga.Pages
                     animationService.Animate();
                     delta -= targetTicksPerFrame;
                 }
-                animationService.Draw();
+                //if(loopCount%2==0)
+                    animationService.Draw();
                 //End Animation Logic
 
                 //Start Curve Editor Logic

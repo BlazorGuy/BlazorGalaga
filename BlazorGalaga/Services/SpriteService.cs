@@ -11,21 +11,28 @@ namespace BlazorGalaga.Services
 {
     public class SpriteService
     {
-        public Canvas2DContext CanvasCtx { get; set; }
-        public Canvas2DContext BufferCanvasCtx { get; set; }
+        public Canvas2DContext DynamicCtx { get; set; }
+        public Canvas2DContext StaticCtx { get; set; }
+        public Canvas2DContext BufferCtx { get; set; }
+        public ElementReference BufferCtxCanvas { get; set; }
         public ElementReference SpriteSheet { get; set; }
         public List<Sprite> Sprites = new List<Sprite>();
 
 
         public async void Init()
         {
-            await CanvasCtx.SetStrokeStyleAsync("white");
-            await CanvasCtx.SetFillStyleAsync("yellow");
-            await CanvasCtx.SetLineWidthAsync(2);
+            await DynamicCtx.SetStrokeStyleAsync("white");
+            await DynamicCtx.SetFillStyleAsync("yellow");
+            await DynamicCtx.SetLineWidthAsync(2);
 
-            await BufferCanvasCtx.DrawImageAsync(
-                SpriteSheet, 0, 0
+            BufferCtxCanvas = BufferCtx.Canvas;
+
+            await BufferCtx.DrawImageAsync(
+                SpriteSheet, 109,91,16,16,0,0,45,45
             );
+
+            //await StaticCtx.SetFillStyleAsync("yellow");
+            //await StaticCtx.FillRectAsync(150, 250, 100, 100);
 
         }
 
@@ -35,23 +42,33 @@ namespace BlazorGalaga.Services
             if (!sprite.IsInitialized)
                 SetSpriteInfoBySpriteType(sprite);
 
-            await CanvasCtx.SaveAsync();
-            await CanvasCtx.TranslateAsync(location.X, location.Y);
-            await CanvasCtx.RotateAsync((float)((rotationangle + sprite.InitialRotationOffset) * Math.PI / 180));
+            if (rotationangle != 0)
+            {
+                await DynamicCtx.SaveAsync();
+                await DynamicCtx.TranslateAsync(location.X, location.Y);
+                await DynamicCtx.RotateAsync((float)((rotationangle + sprite.InitialRotationOffset) * Math.PI / 180));
+            }
 
-            await CanvasCtx.DrawImageAsync(
-                BufferCanvasCtx.Canvas,
-                sprite.SpriteSheetRect.X, //source x
-                sprite.SpriteSheetRect.Y, //source y
-                sprite.SpriteSheetRect.Width, //source width
-                sprite.SpriteSheetRect.Height, //source height
-                (int)sprite.SpriteDestRect.Width / 2 * -1, //dest x
-                (int)sprite.SpriteDestRect.Height / 2 * -1, //dest y
-                sprite.SpriteDestRect.Width,//dest width
-                sprite.SpriteDestRect.Height //dest height
+            await DynamicCtx.DrawImageAsync(
+                BufferCtxCanvas,
+                rotationangle == 0 ? (int)location.X - (int)sprite.SpriteDestRect.Width / 2 : (int)sprite.SpriteDestRect.Width / 2 * -1, //dest x
+                rotationangle == 0 ? (int)location.Y - (int)sprite.SpriteDestRect.Height / 2 : (int)sprite.SpriteDestRect.Height / 2 * -1 //dest y,
             );
 
-            await CanvasCtx.RestoreAsync();
+            //await DynamicCtx.DrawImageAsync(
+            //    BufferCtx.Canvas,
+            //    sprite.SpriteSheetRect.X, //source x
+            //    sprite.SpriteSheetRect.Y, //source y
+            //    sprite.SpriteSheetRect.Width, //source width
+            //    sprite.SpriteSheetRect.Height, //source height
+            //    rotationangle == 0 ? (int)location.X - (int)sprite.SpriteDestRect.Width / 2 : (int)sprite.SpriteDestRect.Width / 2 * -1, //dest x
+            //    rotationangle == 0 ? (int)location.Y - (int)sprite.SpriteDestRect.Height / 2 : (int)sprite.SpriteDestRect.Height / 2 * -1, //dest y,
+            //    sprite.SpriteDestRect.Width,//dest width
+            //    sprite.SpriteDestRect.Height //dest height
+            //);
+
+            if (rotationangle!=0)
+                await DynamicCtx.RestoreAsync();
         }
 
         private void SetSpriteInfoBySpriteType(Sprite sprite)

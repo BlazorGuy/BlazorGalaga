@@ -63,6 +63,7 @@ namespace BlazorGalaga.Services
                 {
                     //this stops the animation
                     animatable.CurPathPointIndex -= animatable.Speed;
+                    animatable.CurPathPointIndex = animatable.PathPoints.Count-1;
                     animatable.IsMoving = false;
                     if (animatable.LoopBack) animatable.Speed *= -1;
                 }
@@ -70,6 +71,7 @@ namespace BlazorGalaga.Services
                 {
                     //this stops the animation
                     animatable.CurPathPointIndex = 0;
+                    animatable.CurPathPointIndex = animatable.PathPoints.Count - 1;
                     animatable.IsMoving = false;
                     if (animatable.LoopBack) animatable.Speed *= -1;
                 }
@@ -107,27 +109,30 @@ namespace BlazorGalaga.Services
         {
             AnimationCount += 1;
 
-            spriteService.CanvasCtx.BeginBatchAsync();
+            spriteService.DynamicCtx.BeginBatchAsync();
 
-            ResetCanvas(spriteService.CanvasCtx);
+            ResetCanvas(spriteService.DynamicCtx);
 
             foreach (IAnimatable animatable in Animatables.Where(a=>a.Started)) {
 
-                if(animatable.IsMoving || (!animatable.IsMoving && AnimationCount % 2==0))
-                    spriteService.DrawSprite(animatable.Sprite, animatable.Location, animatable.RotateAlongPath ? animatable.Rotation : 0);
+                spriteService.DrawSprite(
+                    animatable.Sprite,
+                    animatable.Location,
+                    (animatable.RotateAlongPath && animatable.IsMoving) ? animatable.Rotation : 0
+                    );
 
                 //bezierCurveService.DrawGrid(spriteService.CanvasCtx);
 
                 foreach (BezierCurve path in animatable.Paths)
                 {
                     if (animatable.DrawPath)
-                        bezierCurveService.DrawCurve(spriteService.CanvasCtx, path);
+                        bezierCurveService.DrawCurve(spriteService.DynamicCtx, path);
                     if (animatable.DrawControlLines)
-                        bezierCurveService.DrawCurveControlLines(spriteService.CanvasCtx, path);
+                        bezierCurveService.DrawCurveControlLines(spriteService.DynamicCtx, path);
                 }
             }
 
-            spriteService.CanvasCtx.EndBatchAsync();
+            spriteService.DynamicCtx.EndBatchAsync();
         }
     }
 }

@@ -43,7 +43,6 @@
 
         window.requestAnimationFrame(gameLoop);
 
-
         var canvas = document.querySelector('#theCanvas canvas');
 
         canvas.addEventListener("mousemove", function (e) {
@@ -67,6 +66,16 @@
             spriteSheetLoaded = true;
         });
     };
+
+    function setImageSmoothingForCanvases() {
+
+        var canvaslist = document.getElementsByTagName("canvas");
+
+        for (let cnv of canvaslist) {
+            var ctx = cnv.getContext("2d");
+            ctx.imageSmoothingEnabled = false;
+        }
+    }
 
     function getMousePos(canvas, evt) {
         var rect = canvas.getBoundingClientRect(), // abs. size of element
@@ -111,11 +120,7 @@
 
     function resizeCanvas(){
 
-        var canvas = document.querySelector('#theCanvas canvas');
-        var ctx = canvas.getContext('2d');
-
-        //very important to make the pixels look crisp
-        ctx.imageSmoothingEnabled = false;
+        setImageSmoothingForCanvases();
 
         var game = {
             canvas: document.getElementById("theCanvas"),
