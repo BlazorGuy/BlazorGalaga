@@ -52,7 +52,7 @@ namespace BlazorGalaga.Pages
         }
 
         [JSInvokable("SpriteSheetLoaded")]
-        public async void SpriteSheetLoaded()
+        public void SpriteSheetLoaded()
         {
             Utils.dOut("SpriteSheetLoaded", true);
             spriteService.DynamicCtx = DynamicCtx;

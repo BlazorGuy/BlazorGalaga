@@ -7,6 +7,7 @@ using BlazorGalaga.Models;
 using BlazorGalaga.Static;
 using System.Linq;
 using BlazorGalaga.Interfaces;
+using System.Text.Json;
 
 namespace BlazorGalaga.Services
 {
@@ -101,6 +102,8 @@ namespace BlazorGalaga.Services
                         }
                     }
                     animatable.PathPoints = bezierCurveService.GetEvenlyDistributedPathPointsByLength(animatable.PathPoints, pointgranularity);
+                    var json = JsonSerializer.Serialize(animatable.PathPoints);
+                    Console.WriteLine(json);
                 }
             }
         }
