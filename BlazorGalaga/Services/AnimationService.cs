@@ -81,8 +81,8 @@ namespace BlazorGalaga.Services
 
         public void ComputePathPoints()
         {
-            int pointgranularity = 1; //the lower the more granular 
-
+            float pointgranularity = 1F; //the lower the more granular 
+    
             foreach (var animatable in Animatables)
             {
                 if (animatable.Paths != null)
@@ -90,7 +90,7 @@ namespace BlazorGalaga.Services
                     animatable.PathPoints = new List<PointF>();
                     foreach (BezierCurve path in animatable.Paths)
                     {
-                        for (var percent = 0F; percent <= 100; percent+=.01F)
+                        for (var percent = 0F; percent <= 100; percent+= .01F)
                         {
                             PointF point;
                             if (animatable.PathIsLine)

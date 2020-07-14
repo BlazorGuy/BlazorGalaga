@@ -8,6 +8,8 @@ namespace BlazorGalaga.Models.Paths
 {
     public class Intro1 : IIntro
     {
+        public List<PointF> PathPoints { get; set; }
+
         public List<BezierCurve> GetPaths()
         {
 

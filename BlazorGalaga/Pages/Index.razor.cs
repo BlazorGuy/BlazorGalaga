@@ -51,9 +51,10 @@ namespace BlazorGalaga.Pages
             await JsRuntime.InvokeAsync<object>("initFromBlazor", DotNetObjectReference.Create(this));
         }
 
-        private void SpriteSheetLoaded()
+        [JSInvokable("SpriteSheetLoaded")]
+        public async void SpriteSheetLoaded()
         {
-
+            Utils.dOut("SpriteSheetLoaded", true);
             spriteService.DynamicCtx = DynamicCtx;
             spriteService.StaticCtx = StaticCtx;
             spriteService.BufferCtx = BufferCtx;
@@ -65,7 +66,6 @@ namespace BlazorGalaga.Pages
 
             ship = (Ship)animationService.Animatables.FirstOrDefault(a => a.Sprite.SpriteType == Sprite.SpriteTypes.Ship);
             ship.CurPathPointIndex = (int)ship.PathPoints.Count / 2;
-
         }
 
         private int targetTicksPerFrame = (1000 / 60);
@@ -90,24 +90,17 @@ namespace BlazorGalaga.Pages
             if (stopGameLoop || glo.pauseanimation)
             {
                 lastTimeStamp = glo.timestamp;
+                Utils.dOut("Exited GameLoop", true);
                 return;
             }
 
             try
             {
-                await JsRuntime.InvokeAsync<object>("logDiagnosticInfo", Utils.DiagnosticInfo);
-
                 loopCount++;
 
-                if (spriteService.DynamicCtx == null)
-                {
-                    if (glo.spritesheetloaded)
-                        SpriteSheetLoaded();
-                    else
-                        return;
-                }
-
                 var timeStamp = glo.timestamp;
+
+                Utils.dOut("GameLoop Running", "LC: " + loopCount + " , TS: " + glo.timestamp);
 
                 gameService.Process();
 
@@ -115,27 +108,28 @@ namespace BlazorGalaga.Pages
                 delta += (int)(timeStamp - lastTimeStamp);
                 lastTimeStamp = timeStamp;
 
-                Utils.dOut("delta", delta);
                 while (delta >= targetTicksPerFrame)
                 {
                     animationService.Animate();
                     delta -= targetTicksPerFrame;
                 }
                 //if(loopCount%2==0)
-                    animationService.Draw();
+                animationService.Draw();
                 //End Animation Logic
 
                 //Start Curve Editor Logic
                 if (glo.editcurveschecked)
-                    CurveEditorHelper.EditCurves(animationService,glo);
+                    CurveEditorHelper.EditCurves(animationService, glo);
                 else
                     CurveEditorHelper.DisableLines(animationService);
                 if (glo.resetanimation) CurveEditorHelper.ResetAnimation(animationService);
-                //End Curve Editor Logic
+                ////End Curve Editor Logic
 
                 Utils.LogFPS();
 
                 KeyBoardHelper.ControlShip(ship);
+
+                await JsRuntime.InvokeAsync<object>("logDiagnosticInfo", Utils.DiagnosticInfo);
             }
             catch (Exception ex)
             {
