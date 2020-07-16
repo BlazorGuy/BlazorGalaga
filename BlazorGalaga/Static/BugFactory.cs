@@ -43,7 +43,6 @@ namespace BlazorGalaga.Static
 
         public static IAnimatable CreateAnimatable_BugIntro(int index, int startdelay, IIntro intro)
         {
-
             var bug = new Bug()
             {
                 Index = index,
@@ -83,7 +82,7 @@ namespace BlazorGalaga.Static
                 });
 
             //add the bugs destination path from the enemy grid
-            bug.Paths.Add(GetGridPath(bug.Paths[bug.Paths.Count - 1].EndPoint, index));
+            //bug.Paths.Add(GetGridPath(bug.Paths[bug.Paths.Count - 1].EndPoint, index));
 
             return bug;
 

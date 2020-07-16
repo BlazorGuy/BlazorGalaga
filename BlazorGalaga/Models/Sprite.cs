@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Blazor.Extensions.Canvas.Canvas2D;
+using Microsoft.AspNetCore.Components;
+using System;
 using System.Drawing;
 
 namespace BlazorGalaga.Models
@@ -16,6 +18,7 @@ namespace BlazorGalaga.Models
         public SpriteTypes SpriteType { get; set; }
         public bool IsInitialized { get; set; }
         public float InitialRotationOffset { get; set; }
+        public Canvas2DContext BufferCanvas { get; set; }
 
         public Sprite(SpriteTypes spritetype)
         {

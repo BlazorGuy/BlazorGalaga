@@ -8,16 +8,22 @@ using BlazorGalaga.Static;
 using System.Linq;
 using BlazorGalaga.Interfaces;
 using System.Text.Json;
+using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using System.Text;
+using System.Diagnostics;
 
 namespace BlazorGalaga.Services
 {
     public class AnimationService
     {
+        [Inject]
+        public IJSRuntime JsRuntime { get; set; }
+
         public List<IAnimatable> Animatables = new List<IAnimatable>();
 
         private BezierCurveService bezierCurveService;
         private SpriteService spriteService;
-        private long AnimationCount = 0;
 
         public AnimationService(BezierCurveService bcs, SpriteService ss)
         {
@@ -80,10 +86,33 @@ namespace BlazorGalaga.Services
 
         }
 
-        public void ComputePathPoints()
+        public List<PointF> ComputePathPoints(BezierCurve path, bool pathisline)
         {
             float pointgranularity = 1F; //the lower the more granular 
-    
+            List<PointF> pathpoints = new List<PointF>(70000);
+
+            for (var percent = 0F; percent <= 100; percent += .01F)
+            {
+                if (pathisline)
+                    pathpoints.Add(bezierCurveService.getLineXYatPercent(path, percent));
+                else
+                    pathpoints.Add(bezierCurveService.getCubicBezierXYatPercent(path, percent));
+            }
+
+            pathpoints = bezierCurveService.GetEvenlyDistributedPathPointsByLength(pathpoints, pointgranularity);
+
+            return pathpoints;
+        }
+
+        public void ComputePathPoints()
+        {
+            var stopwatch = new Stopwatch();
+
+            stopwatch.Start();
+
+            float pointgranularity = 1F; //the lower the more granular 
+            StringBuilder fulljson = new StringBuilder();
+            
             foreach (var animatable in Animatables)
             {
                 if (animatable.Paths != null)
@@ -102,16 +131,16 @@ namespace BlazorGalaga.Services
                         }
                     }
                     animatable.PathPoints = bezierCurveService.GetEvenlyDistributedPathPointsByLength(animatable.PathPoints, pointgranularity);
-                    var json = JsonSerializer.Serialize(animatable.PathPoints);
-                    Console.WriteLine(json);
                 }
+                //var json = JsonSerializer.Serialize(animatable.PathPoints);
+                //fulljson.Append(json.Replace("[","").Replace("]","") + ",");
             }
+            //Console.WriteLine("[" + fulljson + "]");
+            Utils.dOut("ComputePathPoints", stopwatch.ElapsedMilliseconds);
         }
 
         public void Draw()
         {
-            AnimationCount += 1;
-
             spriteService.DynamicCtx.BeginBatchAsync();
 
             ResetCanvas(spriteService.DynamicCtx);
@@ -126,13 +155,13 @@ namespace BlazorGalaga.Services
 
                 //bezierCurveService.DrawGrid(spriteService.CanvasCtx);
 
-                foreach (BezierCurve path in animatable.Paths)
-                {
-                    if (animatable.DrawPath)
-                        bezierCurveService.DrawCurve(spriteService.DynamicCtx, path);
-                    if (animatable.DrawControlLines)
-                        bezierCurveService.DrawCurveControlLines(spriteService.DynamicCtx, path);
-                }
+                //foreach (BezierCurve path in animatable.Paths)
+                //{
+                //    if (animatable.DrawPath)
+                //        bezierCurveService.DrawCurve(spriteService.DynamicCtx, path);
+                //    if (animatable.DrawControlLines)
+                //        bezierCurveService.DrawCurveControlLines(spriteService.DynamicCtx, path);
+                //}
             }
 
             spriteService.DynamicCtx.EndBatchAsync();

@@ -8,6 +8,5 @@ namespace BlazorGalaga.Interfaces
     public interface IIntro
     {
         public List<BezierCurve> GetPaths();
-        public List<PointF> PathPoints { get; set; }
     }
 }

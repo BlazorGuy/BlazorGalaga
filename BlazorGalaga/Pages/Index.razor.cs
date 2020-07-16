@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Blazor.Extensions;
 using Blazor.Extensions.Canvas.Canvas2D;
@@ -18,15 +19,16 @@ namespace BlazorGalaga.Pages
     public partial class Index: ComponentBase
     {
         public string DiagnosticInfo = "";
+        public List<Canvas> BufferCanvases { get; set; }
 
         private Canvas2DContext DynamicCtx;
         private Canvas2DContext StaticCtx;
-        private Canvas2DContext BufferCtx;
+        private Canvas2DContext BufferCtx_BlueBug;
         private bool stopGameLoop;
 
         protected BECanvasComponent StaticCanvas;
         protected BECanvasComponent DynamicCanvas;
-        protected BECanvasComponent BufferCanvas;
+        protected BECanvasComponent BufferCanvas_BlueBug;
         protected ElementReference spriteSheet;
 
         private static Ship ship;
@@ -46,7 +48,7 @@ namespace BlazorGalaga.Pages
         {
             DynamicCtx = await DynamicCanvas.CreateCanvas2DAsync();
             StaticCtx = await StaticCanvas.CreateCanvas2DAsync();
-            BufferCtx = await BufferCanvas.CreateCanvas2DAsync();
+            BufferCtx_BlueBug = await BufferCanvas_BlueBug.CreateCanvas2DAsync();
 
             await JsRuntime.InvokeAsync<object>("initFromBlazor", DotNetObjectReference.Create(this));
         }
@@ -54,10 +56,11 @@ namespace BlazorGalaga.Pages
         [JSInvokable("SpriteSheetLoaded")]
         public void SpriteSheetLoaded()
         {
-            Utils.dOut("SpriteSheetLoaded", true);
             spriteService.DynamicCtx = DynamicCtx;
             spriteService.StaticCtx = StaticCtx;
-            spriteService.BufferCtx = BufferCtx;
+            spriteService.BufferCanvases = new List<Canvas2DContext>();
+            spriteService.BufferCanvases.Add(BufferCtx_BlueBug);
+
             spriteService.SpriteSheet = spriteSheet;
             spriteService.Init();
 
@@ -66,6 +69,8 @@ namespace BlazorGalaga.Pages
 
             ship = (Ship)animationService.Animatables.FirstOrDefault(a => a.Sprite.SpriteType == Sprite.SpriteTypes.Ship);
             ship.CurPathPointIndex = (int)ship.PathPoints.Count / 2;
+
+            Utils.dOut("SpriteSheetLoaded", true);
         }
 
         private int targetTicksPerFrame = (1000 / 60);
@@ -102,7 +107,8 @@ namespace BlazorGalaga.Pages
 
                 Utils.dOut("GameLoop Running", "LC: " + loopCount + " , TS: " + glo.timestamp);
 
-                gameService.Process();
+                if (gameService.animationService != null)
+                    gameService.Process();
 
                 //Start Animation Logic
                 delta += (int)(timeStamp - lastTimeStamp);
@@ -113,8 +119,8 @@ namespace BlazorGalaga.Pages
                     animationService.Animate();
                     delta -= targetTicksPerFrame;
                 }
-                //if(loopCount%2==0)
-                animationService.Draw();
+                if(loopCount%2==0)
+                    animationService.Draw();
                 //End Animation Logic
 
                 //Start Curve Editor Logic

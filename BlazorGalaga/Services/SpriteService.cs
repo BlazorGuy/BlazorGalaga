@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Drawing;
 using BlazorGalaga.Static;
+using System.Linq;
 
 namespace BlazorGalaga.Services
 {
@@ -14,7 +15,7 @@ namespace BlazorGalaga.Services
         public Canvas2DContext DynamicCtx { get; set; }
         public Canvas2DContext StaticCtx { get; set; }
         public Canvas2DContext BufferCtx { get; set; }
-        public ElementReference BufferCtxCanvas { get; set; }
+        public List<Canvas2DContext> BufferCanvases { get; set; }
         public ElementReference SpriteSheet { get; set; }
         public List<Sprite> Sprites = new List<Sprite>();
 
@@ -25,9 +26,7 @@ namespace BlazorGalaga.Services
             await DynamicCtx.SetFillStyleAsync("yellow");
             await DynamicCtx.SetLineWidthAsync(2);
 
-            BufferCtxCanvas = BufferCtx.Canvas;
-
-            await BufferCtx.DrawImageAsync(
+            await BufferCanvases.FirstOrDefault().DrawImageAsync(
                 SpriteSheet, 109,91,16,16,0,0,45,45
             );
 
@@ -50,22 +49,10 @@ namespace BlazorGalaga.Services
             }
 
             await DynamicCtx.DrawImageAsync(
-                BufferCtxCanvas,
+                sprite.BufferCanvas.Canvas,
                 rotationangle == 0 ? (int)location.X - (int)sprite.SpriteDestRect.Width / 2 : (int)sprite.SpriteDestRect.Width / 2 * -1, //dest x
                 rotationangle == 0 ? (int)location.Y - (int)sprite.SpriteDestRect.Height / 2 : (int)sprite.SpriteDestRect.Height / 2 * -1 //dest y,
             );
-
-            //await DynamicCtx.DrawImageAsync(
-            //    BufferCtx.Canvas,
-            //    sprite.SpriteSheetRect.X, //source x
-            //    sprite.SpriteSheetRect.Y, //source y
-            //    sprite.SpriteSheetRect.Width, //source width
-            //    sprite.SpriteSheetRect.Height, //source height
-            //    rotationangle == 0 ? (int)location.X - (int)sprite.SpriteDestRect.Width / 2 : (int)sprite.SpriteDestRect.Width / 2 * -1, //dest x
-            //    rotationangle == 0 ? (int)location.Y - (int)sprite.SpriteDestRect.Height / 2 : (int)sprite.SpriteDestRect.Height / 2 * -1, //dest y,
-            //    sprite.SpriteDestRect.Width,//dest width
-            //    sprite.SpriteDestRect.Height //dest height
-            //);
 
             if (rotationangle!=0)
                 await DynamicCtx.RestoreAsync();
@@ -79,11 +66,13 @@ namespace BlazorGalaga.Services
                 case Sprite.SpriteTypes.Ship:
                     sprite.SpriteSheetRect = new RectangleF(109,1, 16, 16);
                     sprite.SpriteDestRect = new  RectangleF(0, 0, Constants.SpriteDestSize.Width, Constants.SpriteDestSize.Height);
+                    sprite.BufferCanvas = BufferCanvases.FirstOrDefault();
                     break;
                 case Sprite.SpriteTypes.BlueBug:
                     sprite.SpriteSheetRect = new RectangleF(109, 91, 16, 16);
                     sprite.SpriteDestRect = new RectangleF(0, 0, Constants.SpriteDestSize.Width, Constants.SpriteDestSize.Height);
                     sprite.InitialRotationOffset = -90;
+                    sprite.BufferCanvas = BufferCanvases.FirstOrDefault();
                     break;
             }
 
