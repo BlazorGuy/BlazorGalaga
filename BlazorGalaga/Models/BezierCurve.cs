@@ -13,6 +13,7 @@ namespace BlazorGalaga.Models
         public bool ControlPoint1Dragged { get; set; }
         public bool ControlPoint2Dragged { get; set; }
         public bool EndPointDragged { get; set; }
+        public bool IsComputed { get; set; }
     }
 
 }

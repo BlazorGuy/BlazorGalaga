@@ -117,7 +117,7 @@ namespace BlazorGalaga.Pages
                 Utils.dOut("GameLoop Running", "LC: " + loopCount + " , TS: " + glo.timestamp);
 
                 if (gameService.animationService != null)
-                    gameService.Process();
+                    gameService.Process(ship);
 
                 //Start Animation Logic
                 delta += (int)(timeStamp - lastTimeStamp);
