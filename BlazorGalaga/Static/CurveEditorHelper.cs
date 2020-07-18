@@ -102,11 +102,14 @@ namespace BlazorGalaga.Static
                         path.EndPointDragged = false;
                         path.ControlPoint1Dragged = false;
                         path.ControlPoint2Dragged = false;
-                        curvedata += "<br/>paths.Add(new BezierCurve() {" +
-                            "StartPoint = new PointF(" + path.StartPoint.X + "F," + path.StartPoint.Y + "F),<br/>" +
-                            "ControlPoint1 = new PointF(" + path.ControlPoint1.X + "F," + path.ControlPoint1.Y + "F),<br/>" +
-                            "ControlPoint2 = new PointF(" + path.ControlPoint2.X + "F," + path.ControlPoint2.Y + "F),<br/>" +
-                            "EndPoint = new PointF(" + path.EndPoint.X + "F," + path.EndPoint.Y + "F)});<br/>";
+                        if (path.DrawPath)
+                        {
+                            curvedata += "<br/>paths.Add(new BezierCurve() {" +
+                                "StartPoint = new PointF(" + path.StartPoint.X + "F," + path.StartPoint.Y + "F),<br/>" +
+                                "ControlPoint1 = new PointF(" + path.ControlPoint1.X + "F," + path.ControlPoint1.Y + "F),<br/>" +
+                                "ControlPoint2 = new PointF(" + path.ControlPoint2.X + "F," + path.ControlPoint2.Y + "F),<br/>" +
+                                "EndPoint = new PointF(" + path.EndPoint.X + "F," + path.EndPoint.Y + "F)});<br/>";
+                        }
                     }
                 }
                 Utils.dOut("CurveData", curvedata);

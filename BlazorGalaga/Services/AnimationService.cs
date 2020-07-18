@@ -91,7 +91,7 @@ namespace BlazorGalaga.Services
             float pointgranularity = 1F; //the lower the more granular
             List<PointF> pathpoints = new List<PointF>();
 
-            for (var percent = 0F; percent <= 100; percent += .01F)
+            for (var percent = 0F; percent <= 100; percent += .1F)
             {
                 var point = bezierCurveService.getCubicBezierXYatPercent(path, percent);
                 pathpoints.Add(point);
@@ -117,7 +117,7 @@ namespace BlazorGalaga.Services
                     animatable.PathPoints = new List<PointF>();
                     foreach (BezierCurve path in animatable.Paths)
                     {
-                        for (var percent = 0F; percent <= 100; percent+= .01F)
+                        for (var percent = 0F; percent <= 100; percent+= .1F)
                         {
                             PointF point;
                             if (animatable.PathIsLine)
@@ -126,9 +126,9 @@ namespace BlazorGalaga.Services
                                 point = bezierCurveService.getCubicBezierXYatPercent(path, percent);
                             animatable.PathPoints.Add(point);
                         }
-                        path.IsComputed = true;
                     }
-                    animatable.PathPoints = bezierCurveService.GetEvenlyDistributedPathPointsByLength(animatable.PathPoints, pointgranularity);
+                    if (animatable.PathPoints.Count >0)
+                        animatable.PathPoints = bezierCurveService.GetEvenlyDistributedPathPointsByLength(animatable.PathPoints, pointgranularity);
                 }
             }
             Utils.dOut("ComputePathPoints", stopwatch.ElapsedMilliseconds);
@@ -150,7 +150,7 @@ namespace BlazorGalaga.Services
 
                 //bezierCurveService.DrawGrid(spriteService.CanvasCtx);
 
-                foreach (BezierCurve path in animatable.Paths)
+                foreach (BezierCurve path in animatable.Paths.Where(a=>a.DrawPath==true))
                 {
                     if (animatable.DrawPath)
                         bezierCurveService.DrawCurve(spriteService.DynamicCtx, path);

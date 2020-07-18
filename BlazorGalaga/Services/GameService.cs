@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BlazorGalaga.Interfaces;
 using BlazorGalaga.Models;
+using BlazorGalaga.Models.Paths;
 using BlazorGalaga.Static;
 using BlazorGalaganimatable.Models.Paths;
 
@@ -46,6 +47,10 @@ namespace BlazorGalaga.Services
                     {
                         animationService.Animatables.Where(a => a.Index < 8).ToList().ForEach(a => a.Started = true);
                     });
+                    //Task.Delay(6000).ContinueWith((task) =>
+                    //{
+                    //    DoEnemyDive();
+                    //});
                     Task.Delay(5000).ContinueWith((task) =>
                     {
                         animationService.Animatables.Where(a => a.Index >= 8 && a.Index < 16).ToList().ForEach(a => a.Started = true);
@@ -67,7 +72,7 @@ namespace BlazorGalaga.Services
                     });
                     Task.Delay(22000).ContinueWith((task) =>
                     {
-                        for(int i=0;i<=100;i++)
+                        for (int i = 0; i <= 100; i++)
                         {
                             Task.Delay(i * 3000).ContinueWith((task) =>
                             {
@@ -84,14 +89,29 @@ namespace BlazorGalaga.Services
         private void DoEnemyDive()
         {
             var bugs = GetBugs();
-            var bug =  bugs.Where(a=>!a.IsMoving).FirstOrDefault(a => a.Index == Utils.Rnd(0,bugs.Count-1));
-            var dive1 = new Dive1();
-            var paths = dive1.GetPaths(bug, Ship);
+            Bug bug = null;
+            Utils.dOut("diving 1", "");
+            while(bug == null || bug.IsMoving)
+            {
+                bug = bugs.FirstOrDefault(a => a.Index == Utils.Rnd(0, bugs.Count - 1));
+            } 
+
+            Utils.dOut("diving 2", "");
+
+            IDive dive;
+            //dive = new Dive2();
+            if (Utils.Rnd(0, 10) % 2 == 0)
+                dive = new BlueBugDive1();
+            else
+                dive = new BlueBugDive2();
+
+            var paths = dive.GetPaths(bug, Ship);
 
             bug.Speed = 5;
             bug.Paths.AddRange(paths);
 
             paths.ForEach(p => {
+                p.DrawPath = true;
                 bug.PathPoints.AddRange(animationService.ComputePathPoints(p));
             });
         }
