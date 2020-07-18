@@ -15,7 +15,7 @@ namespace BlazorGalaga.Services
         public Canvas2DContext DynamicCtx { get; set; }
         public Canvas2DContext StaticCtx { get; set; }
         public Canvas2DContext BufferCtx { get; set; }
-        public List<Canvas2DContext> BufferCanvases { get; set; }
+        public List<Canvas> BufferCanvases { get; set; }
         public ElementReference SpriteSheet { get; set; }
         public List<Sprite> Sprites = new List<Sprite>();
 
@@ -25,10 +25,6 @@ namespace BlazorGalaga.Services
             await DynamicCtx.SetStrokeStyleAsync("white");
             await DynamicCtx.SetFillStyleAsync("yellow");
             await DynamicCtx.SetLineWidthAsync(2);
-
-            await BufferCanvases.FirstOrDefault().DrawImageAsync(
-                SpriteSheet, 109,91,16,16,0,0,45,45
-            );
 
             //await StaticCtx.SetFillStyleAsync("yellow");
             //await StaticCtx.FillRectAsync(150, 250, 100, 100);
@@ -48,11 +44,14 @@ namespace BlazorGalaga.Services
                 await DynamicCtx.RotateAsync((float)((rotationangle + sprite.InitialRotationOffset) * Math.PI / 180));
             }
 
-            await DynamicCtx.DrawImageAsync(
-                sprite.BufferCanvas.Canvas,
-                rotationangle == 0 ? (int)location.X - (int)sprite.SpriteDestRect.Width / 2 : (int)sprite.SpriteDestRect.Width / 2 * -1, //dest x
-                rotationangle == 0 ? (int)location.Y - (int)sprite.SpriteDestRect.Height / 2 : (int)sprite.SpriteDestRect.Height / 2 * -1 //dest y,
-            );
+            if (sprite.BufferCanvas != null)
+            {
+                await DynamicCtx.DrawImageAsync(
+                    sprite.BufferCanvas.Canvas,
+                    rotationangle == 0 ? (int)location.X - (int)sprite.SpriteDestRect.Width / 2 : (int)sprite.SpriteDestRect.Width / 2 * -1, //dest x
+                    rotationangle == 0 ? (int)location.Y - (int)sprite.SpriteDestRect.Height / 2 : (int)sprite.SpriteDestRect.Height / 2 * -1 //dest y,
+                );
+            }
 
             if (rotationangle!=0)
                 await DynamicCtx.RestoreAsync();
@@ -64,19 +63,25 @@ namespace BlazorGalaga.Services
             switch (sprite.SpriteType)
             {
                 case Sprite.SpriteTypes.Ship:
-                    sprite.SpriteSheetRect = new RectangleF(109,1, 16, 16);
-                    sprite.SpriteDestRect = new  RectangleF(0, 0, Constants.SpriteDestSize.Width, Constants.SpriteDestSize.Height);
-                    sprite.BufferCanvas = BufferCanvases.FirstOrDefault();
+                    SetUpSprite(sprite, 0, 109, 1, 0);
                     break;
                 case Sprite.SpriteTypes.BlueBug:
-                    sprite.SpriteSheetRect = new RectangleF(109, 91, 16, 16);
-                    sprite.SpriteDestRect = new RectangleF(0, 0, Constants.SpriteDestSize.Width, Constants.SpriteDestSize.Height);
-                    sprite.InitialRotationOffset = -90;
-                    sprite.BufferCanvas = BufferCanvases.FirstOrDefault();
+                    SetUpSprite(sprite, 1, 109, 91, -90);
                     break;
             }
 
             sprite.IsInitialized = true;
+        }
+
+        private async void SetUpSprite(Sprite sprite,int bufferindex, int sx, int sy, int rotationoffset)
+        {
+            await BufferCanvases[bufferindex].Context.DrawImageAsync(
+                SpriteSheet, sx, sy, Constants.SpriteSourceSize, Constants.SpriteSourceSize, 0, 0, Constants.SpriteDestSize.Width, Constants.SpriteDestSize.Height
+            );
+
+            sprite.BufferCanvas = BufferCanvases[bufferindex].Context;
+            sprite.SpriteDestRect = new RectangleF(0, 0, Constants.SpriteDestSize.Width, Constants.SpriteDestSize.Height);
+            sprite.InitialRotationOffset = rotationoffset;
         }
 
     }

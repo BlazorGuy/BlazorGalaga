@@ -86,24 +86,6 @@ namespace BlazorGalaga.Services
 
         }
 
-        public List<PointF> ComputePathPoints(BezierCurve path, bool pathisline)
-        {
-            float pointgranularity = 1F; //the lower the more granular 
-            List<PointF> pathpoints = new List<PointF>(70000);
-
-            for (var percent = 0F; percent <= 100; percent += .01F)
-            {
-                if (pathisline)
-                    pathpoints.Add(bezierCurveService.getLineXYatPercent(path, percent));
-                else
-                    pathpoints.Add(bezierCurveService.getCubicBezierXYatPercent(path, percent));
-            }
-
-            pathpoints = bezierCurveService.GetEvenlyDistributedPathPointsByLength(pathpoints, pointgranularity);
-
-            return pathpoints;
-        }
-
         public void ComputePathPoints()
         {
             var stopwatch = new Stopwatch();
@@ -132,10 +114,7 @@ namespace BlazorGalaga.Services
                     }
                     animatable.PathPoints = bezierCurveService.GetEvenlyDistributedPathPointsByLength(animatable.PathPoints, pointgranularity);
                 }
-                //var json = JsonSerializer.Serialize(animatable.PathPoints);
-                //fulljson.Append(json.Replace("[","").Replace("]","") + ",");
             }
-            //Console.WriteLine("[" + fulljson + "]");
             Utils.dOut("ComputePathPoints", stopwatch.ElapsedMilliseconds);
         }
 

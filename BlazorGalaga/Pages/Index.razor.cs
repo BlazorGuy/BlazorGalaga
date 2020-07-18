@@ -23,12 +23,10 @@ namespace BlazorGalaga.Pages
 
         private Canvas2DContext DynamicCtx;
         private Canvas2DContext StaticCtx;
-        private Canvas2DContext BufferCtx_BlueBug;
         private bool stopGameLoop;
 
         protected BECanvasComponent StaticCanvas;
         protected BECanvasComponent DynamicCanvas;
-        protected BECanvasComponent BufferCanvas_BlueBug;
         protected ElementReference spriteSheet;
 
         private static Ship ship;
@@ -44,11 +42,24 @@ namespace BlazorGalaga.Pages
         [Inject]
         public IJSRuntime JsRuntime { get; set; }
 
+        protected override void OnInitialized()
+        {
+            BufferCanvases = new List<Canvas>();
+
+            for (int i = 1; i <= Constants.SpriteBufferCount; i++)
+                BufferCanvases.Add(new Canvas() { CanvasRef = new BECanvasComponent() });
+        }
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
+
             DynamicCtx = await DynamicCanvas.CreateCanvas2DAsync();
             StaticCtx = await StaticCanvas.CreateCanvas2DAsync();
-            BufferCtx_BlueBug = await BufferCanvas_BlueBug.CreateCanvas2DAsync();
+
+            foreach (var canvas in BufferCanvases)
+            {
+               canvas.Context = await canvas.CanvasRef.CreateCanvas2DAsync();
+            }
 
             await JsRuntime.InvokeAsync<object>("initFromBlazor", DotNetObjectReference.Create(this));
         }
@@ -56,10 +67,10 @@ namespace BlazorGalaga.Pages
         [JSInvokable("SpriteSheetLoaded")]
         public void SpriteSheetLoaded()
         {
+
             spriteService.DynamicCtx = DynamicCtx;
             spriteService.StaticCtx = StaticCtx;
-            spriteService.BufferCanvases = new List<Canvas2DContext>();
-            spriteService.BufferCanvases.Add(BufferCtx_BlueBug);
+            spriteService.BufferCanvases = BufferCanvases;
 
             spriteService.SpriteSheet = spriteSheet;
             spriteService.Init();

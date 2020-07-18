@@ -58,8 +58,14 @@
 <div id="divDiagnostics" style="position:absolute;left:15px;top:190px;width:300px;height:400px;background-color:lightgray;padding:5px;font-size:10px;font-size:10px;overflow:scroll">
 </div>
 
-<div id="divBufferCanvas" style="position:absolute;left:1400px;top:15px;opacity:1">
-    <BECanvas Width="45" Height="45" @ref="BufferCanvas_BlueBug"></BECanvas>
+<div id="divBufferCanvas" style="position:absolute;left:1100px;top:15px;opacity:1">
+    @if (BufferCanvases != null && BufferCanvases.Count>0)
+    {
+        @foreach(var canvas in BufferCanvases)
+        {
+            <BECanvas Width="45" Height="45" @ref="@canvas.CanvasRef"></BECanvas>
+        }
+    }
 </div>
 
 <div id="theCanvas" style="position: fixed; opacity: 1; background-color: black; width: 100%; height: 100%;">

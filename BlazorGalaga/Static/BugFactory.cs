@@ -82,7 +82,7 @@ namespace BlazorGalaga.Static
                 });
 
             //add the bugs destination path from the enemy grid
-            //bug.Paths.Add(GetGridPath(bug.Paths[bug.Paths.Count - 1].EndPoint, index));
+            bug.Paths.Add(GetGridPath(bug.Paths[bug.Paths.Count - 1].EndPoint, index));
 
             return bug;
 

@@ -17,7 +17,7 @@ namespace BlazorGalaga.Static
 
         public static void ResetAnimation(AnimationService animationService)
         {
-            foreach (var animatable in animationService.Animatables.Where(a=>a.Sprite.SpriteType!= Sprite.SpriteTypes.Ship))
+            foreach (var animatable in animationService.Animatables.Where(a => a.Sprite.SpriteType != Sprite.SpriteTypes.Ship))
             {
                 animatable.CurPathPointIndex = animatable.StartDelay;
             }
@@ -42,17 +42,18 @@ namespace BlazorGalaga.Static
 
             if (glo.addpath)
             {
-                animationService.Animatables[0].Paths.Add(new BezierCurve() {
-                    StartPoint = new PointF(10,10),
-                    EndPoint = new PointF(10,100),
-                    ControlPoint1 = new PointF(10,50),
-                    ControlPoint2 = new PointF(30,30)
+                animationService.Animatables[0].Paths.Add(new BezierCurve()
+                {
+                    StartPoint = new PointF(10, 10),
+                    EndPoint = new PointF(10, 100),
+                    ControlPoint1 = new PointF(10, 50),
+                    ControlPoint2 = new PointF(30, 30)
                 });
             }
 
             if (MouseHelper.MouseIsDown)
             {
-                foreach (var animatable in animationService.Animatables.Where(a=>a.Sprite.SpriteType != Sprite.SpriteTypes.Ship))
+                foreach (var animatable in animationService.Animatables.Where(a => a.Sprite.SpriteType != Sprite.SpriteTypes.Ship))
                 {
                     foreach (var path in animatable.Paths)
                     {
@@ -92,7 +93,7 @@ namespace BlazorGalaga.Static
             {
                 isDraggingCurve = false;
                 animationService.ComputePathPoints();
-                string curvedata="";
+                string curvedata = "";
                 foreach (var animatable in animationService.Animatables.Where(a => a.Sprite.SpriteType != Sprite.SpriteTypes.Ship))
                 {
                     foreach (var path in animatable.Paths)
