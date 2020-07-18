@@ -7,9 +7,9 @@ namespace BlazorGalaga.Models
 {
     public class Bug : AnimatableBase
     {
-        public Bug()
+        public Bug(Sprite.SpriteTypes spritetype)
         {
-            Sprite = new Sprite(Sprite.SpriteTypes.BlueBug);
+            Sprite = new Sprite(spritetype);
         }
     }
 }

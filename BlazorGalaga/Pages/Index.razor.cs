@@ -57,9 +57,7 @@ namespace BlazorGalaga.Pages
             StaticCtx = await StaticCanvas.CreateCanvas2DAsync();
 
             foreach (var canvas in BufferCanvases)
-            {
                canvas.Context = await canvas.CanvasRef.CreateCanvas2DAsync();
-            }
 
             await JsRuntime.InvokeAsync<object>("initFromBlazor", DotNetObjectReference.Create(this));
         }

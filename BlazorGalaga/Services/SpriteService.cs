@@ -24,6 +24,7 @@ namespace BlazorGalaga.Services
         {
             await DynamicCtx.SetStrokeStyleAsync("white");
             await DynamicCtx.SetFillStyleAsync("yellow");
+            await DynamicCtx.SetFontAsync("48px serif");
             await DynamicCtx.SetLineWidthAsync(2);
 
             //await StaticCtx.SetFillStyleAsync("yellow");
@@ -67,6 +68,12 @@ namespace BlazorGalaga.Services
                     break;
                 case Sprite.SpriteTypes.BlueBug:
                     SetUpSprite(sprite, 1, 109, 91, -90);
+                    break;
+                case Sprite.SpriteTypes.RedBug:
+                    SetUpSprite(sprite, 2, 109, 73, -90);
+                    break;
+                case Sprite.SpriteTypes.GreenBug:
+                    SetUpSprite(sprite, 3, 109, 37, -90);
                     break;
             }
 

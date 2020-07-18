@@ -18,32 +18,32 @@ namespace BlazorGalaga.Static
             {
                 case 1:
                     for (int i = 0; i < 4; i++)
-                        animatables.Add(CreateAnimatable_BugIntro(i, i * Constants.BugIntroSpacing, new Intro1()));
+                        animatables.Add(CreateAnimatable_BugIntro(i, i * Constants.BugIntroSpacing, new Intro1(), Sprite.SpriteTypes.BlueBug));
 
                     for (int i = 0; i < 4; i++)
-                        animatables.Add(CreateAnimatable_BugIntro(i + 4, i * Constants.BugIntroSpacing, new Intro2()));
+                        animatables.Add(CreateAnimatable_BugIntro(i + 4, i * Constants.BugIntroSpacing, new Intro2(),Sprite.SpriteTypes.RedBug));
                     break;
                 case 2:
                     for (int i = 0; i < 8; i++)
-                        animatables.Add(CreateAnimatable_BugIntro(i + 8, i * Constants.BugIntroSpacing, new Intro3()));
+                        animatables.Add(CreateAnimatable_BugIntro(i + 8, i * Constants.BugIntroSpacing, new Intro3(), i % 2 != 0 ? Sprite.SpriteTypes.GreenBug : Sprite.SpriteTypes.RedBug));
 
                     for (int i = 0; i < 8; i++)
-                        animatables.Add(CreateAnimatable_BugIntro(i + 16, i * Constants.BugIntroSpacing, new Intro4()));
+                        animatables.Add(CreateAnimatable_BugIntro(i + 16, i * Constants.BugIntroSpacing, new Intro4(), Sprite.SpriteTypes.RedBug));
                     break;
                 case 3:
                     for (int i = 0; i < 8; i++)
-                        animatables.Add(CreateAnimatable_BugIntro(i + 24, i * Constants.BugIntroSpacing, new Intro1()));
+                        animatables.Add(CreateAnimatable_BugIntro(i + 24, i * Constants.BugIntroSpacing, new Intro1(), Sprite.SpriteTypes.BlueBug));
                     for (int i = 0; i < 8; i++)
-                        animatables.Add(CreateAnimatable_BugIntro(i + 32, i * Constants.BugIntroSpacing, new Intro2()));
+                        animatables.Add(CreateAnimatable_BugIntro(i + 32, i * Constants.BugIntroSpacing, new Intro2(), Sprite.SpriteTypes.BlueBug));
                     break;
             }
 
             return animatables;
         }
 
-        public static IAnimatable CreateAnimatable_BugIntro(int index, int startdelay, IIntro intro)
+        public static IAnimatable CreateAnimatable_BugIntro(int index, int startdelay, IIntro intro, Sprite.SpriteTypes spritetype)
         {
-            var bug = new Bug()
+            var bug = new Bug(spritetype)
             {
                 Index = index,
                 Paths = intro.GetPaths(),
@@ -120,25 +120,25 @@ namespace BlazorGalaga.Static
                     break;
 
                 case 8:
-                    endpoint = enemyGrid.GetPointByRowCol(2, 3);
-                    break;
-                case 9:
                     endpoint = enemyGrid.GetPointByRowCol(2, 6);
                     break;
-                case 10:
-                    endpoint = enemyGrid.GetPointByRowCol(3, 3);
-                    break;
-                case 11:
-                    endpoint = enemyGrid.GetPointByRowCol(3, 6);
-                    break;
-                case 12:
+                case 9:
                     endpoint = enemyGrid.GetPointByRowCol(1, 1);
                     break;
-                case 13:
+                case 10:
+                    endpoint = enemyGrid.GetPointByRowCol(3, 6);
+                    break;
+                case 11:
                     endpoint = enemyGrid.GetPointByRowCol(1, 2);
                     break;
-                case 14:
+                case 12:
+                    endpoint = enemyGrid.GetPointByRowCol(3, 3);
+                    break;
+                case 13:
                     endpoint = enemyGrid.GetPointByRowCol(1, 3);
+                    break;
+                case 14:
+                    endpoint = enemyGrid.GetPointByRowCol(2, 3);
                     break;
                 case 15:
                     endpoint = enemyGrid.GetPointByRowCol(1, 4);
