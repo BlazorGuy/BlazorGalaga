@@ -34,6 +34,12 @@ namespace BlazorGalaga.Static
         private static long framesRendered = 0;
         private static Stopwatch timer = new Stopwatch();
         private static List<dOutInfo> dOuts = new List<dOutInfo>();
+        private static Random rnd = new Random();
+
+        public static int Rnd(int min, int max)
+        {
+            return rnd.Next(min, max);
+        }
 
         public static void dOut(string key, object value)
         {
