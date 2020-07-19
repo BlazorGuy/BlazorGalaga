@@ -1,16 +1,13 @@
 ﻿<Properties StartupConfiguration="{202B6679-81B6-4D6C-83B3-0DC9DE1151AC}|Default">
   <MonoDevelop.Ide.ItemProperties.BlazorGalaga PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Models/Paths/BlueBugDive1.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Services/GameService.cs">
     <Files>
-      <File FileName="BlazorGalaga/Services/SpriteService.cs" Line="69" Column="49" />
+      <File FileName="BlazorGalaga/Services/SpriteService.cs" Line="74" Column="27" />
       <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="104" Column="1" />
       <File FileName="BlazorGalaga/Static/BugFactory.cs" Line="86" Column="73" />
-      <File FileName="BlazorGalaga/Services/GameService.cs" Line="119" Column="36" />
-      <File FileName="BlazorGalaga/Pages/Index.razor.cs" Line="131" Column="35" />
-      <File FileName="BlazorGalaga/Static/Utils.cs" Line="39" Column="10" />
-      <File FileName="BlazorGalaga/Models/Paths/Dive1.cs" Line="53" Column="10" />
-      <File FileName="BlazorGalaga/Models/Paths/Dive2.cs" Line="14" Column="63" />
-      <File FileName="BlazorGalaga/Models/Paths/RedBugDive1.cs" Line="1" Column="1" />
+      <File FileName="BlazorGalaga/Services/GameService.cs" Line="146" Column="30" />
+      <File FileName="BlazorGalaga/Pages/Index.razor.cs" Line="123" Column="40" />
+      <File FileName="BlazorGalaga/Pages/Index.razor" Line="60" Column="55" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -18,16 +15,18 @@
           <Node name="BlazorGalaga" expanded="True">
             <Node name="BlazorGalaga" expanded="True">
               <Node name="Interfaces" expanded="True" />
-              <Node name="Models" expanded="True">
-                <Node name="Paths" expanded="True">
-                  <Node name="BlueBugDive1.cs" selected="True" />
-                </Node>
-              </Node>
+              <Node name="Models" expanded="True" />
               <Node name="Pages" expanded="True">
                 <Node name="Index.razor" expanded="True" />
               </Node>
-              <Node name="Services" expanded="True" />
+              <Node name="Services" expanded="True">
+                <Node name="GameService.cs" selected="True" />
+              </Node>
               <Node name="Static" expanded="True" />
+              <Node name="wwwroot" expanded="True">
+                <Node name="Assets" expanded="True" />
+                <Node name="css" expanded="True" />
+              </Node>
             </Node>
           </Node>
         </State>

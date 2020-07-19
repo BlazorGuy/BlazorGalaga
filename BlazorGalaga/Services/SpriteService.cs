@@ -27,9 +27,6 @@ namespace BlazorGalaga.Services
             await DynamicCtx.SetFontAsync("48px serif");
             await DynamicCtx.SetLineWidthAsync(2);
 
-            //await StaticCtx.SetFillStyleAsync("yellow");
-            //await StaticCtx.FillRectAsync(150, 250, 100, 100);
-
         }
 
         public async void DrawSprite(Sprite sprite, PointF location, float rotationangle)
@@ -83,7 +80,15 @@ namespace BlazorGalaga.Services
         private async void SetUpSprite(Sprite sprite,int bufferindex, int sx, int sy, int rotationoffset)
         {
             await BufferCanvases[bufferindex].Context.DrawImageAsync(
-                SpriteSheet, sx, sy, Constants.SpriteSourceSize, Constants.SpriteSourceSize, 0, 0, Constants.SpriteDestSize.Width, Constants.SpriteDestSize.Height
+                SpriteSheet,
+                sx,
+                sy,
+                Constants.SpriteSourceSize,
+                Constants.SpriteSourceSize,
+                0,
+                0,
+                Constants.SpriteDestSize.Width,
+                Constants.SpriteDestSize.Height
             );
 
             sprite.BufferCanvas = BufferCanvases[bufferindex].Context;

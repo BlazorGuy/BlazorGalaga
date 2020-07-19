@@ -83,7 +83,7 @@ namespace BlazorGalaga.Static
 
             //add the bugs destination path from the enemy grid
             bug.Paths.Add(GetGridPath(bug.Paths[bug.Paths.Count - 1].EndPoint, index));
-            //store the destination path on the enemy grid for later use
+            //store the destination path 
             bug.HomePoint = bug.Paths[bug.Paths.Count - 1].EndPoint;
 
             return bug;
@@ -97,29 +97,30 @@ namespace BlazorGalaga.Static
             switch (index)
             {
                 case 0:
-                    endpoint = enemyGrid.GetPointByRowCol(3, 4);
-                    break;
-                case 1:
-                    endpoint = enemyGrid.GetPointByRowCol(3, 5);
-                    break;
-                case 2:
-                    endpoint = enemyGrid.GetPointByRowCol(2, 4);
-                    break;
-                case 3:
-                    endpoint = enemyGrid.GetPointByRowCol(2, 5);
-                    break;
-                case 4:
                     endpoint = enemyGrid.GetPointByRowCol(5, 5);
                     break;
-                case 5:
+                case 1:
                     endpoint = enemyGrid.GetPointByRowCol(5, 6);
                     break;
-                case 6:
+                case 2:
                     endpoint = enemyGrid.GetPointByRowCol(4, 5);
                     break;
-                case 7:
+                case 3:
                     endpoint = enemyGrid.GetPointByRowCol(4, 6);
                     break;
+                case 4:
+                    endpoint = enemyGrid.GetPointByRowCol(3, 4);
+                    break;
+                case 5:
+                    endpoint = enemyGrid.GetPointByRowCol(3, 5);
+                    break;
+                case 6:
+                    endpoint = enemyGrid.GetPointByRowCol(2, 4);
+                    break;
+                case 7:
+                    endpoint = enemyGrid.GetPointByRowCol(2, 5);
+                    break;
+
 
                 case 8:
                     endpoint = enemyGrid.GetPointByRowCol(2, 6);

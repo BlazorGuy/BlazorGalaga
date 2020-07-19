@@ -31,10 +31,10 @@ namespace BlazorGalaga.Models
 
         public EnemyGrid()
         {
-            const int GridLeft = 250;
+            const int GridLeft = 270;
             const int GridTop = 150;
-            const int HSpacing = 60;
-            const int VSpacing = 60;
+            const int HSpacing = 45;
+            const int VSpacing = 45;
             const int XOffset = 0;
             const int YOffset = 0;
 

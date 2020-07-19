@@ -74,6 +74,7 @@ namespace BlazorGalaga.Pages
             spriteService.Init();
 
             gameService.animationService = animationService;
+            gameService.spriteService = spriteService;
             gameService.Init();
 
             ship = (Ship)animationService.Animatables.FirstOrDefault(a => a.Sprite.SpriteType == Sprite.SpriteTypes.Ship);

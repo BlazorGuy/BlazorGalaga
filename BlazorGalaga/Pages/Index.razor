@@ -1,7 +1,6 @@
 ﻿@page "/"
 
-<style>
-
+    <style>
 
 
     .content {
@@ -40,7 +39,7 @@
         overflow-y: hidden; /* Hide vertical scrollbar */
         overflow-x: hidden; /* Hide horizontal scrollbar */
     }
-</style>
+    </style>
 
 <div id="divDebugDash" style="position:absolute;left:15px;top:15px;width:300px;height:150px;background-color:lightgray;padding:5px;font-size:10px;font-size:10px">
     <input type="checkbox" id="PauseAnimation"  />
@@ -58,7 +57,7 @@
 <div id="divDiagnostics" style="position:absolute;left:15px;top:190px;width:300px;height:400px;background-color:lightgray;padding:5px;font-size:10px;font-size:10px;overflow:scroll">
 </div>
 
-<div id="divBufferCanvas" style="position:absolute;left:1100px;top:15px;opacity:1">
+<div id="divBufferCanvas" style="font-family:Minecraft;position:absolute;left:1100px;top:15px;opacity:1">
     @if (BufferCanvases != null && BufferCanvases.Count>0)
     {
         @foreach(var canvas in BufferCanvases)
