@@ -6,7 +6,7 @@ using BlazorGalaga.Static;
 
 namespace BlazorGalaga.Models.Paths
 {
-    public class RedBugDive1 : IDive
+    public class RedBugDive2 : IDive
     {
         public List<BezierCurve> GetPaths(IAnimatable animatable, Ship ship)
         {
@@ -14,19 +14,19 @@ namespace BlazorGalaga.Models.Paths
 
             var cx = Constants.CanvasSize.Width / 2;
 
-            var rotateclockwise = new BezierCurve()
+            var rotatecounterclockwise = new BezierCurve()
             {
                 StartPoint = animatable.Location,
-                EndPoint = new PointF(animatable.Location.X + 100, animatable.Location.Y),
+                EndPoint = new PointF(animatable.Location.X - 100, animatable.Location.Y),
                 ControlPoint1 = new PointF(animatable.Location.X, animatable.Location.Y - 100),
-                ControlPoint2 = new PointF(animatable.Location.X + 100, animatable.Location.Y - 100)
+                ControlPoint2 = new PointF(animatable.Location.X - 100, animatable.Location.Y - 100)
             };
             var dive = new BezierCurve()
             {
-                StartPoint = new PointF(animatable.Location.X + 100, animatable.Location.Y),
-                EndPoint = new PointF(ship.Location.X + 90, Constants.CanvasSize.Height + 20),
-                ControlPoint1 = new PointF(animatable.Location.X + 100, Constants.CanvasSize.Height / 2),
-                ControlPoint2 = new PointF(0, Constants.CanvasSize.Height / 2),
+                StartPoint = new PointF(animatable.Location.X - 100, animatable.Location.Y),
+                EndPoint = new PointF(ship.Location.X - 90, Constants.CanvasSize.Height + 20),
+                ControlPoint1 = new PointF(animatable.Location.X - 100, Constants.CanvasSize.Height / 2),
+                ControlPoint2 = new PointF(Constants.CanvasSize.Width, Constants.CanvasSize.Height / 2),
             };
             var gohome = new BezierCurve()
             {
@@ -36,7 +36,7 @@ namespace BlazorGalaga.Models.Paths
                 ControlPoint2 = new PointF(Constants.CanvasSize.Width, Constants.CanvasSize.Height / 2)
             };
 
-            paths.Add(rotateclockwise);
+            paths.Add(rotatecounterclockwise);
             paths.Add(dive);
             paths.Add(gohome);
 

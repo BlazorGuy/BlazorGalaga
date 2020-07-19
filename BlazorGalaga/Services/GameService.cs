@@ -41,49 +41,49 @@ namespace BlazorGalaga.Services
 
                     //creates two top down bug lines of 4 each, these enter at the same time
                     animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(1));
-                    //creates two side bug lines of 8 each, these enter one after the other
-                    animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(2));
-                    //creates two top down bug lines of 8 each, these enter one after the other
-                    animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(3));
+                    ////creates two side bug lines of 8 each, these enter one after the other
+                    //animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(2));
+                    ////creates two top down bug lines of 8 each, these enter one after the other
+                    //animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(3));
                     animationService.ComputePathPoints();
 
                     Task.Delay(2000).ContinueWith((task) =>
                     {
                         animationService.Animatables.Where(a => a.Index < 8).ToList().ForEach(a => a.Started = true);
                     });
-                    //Task.Delay(6000).ContinueWith((task) =>
+                    Task.Delay(6000).ContinueWith((task) =>
+                    {
+                        DoEnemyDive();
+                    });
+                    //Task.Delay(5000).ContinueWith((task) =>
                     //{
-                    //    DoEnemyDive();
+                    //    animationService.Animatables.Where(a => a.Index >= 8 && a.Index < 16).ToList().ForEach(a => a.Started = true);
                     //});
-                    Task.Delay(5000).ContinueWith((task) =>
-                    {
-                        animationService.Animatables.Where(a => a.Index >= 8 && a.Index < 16).ToList().ForEach(a => a.Started = true);
-                    });
 
-                    Task.Delay(9000).ContinueWith((task) =>
-                    {
-                        animationService.Animatables.Where(a => a.Index >= 16 && a.Index < 24).ToList().ForEach(a => a.Started = true);
-                    });
+                    //Task.Delay(9000).ContinueWith((task) =>
+                    //{
+                    //    animationService.Animatables.Where(a => a.Index >= 16 && a.Index < 24).ToList().ForEach(a => a.Started = true);
+                    //});
 
-                    Task.Delay(14000).ContinueWith((task) =>
-                    {
-                        animationService.Animatables.Where(a => a.Index >= 24 && a.Index < 32).ToList().ForEach(a => a.Started = true);
-                    });
+                    //Task.Delay(14000).ContinueWith((task) =>
+                    //{
+                    //    animationService.Animatables.Where(a => a.Index >= 24 && a.Index < 32).ToList().ForEach(a => a.Started = true);
+                    //});
 
-                    Task.Delay(18000).ContinueWith((task) =>
-                    {
-                        animationService.Animatables.Where(a => a.Index >= 32 && a.Index < 40).ToList().ForEach(a => a.Started = true);
-                    });
-                    Task.Delay(22000).ContinueWith((task) =>
-                    {
-                        for (int i = 0; i <= 100; i++)
-                        {
-                            Task.Delay(i * 3000).ContinueWith((task) =>
-                            {
-                                DoEnemyDive();
-                            });
-                        }
-                    });
+                    //Task.Delay(18000).ContinueWith((task) =>
+                    //{
+                    //    animationService.Animatables.Where(a => a.Index >= 32 && a.Index < 40).ToList().ForEach(a => a.Started = true);
+                    //});
+                    //Task.Delay(22000).ContinueWith((task) =>
+                    //{
+                    //    for (int i = 0; i <= 100; i++)
+                    //    {
+                    //        Task.Delay(i * 3000).ContinueWith((task) =>
+                    //        {
+                    //            DoEnemyDive();
+                    //        });
+                    //    }
+                    //});
                     break;
             }
 
@@ -102,12 +102,27 @@ namespace BlazorGalaga.Services
 
             Utils.dOut("diving 2", "");
 
-            IDive dive;
-            //dive = new Dive2();
-            if (Utils.Rnd(0, 10) % 2 == 0)
-                dive = new BlueBugDive1();
-            else
-                dive = new BlueBugDive2();
+            IDive dive = null;
+            dive = new GreenBugDive2();
+
+            //if (bug.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug)
+            //{
+            //    if (Utils.Rnd(0, 10) % 2 == 0)
+            //        dive = new BlueBugDive1();
+            //    else
+            //        dive = new BlueBugDive2();
+            //}
+            //else if (bug.Sprite.SpriteType == Sprite.SpriteTypes.RedBug)
+            //{
+            //    if (Utils.Rnd(0, 10) % 2 == 0)
+            //        dive = new RedBugDive1();
+            //    else
+            //        dive = new RedBugDive2();
+            //}
+            //else
+            //{
+            //    dive = new RedBugDive1();
+            //}
 
             var paths = dive.GetPaths(bug, Ship);
 
