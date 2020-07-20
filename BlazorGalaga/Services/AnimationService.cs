@@ -62,6 +62,8 @@ namespace BlazorGalaga.Services
                     Utils.dOut("Animation Error", ex.Message + "<br/>" + ex.StackTrace + "<br/>" + " animatable.CurPathPointIndex: " + animatable.CurPathPointIndex + " animatable.PathPoints.Count: " + animatable.PathPoints.Count);
                 }
 
+                Utils.dOut("Animatables", Animatables.Count);
+
                 animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
                 animatable.CurPathPointIndex += animatable.Speed;
                 animatable.IsMoving = true;
@@ -83,17 +85,33 @@ namespace BlazorGalaga.Services
                     if (animatable.LoopBack) animatable.Speed *= -1;
                 }
             }
-
+            CleanUpOffScreenAnimatables();
         }
 
-        public List<PointF> ComputePathPoints(BezierCurve path)
+        public void CleanUpOffScreenAnimatables()
+        {
+            Animatables.RemoveAll(a =>
+                !a.IsMoving
+                && a.Started
+                && (a.Location.X < 0 ||
+                    a.Location.Y < 0 ||
+                    a.Location.X > Constants.CanvasSize.Width ||
+                    a.Location.Y > Constants.CanvasSize.Height)
+                    );
+        }
+
+        public List<PointF> ComputePathPoints(BezierCurve path, bool pathisline=false)
         {
             float pointgranularity = 1F; //the lower the more granular
             List<PointF> pathpoints = new List<PointF>();
 
             for (var percent = 0F; percent <= 100; percent += .1F)
             {
-                var point = bezierCurveService.getCubicBezierXYatPercent(path, percent);
+                PointF point;
+                if (pathisline)
+                    point = bezierCurveService.getLineXYatPercent(path, percent);
+                else
+                    point = bezierCurveService.getCubicBezierXYatPercent(path, percent);
                 pathpoints.Add(point);
             }
 

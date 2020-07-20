@@ -72,6 +72,9 @@ namespace BlazorGalaga.Services
                 case Sprite.SpriteTypes.GreenBug:
                     SetUpSprite(sprite, 3, 109, 37, -90);
                     break;
+                case Sprite.SpriteTypes.ShipMissle:
+                    SetUpSprite(sprite, 4, 310, 120, 0);
+                    break;
             }
 
             sprite.IsInitialized = true;

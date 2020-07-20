@@ -5,13 +5,13 @@ using BlazorGalaga.Interfaces;
 
 namespace BlazorGalaga.Models
 {
-    public class Ship : AnimatableBase
+    public class ShipMissle : AnimatableBase
     {
         public bool IsFiring { get; set; }
 
-        public Ship() 
+        public ShipMissle() 
         {
-            Sprite = new Sprite(Sprite.SpriteTypes.Ship);
+            Sprite = new Sprite(Sprite.SpriteTypes.ShipMissle);
         }
     }
 }

@@ -1,15 +1,16 @@
 ﻿<Properties StartupConfiguration="{202B6679-81B6-4D6C-83B3-0DC9DE1151AC}|Default">
   <MonoDevelop.Ide.ItemProperties.BlazorGalaga PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Models/Paths/GreenBugDive2.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Static/KeyBoardHelper.cs">
     <Files>
-      <File FileName="BlazorGalaga/Services/SpriteService.cs" Line="74" Column="27" />
-      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="104" Column="1" />
-      <File FileName="BlazorGalaga/Static/BugFactory.cs" Line="117" Column="24" />
-      <File FileName="BlazorGalaga/Services/GameService.cs" Line="44" Column="94" />
-      <File FileName="BlazorGalaga/Pages/Index.razor.cs" Line="123" Column="40" />
-      <File FileName="BlazorGalaga/Pages/Index.razor" Line="60" Column="55" />
-      <File FileName="BlazorGalaga/Models/Paths/GreenBugDive1.cs" Line="56" Column="41" />
-      <File FileName="BlazorGalaga/Models/Paths/GreenBugDive2.cs" Line="10" Column="31" />
+      <File FileName="BlazorGalaga/Services/SpriteService.cs" Line="76" Column="55" />
+      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="96" Column="30" />
+      <File FileName="BlazorGalaga/Static/BugFactory.cs" />
+      <File FileName="BlazorGalaga/Services/GameService.cs" Line="73" Column="1" />
+      <File FileName="BlazorGalaga/Pages/Index.razor.cs" />
+      <File FileName="BlazorGalaga/Pages/Index.razor" />
+      <File FileName="BlazorGalaga/Models/Paths/GreenBugDive1.cs" />
+      <File FileName="BlazorGalaga/Models/Paths/GreenBugDive2.cs" Line="51" Column="70" />
+      <File FileName="BlazorGalaga/Static/KeyBoardHelper.cs" Line="58" Column="40" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -17,12 +18,11 @@
           <Node name="BlazorGalaga" expanded="True">
             <Node name="BlazorGalaga" expanded="True">
               <Node name="Interfaces" expanded="True" />
-              <Node name="Models" expanded="True">
-                <Node name="Paths" expanded="True">
-                  <Node name="GreenBugDive2.cs" selected="True" />
-                </Node>
-              </Node>
+              <Node name="Models" expanded="True" />
               <Node name="Services" expanded="True" />
+              <Node name="Static" expanded="True">
+                <Node name="KeyBoardHelper.cs" selected="True" />
+              </Node>
             </Node>
           </Node>
         </State>

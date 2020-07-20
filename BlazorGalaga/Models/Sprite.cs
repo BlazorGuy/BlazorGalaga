@@ -12,7 +12,8 @@ namespace BlazorGalaga.Models
             Ship,
             BlueBug,
             RedBug,
-            GreenBug
+            GreenBug,
+            ShipMissle
         }
 
         public RectangleF SpriteDestRect { get; set; }

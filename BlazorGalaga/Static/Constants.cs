@@ -14,5 +14,7 @@ namespace BlazorGalaga.Static
         public static int BugIntroSpacing = 70;
         public static string ArrowLeft = "ArrowLeft";
         public static string ArrowRight = "ArrowRight";
+        public static string Space = "Space";
+        public static int ShipMissleDelaySpeed = 200;
     }
 }
