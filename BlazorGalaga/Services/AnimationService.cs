@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Text;
 using System.Diagnostics;
+using System.ComponentModel;
 
 namespace BlazorGalaga.Services
 {
@@ -62,21 +63,24 @@ namespace BlazorGalaga.Services
                     Utils.dOut("Animation Error", ex.Message + "<br/>" + ex.StackTrace + "<br/>" + " animatable.CurPathPointIndex: " + animatable.CurPathPointIndex + " animatable.PathPoints.Count: " + animatable.PathPoints.Count);
                 }
 
-                Utils.dOut("Animatables", Animatables.Count);
-
-                animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
                 animatable.CurPathPointIndex += animatable.Speed;
-                animatable.IsMoving = true;
 
                 if (animatable.CurPathPointIndex > animatable.PathPoints.Count - 1)
                 {
                     //this stops the animation
-                    animatable.CurPathPointIndex -= animatable.Speed;
                     animatable.CurPathPointIndex = animatable.PathPoints.Count-1;
-                    animatable.IsMoving = false;
                     if (animatable.LoopBack) animatable.Speed *= -1;
+                    if ((int)(animatable.Rotation + animatable.Sprite.InitialRotationOffset) > 0)
+                        animatable.Rotation -= 1;
+                    else if ((int)(animatable.Rotation + animatable.Sprite.InitialRotationOffset) < 0)
+                        animatable.Rotation += 1;
+                    else
+                    {
+                        animatable.IsMoving = false;
+                        animatable.ZIndex = 0;
+                    }
                 }
-                if (animatable.CurPathPointIndex < 0)
+                else if (animatable.CurPathPointIndex < 0)
                 {
                     //this stops the animation
                     animatable.CurPathPointIndex = 0;
@@ -84,7 +88,13 @@ namespace BlazorGalaga.Services
                     animatable.IsMoving = false;
                     if (animatable.LoopBack) animatable.Speed *= -1;
                 }
+                else
+                {
+                    animatable.IsMoving = true;
+                    animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
+                }
             }
+
             CleanUpOffScreenAnimatables();
         }
 
@@ -158,15 +168,13 @@ namespace BlazorGalaga.Services
 
             ResetCanvas(spriteService.DynamicCtx);
 
-            foreach (IAnimatable animatable in Animatables.Where(a=>a.Started)) {
+            foreach (IAnimatable animatable in Animatables.Where(a=>a.Started).OrderByDescending(a=>a.ZIndex)) {
 
                 spriteService.DrawSprite(
-                    animatable.Sprite,
+                    animatable.SpriteBankIndex == null ? animatable.Sprite : animatable.SpriteBank[(int)animatable.SpriteBankIndex],
                     animatable.Location,
                     (animatable.RotateAlongPath && animatable.IsMoving) ? animatable.Rotation : 0
                     );
-
-                //bezierCurveService.DrawGrid(spriteService.CanvasCtx);
 
                 foreach (BezierCurve path in animatable.Paths.Where(a=>a.DrawPath==true))
                 {

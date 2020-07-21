@@ -25,8 +25,11 @@ namespace BlazorGalaga.Models
         public bool Started { get; set; }
         public bool StartDelayStarted { get; set; }
         public bool IsMoving { get; set; }
-
+        public List<Sprite> SpriteBank { get; set; }
+        public int? SpriteBankIndex { get; set; }
         public int StartDelay { get; set; }
+
+        public int ZIndex { get; set; }
 
         public AnimatableBase()
         {

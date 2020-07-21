@@ -50,8 +50,22 @@ namespace BlazorGalaga.Static
                 RotateAlongPath = true,
                 Speed = Constants.BugIntroSpeed,
                 StartDelay = startdelay,
-                Started = false
+                Started = false,
+                ZIndex = 100,
             };
+
+            switch (spritetype)
+            {
+                case Sprite.SpriteTypes.BlueBug:
+                    bug.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.BlueBug_DownFlap));
+                    break;
+                case Sprite.SpriteTypes.RedBug:
+                    bug.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.RedBug_DownFlap));
+                    break;
+                case Sprite.SpriteTypes.GreenBug:
+                    bug.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.GreenBug_DownFlap));
+                    break;
+            }
 
             if (index < 8 || index >= 24)
                 //For bugs dropping from the top, add an offscreen path to make the bug fly in from off screen

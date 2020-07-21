@@ -75,6 +75,15 @@ namespace BlazorGalaga.Services
                 case Sprite.SpriteTypes.ShipMissle:
                     SetUpSprite(sprite, 4, 310, 120, 0);
                     break;
+                case Sprite.SpriteTypes.BlueBug_DownFlap:
+                    SetUpSprite(sprite, 5, 127, 91, 0);
+                    break;
+                case Sprite.SpriteTypes.RedBug_DownFlap:
+                    SetUpSprite(sprite, 6, 127, 73, 0);
+                    break;
+                case Sprite.SpriteTypes.GreenBug_DownFlap:
+                    SetUpSprite(sprite, 7, 127, 37, 0);
+                    break;
             }
 
             sprite.IsInitialized = true;

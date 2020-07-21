@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using BlazorGalaga.Interfaces;
 using BlazorGalaga.Models;
@@ -21,11 +22,29 @@ namespace BlazorGalaga.Services
 
         private bool levelInitialized = false;
         private bool consoledrawn = false;
+        private System.Timers.Timer FlapWingsTimer = new System.Timers.Timer();
+        private bool WingsUp;
 
         public void Init()
         {
+            FlapWingsTimer.Interval = 500;
+            FlapWingsTimer.Elapsed += FlapWingsTimer_Elapsed;
+            FlapWingsTimer.Start();
+
             Lives = 2;
             InitShip();
+        }
+
+        private void FlapWingsTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            Utils.dOut("WingsUp", WingsUp);
+
+            var bugs = GetBugs();
+
+            foreach(var bug in bugs.Where(a=>!a.IsMoving && a.Started))
+                bug.SpriteBankIndex = WingsUp ? null : (int?)0;
+
+            WingsUp = !WingsUp;
         }
 
         private void InitLevel(int level)
@@ -98,7 +117,9 @@ namespace BlazorGalaga.Services
             while(bug == null || bug.IsMoving)
             {
                 bug = bugs.FirstOrDefault(a => a.Index == Utils.Rnd(0, bugs.Count - 1));
-            } 
+            }
+
+            bug.SpriteBankIndex = null;
 
             IDive dive = null;
             //dive = new GreenBugDive2();
@@ -129,8 +150,11 @@ namespace BlazorGalaga.Services
                 dive = new RedBugDive1();
             }
 
+            animationService.Animatables.ForEach(a => a.ZIndex = 0);
+
             var paths = dive.GetPaths(bug, Ship);
 
+            bug.ZIndex = 100;
             bug.Speed = 5;
             bug.Paths.AddRange(paths);
 
@@ -242,6 +266,8 @@ namespace BlazorGalaga.Services
                 ship.PathPoints.AddRange(animationService.ComputePathPoints(a));
             });
 
+            ship.CurPathPointIndex = (int)ship.PathPoints.Count / 3;
+
             animationService.Animatables.Add(ship);
         }
 
@@ -266,6 +292,7 @@ namespace BlazorGalaga.Services
                 DoFireFromShip();
                 Utils.dOut("Ship Fired", firecount);
             }
+            
         }
     }
 }

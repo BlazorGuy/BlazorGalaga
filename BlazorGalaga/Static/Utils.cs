@@ -30,6 +30,7 @@ namespace BlazorGalaga.Static
             }
         }
 
+        public static Stopwatch GlobalStopWatch { get; set; }
         public static float FPS;
         private static long framesRendered = 0;
         private static Stopwatch timer = new Stopwatch();
@@ -62,7 +63,7 @@ namespace BlazorGalaga.Static
             if (timer.ElapsedMilliseconds >= 1000)
             {
                 FPS = framesRendered;
-                dOut("FPS", FPS.ToString());
+                dOut("FPS","<span style='color:blue;font-weight:bold'>" +  FPS.ToString() + "</span>");
                 framesRendered = 0;
                 timer.Restart();
             }

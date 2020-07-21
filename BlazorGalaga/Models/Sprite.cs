@@ -11,8 +11,11 @@ namespace BlazorGalaga.Models
         {
             Ship,
             BlueBug,
+            BlueBug_DownFlap,
             RedBug,
+            RedBug_DownFlap,
             GreenBug,
+            GreenBug_DownFlap,
             ShipMissle
         }
 

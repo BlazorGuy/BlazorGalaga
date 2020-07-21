@@ -12,6 +12,7 @@ namespace BlazorGalaga.Models
         public Bug(Sprite.SpriteTypes spritetype)
         {
             Sprite = new Sprite(spritetype);
+            SpriteBank = new List<Sprite>();
         }
     }
 }

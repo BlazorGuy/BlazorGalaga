@@ -16,6 +16,7 @@ namespace BlazorGalaga.Interfaces
         public bool RotateAlongPath { get; set; }
         public bool DrawPath { get; set; }
         public Sprite Sprite { get; set; }
+        public List<Sprite> SpriteBank { get; set; }
         public bool PathIsLine { get; set; }
         public List<PointF> PathPoints { get; set; }
         public int CurPathPointIndex { get; set; }
@@ -27,6 +28,8 @@ namespace BlazorGalaga.Interfaces
         public bool StartDelayStarted { get; set; }
         public bool Started { get; set; }
         public bool IsMoving { get; set; }
+        public int? SpriteBankIndex { get; set; }
+        public int ZIndex { get; set; }
 
     }
 }
