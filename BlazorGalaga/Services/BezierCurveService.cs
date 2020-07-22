@@ -138,17 +138,21 @@ namespace BlazorGalaga.Services
             return (float)angdeg;
         }
 
-        //for strait lines
-        public PointF getLineXYatPercent(BezierCurve curve, float percent)
+        public PointF getLineXYatPercent(PointF startpoint, PointF endpoint, float percent)
         {
             percent /= 100;
 
-            var dx = curve.EndPoint.X - curve.StartPoint.X;
-            var dy = curve.EndPoint.Y - curve.StartPoint.Y;
-            var X = curve.StartPoint.X + dx * percent;
-            var Y = curve.StartPoint.Y + dy * percent;
+            var dx = endpoint.X - startpoint.X;
+            var dy = endpoint.Y - startpoint.Y;
+            var X = startpoint.X + dx * percent;
+            var Y = startpoint.Y + dy * percent;
 
             return new PointF(X, Y);
+        }
+        //for strait lines
+        public PointF getLineXYatPercent(BezierCurve curve, float percent)
+        {
+            return getLineXYatPercent(curve.StartPoint, curve.EndPoint, percent);
         }
 
         public PointF getQuadraticBezierXYatPercent(BezierCurve curve, float percent)

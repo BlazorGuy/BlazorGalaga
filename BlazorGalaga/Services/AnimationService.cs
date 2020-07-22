@@ -67,17 +67,30 @@ namespace BlazorGalaga.Services
 
                 if (animatable.CurPathPointIndex > animatable.PathPoints.Count - 1)
                 {
+                    if (animatable.LineToLocation != null && animatable.LineToLocationPercent <= 100)
+                    {
+                        var speed = animatable.Speed / 2;
+                        animatable.PevLocation = animatable.Location;
+                        animatable.Location = bezierCurveService.getLineXYatPercent(animatable.LineFromToLocation, animatable.LineToLocation, animatable.LineToLocationPercent);
+                        if (animatable.LineToLocationPercent + speed < 100)
+                            animatable.NextLocation = bezierCurveService.getLineXYatPercent(animatable.LineFromToLocation, animatable.LineToLocation, animatable.LineToLocationPercent + speed); ;
+                        animatable.LineToLocationPercent += speed;
+                        //animatable.IsMoving = true;
+                        animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
+                    }
                     //this stops the animation
                     animatable.CurPathPointIndex = animatable.PathPoints.Count-1;
                     if (animatable.LoopBack) animatable.Speed *= -1;
-                    if ((int)(animatable.Rotation + animatable.Sprite.InitialRotationOffset) > 0)
-                        animatable.Rotation -= 1;
-                    else if ((int)(animatable.Rotation + animatable.Sprite.InitialRotationOffset) < 0)
-                        animatable.Rotation += 1;
+                    if (animatable.RotateAlongPath && (int)(animatable.Rotation + animatable.Sprite.InitialRotationOffset) > 0)
+                        animatable.Rotation -= animatable.RotatIntoPlaceSpeed;
+                    else if (animatable.RotateAlongPath && (int)(animatable.Rotation + animatable.Sprite.InitialRotationOffset) < 0)
+                        animatable.Rotation += animatable.RotatIntoPlaceSpeed;
                     else
                     {
                         animatable.IsMoving = false;
                         animatable.ZIndex = 0;
+                        animatable.PathPoints.Clear();
+                        animatable.Paths.Clear();
                     }
                 }
                 else if (animatable.CurPathPointIndex < 0)
@@ -100,22 +113,32 @@ namespace BlazorGalaga.Services
 
         public void CleanUpOffScreenAnimatables()
         {
-            Animatables.RemoveAll(a =>
-                !a.IsMoving
-                && a.Started
-                && (a.Location.X < 0 ||
-                    a.Location.Y < 0 ||
-                    a.Location.X > Constants.CanvasSize.Width ||
-                    a.Location.Y > Constants.CanvasSize.Height)
-                    );
+            Utils.dOut("Animatables", Animatables.Count);
+
+            for(var i = 0; i <= Animatables.Count - 1; i++)
+            {
+                if (!Animatables[i].IsMoving
+                && Animatables[i].Started
+                && (Animatables[i].Location.X < 0 ||
+                    Animatables[i].Location.Y < 0 ||
+                    Animatables[i].Location.X > Constants.CanvasSize.Width ||
+                    Animatables[i].Location.Y > Constants.CanvasSize.Height))
+                {
+                    (Animatables[i] as AnimatableBase).Dispose();
+                    Animatables[i] = null;
+                }
+            }
+
+            Animatables.RemoveAll(a => a == null);
+
         }
 
-        public List<PointF> ComputePathPoints(BezierCurve path, bool pathisline=false)
+        public List<PointF> ComputePathPoints(BezierCurve path, bool pathisline=false,float granularity = .1F)
         {
             float pointgranularity = 1F; //the lower the more granular
             List<PointF> pathpoints = new List<PointF>();
 
-            for (var percent = 0F; percent <= 100; percent += .1F)
+            for (var percent = 0F; percent <= 100; percent += granularity)
             {
                 PointF point;
                 if (pathisline)

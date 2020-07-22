@@ -9,7 +9,7 @@ namespace BlazorGalaga.Static
 {
     public static class BugFactory
     {
-        private static EnemyGrid enemyGrid = new EnemyGrid();
+        public static EnemyGrid EnemyGrid = new EnemyGrid();
         public static List<IAnimatable> CreateAnimation_BugIntro(int introindex)
         {
             List<IAnimatable> animatables = new List<IAnimatable>();
@@ -52,6 +52,7 @@ namespace BlazorGalaga.Static
                 StartDelay = startdelay,
                 Started = false,
                 ZIndex = 100,
+                RotatIntoPlaceSpeed = Constants.BugRotateIntoPlaceSpeed
             };
 
             switch (spritetype)
@@ -96,7 +97,9 @@ namespace BlazorGalaga.Static
                 });
 
             //add the bugs destination path from the enemy grid
-            bug.Paths.Add(GetGridPath(bug.Paths[bug.Paths.Count - 1].EndPoint, index));
+            //bug.Paths.Add(GetGridPath(bug.Paths[bug.Paths.Count - 1].EndPoint, index));
+            bug.LineFromToLocation = bug.Paths[bug.Paths.Count - 1].EndPoint;
+            bug.LineToLocation = GetGridPath(bug.Paths[bug.Paths.Count - 1].EndPoint, index).EndPoint;
             //store the destination path 
             bug.HomePoint = bug.Paths[bug.Paths.Count - 1].EndPoint;
 
@@ -111,129 +114,129 @@ namespace BlazorGalaga.Static
             switch (index)
             {
                 case 0:
-                    endpoint = enemyGrid.GetPointByRowCol(5, 5);
+                    endpoint = EnemyGrid.GetPointByRowCol(5, 5);
                     break;
                 case 1:
-                    endpoint = enemyGrid.GetPointByRowCol(5, 6);
+                    endpoint = EnemyGrid.GetPointByRowCol(5, 6);
                     break;
                 case 2:
-                    endpoint = enemyGrid.GetPointByRowCol(4, 5);
+                    endpoint = EnemyGrid.GetPointByRowCol(4, 5);
                     break;
                 case 3:
-                    endpoint = enemyGrid.GetPointByRowCol(4, 6);
+                    endpoint = EnemyGrid.GetPointByRowCol(4, 6);
                     break;
                 case 4:
-                    endpoint = enemyGrid.GetPointByRowCol(3, 4);
+                    endpoint = EnemyGrid.GetPointByRowCol(3, 4);
                     break;
                 case 5:
-                    endpoint = enemyGrid.GetPointByRowCol(3, 5);
+                    endpoint = EnemyGrid.GetPointByRowCol(3, 5);
                     break;
                 case 6:
-                    endpoint = enemyGrid.GetPointByRowCol(2, 4);
+                    endpoint = EnemyGrid.GetPointByRowCol(2, 4);
                     break;
                 case 7:
-                    endpoint = enemyGrid.GetPointByRowCol(2, 5);
+                    endpoint = EnemyGrid.GetPointByRowCol(2, 5);
                     break;
 
 
                 case 8:
-                    endpoint = enemyGrid.GetPointByRowCol(2, 6);
+                    endpoint = EnemyGrid.GetPointByRowCol(2, 6);
                     break;
                 case 9:
-                    endpoint = enemyGrid.GetPointByRowCol(1, 1);
+                    endpoint = EnemyGrid.GetPointByRowCol(1, 1);
                     break;
                 case 10:
-                    endpoint = enemyGrid.GetPointByRowCol(3, 6);
+                    endpoint = EnemyGrid.GetPointByRowCol(3, 6);
                     break;
                 case 11:
-                    endpoint = enemyGrid.GetPointByRowCol(1, 2);
+                    endpoint = EnemyGrid.GetPointByRowCol(1, 2);
                     break;
                 case 12:
-                    endpoint = enemyGrid.GetPointByRowCol(3, 3);
+                    endpoint = EnemyGrid.GetPointByRowCol(3, 3);
                     break;
                 case 13:
-                    endpoint = enemyGrid.GetPointByRowCol(1, 3);
+                    endpoint = EnemyGrid.GetPointByRowCol(1, 3);
                     break;
                 case 14:
-                    endpoint = enemyGrid.GetPointByRowCol(2, 3);
+                    endpoint = EnemyGrid.GetPointByRowCol(2, 3);
                     break;
                 case 15:
-                    endpoint = enemyGrid.GetPointByRowCol(1, 4);
+                    endpoint = EnemyGrid.GetPointByRowCol(1, 4);
                     break;
 
                 case 16:
-                    endpoint = enemyGrid.GetPointByRowCol(2, 7);
+                    endpoint = EnemyGrid.GetPointByRowCol(2, 7);
                     break;
                 case 17:
-                    endpoint = enemyGrid.GetPointByRowCol(2, 8);
+                    endpoint = EnemyGrid.GetPointByRowCol(2, 8);
                     break;
                 case 18:
-                    endpoint = enemyGrid.GetPointByRowCol(3, 7);
+                    endpoint = EnemyGrid.GetPointByRowCol(3, 7);
                     break;
                 case 19:
-                    endpoint = enemyGrid.GetPointByRowCol(3, 8);
+                    endpoint = EnemyGrid.GetPointByRowCol(3, 8);
                     break;
                 case 20:
-                    endpoint = enemyGrid.GetPointByRowCol(2, 1);
+                    endpoint = EnemyGrid.GetPointByRowCol(2, 1);
                     break;
                 case 21:
-                    endpoint = enemyGrid.GetPointByRowCol(2, 2);
+                    endpoint = EnemyGrid.GetPointByRowCol(2, 2);
                     break;
                 case 22:
-                    endpoint = enemyGrid.GetPointByRowCol(3, 1);
+                    endpoint = EnemyGrid.GetPointByRowCol(3, 1);
                     break;
                 case 23:
-                    endpoint = enemyGrid.GetPointByRowCol(3, 2);
+                    endpoint = EnemyGrid.GetPointByRowCol(3, 2);
                     break;
 
                 case 24:
-                    endpoint = enemyGrid.GetPointByRowCol(4, 7);
+                    endpoint = EnemyGrid.GetPointByRowCol(4, 7);
                     break;
                 case 25:
-                    endpoint = enemyGrid.GetPointByRowCol(4, 8);
+                    endpoint = EnemyGrid.GetPointByRowCol(4, 8);
                     break;
                 case 26:
-                    endpoint = enemyGrid.GetPointByRowCol(5, 7);
+                    endpoint = EnemyGrid.GetPointByRowCol(5, 7);
                     break;
                 case 27:
-                    endpoint = enemyGrid.GetPointByRowCol(5, 8);
+                    endpoint = EnemyGrid.GetPointByRowCol(5, 8);
                     break;
                 case 28:
-                    endpoint = enemyGrid.GetPointByRowCol(4, 4);
+                    endpoint = EnemyGrid.GetPointByRowCol(4, 4);
                     break;
                 case 29:
-                    endpoint = enemyGrid.GetPointByRowCol(4, 3);
+                    endpoint = EnemyGrid.GetPointByRowCol(4, 3);
                     break;
                 case 30:
-                    endpoint = enemyGrid.GetPointByRowCol(5, 4);
+                    endpoint = EnemyGrid.GetPointByRowCol(5, 4);
                     break;
                 case 31:
-                    endpoint = enemyGrid.GetPointByRowCol(5, 3);
+                    endpoint = EnemyGrid.GetPointByRowCol(5, 3);
                     break;
 
                 case 32:
-                    endpoint = enemyGrid.GetPointByRowCol(4, 2);
+                    endpoint = EnemyGrid.GetPointByRowCol(4, 2);
                     break;
                 case 33:
-                    endpoint = enemyGrid.GetPointByRowCol(4, 1);
+                    endpoint = EnemyGrid.GetPointByRowCol(4, 1);
                     break;
                 case 34:
-                    endpoint = enemyGrid.GetPointByRowCol(5, 2);
+                    endpoint = EnemyGrid.GetPointByRowCol(5, 2);
                     break;
                 case 35:
-                    endpoint = enemyGrid.GetPointByRowCol(5, 1);
+                    endpoint = EnemyGrid.GetPointByRowCol(5, 1);
                     break;
                 case 36:
-                    endpoint = enemyGrid.GetPointByRowCol(4, 9);
+                    endpoint = EnemyGrid.GetPointByRowCol(4, 9);
                     break;
                 case 37:
-                    endpoint = enemyGrid.GetPointByRowCol(4, 10);
+                    endpoint = EnemyGrid.GetPointByRowCol(4, 10);
                     break;
                 case 38:
-                    endpoint = enemyGrid.GetPointByRowCol(5, 9);
+                    endpoint = EnemyGrid.GetPointByRowCol(5, 9);
                     break;
                 case 39:
-                    endpoint = enemyGrid.GetPointByRowCol(5, 10);
+                    endpoint = EnemyGrid.GetPointByRowCol(5, 10);
                     break;
             }
 

@@ -29,9 +29,12 @@ namespace BlazorGalaga.Models
             return GridPoints.FirstOrDefault(a => a.Row == row && a.Column == col).Point;
         }
 
+        public int GridLeft { get; set; }
+
         public EnemyGrid()
         {
-            const int GridLeft = 270;
+            GridLeft = 270;
+            
             const int GridTop = 150;
             const int HSpacing = 45;
             const int VSpacing = 45;

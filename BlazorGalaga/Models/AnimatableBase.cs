@@ -5,7 +5,7 @@ using BlazorGalaga.Interfaces;
 
 namespace BlazorGalaga.Models
 {
-    public abstract class AnimatableBase : IAnimatable
+    public abstract class AnimatableBase : IAnimatable, IDisposable
     {
         public int Index { get; set; }
         public PointF Location { get; set; }
@@ -28,13 +28,27 @@ namespace BlazorGalaga.Models
         public List<Sprite> SpriteBank { get; set; }
         public int? SpriteBankIndex { get; set; }
         public int StartDelay { get; set; }
-
+        public PointF LineFromToLocation { get; set; }
+        public PointF LineToLocation { get; set; }
         public int ZIndex { get; set; }
-
+        public int RotatIntoPlaceSpeed { get; set; }
+        public int LineToLocationPercent { get; set; }
         public AnimatableBase()
         {
             PathPoints = new List<PointF>();
             Location = new PointF(-5000, -5000);
+        }
+
+        public void Dispose()
+        {
+            PathPoints?.Clear();
+            Paths?.Clear();
+            SpriteBank?.Clear();
+
+            Paths = null;
+            PathPoints = null;
+            Sprite = null;
+            SpriteBank = null;
         }
 
     }

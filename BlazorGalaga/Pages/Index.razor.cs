@@ -48,9 +48,6 @@ namespace BlazorGalaga.Pages
 
             for (int i = 1; i <= Constants.SpriteBufferCount; i++)
                 BufferCanvases.Add(new Canvas() { CanvasRef = new BECanvasComponent() });
-
-            Utils.GlobalStopWatch = new Stopwatch();
-            Utils.GlobalStopWatch.Start();
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -116,8 +113,6 @@ namespace BlazorGalaga.Pages
                 var timeStamp = glo.timestamp;
 
                 Utils.dOut("GameLoop Running", "LC: " + loopCount + " , TS: " + glo.timestamp);
-
-                Utils.dOut("Utils.GlobalStopWatch.ElapsedMilliseconds", Utils.GlobalStopWatch.ElapsedMilliseconds);
 
                 if (gameService.animationService != null)
                     gameService.Process(ship);

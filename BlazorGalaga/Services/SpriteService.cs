@@ -76,13 +76,13 @@ namespace BlazorGalaga.Services
                     SetUpSprite(sprite, 4, 310, 120, 0);
                     break;
                 case Sprite.SpriteTypes.BlueBug_DownFlap:
-                    SetUpSprite(sprite, 5, 127, 91, 0);
+                    SetUpSprite(sprite, 5, 127, 91, -90);
                     break;
                 case Sprite.SpriteTypes.RedBug_DownFlap:
-                    SetUpSprite(sprite, 6, 127, 73, 0);
+                    SetUpSprite(sprite, 6, 127, 73, -90);
                     break;
                 case Sprite.SpriteTypes.GreenBug_DownFlap:
-                    SetUpSprite(sprite, 7, 127, 37, 0);
+                    SetUpSprite(sprite, 7, 127, 37, -90);
                     break;
             }
 

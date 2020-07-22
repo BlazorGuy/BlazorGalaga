@@ -30,6 +30,11 @@ namespace BlazorGalaga.Interfaces
         public bool IsMoving { get; set; }
         public int? SpriteBankIndex { get; set; }
         public int ZIndex { get; set; }
+        public int RotatIntoPlaceSpeed { get; set; }
+
+        public PointF LineFromToLocation { get; set; }
+        public PointF LineToLocation { get; set; }
+        public int LineToLocationPercent { get; set; }
 
     }
 }

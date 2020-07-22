@@ -23,11 +23,11 @@ namespace BlazorGalaga.Services
         private bool levelInitialized = false;
         private bool consoledrawn = false;
         private System.Timers.Timer FlapWingsTimer = new System.Timers.Timer();
-        private bool WingsUp;
+        private int WingFlapCount;
 
         public void Init()
         {
-            FlapWingsTimer.Interval = 500;
+            FlapWingsTimer.Interval = Constants.WingFlapInterval;
             FlapWingsTimer.Elapsed += FlapWingsTimer_Elapsed;
             FlapWingsTimer.Start();
 
@@ -37,14 +37,43 @@ namespace BlazorGalaga.Services
 
         private void FlapWingsTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            Utils.dOut("WingsUp", WingsUp);
-
             var bugs = GetBugs();
 
-            foreach(var bug in bugs.Where(a=>!a.IsMoving && a.Started))
-                bug.SpriteBankIndex = WingsUp ? null : (int?)0;
+            WingFlapCount++;
 
-            WingsUp = !WingsUp;
+            foreach (var bug in bugs.Where(a => a.Started))
+            {
+                if (bug.IsMoving)
+                {
+                    if (bug.IsDiving)
+                        bug.SpriteBankIndex = Utils.Rnd(1, 10) > 6 ? null : (int?)0;
+                    else
+                        bug.SpriteBankIndex = WingFlapCount % 4 == 0 ? null : (int?)0;
+                }
+                else
+                    bug.SpriteBankIndex = WingFlapCount % 2 == 0 ? null : (int?)0;
+            }
+
+            //MoveEnemyGrid();
+        }
+
+        private void MoveEnemyGrid()
+        {
+            var bugs = GetBugs();
+
+           // BugFactory.EnemyGrid.GridLeft += 10;
+
+            foreach (var bug in bugs.Where(a => a.Started && !a.IsMoving))
+            {
+                var path = new BezierCurve() { 
+                    StartPoint = bug.Location,
+                    EndPoint = new PointF(bug.Location.X + 10, bug.Location.Y)
+                };
+
+                bug.Speed = 1;
+                bug.RotateAlongPath = false;
+                bug.PathPoints.AddRange(animationService.ComputePathPoints(path, true, 5));
+            }
         }
 
         private void InitLevel(int level)
@@ -120,6 +149,7 @@ namespace BlazorGalaga.Services
             }
 
             bug.SpriteBankIndex = null;
+            bug.IsDiving = true;
 
             IDive dive = null;
             //dive = new GreenBugDive2();

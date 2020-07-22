@@ -30,7 +30,6 @@ namespace BlazorGalaga.Static
             }
         }
 
-        public static Stopwatch GlobalStopWatch { get; set; }
         public static float FPS;
         private static long framesRendered = 0;
         private static Stopwatch timer = new Stopwatch();
