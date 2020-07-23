@@ -46,7 +46,7 @@ namespace BlazorGalaga.Services
                 bug.LineFromToLocation = bug.Paths.Last().EndPoint;
                 bug.LineToLocation = BugFactory.EnemyGrid.GetPointByRowCol(bug.HomePoint.X, bug.HomePoint.Y);
                 if (bug.Started && !bug.IsMoving)
-                    bug.Location = bug.LineToLocation;
+                    bug.Location = (PointF)bug.LineToLocation;
             });
         }
 
@@ -286,7 +286,8 @@ namespace BlazorGalaga.Services
                 DrawPath = false,
                 PathIsLine = true,
                 RotateAlongPath = false,
-                Started = true
+                Started = true,
+                LineToLocation = null
             };
 
             ship.Paths.ForEach(a => {

@@ -27,8 +27,8 @@ namespace BlazorGalaga.Models
         public List<Sprite> SpriteBank { get; set; }
         public int? SpriteBankIndex { get; set; }
         public int StartDelay { get; set; }
-        public PointF LineFromToLocation { get; set; }
-        public PointF LineToLocation { get; set; }
+        public PointF? LineFromToLocation { get; set; }
+        public PointF? LineToLocation { get; set; }
         public int ZIndex { get; set; }
         public int RotatIntoPlaceSpeed { get; set; }
         public float LineToLocationPercent { get; set; }

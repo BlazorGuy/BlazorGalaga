@@ -31,8 +31,8 @@ namespace BlazorGalaga.Interfaces
         public int ZIndex { get; set; }
         public int RotatIntoPlaceSpeed { get; set; }
 
-        public PointF LineFromToLocation { get; set; }
-        public PointF LineToLocation { get; set; }
+        public PointF? LineFromToLocation { get; set; }
+        public PointF? LineToLocation { get; set; }
         public float LineToLocationPercent { get; set; }
         public float LineToLocationSpeed { get; set; }
     }

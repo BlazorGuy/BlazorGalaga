@@ -72,14 +72,22 @@ namespace BlazorGalaga.Services
                     if (animatable.LineToLocation != null && animatable.LineToLocationPercent <= 100)
                     {
                         animatable.PevLocation = animatable.Location;
-                        animatable.Location = bezierCurveService.getLineXYatPercent(animatable.LineFromToLocation, animatable.LineToLocation, animatable.LineToLocationPercent);
-                        animatable.NextLocation = bezierCurveService.getLineXYatPercent(animatable.LineFromToLocation, animatable.LineToLocation, animatable.LineToLocationPercent + animatable.LineToLocationSpeed);
+                        animatable.Location = bezierCurveService.getLineXYatPercent((PointF)animatable.LineFromToLocation, (PointF)animatable.LineToLocation, animatable.LineToLocationPercent);
+                        animatable.NextLocation = bezierCurveService.getLineXYatPercent((PointF)animatable.LineFromToLocation, (PointF)animatable.LineToLocation, animatable.LineToLocationPercent + animatable.LineToLocationSpeed);
                         
                         animatable.LineToLocationPercent += animatable.LineToLocationSpeed;
 
                         animatable.PathPoints.Clear();
                         animatable.IsMoving = true;
-                        animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
+                        var rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
+
+                        //this fixes gittery rotation while traveling the strait line
+                        if (rotation > animatable.Rotation && rotation - animatable.Rotation > 5)
+                            animatable.Rotation += 5;
+                        else if (rotation < animatable.Rotation && animatable.Rotation - rotation > 5)
+                            animatable.Rotation -= 5;
+                        else
+                            animatable.Rotation = rotation;
                     }
                     else
                     {
@@ -98,7 +106,6 @@ namespace BlazorGalaga.Services
                 {
                     //this stops the animation
                     animatable.CurPathPointIndex = 0;
-                    animatable.CurPathPointIndex = animatable.PathPoints.Count - 1;
                     animatable.IsMoving = false;
                 }
                 else
