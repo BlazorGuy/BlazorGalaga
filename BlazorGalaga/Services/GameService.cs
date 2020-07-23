@@ -22,58 +22,52 @@ namespace BlazorGalaga.Services
 
         private bool levelInitialized = false;
         private bool consoledrawn = false;
-        private System.Timers.Timer FlapWingsTimer = new System.Timers.Timer();
         private int WingFlapCount;
+        private int MoveEnemyGridIncrement = 3;
+        private float LastEnemyGridMoveTimeStamp = 0;
+        private float LastWingFlapTimeStamp = 0;
 
         public void Init()
         {
-            FlapWingsTimer.Interval = Constants.WingFlapInterval;
-            FlapWingsTimer.Elapsed += FlapWingsTimer_Elapsed;
-            FlapWingsTimer.Start();
-
             Lives = 2;
             InitShip();
-        }
-
-        private void FlapWingsTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            var bugs = GetBugs();
-
-            WingFlapCount++;
-
-            foreach (var bug in bugs.Where(a => a.Started))
-            {
-                if (bug.IsMoving)
-                {
-                    if (bug.IsDiving)
-                        bug.SpriteBankIndex = Utils.Rnd(1, 10) > 6 ? null : (int?)0;
-                    else
-                        bug.SpriteBankIndex = WingFlapCount % 4 == 0 ? null : (int?)0;
-                }
-                else
-                    bug.SpriteBankIndex = WingFlapCount % 2 == 0 ? null : (int?)0;
-            }
-
-            //MoveEnemyGrid();
         }
 
         private void MoveEnemyGrid()
         {
             var bugs = GetBugs();
 
-           // BugFactory.EnemyGrid.GridLeft += 10;
+            if (BugFactory.EnemyGrid.GridLeft > 350 || BugFactory.EnemyGrid.GridLeft < 180)
+                MoveEnemyGridIncrement *= -1;
+            
+            BugFactory.EnemyGrid.GridLeft += MoveEnemyGridIncrement;
+            
+            bugs.ForEach(bug => {
+                bug.LineFromToLocation = bug.Paths.Last().EndPoint;
+                bug.LineToLocation = BugFactory.EnemyGrid.GetPointByRowCol(bug.HomePoint.X, bug.HomePoint.Y);
+                if (bug.Started && !bug.IsMoving)
+                    bug.Location = bug.LineToLocation;
+            });
+        }
 
-            foreach (var bug in bugs.Where(a => a.Started && !a.IsMoving))
-            {
-                var path = new BezierCurve() { 
-                    StartPoint = bug.Location,
-                    EndPoint = new PointF(bug.Location.X + 10, bug.Location.Y)
-                };
+        private void FlapWings()
+        {
+            var bugs = GetBugs();
 
-                bug.Speed = 1;
-                bug.RotateAlongPath = false;
-                bug.PathPoints.AddRange(animationService.ComputePathPoints(path, true, 5));
-            }
+            WingFlapCount++;
+
+            bugs.Where(a => a.Started).ToList().ForEach(bug =>
+              {
+                  if (bug.IsMoving)
+                  {
+                      if (bug.IsDiving)
+                          bug.SpriteBankIndex = Utils.Rnd(1, 10) > 6 ? null : (int?)0;
+                      else
+                          bug.SpriteBankIndex = WingFlapCount % 4 == 0 ? null : (int?)0;
+                  }
+                  else
+                      bug.SpriteBankIndex = WingFlapCount % 2 == 0 ? null : (int?)0;
+              });
         }
 
         private void InitLevel(int level)
@@ -152,7 +146,7 @@ namespace BlazorGalaga.Services
             bug.IsDiving = true;
 
             IDive dive = null;
-            //dive = new GreenBugDive2();
+            //dive = new GreenBugDive1();
 
             if (bug.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug)
             {
@@ -184,9 +178,12 @@ namespace BlazorGalaga.Services
 
             var paths = dive.GetPaths(bug, Ship);
 
+            bug.RotateAlongPath = true;
             bug.ZIndex = 100;
             bug.Speed = 5;
             bug.Paths.AddRange(paths);
+            bug.LineToLocationPercent = 0;
+            bug.LineToLocationSpeed = 2.5F;
 
             paths.ForEach(p => {
                 p.DrawPath = true;
@@ -303,17 +300,30 @@ namespace BlazorGalaga.Services
 
         int firecount = 0;
 
-        public async void Process(Ship ship)
+        public async void Process(Ship ship, float timestamp)
         {
-            this.Ship = ship;
-
+            //Begin Init - Only happens once
             if (!levelInitialized)
             {
+                this.Ship = ship;
                 InitLevel(1);
             }
 
-            if (!consoledrawn && Ship.Sprite.BufferCanvas!=null)
+            if (!consoledrawn && Ship.Sprite.BufferCanvas != null)
                 await DrawConsole();
+            //End Init - Only happens once
+
+            if (timestamp - LastEnemyGridMoveTimeStamp > 100 || LastEnemyGridMoveTimeStamp == 0)
+            {
+                MoveEnemyGrid();
+                LastEnemyGridMoveTimeStamp = timestamp;
+            }
+
+            if (timestamp - LastWingFlapTimeStamp > 500 || LastWingFlapTimeStamp == 0)
+            {
+                FlapWings();
+                LastWingFlapTimeStamp = timestamp;
+            }
 
             if (ship.IsFiring)
             {

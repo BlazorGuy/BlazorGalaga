@@ -67,30 +67,31 @@ namespace BlazorGalaga.Services
 
                 if (animatable.CurPathPointIndex > animatable.PathPoints.Count - 1)
                 {
+                    //this stops the animation
+                    animatable.CurPathPointIndex = animatable.PathPoints.Count - 1;
                     if (animatable.LineToLocation != null && animatable.LineToLocationPercent <= 100)
                     {
-                        var speed = animatable.Speed / 2;
                         animatable.PevLocation = animatable.Location;
                         animatable.Location = bezierCurveService.getLineXYatPercent(animatable.LineFromToLocation, animatable.LineToLocation, animatable.LineToLocationPercent);
-                        if (animatable.LineToLocationPercent + speed < 100)
-                            animatable.NextLocation = bezierCurveService.getLineXYatPercent(animatable.LineFromToLocation, animatable.LineToLocation, animatable.LineToLocationPercent + speed); ;
-                        animatable.LineToLocationPercent += speed;
-                        //animatable.IsMoving = true;
+                        animatable.NextLocation = bezierCurveService.getLineXYatPercent(animatable.LineFromToLocation, animatable.LineToLocation, animatable.LineToLocationPercent + animatable.LineToLocationSpeed);
+                        
+                        animatable.LineToLocationPercent += animatable.LineToLocationSpeed;
+
+                        animatable.PathPoints.Clear();
+                        animatable.IsMoving = true;
                         animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
                     }
-                    //this stops the animation
-                    animatable.CurPathPointIndex = animatable.PathPoints.Count-1;
-                    if (animatable.LoopBack) animatable.Speed *= -1;
-                    if (animatable.RotateAlongPath && (int)(animatable.Rotation + animatable.Sprite.InitialRotationOffset) > 0)
-                        animatable.Rotation -= animatable.RotatIntoPlaceSpeed;
-                    else if (animatable.RotateAlongPath && (int)(animatable.Rotation + animatable.Sprite.InitialRotationOffset) < 0)
-                        animatable.Rotation += animatable.RotatIntoPlaceSpeed;
                     else
                     {
-                        animatable.IsMoving = false;
-                        animatable.ZIndex = 0;
-                        animatable.PathPoints.Clear();
-                        animatable.Paths.Clear();
+                        //if (animatable.RotateAlongPath && (int)(animatable.Rotation + animatable.Sprite.InitialRotationOffset) > 0)
+                        //    animatable.Rotation -= animatable.RotatIntoPlaceSpeed;
+                        //else if (animatable.RotateAlongPath && (int)(animatable.Rotation + animatable.Sprite.InitialRotationOffset) < 0)
+                        //    animatable.Rotation += animatable.RotatIntoPlaceSpeed;
+                        //else
+                        //{
+                            animatable.IsMoving = false;
+                            animatable.ZIndex = 0;
+                        //}
                     }
                 }
                 else if (animatable.CurPathPointIndex < 0)
@@ -99,7 +100,6 @@ namespace BlazorGalaga.Services
                     animatable.CurPathPointIndex = 0;
                     animatable.CurPathPointIndex = animatable.PathPoints.Count - 1;
                     animatable.IsMoving = false;
-                    if (animatable.LoopBack) animatable.Speed *= -1;
                 }
                 else
                 {

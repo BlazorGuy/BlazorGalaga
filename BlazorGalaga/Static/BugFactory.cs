@@ -96,157 +96,107 @@ namespace BlazorGalaga.Static
                     ControlPoint2 = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y)
                 });
 
-            //add the bugs destination path from the enemy grid
-            //bug.Paths.Add(GetGridPath(bug.Paths[bug.Paths.Count - 1].EndPoint, index));
-            bug.LineFromToLocation = bug.Paths[bug.Paths.Count - 1].EndPoint;
-            bug.LineToLocation = GetGridPath(bug.Paths[bug.Paths.Count - 1].EndPoint, index).EndPoint;
-            //store the destination path 
-            bug.HomePoint = bug.Paths[bug.Paths.Count - 1].EndPoint;
+            bug.HomePoint = GetGridPoint(index);
+            bug.LineToLocationSpeed = 4;
 
             return bug;
 
         }
 
-        private static BezierCurve GetGridPath(PointF startpoint, int index)
+        private static Point GetGridPoint(int index)
         {
-            PointF endpoint = new PointF(0,0);
 
             switch (index)
             {
                 case 0:
-                    endpoint = EnemyGrid.GetPointByRowCol(5, 5);
-                    break;
+                    return new Point(5, 5);
                 case 1:
-                    endpoint = EnemyGrid.GetPointByRowCol(5, 6);
-                    break;
+                   return new Point(5, 6);
                 case 2:
-                    endpoint = EnemyGrid.GetPointByRowCol(4, 5);
-                    break;
+                   return new Point(4, 5);
                 case 3:
-                    endpoint = EnemyGrid.GetPointByRowCol(4, 6);
-                    break;
+                   return new Point(4, 6);
                 case 4:
-                    endpoint = EnemyGrid.GetPointByRowCol(3, 4);
-                    break;
+                   return new Point(3, 4);
                 case 5:
-                    endpoint = EnemyGrid.GetPointByRowCol(3, 5);
-                    break;
+                   return new Point(3, 5);
                 case 6:
-                    endpoint = EnemyGrid.GetPointByRowCol(2, 4);
-                    break;
+                   return new Point(2, 4);
                 case 7:
-                    endpoint = EnemyGrid.GetPointByRowCol(2, 5);
-                    break;
+                   return new Point(2, 5);
 
 
                 case 8:
-                    endpoint = EnemyGrid.GetPointByRowCol(2, 6);
-                    break;
+                   return new Point(2, 6);
                 case 9:
-                    endpoint = EnemyGrid.GetPointByRowCol(1, 1);
-                    break;
+                   return new Point(1, 1);
                 case 10:
-                    endpoint = EnemyGrid.GetPointByRowCol(3, 6);
-                    break;
+                   return new Point(3, 6);
                 case 11:
-                    endpoint = EnemyGrid.GetPointByRowCol(1, 2);
-                    break;
+                   return new Point(1, 2);
                 case 12:
-                    endpoint = EnemyGrid.GetPointByRowCol(3, 3);
-                    break;
+                   return new Point(3, 3);
                 case 13:
-                    endpoint = EnemyGrid.GetPointByRowCol(1, 3);
-                    break;
+                   return new Point(1, 3);
                 case 14:
-                    endpoint = EnemyGrid.GetPointByRowCol(2, 3);
-                    break;
+                   return new Point(2, 3);
                 case 15:
-                    endpoint = EnemyGrid.GetPointByRowCol(1, 4);
-                    break;
+                   return new Point(1, 4);
 
                 case 16:
-                    endpoint = EnemyGrid.GetPointByRowCol(2, 7);
-                    break;
+                   return new Point(2, 7);
                 case 17:
-                    endpoint = EnemyGrid.GetPointByRowCol(2, 8);
-                    break;
+                   return new Point(2, 8);
                 case 18:
-                    endpoint = EnemyGrid.GetPointByRowCol(3, 7);
-                    break;
+                   return new Point(3, 7);
                 case 19:
-                    endpoint = EnemyGrid.GetPointByRowCol(3, 8);
-                    break;
+                   return new Point(3, 8);
                 case 20:
-                    endpoint = EnemyGrid.GetPointByRowCol(2, 1);
-                    break;
+                   return new Point(2, 1);
                 case 21:
-                    endpoint = EnemyGrid.GetPointByRowCol(2, 2);
-                    break;
+                   return new Point(2, 2);
                 case 22:
-                    endpoint = EnemyGrid.GetPointByRowCol(3, 1);
-                    break;
+                   return new Point(3, 1);
                 case 23:
-                    endpoint = EnemyGrid.GetPointByRowCol(3, 2);
-                    break;
+                   return new Point(3, 2);
 
                 case 24:
-                    endpoint = EnemyGrid.GetPointByRowCol(4, 7);
-                    break;
+                   return new Point(4, 7);
                 case 25:
-                    endpoint = EnemyGrid.GetPointByRowCol(4, 8);
-                    break;
+                   return new Point(4, 8);
                 case 26:
-                    endpoint = EnemyGrid.GetPointByRowCol(5, 7);
-                    break;
+                   return new Point(5, 7);
                 case 27:
-                    endpoint = EnemyGrid.GetPointByRowCol(5, 8);
-                    break;
+                   return new Point(5, 8);
                 case 28:
-                    endpoint = EnemyGrid.GetPointByRowCol(4, 4);
-                    break;
+                   return new Point(4, 4);
                 case 29:
-                    endpoint = EnemyGrid.GetPointByRowCol(4, 3);
-                    break;
+                   return new Point(4, 3);
                 case 30:
-                    endpoint = EnemyGrid.GetPointByRowCol(5, 4);
-                    break;
+                   return new Point(5, 4);
                 case 31:
-                    endpoint = EnemyGrid.GetPointByRowCol(5, 3);
-                    break;
+                   return new Point(5, 3);
 
                 case 32:
-                    endpoint = EnemyGrid.GetPointByRowCol(4, 2);
-                    break;
+                   return new Point(4, 2);
                 case 33:
-                    endpoint = EnemyGrid.GetPointByRowCol(4, 1);
-                    break;
+                   return new Point(4, 1);
                 case 34:
-                    endpoint = EnemyGrid.GetPointByRowCol(5, 2);
-                    break;
+                   return new Point(5, 2);
                 case 35:
-                    endpoint = EnemyGrid.GetPointByRowCol(5, 1);
-                    break;
+                   return new Point(5, 1);
                 case 36:
-                    endpoint = EnemyGrid.GetPointByRowCol(4, 9);
-                    break;
+                   return new Point(4, 9);
                 case 37:
-                    endpoint = EnemyGrid.GetPointByRowCol(4, 10);
-                    break;
+                   return new Point(4, 10);
                 case 38:
-                    endpoint = EnemyGrid.GetPointByRowCol(5, 9);
-                    break;
+                   return new Point(5, 9);
                 case 39:
-                    endpoint = EnemyGrid.GetPointByRowCol(5, 10);
-                    break;
-            }
+                   return new Point(5, 10);
 
-            return new BezierCurve()
-            {
-                StartPoint = startpoint,
-                EndPoint = endpoint,
-                ControlPoint1 = startpoint,
-                ControlPoint2 = endpoint
-            };
+                default:
+                    return new Point(0,0);
+            }
         }
     }
 }

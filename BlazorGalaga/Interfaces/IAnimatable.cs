@@ -22,7 +22,6 @@ namespace BlazorGalaga.Interfaces
         public int CurPathPointIndex { get; set; }
         public float Rotation { get; set; }
         public int Speed { get; set; }
-        public bool LoopBack { get; set; }
         public bool DrawControlLines { get; set; }
         public int StartDelay { get; set; }
         public bool StartDelayStarted { get; set; }
@@ -34,7 +33,7 @@ namespace BlazorGalaga.Interfaces
 
         public PointF LineFromToLocation { get; set; }
         public PointF LineToLocation { get; set; }
-        public int LineToLocationPercent { get; set; }
-
+        public float LineToLocationPercent { get; set; }
+        public float LineToLocationSpeed { get; set; }
     }
 }

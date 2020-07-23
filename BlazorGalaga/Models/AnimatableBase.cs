@@ -20,7 +20,6 @@ namespace BlazorGalaga.Models
         public int CurPathPointIndex { get; set; }
         public float Rotation { get; set; }
         public int Speed { get; set; }
-        public bool LoopBack { get; set; }
         public bool DrawControlLines { get; set; }
         public bool Started { get; set; }
         public bool StartDelayStarted { get; set; }
@@ -32,7 +31,9 @@ namespace BlazorGalaga.Models
         public PointF LineToLocation { get; set; }
         public int ZIndex { get; set; }
         public int RotatIntoPlaceSpeed { get; set; }
-        public int LineToLocationPercent { get; set; }
+        public float LineToLocationPercent { get; set; }
+
+        public float LineToLocationSpeed { get; set; }
         public AnimatableBase()
         {
             PathPoints = new List<PointF>();

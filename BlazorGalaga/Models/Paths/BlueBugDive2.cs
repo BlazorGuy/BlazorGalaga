@@ -39,7 +39,7 @@ namespace BlazorGalaga.Models.Paths
             var gohome = new BezierCurve()
             {
                 StartPoint = new PointF(cx - 250, Constants.CanvasSize.Height - 200),
-                EndPoint = (animatable as Bug).HomePoint,
+                EndPoint = new PointF(cx - 150, 375),
                 ControlPoint1 = new PointF(cx - 250, Constants.CanvasSize.Height - 300),
                 ControlPoint2 = new PointF(0, Constants.CanvasSize.Height / 2)
             };

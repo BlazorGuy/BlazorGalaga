@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using BlazorGalaga.Interfaces;
 using BlazorGalaga.Models;
 using BlazorGalaga.Static;
@@ -39,7 +40,7 @@ namespace BlazorGalaganimatable.Models.Paths
             var gohome = new BezierCurve()
             {
                 StartPoint = new PointF(cx + 250, Constants.CanvasSize.Height - 200),
-                EndPoint = (animatable as Bug).HomePoint,
+                EndPoint = new PointF(cx + 150,375),
                 ControlPoint1 = new PointF(cx + 250, Constants.CanvasSize.Height - 300),
                 ControlPoint2 = new PointF(Constants.CanvasSize.Width, Constants.CanvasSize.Height / 2)
             };

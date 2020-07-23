@@ -26,6 +26,8 @@ namespace BlazorGalaga.Models
 
         public PointF GetPointByRowCol(int row, int col)
         {
+            GridPoints.Clear();
+            ComputerEnemyGrid();
             return GridPoints.FirstOrDefault(a => a.Row == row && a.Column == col).Point;
         }
 
@@ -34,7 +36,11 @@ namespace BlazorGalaga.Models
         public EnemyGrid()
         {
             GridLeft = 270;
-            
+            ComputerEnemyGrid();
+        }
+
+        public void ComputerEnemyGrid()
+        {
             const int GridTop = 150;
             const int HSpacing = 45;
             const int VSpacing = 45;

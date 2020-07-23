@@ -7,7 +7,7 @@ namespace BlazorGalaga.Models
 {
     public class Bug : AnimatableBase
     {
-        public PointF HomePoint { get; set; }
+        public Point HomePoint { get; set; }
         public bool IsDiving { get; set; }
 
         public Bug(Sprite.SpriteTypes spritetype)

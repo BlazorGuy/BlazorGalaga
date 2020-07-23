@@ -45,10 +45,10 @@ namespace BlazorGalaganimatable.Models.Paths
             };
             var gohome = new BezierCurve()
             {
-                StartPoint = new PointF(ship.Location.X + 90, -50),
-                EndPoint = (animatable as Bug).HomePoint,
-                ControlPoint1 = new PointF(0, 0),
-                ControlPoint2 = new PointF(Constants.CanvasSize.Width, 0)
+                StartPoint = new PointF(cx - 100, -50),
+                EndPoint = new PointF(cx, 75),
+                ControlPoint1 = new PointF(cx - 150, 150),
+                ControlPoint2 = new PointF(cx, 0),
             };
 
             paths.Add(rotatecounterclockwise);
