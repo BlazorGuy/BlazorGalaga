@@ -34,6 +34,7 @@ namespace BlazorGalaga.Models
         public float LineToLocationPercent { get; set; }
 
         public float LineToLocationSpeed { get; set; }
+
         public AnimatableBase()
         {
             PathPoints = new List<PointF>();

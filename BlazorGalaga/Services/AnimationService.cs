@@ -75,9 +75,7 @@ namespace BlazorGalaga.Services
                         animatable.Location = bezierCurveService.getLineXYatPercent((PointF)animatable.LineFromToLocation, (PointF)animatable.LineToLocation, animatable.LineToLocationPercent);
                         animatable.NextLocation = bezierCurveService.getLineXYatPercent((PointF)animatable.LineFromToLocation, (PointF)animatable.LineToLocation, animatable.LineToLocationPercent + animatable.LineToLocationSpeed);
 
-                        var distance = Utils.GetDistance(animatable.Location, (PointF)animatable.LineToLocation);
-
-                        animatable.LineToLocationPercent += (float)(animatable.LineToLocationSpeed + ((distance / 2000) * animatable.LineToLocationPercent));
+                        animatable.LineToLocationPercent += animatable.LineToLocationSpeed;
 
                         animatable.PathPoints.Clear();
                         animatable.IsMoving = true;
@@ -113,7 +111,8 @@ namespace BlazorGalaga.Services
                 else
                 {
                     animatable.IsMoving = true;
-                    animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
+                    if (animatable.RotateAlongPath && animatable.Speed != 0)
+                        animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
                 }
             }
 

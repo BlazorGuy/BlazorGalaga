@@ -33,6 +33,42 @@ namespace BlazorGalaga.Services
             InitShip();
         }
 
+        private void MoveChildBugs()
+        {
+            GetBugs().ForEach(bug =>
+            {
+                if (bug.CurPathPointIndex < bug.PathPoints.Count - 1)
+                {
+                    bug.ChildBugs.ForEach(childbug =>
+                    {
+                        childbug.CurPathPointIndex = 0;
+                        if (childbug.PathPoints.Count == 0)
+                            childbug.PathPoints.Add(new PointF(0, 0));
+                        childbug.Speed = 0;
+                        childbug.IsMoving = true;
+                        childbug.RotateAlongPath = true;
+                        childbug.Location = new PointF(bug.Location.X + 50, bug.Location.Y + 50);
+                        childbug.Rotation = bug.Rotation;
+                    });
+                }
+                else
+                {
+                    bug.ChildBugs.ForEach(childbug =>
+                    {
+                            childbug.LineToLocationPercent = 0;
+                            childbug.LineToLocationSpeed = 2.5F;
+                            childbug.PathPoints.Clear();
+                            childbug.Paths.Clear();
+                            childbug.CurPathPointIndex = 999;
+                            childbug.IsMoving = false;
+                            childbug.RotateAlongPath = true;
+                            childbug.Paths.Add(new BezierCurve() { EndPoint = new PointF(childbug.Location.X, childbug.Location.Y) });
+                    });
+                    bug.ChildBugs.Clear();
+                }
+            });
+        }
+
         private void MoveEnemyGrid()
         {
             var bugs = GetBugs();
@@ -164,6 +200,8 @@ namespace BlazorGalaga.Services
             }
             else if (bug.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug)
             {
+                var childbug = bugs.FirstOrDefault(a => a.HomePoint == new Point(2, bug.HomePoint.Y+1));
+                bug.ChildBugs.Add(childbug);
                 if (Utils.Rnd(0, 10) % 2 == 0)
                     dive = new GreenBugDive1();
                 else
@@ -314,6 +352,8 @@ namespace BlazorGalaga.Services
                 await DrawConsole();
             //End Init - Only happens once
 
+            MoveChildBugs();
+
             if (timestamp - LastEnemyGridMoveTimeStamp > 100 || LastEnemyGridMoveTimeStamp == 0)
             {
                 MoveEnemyGrid();
@@ -331,7 +371,6 @@ namespace BlazorGalaga.Services
                 firecount += 1;
                 ship.IsFiring = false;
                 DoFireFromShip();
-                Utils.dOut("Ship Fired", firecount);
             }
             
         }

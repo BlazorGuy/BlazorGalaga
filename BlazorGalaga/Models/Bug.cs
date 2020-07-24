@@ -9,11 +9,13 @@ namespace BlazorGalaga.Models
     {
         public Point HomePoint { get; set; }
         public bool IsDiving { get; set; }
+        public List<Bug> ChildBugs { get; set; }
 
         public Bug(Sprite.SpriteTypes spritetype)
         {
             Sprite = new Sprite(spritetype);
             SpriteBank = new List<Sprite>();
+            ChildBugs = new List<Bug>();
         }
     }
 }
