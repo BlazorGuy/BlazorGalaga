@@ -6,7 +6,7 @@
   "linkerEnabled": false,
   "resources": {
     "assembly": {
-      "BlazorGalaga.dll": "sha256-gm9zVtywzHbR4qZOULxWPsgS7BEVKDc0BA56XLmW4PY=",
+      "BlazorGalaga.dll": "sha256-bxwjnuqH6qR18ZoKyPCc38RBXWU1ZVL\/vn\/HrKmx4jo=",
       "Microsoft.Extensions.DependencyInjection.Abstractions.dll": "sha256-ycn\/UHLnjC77BNvsurP4mkuYP8oud1oVyfSSlZKMymc=",
       "netstandard.dll": "sha256-\/zcPVM75OAY+joGVM8yIC1gO1SFYWP1CFERgQ8PJkfA=",
       "System.Xml.Linq.dll": "sha256-IPbQMdJxZXdk8HTlaPyXdQ6Zb82iZLphnM74yO4EURQ=",
@@ -60,7 +60,7 @@
       "System.ComponentModel.DataAnnotations.dll": "sha256-LIfCYwg+PHltTK4z3EnbSkA7m2cn8JS4jHVthdKrDF8="
     },
     "pdb": {
-      "BlazorGalaga.pdb": "sha256-9bG+YeyVci6rbXaGhaT1f3zXmmGavXK0HdDFDrg5+\/E=",
+      "BlazorGalaga.pdb": "sha256-wW2ZiTxmlRMW0+t6U51mzr4lEj1OSUgMA2i2rMo7Wu4=",
       "Blazor.Extensions.Canvas.pdb": "sha256-uonb1I\/3OKsiqOyQDHpkYYTot4LXlJIJX\/wPZBWRo\/s="
     },
     "runtime": {

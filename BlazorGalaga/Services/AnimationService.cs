@@ -74,8 +74,10 @@ namespace BlazorGalaga.Services
                         animatable.PevLocation = animatable.Location;
                         animatable.Location = bezierCurveService.getLineXYatPercent((PointF)animatable.LineFromToLocation, (PointF)animatable.LineToLocation, animatable.LineToLocationPercent);
                         animatable.NextLocation = bezierCurveService.getLineXYatPercent((PointF)animatable.LineFromToLocation, (PointF)animatable.LineToLocation, animatable.LineToLocationPercent + animatable.LineToLocationSpeed);
-                        
-                        animatable.LineToLocationPercent += animatable.LineToLocationSpeed;
+
+                        var distance = Utils.GetDistance(animatable.Location, (PointF)animatable.LineToLocation);
+
+                        animatable.LineToLocationPercent += (float)(animatable.LineToLocationSpeed + ((distance / 2000) * animatable.LineToLocationPercent));
 
                         animatable.PathPoints.Clear();
                         animatable.IsMoving = true;
