@@ -1,8 +1,21 @@
-﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+﻿
+@keyframes move-twink-back {
+    from {
+        background-position: 0 0;
+    }
 
-@font-face {
-    font-family: 'Minecraft';
-    src: url('../Assets/Minecraft.ttf');
+    to {
+        background-position: 0px 5000px;
+    }
+}
+
+@keyframes animatedBackground {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 0 944px;
+    }
 }
 
 html, body {
