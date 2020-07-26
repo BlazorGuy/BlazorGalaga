@@ -42,12 +42,14 @@ namespace BlazorGalaga.Services
                     bug.ChildBugs.ForEach(childbug =>
                     {
                         childbug.CurPathPointIndex = 0;
-                        if (childbug.PathPoints.Count == 0)
-                            childbug.PathPoints.Add(new PointF(0, 0));
+                        childbug.PathPoints.Add(new PointF(0, 0));
                         childbug.Speed = 0;
                         childbug.IsMoving = true;
                         childbug.RotateAlongPath = true;
-                        childbug.Location = new PointF(bug.Location.X + 50, bug.Location.Y + 50);
+                        if(childbug.HomePoint.Y == bug.HomePoint.Y + 1)
+                            childbug.Location = new PointF(bug.Location.X + 35, bug.Location.Y + 35);
+                        else
+                            childbug.Location = new PointF(bug.Location.X - 35, bug.Location.Y - 35);
                         childbug.Rotation = bug.Rotation;
                     });
                 }
@@ -55,14 +57,19 @@ namespace BlazorGalaga.Services
                 {
                     bug.ChildBugs.ForEach(childbug =>
                     {
-                            childbug.LineToLocationPercent = 0;
-                            childbug.LineToLocationSpeed = 2.5F;
-                            childbug.PathPoints.Clear();
-                            childbug.Paths.Clear();
-                            childbug.CurPathPointIndex = 999;
-                            childbug.IsMoving = false;
-                            childbug.RotateAlongPath = true;
-                            childbug.Paths.Add(new BezierCurve() { EndPoint = new PointF(childbug.Location.X, childbug.Location.Y) });
+                        childbug.PathPoints.Clear();
+                        childbug.Paths.Clear();
+                        childbug.LineToLocationDistance = 0;
+                        childbug.RotateAlongPath = true;
+                        childbug.IsMoving = true;
+                        childbug.Speed = 5;
+                        //add a minimum path that is 2X the speed just to kick off the line to location logic
+                        childbug.Paths.Add(new BezierCurve() {
+                            StartPoint = childbug.Location,
+                            ControlPoint1 = childbug.Location,
+                            ControlPoint2 = childbug.Location,
+                            EndPoint = new PointF(childbug.Location.X + 10, childbug.Location.Y + 10)});
+                        childbug.PathPoints.AddRange(animationService.ComputePathPoints(childbug.Paths.First()));
                     });
                     bug.ChildBugs.Clear();
                 }
@@ -79,10 +86,12 @@ namespace BlazorGalaga.Services
             BugFactory.EnemyGrid.GridLeft += MoveEnemyGridIncrement;
             
             bugs.ForEach(bug => {
-                bug.LineFromToLocation = bug.Paths.Last().EndPoint;
-                bug.LineToLocation = BugFactory.EnemyGrid.GetPointByRowCol(bug.HomePoint.X, bug.HomePoint.Y);
-                if (bug.Started && !bug.IsMoving)
-                    bug.Location = (PointF)bug.LineToLocation;
+                var homepoint = BugFactory.EnemyGrid.GetPointByRowCol(bug.HomePoint.X, bug.HomePoint.Y);
+                bug.LineFromLocation = new System.Numerics.Vector2(bug.Paths.Last().EndPoint.X, bug.Paths.Last().EndPoint.Y);
+                bug.LineToLocation = new System.Numerics.Vector2(homepoint.X, homepoint.Y);
+                //snap to grid if bug isn't moving
+                if (!bug.IsMoving)
+                    bug.Location = homepoint;
             });
         }
 
@@ -200,8 +209,13 @@ namespace BlazorGalaga.Services
             }
             else if (bug.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug)
             {
-                var childbug = bugs.FirstOrDefault(a => a.HomePoint == new Point(2, bug.HomePoint.Y+1));
-                bug.ChildBugs.Add(childbug);
+                var childbugs = bugs.Where(a =>
+                    (a.HomePoint == new Point(2, bug.HomePoint.Y+1) ||
+                    a.HomePoint == new Point(2, bug.HomePoint.Y+2))
+                    && !a.IsMoving);
+
+                bug.ChildBugs.AddRange(childbugs);
+
                 if (Utils.Rnd(0, 10) % 2 == 0)
                     dive = new GreenBugDive1();
                 else
@@ -220,8 +234,6 @@ namespace BlazorGalaga.Services
             bug.ZIndex = 100;
             bug.Speed = 5;
             bug.Paths.AddRange(paths);
-            bug.LineToLocationPercent = 0;
-            bug.LineToLocationSpeed = 2.5F;
 
             paths.ForEach(p => {
                 p.DrawPath = true;
@@ -324,8 +336,7 @@ namespace BlazorGalaga.Services
                 DrawPath = false,
                 PathIsLine = true,
                 RotateAlongPath = false,
-                Started = true,
-                LineToLocation = null
+                Started = true
             };
 
             ship.Paths.ForEach(a => {

@@ -97,7 +97,6 @@ namespace BlazorGalaga.Static
                 });
 
             bug.HomePoint = GetGridPoint(index);
-            bug.LineToLocationSpeed = 4;
 
             return bug;
 

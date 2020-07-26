@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Numerics;
 using BlazorGalaga.Interfaces;
 
 namespace BlazorGalaga.Models
@@ -27,13 +28,11 @@ namespace BlazorGalaga.Models
         public List<Sprite> SpriteBank { get; set; }
         public int? SpriteBankIndex { get; set; }
         public int StartDelay { get; set; }
-        public PointF? LineFromToLocation { get; set; }
-        public PointF? LineToLocation { get; set; }
+        public Vector2 LineFromLocation { get; set; }
+        public Vector2 LineToLocation { get; set; }
         public int ZIndex { get; set; }
         public int RotatIntoPlaceSpeed { get; set; }
-        public float LineToLocationPercent { get; set; }
-
-        public float LineToLocationSpeed { get; set; }
+        public float LineToLocationDistance { get; set; }
 
         public AnimatableBase()
         {

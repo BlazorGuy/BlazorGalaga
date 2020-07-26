@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Numerics;
 using BlazorGalaga.Models;
 using static BlazorGalaga.Models.Sprite;
 
@@ -31,9 +32,9 @@ namespace BlazorGalaga.Interfaces
         public int ZIndex { get; set; }
         public int RotatIntoPlaceSpeed { get; set; }
 
-        public PointF? LineFromToLocation { get; set; }
-        public PointF? LineToLocation { get; set; }
-        public float LineToLocationPercent { get; set; }
-        public float LineToLocationSpeed { get; set; }
+        public Vector2 LineFromLocation { get; set; }
+        public Vector2 LineToLocation { get; set; }
+        public float LineToLocationDistance { get; set; }
+
     }
 }

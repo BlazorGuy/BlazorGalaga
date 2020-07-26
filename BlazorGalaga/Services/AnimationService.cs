@@ -13,6 +13,7 @@ using Microsoft.JSInterop;
 using System.Text;
 using System.Diagnostics;
 using System.ComponentModel;
+using System.Numerics;
 
 namespace BlazorGalaga.Services
 {
@@ -67,39 +68,29 @@ namespace BlazorGalaga.Services
 
                 if (animatable.CurPathPointIndex > animatable.PathPoints.Count - 1)
                 {
-                    //this stops the animation
+                    //stop the curve animation
                     animatable.CurPathPointIndex = animatable.PathPoints.Count - 1;
-                    if (animatable.LineToLocation != null && animatable.LineToLocationPercent <= 100)
+                    if (animatable.IsMoving &&
+                        (Vector2.Distance(animatable.LineFromLocation,new Vector2(animatable.Location.X, animatable.Location.Y)) < animatable.LineToLocationDistance ||
+                        animatable.LineToLocationDistance == 0))
                     {
-                        animatable.PevLocation = animatable.Location;
-                        animatable.Location = bezierCurveService.getLineXYatPercent((PointF)animatable.LineFromToLocation, (PointF)animatable.LineToLocation, animatable.LineToLocationPercent);
-                        animatable.NextLocation = bezierCurveService.getLineXYatPercent((PointF)animatable.LineFromToLocation, (PointF)animatable.LineToLocation, animatable.LineToLocationPercent + animatable.LineToLocationSpeed);
+                        animatable.LineToLocationDistance = Vector2.Distance(animatable.LineFromLocation, animatable.LineToLocation);
+                        Vector2 direction = Vector2.Normalize(animatable.LineToLocation - animatable.LineFromLocation);
 
-                        animatable.LineToLocationPercent += animatable.LineToLocationSpeed;
+                        animatable.PevLocation = new PointF(animatable.Location.X + direction.X, animatable.Location.Y + direction.Y);
+                        animatable.Location = new PointF(animatable.Location.X + direction.X * animatable.Speed, animatable.Location.Y + direction.Y * animatable.Speed);
+                        animatable.NextLocation = new PointF(animatable.Location.X + direction.X * (animatable.Speed * 2), animatable.Location.Y + direction.Y * (animatable.Speed * 2));
 
                         animatable.PathPoints.Clear();
                         animatable.IsMoving = true;
-                        var rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
 
-                        //this fixes gittery rotation while traveling the strait line
-                        if (rotation > animatable.Rotation && rotation - animatable.Rotation > 5)
-                            animatable.Rotation += 5;
-                        else if (rotation < animatable.Rotation && animatable.Rotation - rotation > 5)
-                            animatable.Rotation -= 5;
-                        else
-                            animatable.Rotation = rotation;
+                        animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
                     }
                     else
                     {
-                        //if (animatable.RotateAlongPath && (int)(animatable.Rotation + animatable.Sprite.InitialRotationOffset) > 0)
-                        //    animatable.Rotation -= animatable.RotatIntoPlaceSpeed;
-                        //else if (animatable.RotateAlongPath && (int)(animatable.Rotation + animatable.Sprite.InitialRotationOffset) < 0)
-                        //    animatable.Rotation += animatable.RotatIntoPlaceSpeed;
-                        //else
-                        //{
-                            animatable.IsMoving = false;
-                            animatable.ZIndex = 0;
-                        //}
+                        animatable.Location = new PointF(animatable.LineToLocation.X,animatable.LineToLocation.Y);
+                        animatable.IsMoving = false;
+                        animatable.ZIndex = 0;
                     }
                 }
                 else if (animatable.CurPathPointIndex < 0)
