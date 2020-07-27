@@ -14,6 +14,7 @@ using System.Text;
 using System.Diagnostics;
 using System.ComponentModel;
 using System.Numerics;
+using System.Net;
 
 namespace BlazorGalaga.Services
 {
@@ -26,11 +27,14 @@ namespace BlazorGalaga.Services
 
         private BezierCurveService bezierCurveService;
         private SpriteService spriteService;
+        private List<PathCache> PathCaches;
 
         public AnimationService(BezierCurveService bcs, SpriteService ss)
         {
             bezierCurveService = bcs;
             spriteService = ss;
+
+            PathCaches = new List<PathCache>();
         }
 
         public void ResetCanvas(Canvas2DContext ctx)
@@ -133,6 +137,13 @@ namespace BlazorGalaga.Services
 
         public List<PointF> ComputePathPoints(BezierCurve path, bool pathisline=false,float granularity = .1F)
         {
+            var cachedPath = PathCaches.FirstOrDefault(a => a.Path.StartPoint == path.StartPoint &&
+                                                        a.Path.ControlPoint1 == path.ControlPoint1 &&
+                                                        a.Path.ControlPoint2 == path.ControlPoint2 &&
+                                                        a.Path.EndPoint == path.EndPoint);
+
+            if (cachedPath != null && !pathisline) return cachedPath.PathPoints;
+
             float pointgranularity = 1F; //the lower the more granular
             List<PointF> pathpoints = new List<PointF>();
 
@@ -148,6 +159,8 @@ namespace BlazorGalaga.Services
 
             pathpoints = bezierCurveService.GetEvenlyDistributedPathPointsByLength(pathpoints, pointgranularity);
 
+            PathCaches.Add(new PathCache() { Path = path, PathPoints = pathpoints });
+
             return pathpoints;
         }
 
@@ -156,8 +169,6 @@ namespace BlazorGalaga.Services
             var stopwatch = new Stopwatch();
 
             stopwatch.Start();
-
-            float pointgranularity = 1F; //the lower the more granular 
             
             foreach (var animatable in Animatables)
             {
@@ -165,19 +176,7 @@ namespace BlazorGalaga.Services
                 {
                     animatable.PathPoints = new List<PointF>();
                     foreach (BezierCurve path in animatable.Paths)
-                    {
-                        for (var percent = 0F; percent <= 100; percent+= .1F)
-                        {
-                            PointF point;
-                            if (animatable.PathIsLine)
-                                point = bezierCurveService.getLineXYatPercent(path, percent);
-                            else
-                                point = bezierCurveService.getCubicBezierXYatPercent(path, percent);
-                            animatable.PathPoints.Add(point);
-                        }
-                    }
-                    if (animatable.PathPoints.Count >0)
-                        animatable.PathPoints = bezierCurveService.GetEvenlyDistributedPathPointsByLength(animatable.PathPoints, pointgranularity);
+                       animatable.PathPoints.AddRange(ComputePathPoints(path, animatable.PathIsLine));
                 }
             }
             Utils.dOut("ComputePathPoints", stopwatch.ElapsedMilliseconds);

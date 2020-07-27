@@ -11,6 +11,7 @@ namespace BlazorGalaga.Models
         public bool IsDiving { get; set; }
         public List<Bug> ChildBugs { get; set; }
 
+        public Point ChildBugOffset { get; set; }
         public Bug(Sprite.SpriteTypes spritetype)
         {
             Sprite = new Sprite(spritetype);

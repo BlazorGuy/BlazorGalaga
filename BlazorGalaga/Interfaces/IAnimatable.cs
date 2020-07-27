@@ -31,10 +31,10 @@ namespace BlazorGalaga.Interfaces
         public int? SpriteBankIndex { get; set; }
         public int ZIndex { get; set; }
         public int RotatIntoPlaceSpeed { get; set; }
-
         public Vector2 LineFromLocation { get; set; }
         public Vector2 LineToLocation { get; set; }
         public float LineToLocationDistance { get; set; }
+
 
     }
 }

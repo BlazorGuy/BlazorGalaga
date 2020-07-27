@@ -50,9 +50,9 @@ namespace BlazorGalaga.Services
                         childbug.IsMoving = true;
                         childbug.RotateAlongPath = true;
                         if(childbug.HomePoint.Y == bug.HomePoint.Y + 1)
-                            childbug.Location = new PointF(bug.Location.X + 35, bug.Location.Y + 35);
+                            childbug.Location = new PointF(bug.Location.X + bug.ChildBugOffset.X, bug.Location.Y + bug.ChildBugOffset.Y);
                         else
-                            childbug.Location = new PointF(bug.Location.X - 35, bug.Location.Y - 35);
+                            childbug.Location = new PointF(bug.Location.X - bug.ChildBugOffset.X, bug.Location.Y + bug.ChildBugOffset.Y);
                         childbug.Rotation = bug.Rotation;
                     });
                 }
@@ -242,6 +242,7 @@ namespace BlazorGalaga.Services
                     && !a.IsMoving);
 
                 bug.ChildBugs.AddRange(childbugs);
+                bug.ChildBugOffset = new Point(35, 35);
 
                 if (Utils.Rnd(0, 10) % 2 == 0)
                     dive = new GreenBugDive1();
