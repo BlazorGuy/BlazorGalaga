@@ -70,8 +70,8 @@ namespace BlazorGalaga.Services
                 {
                     //stop the curve animation
                     animatable.CurPathPointIndex = animatable.PathPoints.Count - 1;
-                    if (animatable.IsMoving &&
-                        (Vector2.Distance(animatable.LineFromLocation,new Vector2(animatable.Location.X, animatable.Location.Y)) < animatable.LineToLocationDistance ||
+                    if (animatable.IsMoving && !animatable.PathIsLine &&
+                        (Vector2.Distance(animatable.LineFromLocation,new Vector2(animatable.Location.X, animatable.Location.Y)) + animatable.Speed < animatable.LineToLocationDistance ||
                         animatable.LineToLocationDistance == 0))
                     {
                         animatable.LineToLocationDistance = Vector2.Distance(animatable.LineFromLocation, animatable.LineToLocation);

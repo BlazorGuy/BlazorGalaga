@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using BlazorGalaga.Interfaces;
@@ -84,14 +85,22 @@ namespace BlazorGalaga.Services
                 MoveEnemyGridIncrement *= -1;
             
             BugFactory.EnemyGrid.GridLeft += MoveEnemyGridIncrement;
-            
-            bugs.ForEach(bug => {
+
+            bugs.ForEach(bug =>
+            {
                 var homepoint = BugFactory.EnemyGrid.GetPointByRowCol(bug.HomePoint.X, bug.HomePoint.Y);
-                bug.LineFromLocation = new System.Numerics.Vector2(bug.Paths.Last().EndPoint.X, bug.Paths.Last().EndPoint.Y);
-                bug.LineToLocation = new System.Numerics.Vector2(homepoint.X, homepoint.Y);
+                if (bug.IsMoving)
+                {
+                    //this animates the line to location logic
+                    bug.LineFromLocation = new Vector2(bug.Paths.Last().EndPoint.X, bug.Paths.Last().EndPoint.Y);
+                    bug.LineToLocation = new Vector2(homepoint.X, homepoint.Y);
+                }
                 //snap to grid if bug isn't moving
-                if (!bug.IsMoving)
-                    bug.Location = homepoint;
+                else
+                {
+                    bug.LineToLocation = new Vector2(homepoint.X,homepoint.Y);
+                    //bug.Location = homepoint;
+                }
             });
         }
 
@@ -343,7 +352,7 @@ namespace BlazorGalaga.Services
                 ship.PathPoints.AddRange(animationService.ComputePathPoints(a));
             });
 
-            ship.CurPathPointIndex = (int)ship.PathPoints.Count / 3;
+            ship.CurPathPointIndex = (int)(ship.PathPoints.Count / 3)- (int)(ship.Sprite.SpriteDestRect.Width/2);
 
             animationService.Animatables.Add(ship);
         }
@@ -383,7 +392,7 @@ namespace BlazorGalaga.Services
                 ship.IsFiring = false;
                 DoFireFromShip();
             }
-            
+
         }
     }
 }

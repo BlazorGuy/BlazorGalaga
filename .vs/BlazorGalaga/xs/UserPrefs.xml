@@ -1,12 +1,10 @@
 ﻿<Properties StartupConfiguration="{202B6679-81B6-4D6C-83B3-0DC9DE1151AC}|Default">
   <MonoDevelop.Ide.ItemProperties.BlazorGalaga PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Static/BugFactory.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Static/Constants.cs">
     <Files>
-      <File FileName="BlazorGalaga/Services/GameService.cs" Line="68" Column="43" />
-      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="69" Column="84" />
-      <File FileName="BlazorGalaga/Interfaces/IAnimatable.cs" Line="37" Column="58" />
-      <File FileName="BlazorGalaga/Models/AnimatableBase.cs" Line="35" Column="58" />
-      <File FileName="BlazorGalaga/Static/BugFactory.cs" Line="99" Column="49" />
+      <File FileName="BlazorGalaga/Services/GameService.cs" Line="87" Column="15" />
+      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="74" Column="166" />
+      <File FileName="BlazorGalaga/Static/Constants.cs" Line="13" Column="44" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -18,7 +16,7 @@
               <Node name="Pages" expanded="True" />
               <Node name="Services" expanded="True" />
               <Node name="Static" expanded="True">
-                <Node name="BugFactory.cs" selected="True" />
+                <Node name="Constants.cs" selected="True" />
               </Node>
             </Node>
           </Node>
