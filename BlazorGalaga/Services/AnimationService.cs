@@ -48,32 +48,28 @@ namespace BlazorGalaga.Services
                     animatable.StartDelayStarted = true;
                 }
 
-                try
-                {
-                    if (animatable.CurPathPointIndex - 1 > 0 && animatable.CurPathPointIndex - 1 < animatable.PathPoints.Count)
-                        animatable.PevLocation = animatable.PathPoints[animatable.CurPathPointIndex - 1];
+                if (animatable.CurPathPointIndex - 1 > 0 && animatable.CurPathPointIndex - 1 < animatable.PathPoints.Count)
+                    animatable.PevLocation = animatable.PathPoints[animatable.CurPathPointIndex - 1];
 
-                    if (animatable.CurPathPointIndex > 0 && animatable.CurPathPointIndex  < animatable.PathPoints.Count)
-                        animatable.Location = animatable.PathPoints[animatable.CurPathPointIndex];
+                if (animatable.CurPathPointIndex > 0 && animatable.CurPathPointIndex  < animatable.PathPoints.Count)
+                    animatable.Location = animatable.PathPoints[animatable.CurPathPointIndex];
 
-                    if (animatable.CurPathPointIndex + 1 > 0 && animatable.CurPathPointIndex + 1 < animatable.PathPoints.Count)
-                        animatable.NextLocation = animatable.PathPoints[animatable.CurPathPointIndex + 1];
-                }
-                catch (Exception ex)
-                {
-                    Utils.dOut("Animation Error", ex.Message + "<br/>" + ex.StackTrace + "<br/>" + " animatable.CurPathPointIndex: " + animatable.CurPathPointIndex + " animatable.PathPoints.Count: " + animatable.PathPoints.Count);
-                }
+                if (animatable.CurPathPointIndex + 1 > 0 && animatable.CurPathPointIndex + 1 < animatable.PathPoints.Count)
+                    animatable.NextLocation = animatable.PathPoints[animatable.CurPathPointIndex + 1];
 
                 animatable.CurPathPointIndex += animatable.Speed;
 
+                //are we at the end of the last path?
                 if (animatable.CurPathPointIndex > animatable.PathPoints.Count - 1)
                 {
                     //stop the curve animation
                     animatable.CurPathPointIndex = animatable.PathPoints.Count - 1;
+                    //do we have an extra lineto to animate?
                     if (animatable.IsMoving && !animatable.PathIsLine &&
                         (Vector2.Distance(animatable.LineFromLocation,new Vector2(animatable.Location.X, animatable.Location.Y)) + animatable.Speed < animatable.LineToLocationDistance ||
                         animatable.LineToLocationDistance == 0))
                     {
+                        //lineto animation
                         animatable.LineToLocationDistance = Vector2.Distance(animatable.LineFromLocation, animatable.LineToLocation);
                         Vector2 direction = Vector2.Normalize(animatable.LineToLocation - animatable.LineFromLocation);
 
@@ -88,6 +84,7 @@ namespace BlazorGalaga.Services
                     }
                     else
                     {
+                        //animation is complete
                         if (!animatable.PathIsLine)
                             animatable.Location = new PointF(animatable.LineToLocation.X,animatable.LineToLocation.Y);
                         animatable.IsMoving = false;
@@ -102,6 +99,7 @@ namespace BlazorGalaga.Services
                 }
                 else
                 {
+                    //animation continues
                     animatable.IsMoving = true;
                     if (animatable.RotateAlongPath && animatable.Speed != 0)
                         animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);

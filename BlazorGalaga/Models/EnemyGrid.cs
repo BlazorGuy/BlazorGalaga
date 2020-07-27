@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlazorGalaga.Static;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -32,18 +33,21 @@ namespace BlazorGalaga.Models
         }
 
         public int GridLeft { get; set; }
+        public int HSpacing { get; set; }
+        public int VSpacing { get; set; }
 
         public EnemyGrid()
         {
-            GridLeft = 270;
+            GridLeft = Constants.EnemyGridLeft;
+            HSpacing = Constants.EnemyGridHSpacing;
+            VSpacing = Constants.EnemyGridHSpacing;
+
             ComputerEnemyGrid();
         }
 
         public void ComputerEnemyGrid()
         {
             const int GridTop = 150;
-            const int HSpacing = 45;
-            const int VSpacing = 45;
             const int XOffset = 0;
             const int YOffset = 0;
 

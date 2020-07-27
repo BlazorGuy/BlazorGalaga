@@ -25,6 +25,8 @@ namespace BlazorGalaga.Services
         private bool consoledrawn = false;
         private int WingFlapCount;
         private int MoveEnemyGridIncrement = 3;
+        private int BreathEnemyGridIncrement = 1;
+        private bool EnemyGridBreathing = false;
         private float LastEnemyGridMoveTimeStamp = 0;
         private float LastWingFlapTimeStamp = 0;
 
@@ -80,11 +82,27 @@ namespace BlazorGalaga.Services
         private void MoveEnemyGrid()
         {
             var bugs = GetBugs();
-
+            
             if (BugFactory.EnemyGrid.GridLeft > 350 || BugFactory.EnemyGrid.GridLeft < 180)
                 MoveEnemyGridIncrement *= -1;
-            
-            BugFactory.EnemyGrid.GridLeft += MoveEnemyGridIncrement;
+
+            if (!EnemyGridBreathing)
+            {
+                BugFactory.EnemyGrid.GridLeft += MoveEnemyGridIncrement;
+            }
+            else
+            {
+                if (Math.Abs(BugFactory.EnemyGrid.GridLeft - Constants.EnemyGridLeft) <= MoveEnemyGridIncrement)
+                    BugFactory.EnemyGrid.GridLeft = Constants.EnemyGridLeft;
+                else
+                    BugFactory.EnemyGrid.GridLeft += MoveEnemyGridIncrement;
+
+                if (BugFactory.EnemyGrid.HSpacing > 60 || BugFactory.EnemyGrid.HSpacing < 45)
+                    BreathEnemyGridIncrement *= -1;
+
+                BugFactory.EnemyGrid.HSpacing += BreathEnemyGridIncrement;
+                BugFactory.EnemyGrid.VSpacing += BreathEnemyGridIncrement;
+            }
 
             bugs.ForEach(bug =>
             {
@@ -171,6 +189,7 @@ namespace BlazorGalaga.Services
                     });
                     Task.Delay(22000).ContinueWith((task) =>
                     {
+                        EnemyGridBreathing = true;
                         for (int i = 0; i <= 100; i++)
                         {
                             Task.Delay(i * 3000).ContinueWith((task) =>
