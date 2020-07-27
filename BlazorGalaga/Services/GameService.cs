@@ -99,7 +99,6 @@ namespace BlazorGalaga.Services
                 else
                 {
                     bug.LineToLocation = new Vector2(homepoint.X,homepoint.Y);
-                    //bug.Location = homepoint;
                 }
             });
         }

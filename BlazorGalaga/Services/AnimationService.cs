@@ -88,7 +88,8 @@ namespace BlazorGalaga.Services
                     }
                     else
                     {
-                        animatable.Location = new PointF(animatable.LineToLocation.X,animatable.LineToLocation.Y);
+                        if (!animatable.PathIsLine)
+                            animatable.Location = new PointF(animatable.LineToLocation.X,animatable.LineToLocation.Y);
                         animatable.IsMoving = false;
                         animatable.ZIndex = 0;
                     }
