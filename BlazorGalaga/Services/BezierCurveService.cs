@@ -165,7 +165,7 @@ namespace BlazorGalaga.Services
 
         public PointF getCubicBezierXYatPercent(BezierCurve curve, float percent)
         {
-            percent /= 100;
+            percent *= .01F;
 
             var x = CubicPoint(percent, curve.StartPoint.X, curve.ControlPoint1.X, curve.ControlPoint2.X, curve.EndPoint.X);
             var y = CubicPoint(percent, curve.StartPoint.Y, curve.ControlPoint1.Y, curve.ControlPoint2.Y, curve.EndPoint.Y);
@@ -176,9 +176,10 @@ namespace BlazorGalaga.Services
         private float CubicPoint(float percent, float p1, float p2, float p3, float p4)
         {
             var b = (1 - percent);
-            return MathF.Pow(b, 3) * p1 + 3 * MathF.Pow(b, 2)
-                * percent * p2 + 3 * b * MathF.Pow(percent, 2)
-                * p3 + MathF.Pow(percent, 3) * p4;
+            return (b*b*b) * p1 + 3 * (b*b)
+                * percent * p2 + 3 * b * (percent * percent)
+                * p3 + (percent * percent * percent) * p4;
         }
+
     }
 }

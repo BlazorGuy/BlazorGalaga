@@ -31,7 +31,6 @@ namespace BlazorGalaga.Services
 
         public async void DrawSprite(Sprite sprite, PointF location, float rotationangle)
         {
-
             if (!sprite.IsInitialized)
                 SetSpriteInfoBySpriteType(sprite);
 
@@ -39,6 +38,7 @@ namespace BlazorGalaga.Services
             {
                 await DynamicCtx.SaveAsync();
                 await DynamicCtx.TranslateAsync(location.X, location.Y);
+                //await DynamicCtx.SetTransformAsync(1, 0, 0, 1, location.X, location.Y);
                 await DynamicCtx.RotateAsync((float)((rotationangle + sprite.InitialRotationOffset) * Math.PI / 180));
             }
 
@@ -46,13 +46,16 @@ namespace BlazorGalaga.Services
             {
                 await DynamicCtx.DrawImageAsync(
                     sprite.BufferCanvas.Canvas,
-                    rotationangle == 0 ? (int)location.X - (int)sprite.SpriteDestRect.Width / 2 : (int)sprite.SpriteDestRect.Width / 2 * -1, //dest x
-                    rotationangle == 0 ? (int)location.Y - (int)sprite.SpriteDestRect.Height / 2 : (int)sprite.SpriteDestRect.Height / 2 * -1 //dest y,
+                    rotationangle == 0 ? (int)location.X - sprite.SpriteDestRect.Width * .5 : (int)sprite.SpriteDestRect.Width *.5 * -1, //dest x
+                    rotationangle == 0 ? (int)location.Y - sprite.SpriteDestRect.Height * .5 : (int)sprite.SpriteDestRect.Height *.5 * -1 //dest y,
                 );
             }
 
-            if (rotationangle!=0)
+            if (rotationangle != 0)
+            {
+                //await DynamicCtx.SetTransformAsync(1, 0, 0, 1, 0, 0);
                 await DynamicCtx.RestoreAsync();
+            }
         }
 
         private void SetSpriteInfoBySpriteType(Sprite sprite)

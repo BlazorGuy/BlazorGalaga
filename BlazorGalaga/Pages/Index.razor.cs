@@ -83,6 +83,7 @@ namespace BlazorGalaga.Pages
         private int targetTicksPerFrame = (1000 / 60);
         private float delta;
         private float lastTimeStamp;
+        private int drawmod = 2;
 
         public class GameLoopObject
         {
@@ -126,8 +127,18 @@ namespace BlazorGalaga.Pages
                     animationService.Animate();
                     delta -= targetTicksPerFrame;
                 }
-                if(loopCount%2==0)
+
+                if(loopCount % drawmod == 0)
                     animationService.Draw();
+
+                if (Utils.FPS > 50 && Utils.FPS <= 55)
+                    drawmod = 3;
+                else if (Utils.FPS > 45 && Utils.FPS <= 50)
+                    drawmod = 4;
+                else if (Utils.FPS <= 45)
+                    drawmod = 5;
+                else
+                    drawmod = 2;
                 //End Animation Logic
 
                 //Start Curve Editor Logic
