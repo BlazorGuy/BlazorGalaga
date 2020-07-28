@@ -119,12 +119,13 @@ namespace BlazorGalaga.Services
 
             for(var i = 0; i <= Animatables.Count - 1; i++)
             {
-                if (!Animatables[i].IsMoving
+                if ((!Animatables[i].IsMoving
                 && Animatables[i].Started
                 && (Animatables[i].Location.X < 0 ||
                     Animatables[i].Location.Y < 0 ||
                     Animatables[i].Location.X > Constants.CanvasSize.Width ||
-                    Animatables[i].Location.Y > Constants.CanvasSize.Height))
+                    Animatables[i].Location.Y > Constants.CanvasSize.Height)) ||
+                    (!Animatables[i].IsMoving && Animatables[i].DestroyAfterComplete))
                 {
                     (Animatables[i] as AnimatableBase).Dispose();
                     Animatables[i] = null;

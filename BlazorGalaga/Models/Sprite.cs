@@ -16,7 +16,8 @@ namespace BlazorGalaga.Models
             RedBug_DownFlap,
             GreenBug,
             GreenBug_DownFlap,
-            ShipMissle
+            ShipMissle,
+            BugMissle
         }
 
         public RectangleF SpriteDestRect { get; set; }

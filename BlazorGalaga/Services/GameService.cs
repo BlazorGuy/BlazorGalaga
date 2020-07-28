@@ -84,7 +84,11 @@ namespace BlazorGalaga.Services
                         {
                             Task.Delay(i * 3000).ContinueWith((task) =>
                             {
-                               EnemyDiveManager.DoEnemyDive(GetBugs(),animationService,Ship);
+                               var bug = EnemyDiveManager.DoEnemyDive(GetBugs(),animationService,Ship);
+                                Task.Delay(1000).ContinueWith((task) =>
+                                {
+                                    EnemyDiveManager.DoEnemyFire(bug, animationService, Ship);
+                                });
                             });
                         }
                     });

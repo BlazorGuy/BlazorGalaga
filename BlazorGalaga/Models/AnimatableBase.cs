@@ -33,6 +33,7 @@ namespace BlazorGalaga.Models
         public int ZIndex { get; set; }
         public int RotatIntoPlaceSpeed { get; set; }
         public float LineToLocationDistance { get; set; }
+        public bool DestroyAfterComplete { get; set; }
 
         public AnimatableBase()
         {

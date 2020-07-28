@@ -13,7 +13,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 {
     public static class EnemyDiveManager
     {
-        public static void DoEnemyDive(List<Bug> bugs, AnimationService animationService, Ship ship)
+        public static Bug DoEnemyDive(List<Bug> bugs, AnimationService animationService, Ship ship)
         {
             Bug bug = null;
 
@@ -75,6 +75,36 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 p.DrawPath = true;
                 bug.PathPoints.AddRange(animationService.ComputePathPoints(p));
             });
+
+            return bug;
+        }
+
+        public static void DoEnemyFire(Bug bug, AnimationService animationService, Ship ship)
+        {
+            List<BezierCurve> paths = new List<BezierCurve>();
+
+            paths.Add(new BezierCurve()
+            {
+                StartPoint = new PointF(bug.Location.X +5, bug.Location.Y + 5),
+                EndPoint = new PointF(ship.Location.X + 20, ship.Location.Y + 20)
+            });
+
+            var missle = new BugMissle()
+            {
+                Paths = paths,
+                DrawPath = false,
+                PathIsLine = true,
+                RotateAlongPath = false,
+                Started = true,
+                Speed = 5,
+                DestroyAfterComplete = true
+            };
+
+            missle.Paths.ForEach(p => {
+                missle.PathPoints.AddRange(animationService.ComputePathPoints(p, true));
+            });
+
+            animationService.Animatables.Add(missle);
         }
     }
 }

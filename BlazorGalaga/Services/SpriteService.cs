@@ -87,6 +87,9 @@ namespace BlazorGalaga.Services
                 case Sprite.SpriteTypes.GreenBug_DownFlap:
                     SetUpSprite(sprite, 7, 127, 37, -90);
                     break;
+                case Sprite.SpriteTypes.BugMissle:
+                    SetUpSprite(sprite, 8, 310, 135, 0);
+                    break;
             }
 
             sprite.IsInitialized = true;
