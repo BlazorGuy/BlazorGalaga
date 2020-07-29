@@ -96,28 +96,43 @@ namespace BlazorGalaga.Services
                 case Sprite.SpriteTypes.BugMissle:
                     SetUpSprite(sprite, 8, 310, 135, 0, 0);
                     break;
+                case Sprite.SpriteTypes.EnemyExplosion1:
+                    SetUpSprite(sprite, 9, 292, 1, 0, 0, 32, 32, 90, 90);
+                    break;
+                case Sprite.SpriteTypes.EnemyExplosion2:
+                    SetUpSprite(sprite, 9, 324, 1, 0, 0, 32, 32, 90, 90);
+                    break;
+                case Sprite.SpriteTypes.EnemyExplosion3:
+                    SetUpSprite(sprite, 9, 356, 1, 0, 0, 32, 32, 90, 90);
+                    break;
+                case Sprite.SpriteTypes.EnemyExplosion4:
+                    SetUpSprite(sprite, 9, 388, 1, 0, 0, 32, 32, 90, 90);
+                    break;
+                case Sprite.SpriteTypes.EnemyExplosion5:
+                    SetUpSprite(sprite, 9, 420, 1, 0, 0, 32, 32, 90, 90);
+                    break;
             }
 
             sprite.IsInitialized = true;
         }
 
-        private async void SetUpSprite(Sprite sprite,int bufferindex, int sx, int sy, int rotationoffset,int dynamiccanvasindex)
+        private async void SetUpSprite(Sprite sprite,int bufferindex, int sx, int sy, int rotationoffset,int dynamiccanvasindex, int swidth=0, int sheight=0, int dwidth= 0, int dheight = 0)
         {
             await BufferCanvases[bufferindex].Context.DrawImageAsync(
                 SpriteSheet,
                 sx,
                 sy,
-                Constants.SpriteSourceSize,
-                Constants.SpriteSourceSize,
+                swidth==0 ? Constants.SpriteSourceSize : swidth,
+                sheight==0 ? Constants.SpriteSourceSize: sheight,
                 0,
                 0,
-                Constants.SpriteDestSize.Width,
-                Constants.SpriteDestSize.Height
+                dwidth==0 ? Constants.SpriteDestSize.Width : dwidth,
+                dheight==0 ? Constants.SpriteDestSize.Height : dheight
             );
 
             sprite.BufferCanvas = BufferCanvases[bufferindex].Context;
             sprite.DynamicCanvas = dynamiccanvasindex == 0 ? DynamicCtx1 : DynamicCtx2;
-            sprite.SpriteDestRect = new RectangleF(0, 0, Constants.SpriteDestSize.Width, Constants.SpriteDestSize.Height);
+            sprite.SpriteDestRect = new RectangleF(0, 0, dwidth==0 ? Constants.SpriteDestSize.Width : dwidth, dheight==0 ? Constants.SpriteDestSize.Height: dheight);
             sprite.InitialRotationOffset = rotationoffset;
         }
 

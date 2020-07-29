@@ -25,6 +25,11 @@ namespace BlazorGalaga.Pages
         private Canvas2DContext DynamicCtx2;
         private Canvas2DContext StaticCtx;
         private bool stopGameLoop;
+        private int targetTicksPerFrame = (1000 / 60);
+        private float delta;
+        private float lastTimeStamp;
+        private int drawmod = 2;
+        private long loopCount = 0;
 
         protected BECanvasComponent StaticCanvas;
         protected BECanvasComponent DynamicCanvas1;
@@ -84,11 +89,6 @@ namespace BlazorGalaga.Pages
             ship = (Ship)animationService.Animatables.FirstOrDefault(a => a.Sprite.SpriteType == Sprite.SpriteTypes.Ship);
         }
 
-        private int targetTicksPerFrame = (1000 / 60);
-        private float delta;
-        private float lastTimeStamp;
-        private int drawmod = 2;
-
         public class GameLoopObject
         {
             public float timestamp { get; set; }
@@ -98,8 +98,6 @@ namespace BlazorGalaga.Pages
             public bool resetanimation { get; set; }
             public bool spritesheetloaded { get; set; }
         }
-
-        private long loopCount = 0;
 
         [JSInvokable]
         public async void GameLoop(GameLoopObject glo)
@@ -118,7 +116,6 @@ namespace BlazorGalaga.Pages
                 var timeStamp = glo.timestamp;
 
                 Utils.dOut("GameLoop Running", "LC: " + loopCount + " , TS: " + glo.timestamp);
-
 
                 //Start Animation Logic
                 delta += (int)(timeStamp - lastTimeStamp);

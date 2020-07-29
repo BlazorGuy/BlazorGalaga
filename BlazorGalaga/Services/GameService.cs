@@ -29,6 +29,21 @@ namespace BlazorGalaga.Services
         {
             Lives = 2;
             ShipManager.InitShip(animationService);
+
+            Task.Delay(1000).ContinueWith((task) =>
+            {
+                var exp = new EnemyExplosion()
+                {
+                    DrawPath = false,
+                    RotateAlongPath = false,
+                    Started = true,
+                    Speed = 10,
+                    DestroyAfterComplete = false
+                };
+
+                exp.PathPoints.Add(new PointF(100, 400));
+                animationService.Animatables.Add(exp);
+            });
         }
 
         private void InitLevel(int level)

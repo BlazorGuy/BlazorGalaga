@@ -18,7 +18,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 {
                     if (bug.CurPathPointIndex < bug.PathPoints.Count - 1)
                     {
-                        bug.ChildBugs.ForEach(childbug =>
+                        bug.ChildBugs.Where(a=>a !=null).ToList().ForEach(childbug =>
                         {
                             childbug.CurPathPointIndex = 0;
                             childbug.PathPoints.Add(new PointF(0, 0));
@@ -34,7 +34,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                     }
                     else
                     {
-                        bug.ChildBugs.ForEach(childbug =>
+                        bug.ChildBugs.Where(a => a != null).ToList().ForEach(childbug =>
                         {
                             childbug.PathPoints.Clear();
                             childbug.Paths.Clear();
