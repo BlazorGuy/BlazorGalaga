@@ -14,43 +14,46 @@ namespace BlazorGalaga.Static.GameServiceHelpers
         {
             bugs.ForEach(bug =>
             {
-                if (bug.CurPathPointIndex < bug.PathPoints.Count - 1)
+                if (bug != null && bug.ChildBugs != null)
                 {
-                    bug.ChildBugs.ForEach(childbug =>
+                    if (bug.CurPathPointIndex < bug.PathPoints.Count - 1)
                     {
-                        childbug.CurPathPointIndex = 0;
-                        childbug.PathPoints.Add(new PointF(0, 0));
-                        childbug.Speed = 0;
-                        childbug.IsMoving = true;
-                        childbug.RotateAlongPath = true;
-                        if (childbug.HomePoint.Y == bug.HomePoint.Y + 1)
-                            childbug.Location = new PointF(bug.Location.X + bug.ChildBugOffset.X, bug.Location.Y + bug.ChildBugOffset.Y);
-                        else
-                            childbug.Location = new PointF(bug.Location.X - bug.ChildBugOffset.X, bug.Location.Y + bug.ChildBugOffset.Y);
-                        childbug.Rotation = bug.Rotation;
-                    });
-                }
-                else
-                {
-                    bug.ChildBugs.ForEach(childbug =>
+                        bug.ChildBugs.ForEach(childbug =>
+                        {
+                            childbug.CurPathPointIndex = 0;
+                            childbug.PathPoints.Add(new PointF(0, 0));
+                            childbug.Speed = 0;
+                            childbug.IsMoving = true;
+                            childbug.RotateAlongPath = true;
+                            if (childbug.HomePoint.Y == bug.HomePoint.Y + 1)
+                                childbug.Location = new PointF(bug.Location.X + bug.ChildBugOffset.X, bug.Location.Y + bug.ChildBugOffset.Y);
+                            else
+                                childbug.Location = new PointF(bug.Location.X - bug.ChildBugOffset.X, bug.Location.Y + bug.ChildBugOffset.Y);
+                            childbug.Rotation = bug.Rotation;
+                        });
+                    }
+                    else
                     {
-                        childbug.PathPoints.Clear();
-                        childbug.Paths.Clear();
-                        childbug.LineToLocationDistance = 0;
-                        childbug.RotateAlongPath = true;
-                        childbug.IsMoving = true;
-                        childbug.Speed = 5;
+                        bug.ChildBugs.ForEach(childbug =>
+                        {
+                            childbug.PathPoints.Clear();
+                            childbug.Paths.Clear();
+                            childbug.LineToLocationDistance = 0;
+                            childbug.RotateAlongPath = true;
+                            childbug.IsMoving = true;
+                            childbug.Speed = 5;
                         //add a minimum path that is 2X the speed just to kick off the line to location logic
                         childbug.Paths.Add(new BezierCurve()
-                        {
-                            StartPoint = childbug.Location,
-                            ControlPoint1 = childbug.Location,
-                            ControlPoint2 = childbug.Location,
-                            EndPoint = new PointF(childbug.Location.X + 10, childbug.Location.Y + 10)
+                            {
+                                StartPoint = childbug.Location,
+                                ControlPoint1 = childbug.Location,
+                                ControlPoint2 = childbug.Location,
+                                EndPoint = new PointF(childbug.Location.X + 10, childbug.Location.Y + 10)
+                            });
+                            childbug.PathPoints.AddRange(animationService.ComputePathPoints(childbug.Paths.First()));
                         });
-                        childbug.PathPoints.AddRange(animationService.ComputePathPoints(childbug.Paths.First()));
-                    });
-                    bug.ChildBugs.Clear();
+                        bug.ChildBugs.Clear();
+                    }
                 }
             });
         }

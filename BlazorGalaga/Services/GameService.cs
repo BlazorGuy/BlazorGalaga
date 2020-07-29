@@ -85,10 +85,13 @@ namespace BlazorGalaga.Services
                             Task.Delay(i * 3000).ContinueWith((task) =>
                             {
                                var bug = EnemyDiveManager.DoEnemyDive(GetBugs(),animationService,Ship);
-                                Task.Delay(1000).ContinueWith((task) =>
+                                if (bug != null)
                                 {
-                                    EnemyDiveManager.DoEnemyFire(bug, animationService, Ship);
-                                });
+                                    Task.Delay(1000).ContinueWith((task) =>
+                                    {
+                                        EnemyDiveManager.DoEnemyFire(bug, animationService, Ship);
+                                    });
+                                }
                             });
                         }
                     });
@@ -109,6 +112,8 @@ namespace BlazorGalaga.Services
 
         public async void Process(Ship ship, float timestamp)
         {
+            var bugs = GetBugs();
+
             //Begin Init - Only happens once
             if (!levelInitialized)
             {
@@ -123,17 +128,17 @@ namespace BlazorGalaga.Services
             }
             //End Init - Only happens once
 
-            ChildBugsManager.MoveChildBugs(GetBugs(),animationService);
+            ChildBugsManager.MoveChildBugs(bugs, animationService);
 
             if (timestamp - EnemyGridManager.LastEnemyGridMoveTimeStamp > 100 || EnemyGridManager.LastEnemyGridMoveTimeStamp == 0)
             {
-                EnemyGridManager.MoveEnemyGrid(GetBugs());
+                EnemyGridManager.MoveEnemyGrid(bugs);
                 EnemyGridManager.LastEnemyGridMoveTimeStamp = timestamp;
             }
 
             if (timestamp - FlapWingsManager.LastWingFlapTimeStamp > 500 || FlapWingsManager.LastWingFlapTimeStamp == 0)
             {
-                FlapWingsManager.FlapWings(GetBugs());
+                FlapWingsManager.FlapWings(bugs);
                 FlapWingsManager.LastWingFlapTimeStamp = timestamp;
             }
 
@@ -142,6 +147,8 @@ namespace BlazorGalaga.Services
                 ship.IsFiring = false;
                 ShipManager.Fire(ship, animationService);
             }
+
+            ShipManager.CheckMissileCollisions(bugs, animationService);
 
         }
     }

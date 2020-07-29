@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace BlazorGalaga.Static.GameServiceHelpers
@@ -26,7 +27,8 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 DrawPath = false,
                 PathIsLine = true,
                 RotateAlongPath = false,
-                Started = true
+                Started = true,
+                Index = -999
             };
 
             ship.Paths.ForEach(a => {
@@ -55,7 +57,8 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 PathIsLine = true,
                 RotateAlongPath = false,
                 Started = true,
-                Speed = 10
+                Speed = 10,
+                DestroyAfterComplete = true
             };
 
             missle.Paths.ForEach(p => {
@@ -63,6 +66,25 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             });
 
             animationService.Animatables.Add(missle);
+        }
+
+        public static void CheckMissileCollisions(List<Bug> bugs, AnimationService animationService)
+        {
+
+            animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.ShipMissle).ToList().ForEach(missile => {
+                var missilerect = new Rectangle((int)missile.Location.X + 5, (int)missile.Location.Y + 10, 5, 5);
+                foreach(var bug in bugs)
+                {
+                    var bugrect = new Rectangle((int)bug.Location.X, (int)bug.Location.Y, (int)bug.Sprite.SpriteDestRect.Width, (int)bug.Sprite.SpriteDestRect.Height);
+                    if (missilerect.IntersectsWith(bugrect))
+                    {
+                        missile.DestroyImmediately = true;
+                        bug.DestroyImmediately = true;
+                        return;
+                    }
+                }
+            });
+
         }
     }
 }

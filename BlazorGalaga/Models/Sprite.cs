@@ -25,7 +25,7 @@ namespace BlazorGalaga.Models
         public bool IsInitialized { get; set; }
         public float InitialRotationOffset { get; set; }
         public Canvas2DContext BufferCanvas { get; set; }
-
+        public Canvas2DContext DynamicCanvas { get; set; }
         public Sprite(SpriteTypes spritetype)
         {
             SpriteType = spritetype;

@@ -21,12 +21,14 @@ namespace BlazorGalaga.Pages
         public string DiagnosticInfo = "";
         public List<Canvas> BufferCanvases { get; set; }
 
-        private Canvas2DContext DynamicCtx;
+        private Canvas2DContext DynamicCtx1;
+        private Canvas2DContext DynamicCtx2;
         private Canvas2DContext StaticCtx;
         private bool stopGameLoop;
 
         protected BECanvasComponent StaticCanvas;
-        protected BECanvasComponent DynamicCanvas;
+        protected BECanvasComponent DynamicCanvas1;
+        protected BECanvasComponent DynamicCanvas2;
         protected ElementReference spriteSheet;
 
         private static Ship ship;
@@ -53,7 +55,8 @@ namespace BlazorGalaga.Pages
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
 
-            DynamicCtx = await DynamicCanvas.CreateCanvas2DAsync();
+            DynamicCtx1 = await DynamicCanvas1.CreateCanvas2DAsync();
+            DynamicCtx2 = await DynamicCanvas2.CreateCanvas2DAsync();
             StaticCtx = await StaticCanvas.CreateCanvas2DAsync();
 
             foreach (var canvas in BufferCanvases)
@@ -66,7 +69,8 @@ namespace BlazorGalaga.Pages
         public void SpriteSheetLoaded()
         {
 
-            spriteService.DynamicCtx = DynamicCtx;
+            spriteService.DynamicCtx1 = DynamicCtx1;
+            spriteService.DynamicCtx2 = DynamicCtx2;
             spriteService.StaticCtx = StaticCtx;
             spriteService.BufferCanvases = BufferCanvases;
 
@@ -115,8 +119,6 @@ namespace BlazorGalaga.Pages
 
                 Utils.dOut("GameLoop Running", "LC: " + loopCount + " , TS: " + glo.timestamp);
 
-                if (gameService.animationService != null)
-                    gameService.Process(ship, timeStamp);
 
                 //Start Animation Logic
                 delta += (int)(timeStamp - lastTimeStamp);
@@ -128,8 +130,12 @@ namespace BlazorGalaga.Pages
                     delta -= targetTicksPerFrame;
                 }
 
-                if(loopCount % drawmod == 0)
+                if (loopCount % drawmod == 0)
+                {
                     animationService.Draw();
+                    if (gameService.animationService != null)
+                        gameService.Process(ship, timeStamp);
+                }
 
                 if (Utils.FPS > 50 && Utils.FPS <= 55)
                     drawmod = 3;

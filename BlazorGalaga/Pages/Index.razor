@@ -26,6 +26,10 @@
             z-index: 1000;
         }
 
+        #theCanvas canvas:nth-child(1) {
+            z-index: 1000;
+        }
+
     #theCanvas canvas:last-child {
         z-index: 1;
     }
@@ -94,7 +98,8 @@
 </div>
 
 <div id="theCanvas" style="position: fixed; opacity: 1; background-color: black; width: 100%; height: 100%;">
-    <BECanvas Width="672" Height="944" @ref="DynamicCanvas"></BECanvas>
+    <BECanvas Width="672" Height="944" @ref="DynamicCanvas1"></BECanvas>
+    <BECanvas Width="672" Height="944" @ref="DynamicCanvas2"></BECanvas>
     <BECanvas Width="672" Height="944" @ref="StaticCanvas"></BECanvas>
     <div class="twinkle"></div>
     <div class="background"></div>

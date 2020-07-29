@@ -35,7 +35,7 @@ namespace BlazorGalaga.Interfaces
         public Vector2 LineToLocation { get; set; }
         public float LineToLocationDistance { get; set; }
         public bool DestroyAfterComplete { get; set; }
-
+        public bool DestroyImmediately { get; set; }
 
     }
 }

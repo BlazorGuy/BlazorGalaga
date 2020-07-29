@@ -16,10 +16,13 @@ namespace BlazorGalaga.Static.GameServiceHelpers
         public static Bug DoEnemyDive(List<Bug> bugs, AnimationService animationService, Ship ship)
         {
             Bug bug = null;
+            int loopcount = 0;
 
             while (bug == null || bug.IsMoving)
             {
-                bug = bugs.FirstOrDefault(a => a.Index == Utils.Rnd(0, bugs.Count - 1));
+                bug = bugs.FirstOrDefault(a => a.Index == Utils.Rnd(0, bugs.OrderBy(b=>b.Index).Last().Index));
+                loopcount++;
+                if (loopcount > 50) return null;
             }
 
             bug.SpriteBankIndex = null;
