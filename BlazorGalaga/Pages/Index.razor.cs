@@ -99,6 +99,10 @@ namespace BlazorGalaga.Pages
             public bool spritesheetloaded { get; set; }
         }
 
+        Stopwatch sw = new Stopwatch();
+        long totaldraw = 0;
+        long maxdraw = 0;
+
         [JSInvokable]
         public async void GameLoop(GameLoopObject glo)
         {
@@ -115,23 +119,16 @@ namespace BlazorGalaga.Pages
 
                 var timeStamp = glo.timestamp;
 
-                Utils.dOut("GameLoop Running", "LC: " + loopCount + " , TS: " + glo.timestamp);
-
                 //Start Animation Logic
                 delta += (int)(timeStamp - lastTimeStamp);
                 lastTimeStamp = timeStamp;
 
                 while (delta >= targetTicksPerFrame)
                 {
+                    sw.Restart();
                     animationService.Animate();
+                    Utils.dOut("animationService.Animate()", sw.ElapsedMilliseconds);
                     delta -= targetTicksPerFrame;
-                }
-
-                if (loopCount % drawmod == 0)
-                {
-                    animationService.Draw();
-                    if (gameService.animationService != null)
-                        gameService.Process(ship, timeStamp);
                 }
 
                 if (Utils.FPS > 50 && Utils.FPS <= 55)
@@ -142,6 +139,21 @@ namespace BlazorGalaga.Pages
                     drawmod = 5;
                 else
                     drawmod = 2;
+
+                if (loopCount % drawmod == 0)
+                {
+                    sw.Restart();
+                    animationService.Draw();
+                    if (sw.ElapsedMilliseconds >=8)
+                        totaldraw += sw.ElapsedMilliseconds;
+                    if (sw.ElapsedMilliseconds > maxdraw && sw.ElapsedMilliseconds < 50) maxdraw = sw.ElapsedMilliseconds;
+                    Utils.dOut("animationService.Draw()", sw.ElapsedMilliseconds + " Avg: " + ((int)totaldraw/(loopCount/drawmod)) + " Max: " + maxdraw);
+
+                    sw.Restart();
+                    if (gameService.animationService != null)
+                        gameService.Process(ship, timeStamp);
+                    Utils.dOut("gameService.Process()", sw.ElapsedMilliseconds);
+                }
                 //End Animation Logic
 
                 //Start Curve Editor Logic

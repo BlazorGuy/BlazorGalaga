@@ -115,8 +115,6 @@ namespace BlazorGalaga.Services
 
         public void CleanUpOffScreenAnimatables()
         {
-            Utils.dOut("Animatables", Animatables.Count);
-
             for(var i = 0; i <= Animatables.Count - 1; i++)
             {
                 if ((!Animatables[i].IsMoving
@@ -168,10 +166,7 @@ namespace BlazorGalaga.Services
 
         public void ComputePathPoints()
         {
-            var stopwatch = new Stopwatch();
-
-            stopwatch.Start();
-            
+           
             foreach (var animatable in Animatables)
             {
                 if (animatable.Paths != null)
@@ -181,18 +176,19 @@ namespace BlazorGalaga.Services
                        animatable.PathPoints.AddRange(ComputePathPoints(path, animatable.PathIsLine));
                 }
             }
-            Utils.dOut("ComputePathPoints", stopwatch.ElapsedMilliseconds);
+
         }
 
         public void Draw()
         {
             spriteService.DynamicCtx1.BeginBatchAsync();
-            spriteService.DynamicCtx2.BeginBatchAsync();
+            //spriteService.DynamicCtx2.BeginBatchAsync();
 
             ResetCanvas(spriteService.DynamicCtx1);
-            ResetCanvas(spriteService.DynamicCtx2);
+            //ResetCanvas(spriteService.DynamicCtx2);
 
-            foreach (IAnimatable animatable in Animatables.Where(a=>a.Started).OrderByDescending(a=>a.ZIndex)) {
+            foreach (IAnimatable animatable in Animatables.Where(a => a.Started).OrderByDescending(a => a.ZIndex))
+            {
 
                 spriteService.DrawSprite(
                     animatable.SpriteBankIndex == null ? animatable.Sprite : animatable.SpriteBank[(int)animatable.SpriteBankIndex],
@@ -210,7 +206,7 @@ namespace BlazorGalaga.Services
             }
 
             spriteService.DynamicCtx1.EndBatchAsync();
-            spriteService.DynamicCtx2.EndBatchAsync();
+            //spriteService.DynamicCtx2.EndBatchAsync();
         }
     }
 }

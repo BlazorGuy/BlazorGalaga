@@ -94,21 +94,21 @@ namespace BlazorGalaga.Services
                     });
                     Task.Delay(22000).ContinueWith((task) =>
                     {
-                       EnemyGridManager.EnemyGridBreathing = true;
-                        for (int i = 0; i <= 100; i++)
-                        {
-                            Task.Delay(i * 3000).ContinueWith((task) =>
-                            {
-                               var bug = EnemyDiveManager.DoEnemyDive(GetBugs(),animationService,Ship);
-                                if (bug != null)
-                                {
-                                    Task.Delay(1000).ContinueWith((task) =>
-                                    {
-                                        EnemyDiveManager.DoEnemyFire(bug, animationService, Ship);
-                                    });
-                                }
-                            });
-                        }
+                       //EnemyGridManager.EnemyGridBreathing = true;
+                       // for (int i = 0; i <= 100; i++)
+                       // {
+                       //     Task.Delay(i * 3000).ContinueWith((task) =>
+                       //     {
+                       //        var bug = EnemyDiveManager.DoEnemyDive(GetBugs(),animationService,Ship);
+                       //         if (bug != null)
+                       //         {
+                       //             Task.Delay(1000).ContinueWith((task) =>
+                       //             {
+                       //                 EnemyDiveManager.DoEnemyFire(bug, animationService, Ship);
+                       //             });
+                       //         }
+                       //     });
+                       // }
                     });
                     break;
             }
