@@ -34,6 +34,9 @@ namespace BlazorGalaga.Services
             await DynamicCtx2.SetFontAsync("48px serif");
             await DynamicCtx2.SetLineWidthAsync(2);
 
+            foreach (var spritetype in Enum.GetValues(typeof(Sprite.SpriteTypes)).Cast<Sprite.SpriteTypes>())
+                SetSpriteInfoBySpriteType(new Sprite(spritetype));
+
         }
 
         private bool isrotated = false;
@@ -106,6 +109,12 @@ namespace BlazorGalaga.Services
                 case Sprite.SpriteTypes.BugMissle:
                     SetUpSprite(BufferCanvases, sprite, 8, 310, 135, 0, 0);
                     break;
+                case Sprite.SpriteTypes.GreenBug_Blue:
+                    SetUpSprite(BufferCanvases, sprite, 9, 109, 55, -90, 0);
+                    break;
+                case Sprite.SpriteTypes.GreenBug_Blue_DownFlap:
+                    SetUpSprite(BufferCanvases, sprite, 10, 127, 55, -90, 0);
+                    break;
                 case Sprite.SpriteTypes.EnemyExplosion1:
                     SetUpSprite(BigBufferCanvases, sprite, 0, 292, 1, 0, 0, true);
                     break;
@@ -131,18 +140,21 @@ namespace BlazorGalaga.Services
                                         int rotationoffset,int dynamiccanvasindex,bool isbig=false)
         {
 
-            await buffercanvases[bufferindex].Context.DrawImageAsync(
-                SpriteSheet,
-                sx,
-                sy,
-                !isbig ? Constants.SpriteSourceSize : Constants.BigSpriteSourceSize,
-                !isbig ? Constants.SpriteSourceSize : Constants.BigSpriteSourceSize,
-                0,
-                0,
-                !isbig ? Constants.SpriteDestSize.Width : Constants.BigSpriteDestSize.Width,
-                !isbig ? Constants.SpriteDestSize.Height : Constants.BigSpriteDestSize.Height
-            );
-
+            if (!buffercanvases[bufferindex].IsInitialized)
+            {
+                await buffercanvases[bufferindex].Context.DrawImageAsync(
+                    SpriteSheet,
+                    sx,
+                    sy,
+                    !isbig ? Constants.SpriteSourceSize : Constants.BigSpriteSourceSize,
+                    !isbig ? Constants.SpriteSourceSize : Constants.BigSpriteSourceSize,
+                    0,
+                    0,
+                    !isbig ? Constants.SpriteDestSize.Width : Constants.BigSpriteDestSize.Width,
+                    !isbig ? Constants.SpriteDestSize.Height : Constants.BigSpriteDestSize.Height
+                );
+                buffercanvases[bufferindex].IsInitialized = true;
+            }
 
             sprite.BufferCanvas = buffercanvases[bufferindex].Context;
             sprite.DynamicCanvas = dynamiccanvasindex == 0 ? DynamicCtx1 : DynamicCtx2;

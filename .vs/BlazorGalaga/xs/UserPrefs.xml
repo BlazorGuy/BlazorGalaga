@@ -2,19 +2,17 @@
   <MonoDevelop.Ide.ItemProperties.BlazorGalaga PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Static/GameServiceHelpers/EnemyExplosionManager.cs">
     <Files>
-      <File FileName="BlazorGalaga/Services/SpriteService.cs" Line="116" Column="83" />
-      <File FileName="BlazorGalaga/Services/GameService.cs" Line="26" Column="43" />
-      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="180" Column="10" />
-      <File FileName="BlazorGalaga/Models/EnemyExplosion.cs" Line="17" Column="1" />
-      <File FileName="BlazorGalaga/Static/GameServiceHelpers/ShipManager.cs" Line="82" Column="40" />
-      <File FileName="BlazorGalaga/Models/Bug.cs" Line="7" Column="2" />
-      <File FileName="BlazorGalaga/Static/GameServiceHelpers/EnemyExplosionManager.cs" Line="4" Column="27" />
+      <File FileName="BlazorGalaga/Services/GameService.cs" Line="100" Column="1" />
+      <File FileName="BlazorGalaga/Static/GameServiceHelpers/EnemyExplosionManager.cs" Line="27" Column="53" />
+      <File FileName="BlazorGalaga/Static/GameServiceHelpers/ChildBugsManager.cs" Line="14" Column="10" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="BlazorGalaga" expanded="True">
             <Node name="BlazorGalaga" expanded="True">
+              <Node name="Interfaces" expanded="True" />
+              <Node name="Models" expanded="True" />
               <Node name="Services" expanded="True" />
               <Node name="Static" expanded="True">
                 <Node name="GameServiceHelpers" expanded="True">

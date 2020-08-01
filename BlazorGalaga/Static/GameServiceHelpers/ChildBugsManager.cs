@@ -12,13 +12,13 @@ namespace BlazorGalaga.Static.GameServiceHelpers
     {
         public static void MoveChildBugs(List<Bug> bugs, AnimationService animationService)
         {
-            bugs.ForEach(bug =>
+            foreach(var bug in bugs)
             {
                 if (bug != null && bug.ChildBugs != null)
                 {
                     if (bug.CurPathPointIndex < bug.PathPoints.Count - 1)
                     {
-                        bug.ChildBugs.Where(a=>a !=null).ToList().ForEach(childbug =>
+                        foreach(var childbug in bug.ChildBugs)
                         {
                             childbug.CurPathPointIndex = 0;
                             childbug.PathPoints.Add(new PointF(0, 0));
@@ -30,11 +30,11 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                             else
                                 childbug.Location = new PointF(bug.Location.X - bug.ChildBugOffset.X, bug.Location.Y + bug.ChildBugOffset.Y);
                             childbug.Rotation = bug.Rotation;
-                        });
+                        };
                     }
                     else
                     {
-                        bug.ChildBugs.Where(a => a != null).ToList().ForEach(childbug =>
+                        foreach(var childbug in bug.ChildBugs)
                         {
                             childbug.PathPoints.Clear();
                             childbug.Paths.Clear();
@@ -42,8 +42,8 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                             childbug.RotateAlongPath = true;
                             childbug.IsMoving = true;
                             childbug.Speed = 5;
-                        //add a minimum path that is 2X the speed just to kick off the line to location logic
-                        childbug.Paths.Add(new BezierCurve()
+                            //add a minimum path that is 2X the speed just to kick off the line to location logic
+                            childbug.Paths.Add(new BezierCurve()
                             {
                                 StartPoint = childbug.Location,
                                 ControlPoint1 = childbug.Location,
@@ -51,11 +51,11 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                                 EndPoint = new PointF(childbug.Location.X + 10, childbug.Location.Y + 10)
                             });
                             childbug.PathPoints.AddRange(animationService.ComputePathPoints(childbug.Paths.First()));
-                        });
+                        }
                         bug.ChildBugs.Clear();
                     }
                 }
-            });
+            }
         }
     }
 }

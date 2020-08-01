@@ -35,11 +35,13 @@ namespace BlazorGalaga.Models
         public float LineToLocationDistance { get; set; }
         public bool DestroyAfterComplete { get; set; }
         public bool DestroyImmediately { get; set; }
+        public bool Visible { get; set; }
 
         public AnimatableBase()
         {
             PathPoints = new List<PointF>();
             Location = new PointF(-5000, -5000);
+            Visible = true;
         }
 
         public void Dispose()

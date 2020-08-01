@@ -14,10 +14,21 @@ namespace BlazorGalaga.Static.GameServiceHelpers
     {
         public static void DoEnemyExplosions(List<Bug> bugs, AnimationService animationService)
         {
-            bugs.Where(a => a.IsExploding).ToList().ForEach(bug => {
-                CreateExplosion(bug.Location, animationService);
-                bug.DestroyImmediately = true;
-            });
+            bugs.Where(a => a.IsExploding && a.Visible).ToList().ForEach(bug => {
+
+                CreateExplosion(bug, animationService);
+
+                //remove bug as child bug if we are destroying it
+                bugs.ForEach(b => b.ChildBugs.RemoveAll(r => r.Index == bug.Index));
+
+                if (bug.ChildBugs != null && bug.ChildBugs.Count > 0)
+                {
+                    bug.Visible = false;
+                    bug.DestroyAfterComplete = true;
+                }
+                else
+                    bug.DestroyImmediately = true;
+        });
 
             animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.EnemyExplosion1).ToList().ForEach(exp =>
             {
@@ -28,7 +39,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             });
         }
 
-        private static void CreateExplosion(PointF location, AnimationService animationService)
+        private static void CreateExplosion(Bug bug, AnimationService animationService)
         {
             var exp = new EnemyExplosion()
             {
@@ -38,7 +49,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 DestroyAfterComplete = false,
                 IsMoving = false,
                 PathIsLine = true,
-                Location = location
+                Location = new PointF(bug.Location.X + 5, bug.Location.Y)
             };
 
             exp.SpriteBankIndex = -1;

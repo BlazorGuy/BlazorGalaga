@@ -99,7 +99,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 PathIsLine = true,
                 RotateAlongPath = false,
                 Started = true,
-                Speed = 5,
+                Speed = Constants.EnemyMissileSpeed,
                 DestroyAfterComplete = true
             };
 

@@ -14,5 +14,6 @@ namespace BlazorGalaga.Models
         public Canvas2DContext Context { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
+        public bool IsInitialized { get; set; }
     }
 }

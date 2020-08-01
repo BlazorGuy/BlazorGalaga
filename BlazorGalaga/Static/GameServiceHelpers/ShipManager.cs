@@ -57,7 +57,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 PathIsLine = true,
                 RotateAlongPath = false,
                 Started = true,
-                Speed = 10,
+                Speed = Constants.ShipMissleSpeed,
                 DestroyAfterComplete = true
             };
 
@@ -79,7 +79,14 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                     if (missilerect.IntersectsWith(bugrect))
                     {
                         missile.DestroyImmediately = true;
-                        bug.IsExploding = true;
+                        if (bug.Sprite.SpriteType== Sprite.SpriteTypes.GreenBug || bug.Sprite.SpriteType== Sprite.SpriteTypes.GreenBug_DownFlap)
+                        {
+                            bug.Sprite = new Sprite(Sprite.SpriteTypes.GreenBug_Blue);
+                            bug.SpriteBank.Clear();
+                            bug.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.GreenBug_Blue_DownFlap));
+                        }
+                        else
+                            bug.IsExploding = true;
                         return;
                     }
                 }

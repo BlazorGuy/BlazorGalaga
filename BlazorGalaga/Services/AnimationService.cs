@@ -187,7 +187,7 @@ namespace BlazorGalaga.Services
             ResetCanvas(spriteService.DynamicCtx1);
             //ResetCanvas(spriteService.DynamicCtx2);
 
-            foreach (IAnimatable animatable in Animatables.Where(a => a.Started).OrderByDescending(a => a.ZIndex))
+            foreach (IAnimatable animatable in Animatables.Where(a => a.Started && a.Visible).OrderByDescending(a => a.ZIndex))
             {
                 if(animatable.Sprite.SpriteType == Sprite.SpriteTypes.EnemyExplosion1)
                 {

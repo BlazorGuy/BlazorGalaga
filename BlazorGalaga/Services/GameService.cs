@@ -79,21 +79,21 @@ namespace BlazorGalaga.Services
                     });
                     Task.Delay(22000).ContinueWith((task) =>
                     {
-                       //EnemyGridManager.EnemyGridBreathing = true;
-                       // for (int i = 0; i <= 100; i++)
-                       // {
-                       //     Task.Delay(i * 3000).ContinueWith((task) =>
-                       //     {
-                       //        var bug = EnemyDiveManager.DoEnemyDive(GetBugs(),animationService,Ship);
-                       //         if (bug != null)
-                       //         {
-                       //             Task.Delay(1000).ContinueWith((task) =>
-                       //             {
-                       //                 EnemyDiveManager.DoEnemyFire(bug, animationService, Ship);
-                       //             });
-                       //         }
-                       //     });
-                       // }
+                        EnemyGridManager.EnemyGridBreathing = true;
+                        for (int i = 0; i <= 100; i++)
+                        {
+                            Task.Delay(i * 3000).ContinueWith((task) =>
+                            {
+                                var bug = EnemyDiveManager.DoEnemyDive(GetBugs(), animationService, Ship);
+                                if (bug != null)
+                                {
+                                    Task.Delay(1000).ContinueWith((task) =>
+                                    {
+                                        EnemyDiveManager.DoEnemyFire(bug, animationService, Ship);
+                                    });
+                                }
+                            });
+                        }
                     });
                     break;
             }
@@ -107,6 +107,7 @@ namespace BlazorGalaga.Services
                 a.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug
                 || a.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug
                 || a.Sprite.SpriteType == Sprite.SpriteTypes.RedBug
+                || a.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug_Blue
             ).Select(a=> a as Bug).ToList();
         }
 
@@ -128,7 +129,7 @@ namespace BlazorGalaga.Services
             }
             //End Init - Only happens once
 
-            if (timestamp - EnemyGridManager.LastEnemyGridMoveTimeStamp > 40 || EnemyGridManager.LastEnemyGridMoveTimeStamp == 0)
+            if (timestamp - EnemyGridManager.LastEnemyGridMoveTimeStamp > 35)
             {
                 EnemyExplosionManager.DoEnemyExplosions(bugs,animationService);
             }
