@@ -65,6 +65,11 @@
         display: block;
     }
 
+    #divBigBufferCanvas canvas {
+        background-color: black;
+        display: block;
+    }
+
     body {
         overflow-y: hidden; /* Hide vertical scrollbar */
         overflow-x: hidden; /* Hide horizontal scrollbar */
@@ -87,16 +92,24 @@
 <div id="divDiagnostics" style="position:absolute;left:15px;top:190px;width:300px;height:400px;background-color:lightgray;padding:5px;font-size:10px;font-size:10px;overflow:scroll">
 </div>
 
-<div id="divBufferCanvas" style="font-family:Minecraft;position:absolute;right:-100px;top:15px;opacity:1">
-    @if (BufferCanvases != null && BufferCanvases.Count>0)
+<div id="divBufferCanvas" style="position:absolute;right:0px;top:15px;opacity:1">
+    @if (BufferCanvases != null && BufferCanvases.Count > 0)
     {
-        @foreach(var canvas in BufferCanvases)
+        @foreach (var canvas in BufferCanvases)
         {
-            <BECanvas Width="45" Height="45" @ref="@canvas.CanvasRef"></BECanvas>
+            <BECanvas Width="@canvas.Width" Height="@canvas.Height" @ref="@canvas.CanvasRef"></BECanvas>
         }
     }
 </div>
-
+<div id="divBigBufferCanvas" style="position:absolute;right:50px;top:15px;opacity:1">
+    @if (BigBufferCanvases != null && BigBufferCanvases.Count > 0)
+    {
+        @foreach (var canvas in BigBufferCanvases)
+        {
+            <BECanvas Width="@canvas.Width" Height="@canvas.Height" @ref="@canvas.CanvasRef"></BECanvas>
+        }
+    }
+</div>
 <div id="theCanvas" style="position: fixed; opacity: 1; background-color: black; width: 100%; height: 100%;">
     <BECanvas Width="672" Height="944" @ref="DynamicCanvas1"></BECanvas>
     <BECanvas Width="672" Height="944" @ref="DynamicCanvas2"></BECanvas>

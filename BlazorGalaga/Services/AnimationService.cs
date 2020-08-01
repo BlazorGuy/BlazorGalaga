@@ -189,6 +189,10 @@ namespace BlazorGalaga.Services
 
             foreach (IAnimatable animatable in Animatables.Where(a => a.Started).OrderByDescending(a => a.ZIndex))
             {
+                if(animatable.Sprite.SpriteType == Sprite.SpriteTypes.EnemyExplosion1)
+                {
+                    Utils.dOut("exp", animatable.SpriteBankIndex);
+                }
 
                 spriteService.DrawSprite(
                     animatable.SpriteBankIndex == null ? animatable.Sprite : animatable.SpriteBank[(int)animatable.SpriteBankIndex],

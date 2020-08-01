@@ -79,7 +79,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                     if (missilerect.IntersectsWith(bugrect))
                     {
                         missile.DestroyImmediately = true;
-                        bug.DestroyImmediately = true;
+                        bug.IsExploding = true;
                         return;
                     }
                 }

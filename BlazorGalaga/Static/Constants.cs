@@ -6,9 +6,12 @@ namespace BlazorGalaga.Static
     public static class Constants
     {
         public static Rectangle CanvasSize = new Rectangle(0,0,672, 944);
-        public static Rectangle SpriteDestSize = new Rectangle(0, 0, 45, 45);
+        public static Rectangle SpriteDestSize = new Rectangle(0, 0, 46, 46);
+        public static Rectangle BigSpriteDestSize = new Rectangle(0, 0, 90, 90);
         public static int SpriteBufferCount = 25;
+        public static int BigSpriteBufferCount = 10;
         public static int SpriteSourceSize = 16;
+        public static int BigSpriteSourceSize = 32;
         public static int ShipMoveSpeed = 5;
         public static int BugIntroSpeed = 10;
         public static int BugIntroSpacing = 70;

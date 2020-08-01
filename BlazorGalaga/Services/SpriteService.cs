@@ -17,6 +17,7 @@ namespace BlazorGalaga.Services
         public Canvas2DContext StaticCtx { get; set; }
         public Canvas2DContext BufferCtx { get; set; }
         public List<Canvas> BufferCanvases { get; set; }
+        public List<Canvas> BigBufferCanvases { get; set; }
         public ElementReference SpriteSheet { get; set; }
         public List<Sprite> Sprites = new List<Sprite>();
 
@@ -79,69 +80,73 @@ namespace BlazorGalaga.Services
             switch (sprite.SpriteType)
             {
                 case Sprite.SpriteTypes.Ship:
-                    SetUpSprite(sprite, 0, 109, 1, 0, 0);
+                    SetUpSprite(BufferCanvases, sprite, 0, 109, 1, 0, 0);
                     break;
                 case Sprite.SpriteTypes.BlueBug:
-                    SetUpSprite(sprite, 1, 109, 91, -90, 0);
+                    SetUpSprite(BufferCanvases, sprite, 1, 109, 91, -90, 0);
                     break;
                 case Sprite.SpriteTypes.RedBug:
-                    SetUpSprite(sprite, 2, 109, 73, -90, 0);
+                    SetUpSprite(BufferCanvases, sprite, 2, 109, 73, -90, 0);
                     break;
                 case Sprite.SpriteTypes.GreenBug:
-                    SetUpSprite(sprite, 3, 109, 37, -90, 0);
+                    SetUpSprite(BufferCanvases, sprite, 3, 109, 37, -90, 0);
                     break;
                 case Sprite.SpriteTypes.ShipMissle:
-                    SetUpSprite(sprite, 4, 310, 120, 0, 0);
+                    SetUpSprite(BufferCanvases, sprite, 4, 310, 120, 0, 0);
                     break;
                 case Sprite.SpriteTypes.BlueBug_DownFlap:
-                    SetUpSprite(sprite, 5, 127, 91, -90, 0);
+                    SetUpSprite(BufferCanvases, sprite, 5, 127, 91, -90, 0);
                     break;
                 case Sprite.SpriteTypes.RedBug_DownFlap:
-                    SetUpSprite(sprite, 6, 127, 73, -90, 0);
+                    SetUpSprite(BufferCanvases, sprite, 6, 127, 73, -90, 0);
                     break;
                 case Sprite.SpriteTypes.GreenBug_DownFlap:
-                    SetUpSprite(sprite, 7, 127, 37, -90, 0);
+                    SetUpSprite(BufferCanvases, sprite, 7, 127, 37, -90, 0);
                     break;
                 case Sprite.SpriteTypes.BugMissle:
-                    SetUpSprite(sprite, 8, 310, 135, 0, 0);
+                    SetUpSprite(BufferCanvases, sprite, 8, 310, 135, 0, 0);
                     break;
                 case Sprite.SpriteTypes.EnemyExplosion1:
-                    SetUpSprite(sprite, 9, 292, 1, 0, 0, 32, 32, 90, 90);
+                    SetUpSprite(BigBufferCanvases, sprite, 0, 292, 1, 0, 0, true);
                     break;
                 case Sprite.SpriteTypes.EnemyExplosion2:
-                    SetUpSprite(sprite, 9, 324, 1, 0, 0, 32, 32, 90, 90);
+                    SetUpSprite(BigBufferCanvases, sprite, 1, 324, 1, 0, 0, true);
                     break;
                 case Sprite.SpriteTypes.EnemyExplosion3:
-                    SetUpSprite(sprite, 9, 356, 1, 0, 0, 32, 32, 90, 90);
+                    SetUpSprite(BigBufferCanvases, sprite, 2, 356, 1, 0, 0, true);
                     break;
                 case Sprite.SpriteTypes.EnemyExplosion4:
-                    SetUpSprite(sprite, 9, 388, 1, 0, 0, 32, 32, 90, 90);
+                    SetUpSprite(BigBufferCanvases, sprite, 3, 388, 1, 0, 0, true);
                     break;
                 case Sprite.SpriteTypes.EnemyExplosion5:
-                    SetUpSprite(sprite, 9, 420, 1, 0, 0, 32, 32, 90, 90);
+                    SetUpSprite(BigBufferCanvases, sprite, 4, 420, 1, 0, 0, true);
                     break;
             }
 
             sprite.IsInitialized = true;
         }
 
-        private async void SetUpSprite(Sprite sprite,int bufferindex, int sx, int sy, int rotationoffset,int dynamiccanvasindex, int swidth=0, int sheight=0, int dwidth= 0, int dheight = 0)
+        private async void SetUpSprite(List<Canvas> buffercanvases,
+                                        Sprite sprite,int bufferindex, int sx, int sy,
+                                        int rotationoffset,int dynamiccanvasindex,bool isbig=false)
         {
-            await BufferCanvases[bufferindex].Context.DrawImageAsync(
+
+            await buffercanvases[bufferindex].Context.DrawImageAsync(
                 SpriteSheet,
                 sx,
                 sy,
-                swidth==0 ? Constants.SpriteSourceSize : swidth,
-                sheight==0 ? Constants.SpriteSourceSize: sheight,
+                !isbig ? Constants.SpriteSourceSize : Constants.BigSpriteSourceSize,
+                !isbig ? Constants.SpriteSourceSize : Constants.BigSpriteSourceSize,
                 0,
                 0,
-                dwidth==0 ? Constants.SpriteDestSize.Width : dwidth,
-                dheight==0 ? Constants.SpriteDestSize.Height : dheight
+                !isbig ? Constants.SpriteDestSize.Width : Constants.BigSpriteDestSize.Width,
+                !isbig ? Constants.SpriteDestSize.Height : Constants.BigSpriteDestSize.Height
             );
 
-            sprite.BufferCanvas = BufferCanvases[bufferindex].Context;
+
+            sprite.BufferCanvas = buffercanvases[bufferindex].Context;
             sprite.DynamicCanvas = dynamiccanvasindex == 0 ? DynamicCtx1 : DynamicCtx2;
-            sprite.SpriteDestRect = new RectangleF(0, 0, dwidth==0 ? Constants.SpriteDestSize.Width : dwidth, dheight==0 ? Constants.SpriteDestSize.Height: dheight);
+            sprite.SpriteDestRect = new RectangleF(0, 0, !isbig ? Constants.SpriteDestSize.Width : Constants.BigSpriteDestSize.Width, !isbig ? Constants.SpriteDestSize.Height: Constants.BigSpriteDestSize.Height);
             sprite.InitialRotationOffset = rotationoffset;
         }
 

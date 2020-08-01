@@ -12,5 +12,7 @@ namespace BlazorGalaga.Models
     {
         public BECanvasComponent CanvasRef { get; set; }
         public Canvas2DContext Context { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace BlazorGalaga.Pages
     {
         public string DiagnosticInfo = "";
         public List<Canvas> BufferCanvases { get; set; }
+        public List<Canvas> BigBufferCanvases { get; set; }
 
         private Canvas2DContext DynamicCtx1;
         private Canvas2DContext DynamicCtx2;
@@ -54,7 +55,21 @@ namespace BlazorGalaga.Pages
             BufferCanvases = new List<Canvas>();
 
             for (int i = 1; i <= Constants.SpriteBufferCount; i++)
-                BufferCanvases.Add(new Canvas() { CanvasRef = new BECanvasComponent() });
+                BufferCanvases.Add(new Canvas() {
+                    CanvasRef = new BECanvasComponent(),
+                    Width = Constants.SpriteDestSize.Width,
+                    Height = Constants.SpriteDestSize.Height
+                });
+
+            BigBufferCanvases = new List<Canvas>();
+
+            for (int i = 1; i <= Constants.BigSpriteBufferCount; i++)
+                BigBufferCanvases.Add(new Canvas()
+                {
+                    CanvasRef = new BECanvasComponent(),
+                    Width = Constants.BigSpriteDestSize.Width,
+                    Height = Constants.BigSpriteDestSize.Height
+                });
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -67,6 +82,9 @@ namespace BlazorGalaga.Pages
             foreach (var canvas in BufferCanvases)
                canvas.Context = await canvas.CanvasRef.CreateCanvas2DAsync();
 
+            foreach (var canvas in BigBufferCanvases)
+                canvas.Context = await canvas.CanvasRef.CreateCanvas2DAsync();
+
             await JsRuntime.InvokeAsync<object>("initFromBlazor", DotNetObjectReference.Create(this));
         }
 
@@ -78,6 +96,7 @@ namespace BlazorGalaga.Pages
             spriteService.DynamicCtx2 = DynamicCtx2;
             spriteService.StaticCtx = StaticCtx;
             spriteService.BufferCanvases = BufferCanvases;
+            spriteService.BigBufferCanvases = BigBufferCanvases;
 
             spriteService.SpriteSheet = spriteSheet;
             spriteService.Init();

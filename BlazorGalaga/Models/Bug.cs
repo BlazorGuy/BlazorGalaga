@@ -9,6 +9,7 @@ namespace BlazorGalaga.Models
     {
         public Point HomePoint { get; set; }
         public bool IsDiving { get; set; }
+        public bool IsExploding { get; set; }
         public List<Bug> ChildBugs { get; set; }
 
         public Point ChildBugOffset { get; set; }

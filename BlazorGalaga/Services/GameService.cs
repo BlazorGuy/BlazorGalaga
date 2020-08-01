@@ -25,25 +25,51 @@ namespace BlazorGalaga.Services
         private bool levelInitialized = false;
         private bool consoledrawn = false;
 
+        public void DoEnemyExplosions()
+        {
+            GetBugs().Where(a => a.IsExploding).ToList().ForEach(bug => {
+                CreateExplosion(bug.Location);
+                bug.DestroyImmediately = true;
+            });
+
+            animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.EnemyExplosion1).ToList().ForEach(exp =>
+            {
+                if (exp.SpriteBankIndex < 4)
+                    exp.SpriteBankIndex += 1;
+                else
+                    exp.DestroyImmediately = true;
+            });
+        }
+
+
+        public void CreateExplosion(PointF location)
+        {
+            var exp = new EnemyExplosion()
+            {
+                DrawPath = false,
+                RotateAlongPath = false,
+                Started = true,
+                DestroyAfterComplete = false,
+                IsMoving = false,
+                PathIsLine = true,
+                Location = location
+            };
+
+            exp.SpriteBankIndex = 0;
+
+            exp.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.EnemyExplosion1));
+            exp.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.EnemyExplosion2));
+            exp.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.EnemyExplosion3));
+            exp.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.EnemyExplosion4));
+            exp.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.EnemyExplosion5));
+
+            animationService.Animatables.Add(exp);
+        }
+
         public void Init()
         {
             Lives = 2;
             ShipManager.InitShip(animationService);
-
-            Task.Delay(1000).ContinueWith((task) =>
-            {
-                var exp = new EnemyExplosion()
-                {
-                    DrawPath = false,
-                    RotateAlongPath = false,
-                    Started = true,
-                    Speed = 10,
-                    DestroyAfterComplete = false
-                };
-
-                exp.PathPoints.Add(new PointF(100, 400));
-                animationService.Animatables.Add(exp);
-            });
         }
 
         private void InitLevel(int level)
@@ -142,6 +168,11 @@ namespace BlazorGalaga.Services
                 consoledrawn = true;
             }
             //End Init - Only happens once
+
+            if (timestamp - EnemyGridManager.LastEnemyGridMoveTimeStamp > 40 || EnemyGridManager.LastEnemyGridMoveTimeStamp == 0)
+            {
+                DoEnemyExplosions();
+            }
 
             ChildBugsManager.MoveChildBugs(bugs, animationService);
 

@@ -10,6 +10,7 @@ namespace BlazorGalaga.Models
         public EnemyExplosion()
         {
             Sprite = new Sprite(Sprite.SpriteTypes.EnemyExplosion1);
+            SpriteBank = new List<Sprite>();
         }
     }
 }
