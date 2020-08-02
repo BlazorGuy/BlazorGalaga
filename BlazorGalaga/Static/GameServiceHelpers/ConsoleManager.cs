@@ -11,6 +11,13 @@ namespace BlazorGalaga.Static.GameServiceHelpers
     {
         public static async Task DrawConsole(int lives, SpriteService spriteService, Ship ship)
         {
+            //draw top black block
+            await spriteService.StaticCtx.SetFillStyleAsync("Black");
+            await spriteService.StaticCtx.FillRectAsync(0, 0, Constants.CanvasSize.Width, 65);
+
+            //draw bottom black block
+            await spriteService.StaticCtx.FillRectAsync(0, Constants.CanvasSize.Height - 65, Constants.CanvasSize.Width, 65);
+
             //draw the ships
             int left = 5;
             for (var i = 1; i <= lives; i++)
@@ -36,18 +43,15 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 45
             );
 
-            //await spriteService.StaticCtx.SetStrokeStyleAsync("red");
-            //await spriteService.StaticCtx.SetLineWidthAsync(1);
             await spriteService.StaticCtx.SetFillStyleAsync("Red");
-            await spriteService.StaticCtx.SetFontAsync("32px Sarif");
+            await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");
 
-            //await spriteService.StaticCtx.StrokeTextAsync("This Is A Test", 50, 25);
-            await spriteService.StaticCtx.FillTextAsync("1UP", 50, 25);
-            await spriteService.StaticCtx.FillTextAsync("HIGH SCORE", 250, 25);
+            await spriteService.StaticCtx.FillTextAsync("1UP", 50, 30);
+            await spriteService.StaticCtx.FillTextAsync("HIGH SCORE", 220, 30);
 
             await spriteService.StaticCtx.SetFillStyleAsync("White");
-            await spriteService.StaticCtx.FillTextAsync("00", 50, 50);
-            await spriteService.StaticCtx.FillTextAsync("20000", 300, 50);
+            await spriteService.StaticCtx.FillTextAsync("00", 50, 60);
+            await spriteService.StaticCtx.FillTextAsync("20000", 300, 60);
         }
     }
 }

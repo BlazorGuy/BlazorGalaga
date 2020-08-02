@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using BlazorGalaga.Models;
+using BlazorGalaga.Services;
 using Microsoft.JSInterop;
 
 namespace BlazorGalaga.Static
@@ -48,17 +50,22 @@ namespace BlazorGalaga.Static
             }
         }
 
-        public static void ControlShip(Ship ship)
+        public static void ControlShip(Ship ship,AnimationService animationService)
         {
             if (fire)
             {
                 ship.IsFiring = true;
                 dontfire = true;
                 fire = false;
-                Task.Delay(Constants.ShipMissleDelaySpeed).ContinueWith((task) =>
+                if (animationService.Animatables.Count(a => a.Sprite.SpriteType == Sprite.SpriteTypes.ShipMissle) >= 2)
                 {
+                    Task.Delay(Constants.ShipMissleDelaySpeed).ContinueWith((task) =>
+                    {
+                        dontfire = false;
+                    });
+                }
+                else
                     dontfire = false;
-                });
             }
 
             if (KeyDown == Constants.ArrowLeft)

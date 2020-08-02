@@ -18,6 +18,11 @@
     }
 }
 
+@font-face {
+    font-family: 'PressStart2P';
+    src: url('../Assets/PressStart2P.ttf');
+}
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: normal;

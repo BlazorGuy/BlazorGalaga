@@ -185,7 +185,7 @@ namespace BlazorGalaga.Pages
 
                 Utils.LogFPS();
 
-                KeyBoardHelper.ControlShip(ship);
+                KeyBoardHelper.ControlShip(ship,animationService);
 
                 await JsRuntime.InvokeAsync<object>("logDiagnosticInfo", Utils.DiagnosticInfo);
             }

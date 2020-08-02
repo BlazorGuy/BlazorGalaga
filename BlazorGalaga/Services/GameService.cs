@@ -85,7 +85,7 @@ namespace BlazorGalaga.Services
                             Task.Delay(i * 3000).ContinueWith((task) =>
                             {
                                 var bug = EnemyDiveManager.DoEnemyDive(GetBugs(), animationService, Ship);
-                                if (bug != null)
+                                if (bug != null && bug.IsDiving)
                                 {
                                     Task.Delay(1000).ContinueWith((task) =>
                                     {

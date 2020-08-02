@@ -1,22 +1,20 @@
 ﻿<Properties StartupConfiguration="{202B6679-81B6-4D6C-83B3-0DC9DE1151AC}|Default">
   <MonoDevelop.Ide.ItemProperties.BlazorGalaga PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Static/GameServiceHelpers/EnemyExplosionManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Static/GameServiceHelpers/ConsoleManager.cs">
     <Files>
-      <File FileName="BlazorGalaga/Services/GameService.cs" Line="100" Column="1" />
-      <File FileName="BlazorGalaga/Static/GameServiceHelpers/EnemyExplosionManager.cs" Line="27" Column="53" />
-      <File FileName="BlazorGalaga/Static/GameServiceHelpers/ChildBugsManager.cs" Line="14" Column="10" />
+      <File FileName="BlazorGalaga/Pages/Index.razor" Line="118" Column="35" />
+      <File FileName="BlazorGalaga/wwwroot/css/app.css" Line="30" Column="2" />
+      <File FileName="BlazorGalaga/Static/GameServiceHelpers/ConsoleManager.cs" Line="1" Column="6" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="BlazorGalaga" expanded="True">
             <Node name="BlazorGalaga" expanded="True">
-              <Node name="Interfaces" expanded="True" />
-              <Node name="Models" expanded="True" />
               <Node name="Services" expanded="True" />
               <Node name="Static" expanded="True">
                 <Node name="GameServiceHelpers" expanded="True">
-                  <Node name="EnemyExplosionManager.cs" selected="True" />
+                  <Node name="ConsoleManager.cs" selected="True" />
                 </Node>
               </Node>
             </Node>
