@@ -1,10 +1,11 @@
 ﻿<Properties StartupConfiguration="{202B6679-81B6-4D6C-83B3-0DC9DE1151AC}|Default">
   <MonoDevelop.Ide.ItemProperties.BlazorGalaga PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Static/GameServiceHelpers/ConsoleManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Static/GameServiceHelpers/Levels/Level2.cs">
     <Files>
-      <File FileName="BlazorGalaga/Pages/Index.razor" Line="118" Column="35" />
-      <File FileName="BlazorGalaga/wwwroot/css/app.css" Line="30" Column="2" />
-      <File FileName="BlazorGalaga/Static/GameServiceHelpers/ConsoleManager.cs" Line="1" Column="6" />
+      <File FileName="BlazorGalaga/Services/GameService.cs" Line="46" Column="62" />
+      <File FileName="BlazorGalaga/Static/GameServiceHelpers/Levels/Level2.cs" Line="34" Column="65" />
+      <File FileName="BlazorGalaga/Static/BugFactory.cs" Line="43" Column="1" />
+      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="145" Column="66" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -14,7 +15,9 @@
               <Node name="Services" expanded="True" />
               <Node name="Static" expanded="True">
                 <Node name="GameServiceHelpers" expanded="True">
-                  <Node name="ConsoleManager.cs" selected="True" />
+                  <Node name="Levels" expanded="True">
+                    <Node name="Level2.cs" selected="True" />
+                  </Node>
                 </Node>
               </Node>
             </Node>

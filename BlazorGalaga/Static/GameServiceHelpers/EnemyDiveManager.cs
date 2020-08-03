@@ -21,7 +21,6 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             while (bug == null || bug.IsMoving)
             {
                 bug = bugs[Utils.Rnd(0, bugs.Count - 1)];
-                //bug = bugs.FirstOrDefault(a => a.Index == Utils.Rnd(bugs.OrderBy(b=>b.Index).First().Index, bugs.OrderBy(b=>b.Index).Last().Index));
                 loopcount++;
                 if (loopcount > 50) return null;
             }
@@ -100,7 +99,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 PathIsLine = true,
                 RotateAlongPath = false,
                 Started = true,
-                Speed = Constants.EnemyMissileSpeed,
+                Speed = Utils.Rnd(Constants.EnemyMissileSpeed-1, Constants.EnemyMissileSpeed + 1),
                 DestroyAfterComplete = true
             };
 

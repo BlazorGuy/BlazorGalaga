@@ -92,7 +92,7 @@ namespace BlazorGalaga.Static
             else if (isDraggingCurve)
             {
                 isDraggingCurve = false;
-                animationService.ComputePathPoints();
+                //animationService.ComputePathPoints();
                 string curvedata = "";
                 foreach (var animatable in animationService.Animatables.Where(a => a.Sprite.SpriteType != Sprite.SpriteTypes.Ship))
                 {

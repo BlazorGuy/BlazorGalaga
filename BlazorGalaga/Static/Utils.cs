@@ -38,7 +38,7 @@ namespace BlazorGalaga.Static
         public static int Rnd(int min, int max)
         {
             Random rnd = new Random();
-            return rnd.Next(min, max);
+            return rnd.Next(min, max+1);
         }
 
         public static void dOut(string key, object value)

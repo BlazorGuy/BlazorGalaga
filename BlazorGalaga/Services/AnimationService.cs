@@ -135,14 +135,14 @@ namespace BlazorGalaga.Services
 
         }
 
-        public List<PointF> ComputePathPoints(BezierCurve path, bool pathisline=false,float granularity = .1F)
+        public List<PointF> ComputePathPoints(BezierCurve path, bool pathisline=false,float granularity = .1F,bool ignorecache = false)
         {
-            var cachedPath = PathCaches.FirstOrDefault(a => a.Path.StartPoint == path.StartPoint &&
-                                                        a.Path.ControlPoint1 == path.ControlPoint1 &&
-                                                        a.Path.ControlPoint2 == path.ControlPoint2 &&
-                                                        a.Path.EndPoint == path.EndPoint);
+            var cachedPath = PathCaches.FirstOrDefault(a => a.Path.StartPoint.X == path.StartPoint.X && 
+                                                        a.Path.ControlPoint1.X == path.ControlPoint1.X &&
+                                                        a.Path.ControlPoint2.X == path.ControlPoint2.X &&
+                                                        a.Path.EndPoint.X == path.EndPoint.X);
 
-            if (cachedPath != null && !pathisline) return cachedPath.PathPoints;
+            if (cachedPath != null && !pathisline && !ignorecache) return cachedPath.PathPoints;
 
             float pointgranularity = 1F; //the lower the more granular
             List<PointF> pathpoints = new List<PointF>();
@@ -189,24 +189,19 @@ namespace BlazorGalaga.Services
 
             foreach (IAnimatable animatable in Animatables.Where(a => a.Started && a.Visible).OrderByDescending(a => a.ZIndex))
             {
-                if(animatable.Sprite.SpriteType == Sprite.SpriteTypes.EnemyExplosion1)
-                {
-                    Utils.dOut("exp", animatable.SpriteBankIndex);
-                }
-
                 spriteService.DrawSprite(
                     animatable.SpriteBankIndex == null ? animatable.Sprite : animatable.SpriteBank[(int)animatable.SpriteBankIndex],
                     animatable.Location,
                     (animatable.RotateAlongPath && animatable.IsMoving) ? animatable.Rotation : 0
                     );
 
-                //foreach (BezierCurve path in animatable.Paths.Where(a=>a.DrawPath==true))
-                //{
-                //    if (animatable.DrawPath)
-                //        bezierCurveService.DrawCurve(spriteService.DynamicCtx, path);
-                //    if (animatable.DrawControlLines)
-                //        bezierCurveService.DrawCurveControlLines(spriteService.DynamicCtx, path);
-                //}
+                foreach (BezierCurve path in animatable.Paths.Where(a => a.DrawPath == true))
+                {
+                    if (animatable.DrawPath)
+                        bezierCurveService.DrawCurve(spriteService.DynamicCtx1, path);
+                    if (animatable.DrawControlLines)
+                        bezierCurveService.DrawCurveControlLines(spriteService.DynamicCtx1, path);
+                }
             }
 
             spriteService.DynamicCtx1.EndBatchAsync();

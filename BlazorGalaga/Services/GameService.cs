@@ -11,6 +11,7 @@ using BlazorGalaga.Models;
 using BlazorGalaga.Models.Paths;
 using BlazorGalaga.Static;
 using BlazorGalaga.Static.GameServiceHelpers;
+using BlazorGalaga.Static.GameServiceHelpers.Levels;
 using BlazorGalaganimatable.Models.Paths;
 
 namespace BlazorGalaga.Services
@@ -36,69 +37,39 @@ namespace BlazorGalaga.Services
             switch (level)
             {
                 case 1:
-                    //animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(2));
-                    //animationService.ComputePathPoints();
-                    //animationService.Animatables.ForEach(a => a.Started = true);
-                    //levelInitialized = true;
-                    //return;
-
-                    //creates two top down bug lines of 4 each, these enter at the same time
-                    animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(1));
-                    //creates two side bug lines of 8 each, these enter one after the other
-                    animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(2));
-                    //creates two top down bug lines of 8 each, these enter one after the other
-                    animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(3));
-                    animationService.ComputePathPoints();
-
-                    Task.Delay(2000).ContinueWith((task) =>
-                    {
-                        animationService.Animatables.Where(a => a.Index < 8).ToList().ForEach(a => a.Started = true);
-                    });
-                    //Task.Delay(6000).ContinueWith((task) =>
-                    //{
-                    //    DoEnemyDive();
-                    //});
-                    Task.Delay(5000).ContinueWith((task) =>
-                    {
-                        animationService.Animatables.Where(a => a.Index >= 8 && a.Index < 16).ToList().ForEach(a => a.Started = true);
-                    });
-
-                    Task.Delay(9000).ContinueWith((task) =>
-                    {
-                        animationService.Animatables.Where(a => a.Index >= 16 && a.Index < 24).ToList().ForEach(a => a.Started = true);
-                    });
-
-                    Task.Delay(14000).ContinueWith((task) =>
-                    {
-                        animationService.Animatables.Where(a => a.Index >= 24 && a.Index < 32).ToList().ForEach(a => a.Started = true);
-                    });
-
-                    Task.Delay(18000).ContinueWith((task) =>
-                    {
-                        animationService.Animatables.Where(a => a.Index >= 32 && a.Index < 40).ToList().ForEach(a => a.Started = true);
-                    });
-                    Task.Delay(22000).ContinueWith((task) =>
-                    {
-                        EnemyGridManager.EnemyGridBreathing = true;
-                        for (int i = 0; i <= 100; i++)
-                        {
-                            Task.Delay(i * 3000).ContinueWith((task) =>
-                            {
-                                var bug = EnemyDiveManager.DoEnemyDive(GetBugs(), animationService, Ship);
-                                if (bug != null && bug.IsDiving)
-                                {
-                                    Task.Delay(1000).ContinueWith((task) =>
-                                    {
-                                        EnemyDiveManager.DoEnemyFire(bug, animationService, Ship);
-                                    });
-                                }
-                            });
-                        }
-                    });
+                    Level2.Init(animationService);
                     break;
             }
 
+            //Task.Delay(22000).ContinueWith((task) =>
+            //{
+            //    EnemyGridManager.EnemyGridBreathing = true;
+            //    DiveAndFire();
+            //});
+
             levelInitialized = true;
+        }
+
+        private void DiveAndFire()
+        {
+            if (GetBugs().Count == 0) return;
+
+            Task.Delay(Utils.Rnd(500,5000)).ContinueWith((task) =>
+            {
+                var bug = EnemyDiveManager.DoEnemyDive(GetBugs(), animationService, Ship);
+                if (bug != null && bug.IsDiving)
+                {
+                    var maxmissleperbug = Utils.Rnd(0, 3);
+                    for (int i = 1; i <= maxmissleperbug; i++)
+                    {
+                        Task.Delay(Utils.Rnd(200, 1000)).ContinueWith((task) =>
+                         {
+                             EnemyDiveManager.DoEnemyFire(bug, animationService, Ship);
+                         });
+                    }
+                }
+                DiveAndFire();
+            });
         }
 
         private List<Bug> GetBugs()

@@ -19,7 +19,6 @@ namespace BlazorGalaga.Static
         [JSInvokable("OnKeyDown")]
         public static void OnKeyDown(string keycode)
         {
-            Utils.dOut("KeyDown",keycode);
 
             if (keycode == Constants.ArrowLeft || keycode == Constants.ArrowRight)
             {
@@ -39,8 +38,6 @@ namespace BlazorGalaga.Static
         [JSInvokable("OnKeyUp")]
         public static void OnKeyUp(string keycode)
         {
-            Utils.dOut("KeyUp", keycode);
-
             if (keycode == Constants.ArrowLeft || keycode == Constants.ArrowRight)
             {
                 if (ignorenextkeyup)
@@ -54,18 +51,16 @@ namespace BlazorGalaga.Static
         {
             if (fire)
             {
-                ship.IsFiring = true;
-                dontfire = true;
-                fire = false;
-                if (animationService.Animatables.Count(a => a.Sprite.SpriteType == Sprite.SpriteTypes.ShipMissle) >= 2)
+                if (animationService.Animatables.Count(a => a.Sprite.SpriteType == Sprite.SpriteTypes.ShipMissle) < 2)
                 {
+                    ship.IsFiring = true;
+                    dontfire = true;
+                    fire = false;
                     Task.Delay(Constants.ShipMissleDelaySpeed).ContinueWith((task) =>
                     {
                         dontfire = false;
                     });
                 }
-                else
-                    dontfire = false;
             }
 
             if (KeyDown == Constants.ArrowLeft)
