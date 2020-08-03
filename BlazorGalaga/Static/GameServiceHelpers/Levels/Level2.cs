@@ -34,6 +34,11 @@ namespace BlazorGalaga.Static.GameServiceHelpers.Levels
                     a.StartDelay = i * Constants.BugIntroSpacing;
                     if (a.Sprite.SpriteType == Sprite.SpriteTypes.RedBug)
                     {
+                        a.Paths[0].StartPoint = new PointF(a.Paths[0].StartPoint.X, a.Paths[0].StartPoint.Y - offset);
+                        a.Paths[0].ControlPoint1 = new PointF(a.Paths[0].ControlPoint1.X, a.Paths[0].ControlPoint1.Y - offset);
+                        a.Paths[0].ControlPoint2 = new PointF(a.Paths[0].ControlPoint2.X, a.Paths[0].ControlPoint2.Y - offset);
+                        a.Paths[0].EndPoint = new PointF(a.Paths[1].StartPoint.X, a.Paths[1].StartPoint.Y - offset);
+
                         a.Paths[1].StartPoint = new PointF(a.Paths[1].StartPoint.X, a.Paths[1].StartPoint.Y - offset);
                         a.Paths[1].ControlPoint1 = new PointF(a.Paths[1].ControlPoint1.X, a.Paths[1].ControlPoint1.Y - offset);
                         a.Paths[1].ControlPoint2 = new PointF(a.Paths[1].ControlPoint2.X - offset, a.Paths[1].ControlPoint2.Y);
@@ -53,15 +58,13 @@ namespace BlazorGalaga.Static.GameServiceHelpers.Levels
                         a.Paths.ForEach(b =>
                         {
                             b.DrawPath = true;
-                            a.PathPoints.AddRange(animationService.ComputePathPoints(b, false, .1F, true));
+                            a.PathPoints.AddRange(animationService.ComputePathPoints(b));
                         });
-                        a.Speed = Constants.BugIntroSpeed - 1;
                     }
                     else
                     {
                         i++;
                     }
-                    a.Paths.RemoveAt(0);
                     a.Paths.ForEach(b => {
                         b.DrawPath = true;
                     });

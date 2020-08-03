@@ -137,10 +137,10 @@ namespace BlazorGalaga.Services
 
         public List<PointF> ComputePathPoints(BezierCurve path, bool pathisline=false,float granularity = .1F,bool ignorecache = false)
         {
-            var cachedPath = PathCaches.FirstOrDefault(a => a.Path.StartPoint.X == path.StartPoint.X && 
-                                                        a.Path.ControlPoint1.X == path.ControlPoint1.X &&
-                                                        a.Path.ControlPoint2.X == path.ControlPoint2.X &&
-                                                        a.Path.EndPoint.X == path.EndPoint.X);
+            var cachedPath = PathCaches.FirstOrDefault(a => a.Path.StartPoint.Equals(path.StartPoint) &&
+                                                        a.Path.ControlPoint1.Equals(path.ControlPoint1) &&
+                                                        a.Path.ControlPoint2.Equals(path.ControlPoint2) &&
+                                                        a.Path.EndPoint.Equals(path.EndPoint));
 
             if (cachedPath != null && !pathisline && !ignorecache) return cachedPath.PathPoints;
 
