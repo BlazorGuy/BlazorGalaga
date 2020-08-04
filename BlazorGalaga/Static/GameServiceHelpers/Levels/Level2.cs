@@ -30,46 +30,57 @@ namespace BlazorGalaga.Static.GameServiceHelpers.Levels
             {
                 var i = 0;
                 var offset = 46;
-                animationService.Animatables.Where(a => a.Index >= 8 && a.Index < 16).ToList().ForEach(a => {
-                    a.StartDelay = i * Constants.BugIntroSpacing;
-                    if (a.Sprite.SpriteType == Sprite.SpriteTypes.RedBug)
+                animationService.Animatables.Where(a => a.Index >= 8 && a.Index < 16).ToList().ForEach(bug => {
+                    bug.StartDelay = i * Constants.BugIntroSpacing;
+                    if (bug.Sprite.SpriteType == Sprite.SpriteTypes.RedBug)
                     {
-                        a.Paths[0].StartPoint = new PointF(a.Paths[0].StartPoint.X, a.Paths[0].StartPoint.Y - offset);
-                        a.Paths[0].ControlPoint1 = new PointF(a.Paths[0].ControlPoint1.X, a.Paths[0].ControlPoint1.Y - offset);
-                        a.Paths[0].ControlPoint2 = new PointF(a.Paths[0].ControlPoint2.X, a.Paths[0].ControlPoint2.Y - offset);
-                        a.Paths[0].EndPoint = new PointF(a.Paths[1].StartPoint.X, a.Paths[1].StartPoint.Y - offset);
+                        bug.Paths[0].StartPoint = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y - offset);
+                        bug.Paths[0].ControlPoint1 = new PointF(bug.Paths[0].ControlPoint1.X, bug.Paths[0].ControlPoint1.Y - offset);
+                        bug.Paths[0].ControlPoint2 = new PointF(bug.Paths[0].ControlPoint2.X, bug.Paths[0].ControlPoint2.Y - offset);
+                        bug.Paths[0].EndPoint = new PointF(bug.Paths[1].StartPoint.X, bug.Paths[1].StartPoint.Y - offset);
 
-                        a.Paths[1].StartPoint = new PointF(a.Paths[1].StartPoint.X, a.Paths[1].StartPoint.Y - offset);
-                        a.Paths[1].ControlPoint1 = new PointF(a.Paths[1].ControlPoint1.X, a.Paths[1].ControlPoint1.Y - offset);
-                        a.Paths[1].ControlPoint2 = new PointF(a.Paths[1].ControlPoint2.X - offset, a.Paths[1].ControlPoint2.Y);
-                        a.Paths[1].EndPoint = new PointF(a.Paths[1].EndPoint.X - offset, a.Paths[1].EndPoint.Y);
+                        bug.Paths[1].StartPoint = new PointF(bug.Paths[1].StartPoint.X, bug.Paths[1].StartPoint.Y - offset);
+                        bug.Paths[1].ControlPoint1 = new PointF(bug.Paths[1].ControlPoint1.X, bug.Paths[1].ControlPoint1.Y - offset);
+                        bug.Paths[1].ControlPoint2 = new PointF(bug.Paths[1].ControlPoint2.X - offset, bug.Paths[1].ControlPoint2.Y);
+                        bug.Paths[1].EndPoint = new PointF(bug.Paths[1].EndPoint.X - offset, bug.Paths[1].EndPoint.Y);
 
-                        a.Paths[2].StartPoint = new PointF(a.Paths[2].StartPoint.X - offset, a.Paths[2].StartPoint.Y);
-                        a.Paths[2].ControlPoint1 = new PointF(a.Paths[2].ControlPoint1.X - offset, a.Paths[2].ControlPoint1.Y + offset);
-                        a.Paths[2].ControlPoint2 = new PointF(a.Paths[2].ControlPoint2.X + offset, a.Paths[2].ControlPoint2.Y + offset);
-                        a.Paths[2].EndPoint = new PointF(a.Paths[2].EndPoint.X + offset, a.Paths[2].EndPoint.Y);
+                        bug.Paths[2].StartPoint = new PointF(bug.Paths[2].StartPoint.X - offset, bug.Paths[2].StartPoint.Y);
+                        bug.Paths[2].ControlPoint1 = new PointF(bug.Paths[2].ControlPoint1.X - offset, bug.Paths[2].ControlPoint1.Y + offset);
+                        bug.Paths[2].ControlPoint2 = new PointF(bug.Paths[2].ControlPoint2.X + offset, bug.Paths[2].ControlPoint2.Y + offset);
+                        bug.Paths[2].EndPoint = new PointF(bug.Paths[2].EndPoint.X + offset, bug.Paths[2].EndPoint.Y);
 
-                        a.Paths[3].StartPoint = new PointF(a.Paths[3].StartPoint.X + offset, a.Paths[3].StartPoint.Y);
-                        a.Paths[3].ControlPoint1 = new PointF(a.Paths[3].ControlPoint1.X + offset, a.Paths[3].ControlPoint1.Y - offset);
-                        a.Paths[3].ControlPoint2 = new PointF(a.Paths[3].ControlPoint2.X, a.Paths[3].ControlPoint2.Y - offset);
-                        a.Paths[3].EndPoint = new PointF(a.Paths[3].EndPoint.X - offset, a.Paths[3].EndPoint.Y - offset);
+                        bug.Paths[3].StartPoint = new PointF(bug.Paths[3].StartPoint.X + offset, bug.Paths[3].StartPoint.Y);
+                        bug.Paths[3].ControlPoint1 = new PointF(bug.Paths[3].ControlPoint1.X + offset, bug.Paths[3].ControlPoint1.Y - offset);
+                        bug.Paths[3].ControlPoint2 = new PointF(bug.Paths[3].ControlPoint2.X, bug.Paths[3].ControlPoint2.Y - offset);
+                        bug.Paths[3].EndPoint = new PointF(bug.Paths[3].EndPoint.X - offset, bug.Paths[3].EndPoint.Y - offset);
 
-                        a.PathPoints.Clear();
-                        a.Paths.ForEach(b =>
+                        bug.VSpeed = new List<VSpeed>();
+                        bug.VSpeed.Add(new VSpeed()
+                        {
+                            PathPointIndex = 1000,
+                            Speed = Constants.BugIntroSpeed - 2
+                        });
+                        bug.VSpeed.Add(new VSpeed()
+                        {
+                            PathPointIndex = 1400,
+                            Speed = Constants.BugIntroSpeed - 3
+                        });;
+                        bug.PathPoints.Clear();
+                        bug.Paths.ForEach(b =>
                         {
                             b.DrawPath = true;
-                            a.PathPoints.AddRange(animationService.ComputePathPoints(b));
+                            bug.PathPoints.AddRange(animationService.ComputePathPoints(b));
                         });
                     }
                     else
                     {
                         i++;
                     }
-                    a.Paths.ForEach(b => {
+                    bug.Paths.ForEach(b => {
                         b.DrawPath = true;
                     });
-                    a.DrawPath = true;
-                    a.Started = true;
+                    bug.DrawPath = true;
+                    bug.Started = true;
                 });
             });
             ////move in 1 set of 8 red bugs from the bottom right

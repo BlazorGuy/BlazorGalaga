@@ -3,8 +3,7 @@ namespace BlazorGalaga.Models
 {
     public class VSpeed
     {
-        public VSpeed()
-        {
-        }
+        public int PathPointIndex { get; set; }
+        public int Speed { get; set; }
     }
 }

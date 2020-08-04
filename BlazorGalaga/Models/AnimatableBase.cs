@@ -36,6 +36,7 @@ namespace BlazorGalaga.Models
         public bool DestroyAfterComplete { get; set; }
         public bool DestroyImmediately { get; set; }
         public bool Visible { get; set; }
+        public List<VSpeed> VSpeed { get; set; }
 
         public AnimatableBase()
         {

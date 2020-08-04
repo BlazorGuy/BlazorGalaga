@@ -61,7 +61,13 @@ namespace BlazorGalaga.Services
                 if (animatable.CurPathPointIndex + 1 > 0 && animatable.CurPathPointIndex + 1 < animatable.PathPoints.Count)
                     animatable.NextLocation = animatable.PathPoints[animatable.CurPathPointIndex + 1];
 
-                animatable.CurPathPointIndex += animatable.Speed;
+                if (animatable.VSpeed != null)
+                {
+                    var vspeed = animatable.VSpeed.LastOrDefault(a => a.PathPointIndex <= animatable.CurPathPointIndex);
+                    animatable.CurPathPointIndex += vspeed != null ? vspeed.Speed : animatable.Speed;
+                } 
+                else
+                    animatable.CurPathPointIndex += animatable.Speed;
 
                 //are we at the end of the last path?
                 if (animatable.CurPathPointIndex > animatable.PathPoints.Count - 1)
@@ -142,7 +148,11 @@ namespace BlazorGalaga.Services
                                                         a.Path.ControlPoint2.Equals(path.ControlPoint2) &&
                                                         a.Path.EndPoint.Equals(path.EndPoint));
 
-            if (cachedPath != null && !pathisline && !ignorecache) return cachedPath.PathPoints;
+            if (cachedPath != null && !pathisline && !ignorecache)
+            {
+                Console.WriteLine("path cached " + path.EndPoint.Y);
+                return cachedPath.PathPoints;
+            }
 
             float pointgranularity = 1F; //the lower the more granular
             List<PointF> pathpoints = new List<PointF>();

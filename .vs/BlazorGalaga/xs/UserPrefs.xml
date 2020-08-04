@@ -1,23 +1,25 @@
 ﻿<Properties StartupConfiguration="{202B6679-81B6-4D6C-83B3-0DC9DE1151AC}|Default">
   <MonoDevelop.Ide.ItemProperties.BlazorGalaga PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Static/GameServiceHelpers/Levels/Level2.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Services/AnimationService.cs">
     <Files>
       <File FileName="BlazorGalaga/Services/GameService.cs" Line="46" Column="62" />
-      <File FileName="BlazorGalaga/Static/GameServiceHelpers/Levels/Level2.cs" Line="34" Column="65" />
+      <File FileName="BlazorGalaga/Static/GameServiceHelpers/Levels/Level2.cs" Line="72" Column="85" />
       <File FileName="BlazorGalaga/Static/BugFactory.cs" Line="43" Column="1" />
-      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="145" Column="66" />
+      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="152" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="BlazorGalaga" expanded="True">
             <Node name="BlazorGalaga" expanded="True">
-              <Node name="Services" expanded="True" />
+              <Node name="Interfaces" expanded="True" />
+              <Node name="Models" expanded="True" />
+              <Node name="Services" expanded="True">
+                <Node name="AnimationService.cs" selected="True" />
+              </Node>
               <Node name="Static" expanded="True">
                 <Node name="GameServiceHelpers" expanded="True">
-                  <Node name="Levels" expanded="True">
-                    <Node name="Level2.cs" selected="True" />
-                  </Node>
+                  <Node name="Levels" expanded="True" />
                 </Node>
               </Node>
             </Node>
