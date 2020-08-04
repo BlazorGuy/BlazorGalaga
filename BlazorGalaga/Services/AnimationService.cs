@@ -24,10 +24,10 @@ namespace BlazorGalaga.Services
         public IJSRuntime JsRuntime { get; set; }
 
         public List<IAnimatable> Animatables = new List<IAnimatable>();
+        public List<PathCache> PathCaches;
 
         private BezierCurveService bezierCurveService;
         private SpriteService spriteService;
-        private List<PathCache> PathCaches;
 
         public AnimationService(BezierCurveService bcs, SpriteService ss)
         {
@@ -150,7 +150,6 @@ namespace BlazorGalaga.Services
 
             if (cachedPath != null && !pathisline && !ignorecache)
             {
-                Console.WriteLine("path cached " + path.EndPoint.Y);
                 return cachedPath.PathPoints;
             }
 

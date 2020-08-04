@@ -14,6 +14,7 @@ namespace BlazorGalaga.Models
         public bool ControlPoint2Dragged { get; set; }
         public bool EndPointDragged { get; set; }
         public bool DrawPath { get; set; }
+        public string Name { get; set; }
     }
 
 }

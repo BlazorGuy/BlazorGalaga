@@ -13,11 +13,11 @@ namespace BlazorGalaga.Static.GameServiceHelpers.Levels
         public static void Init(AnimationService animationService)
         {
             //creates two top down bug lines of 4 each, these enter at the same time
-            animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(1));
+            animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfFourFromTop));
             //creates two side bug lines of 8 each, these enter one after the other
-            animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(2));
+            animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfEightFromBottom));
             //creates two top down bug lines of 8 each, these enter one after the other
-            animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(3));
+            animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfEightFromTop));
             animationService.ComputePathPoints();
 
             //move in 2 sets of 4 (red and blue) from the top at the same time

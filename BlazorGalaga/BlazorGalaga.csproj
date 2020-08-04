@@ -19,7 +19,6 @@
   <ItemGroup>
     <Folder Include="Services\" />
     <Folder Include="Interfaces\" />
-    <Folder Include="Models\Paths\" />
     <Folder Include="Static\GameServiceHelpers\Levels\" />
   </ItemGroup>
 </Project>

@@ -9,32 +9,54 @@ namespace BlazorGalaga.Static
 {
     public static class BugFactory
     {
+        public enum BugIntro
+        {
+            TwoGroupsOfFourFromTop,
+            TwoGroupsOfEightFromBottom,
+            TwoGroupsOfEightFromTop,
+            TwoGroupsOfStackedEightFromBottom,
+            TwoGroupsOfStackedEightFromTop
+        }
+
         public static EnemyGrid EnemyGrid = new EnemyGrid();
-        public static List<IAnimatable> CreateAnimation_BugIntro(int introindex)
+        public static List<IAnimatable> CreateAnimation_BugIntro(BugIntro intro)
         {
             List<IAnimatable> animatables = new List<IAnimatable>();
 
-            switch (introindex)
+            switch (intro)
             {
-                case 1:
+                case BugIntro.TwoGroupsOfFourFromTop:
                     for (int i = 0; i < 4; i++)
                         animatables.Add(CreateAnimatable_BugIntro(i, i * Constants.BugIntroSpacing, new Intro1(), Sprite.SpriteTypes.BlueBug));
 
                     for (int i = 0; i < 4; i++)
                         animatables.Add(CreateAnimatable_BugIntro(i + 4, i * Constants.BugIntroSpacing, new Intro2(),Sprite.SpriteTypes.RedBug));
                     break;
-                case 2:
+                case BugIntro.TwoGroupsOfEightFromBottom:
                     for (int i = 0; i < 8; i++)
                         animatables.Add(CreateAnimatable_BugIntro(i + 8, i * Constants.BugIntroSpacing, new Intro3(), i % 2 != 0 ? Sprite.SpriteTypes.GreenBug : Sprite.SpriteTypes.RedBug));
 
                     for (int i = 0; i < 8; i++)
                         animatables.Add(CreateAnimatable_BugIntro(i + 16, i * Constants.BugIntroSpacing, new Intro4(), Sprite.SpriteTypes.RedBug));
                     break;
-                case 3:
+                case BugIntro.TwoGroupsOfEightFromTop:
                     for (int i = 0; i < 8; i++)
                         animatables.Add(CreateAnimatable_BugIntro(i + 24, i * Constants.BugIntroSpacing, new Intro1(), Sprite.SpriteTypes.BlueBug));
                     for (int i = 0; i < 8; i++)
                         animatables.Add(CreateAnimatable_BugIntro(i + 32, i * Constants.BugIntroSpacing, new Intro2(), Sprite.SpriteTypes.BlueBug));
+                    break;
+                case BugIntro.TwoGroupsOfStackedEightFromBottom:
+                    for (int i = 1; i < 8; i+=2)
+                        animatables.Add(CreateAnimatable_BugIntro(i + 8, (i * Constants.BugIntroSpacing) / 2, new Intro3(), Sprite.SpriteTypes.GreenBug));
+
+                    for (int i = 0; i < 8; i+=2)
+                        animatables.Add(CreateAnimatable_BugIntro(i + 8, (i * Constants.BugIntroSpacing) / 2, new Intro5(), Sprite.SpriteTypes.RedBug));
+
+                    for (int i = 0; i < 4; i++)
+                        animatables.Add(CreateAnimatable_BugIntro(i + 16, i * Constants.BugIntroSpacing, new Intro4(), Sprite.SpriteTypes.RedBug));
+
+                    for (int i = 0; i < 4; i++)
+                        animatables.Add(CreateAnimatable_BugIntro(i + 20, i * Constants.BugIntroSpacing, new Intro6(), Sprite.SpriteTypes.RedBug));
                     break;
             }
 
@@ -55,6 +77,21 @@ namespace BlazorGalaga.Static
                 RotatIntoPlaceSpeed = Constants.BugRotateIntoPlaceSpeed
             };
 
+            if ((intro as Intro5) != null || (intro as Intro6) != null)
+            {
+                bug.VSpeed = new List<VSpeed>();
+                bug.VSpeed.Add(new VSpeed()
+                {
+                    PathPointIndex = 1000,
+                    Speed = Constants.BugIntroSpeed - 2
+                });
+                bug.VSpeed.Add(new VSpeed()
+                {
+                    PathPointIndex = 1300,
+                    Speed = Constants.BugIntroSpeed - 3
+                }); ;
+            }
+
             switch (spritetype)
             {
                 case Sprite.SpriteTypes.BlueBug:
@@ -68,7 +105,7 @@ namespace BlazorGalaga.Static
                     break;
             }
 
-            if (index < 8 || index >= 24)
+            if (intro as Intro1 != null || intro as Intro2 != null)
                 //For bugs dropping from the top, add an offscreen path to make the bug fly in from off screen
                 bug.Paths.Insert(0, new BezierCurve()
                 {
@@ -77,16 +114,16 @@ namespace BlazorGalaga.Static
                     ControlPoint1 = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y - 400),
                     ControlPoint2 = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y)
                 });
-            else if (index >=8 && index <16)
+            else if (intro as Intro3 != null || intro as Intro5 != null)
                 //For bugs coming from the left side, add an offscreen path to make the bug fly in from off screen
                 bug.Paths.Insert(0, new BezierCurve()
                 {
-                    StartPoint = new PointF(bug.Paths[0].StartPoint.X - 800, bug.Paths[0].StartPoint.Y),
-                    EndPoint = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y),
-                    ControlPoint1 = new PointF(bug.Paths[0].StartPoint.X - 800, bug.Paths[0].StartPoint.Y),
-                    ControlPoint2 = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y)
+                    StartPoint = new PointF(bug.Paths[0].StartPoint.X - 800, bug.Paths[0].StartPoint.Y - intro.Offset),
+                    EndPoint = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y - intro.Offset),
+                    ControlPoint1 = new PointF(bug.Paths[0].StartPoint.X - 800, bug.Paths[0].StartPoint.Y - intro.Offset),
+                    ControlPoint2 = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y - intro.Offset)
                 });
-            else if (index >= 16 && index < 25)
+            else if (intro as Intro4 != null || intro as Intro6 != null)
                 //For bugs coming from the right side, add an offscreen path to make the bug fly in from off screen
                 bug.Paths.Insert(0, new BezierCurve()
                 {
