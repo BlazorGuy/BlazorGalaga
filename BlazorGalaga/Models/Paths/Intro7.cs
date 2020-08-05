@@ -31,15 +31,15 @@ namespace BlazorGalaga.Models.Paths
                 StartPoint = new PointF(110.8146F + Offset, 467.1959F),
                 ControlPoint1 = new PointF(7.525259F + Offset , 559.6743F + Offset),
                 ControlPoint2 = new PointF(109.6136F + Offset, 682.1781F - Offset),
-                EndPoint = new PointF(191.2842F + Offset , 649.7506F - Offset)
+                EndPoint = new PointF(191.2842F, 649.7506F - Offset)
             });
 
             paths.Add(new BezierCurve()
             {
-                StartPoint = new PointF(193.6863F + Offset, 649.7506F - Offset),
-                ControlPoint1 = new PointF(276.558F + Offset, 587.2977F - Offset),
-                ControlPoint2 = new PointF(288.5684F + Offset, 542.86F - Offset),
-                EndPoint = new PointF(295.7746F + Offset, 491.2163F - Offset)
+                StartPoint = new PointF(193.6863F, 649.7506F - Offset),
+                ControlPoint1 = new PointF(276.558F, 587.2977F - Offset),
+                ControlPoint2 = new PointF(288.5684F-(Offset/2), 542.86F - Offset),
+                EndPoint = new PointF(295.7746F-(Offset/2), 491.2163F - Offset)
             });
 
             return paths;

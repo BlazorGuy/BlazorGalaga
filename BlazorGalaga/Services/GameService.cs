@@ -11,7 +11,6 @@ using BlazorGalaga.Models;
 using BlazorGalaga.Models.Paths;
 using BlazorGalaga.Static;
 using BlazorGalaga.Static.GameServiceHelpers;
-using BlazorGalaga.Static.GameServiceHelpers.Levels;
 using BlazorGalaganimatable.Models.Paths;
 
 namespace BlazorGalaga.Services
@@ -37,9 +36,44 @@ namespace BlazorGalaga.Services
             switch (level)
             {
                 case 1:
-                    Level2.Init(animationService);
+                    animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfFourFromTop));
+                    animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfEightFromBottom));
+                    animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfEightFromTop));
+                    break;
+                case 2:
+                    animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfFourFromTop));
+                    animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfStackedEightFromBottom));
+                    animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfStackedEightFromTop));
                     break;
             }
+
+            animationService.ComputePathPoints();
+
+            //move in 2 sets of 4 (red and blue) from the top at the same time
+            Task.Delay(2000).ContinueWith((task) =>
+            {
+                animationService.Animatables.Where(a => a.Index < 8).ToList().ForEach(a => a.Started = true);
+            });
+            //move in 1 set of 8 red and green bugs from the bottom left
+            Task.Delay(5000).ContinueWith((task) =>
+            {
+                animationService.Animatables.Where(a => a.Index >= 8 && a.Index < 16).ToList().ForEach(a => a.Started = true);
+            });
+            //move in 1 set of 8 red bugs from the bottom right
+            Task.Delay(9000).ContinueWith((task) =>
+            {
+                animationService.Animatables.Where(a => a.Index >= 16 && a.Index < 24).ToList().ForEach(a => a.Started = true);
+            });
+            //move in 1 set of 8 blue bugs from the top left
+            Task.Delay(14000).ContinueWith((task) =>
+            {
+                animationService.Animatables.Where(a => a.Index >= 24 && a.Index < 32).ToList().ForEach(a => a.Started = true);
+            });
+            //move in 1 set of 8 blue bugs from the top right
+            Task.Delay(18000).ContinueWith((task) =>
+            {
+                animationService.Animatables.Where(a => a.Index >= 32 && a.Index < 40).ToList().ForEach(a => a.Started = true);
+            });
 
             //Task.Delay(22000).ContinueWith((task) =>
             //{
@@ -90,7 +124,7 @@ namespace BlazorGalaga.Services
             if (!levelInitialized)
             {
                 this.Ship = ship;
-                InitLevel(1);
+                InitLevel(2);
             }
 
             if (!consoledrawn && Ship.Sprite.BufferCanvas != null)

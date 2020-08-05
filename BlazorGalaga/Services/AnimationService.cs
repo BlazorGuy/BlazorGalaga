@@ -26,8 +26,8 @@ namespace BlazorGalaga.Services
         public List<IAnimatable> Animatables = new List<IAnimatable>();
         public List<PathCache> PathCaches;
 
-        private BezierCurveService bezierCurveService;
-        private SpriteService spriteService;
+        private readonly BezierCurveService bezierCurveService;
+        private readonly SpriteService spriteService;
 
         public AnimationService(BezierCurveService bcs, SpriteService ss)
         {
@@ -204,13 +204,13 @@ namespace BlazorGalaga.Services
                     (animatable.RotateAlongPath && animatable.IsMoving) ? animatable.Rotation : 0
                     );
 
-                foreach (BezierCurve path in animatable.Paths.Where(a => a.DrawPath == true))
-                {
-                    if (animatable.DrawPath)
-                        bezierCurveService.DrawCurve(spriteService.DynamicCtx1, path);
-                    if (animatable.DrawControlLines)
-                        bezierCurveService.DrawCurveControlLines(spriteService.DynamicCtx1, path);
-                }
+                //foreach (BezierCurve path in animatable.Paths.Where(a => a.DrawPath == true))
+                //{
+                //    if (animatable.DrawPath)
+                //        bezierCurveService.DrawCurve(spriteService.DynamicCtx1, path);
+                //    if (animatable.DrawControlLines)
+                //        bezierCurveService.DrawCurveControlLines(spriteService.DynamicCtx1, path);
+                //}
             }
 
             spriteService.DynamicCtx1.EndBatchAsync();

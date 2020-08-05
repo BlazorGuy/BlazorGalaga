@@ -19,6 +19,5 @@
   <ItemGroup>
     <Folder Include="Services\" />
     <Folder Include="Interfaces\" />
-    <Folder Include="Static\GameServiceHelpers\Levels\" />
   </ItemGroup>
 </Project>

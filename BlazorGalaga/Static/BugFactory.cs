@@ -60,16 +60,16 @@ namespace BlazorGalaga.Static
                     break;
                 case BugIntro.TwoGroupsOfStackedEightFromTop:
                     for (int i = 0; i < 4; i++)
-                        animatables.Add(CreateAnimatable_BugIntro(i, i * Constants.BugIntroSpacing, new Intro2(), Sprite.SpriteTypes.BlueBug));
+                        animatables.Add(CreateAnimatable_BugIntro(i + 24, i * Constants.BugIntroSpacing, new Intro2(), Sprite.SpriteTypes.BlueBug));
 
                     for (int i = 0; i < 4; i++)
-                        animatables.Add(CreateAnimatable_BugIntro(i + 4, i * Constants.BugIntroSpacing, new Intro7(), Sprite.SpriteTypes.BlueBug));
+                        animatables.Add(CreateAnimatable_BugIntro(i + 28, i * Constants.BugIntroSpacing, new Intro7(), Sprite.SpriteTypes.BlueBug));
 
-                    //for (int i = 0; i < 4; i++)
-                    //    animatables.Add(CreateAnimatable_BugIntro(i + 16, i * Constants.BugIntroSpacing, new Intro4(), Sprite.SpriteTypes.RedBug));
+                    for (int i = 0; i < 4; i++)
+                        animatables.Add(CreateAnimatable_BugIntro(i + 32, i * Constants.BugIntroSpacing, new Intro1(), Sprite.SpriteTypes.BlueBug));
 
-                    //for (int i = 0; i < 4; i++)
-                    //    animatables.Add(CreateAnimatable_BugIntro(i + 20, i * Constants.BugIntroSpacing, new Intro6(), Sprite.SpriteTypes.RedBug));
+                    for (int i = 0; i < 4; i++)
+                        animatables.Add(CreateAnimatable_BugIntro(i + 36, i * Constants.BugIntroSpacing, new Intro8(), Sprite.SpriteTypes.BlueBug));
                     break;
             }
 
@@ -90,19 +90,22 @@ namespace BlazorGalaga.Static
                 RotatIntoPlaceSpeed = Constants.BugRotateIntoPlaceSpeed
             };
 
-            if ((intro as Intro5) != null || (intro as Intro6) != null)
+            if ((intro as Intro5) != null || (intro as Intro6) != null || (intro as Intro7) != null || (intro as Intro8) != null)
             {
-                bug.VSpeed = new List<VSpeed>();
-                bug.VSpeed.Add(new VSpeed()
+                bug.VSpeed = new List<VSpeed>
                 {
-                    PathPointIndex = 1000,
-                    Speed = Constants.BugIntroSpeed - 2
-                });
-                bug.VSpeed.Add(new VSpeed()
-                {
-                    PathPointIndex = 1300,
-                    Speed = Constants.BugIntroSpeed - 3
-                }); ;
+                    new VSpeed()
+                    {
+                        PathPointIndex = 1000,
+                        Speed = Constants.BugIntroSpeed - 2
+                    },
+                    new VSpeed()
+                    {
+                        PathPointIndex = 1300,
+                        Speed = Constants.BugIntroSpeed - 3
+                    }
+                };
+                ;
             }
 
             switch (spritetype)
@@ -118,7 +121,7 @@ namespace BlazorGalaga.Static
                     break;
             }
 
-            if (intro as Intro1 != null || intro as Intro2 != null)
+            if (intro as Intro1 != null || intro as Intro2 != null || intro as Intro7 != null || (intro as Intro8) != null)
                 //For bugs dropping from the top, add an offscreen path to make the bug fly in from off screen
                 bug.Paths.Insert(0, new BezierCurve()
                 {
@@ -155,97 +158,50 @@ namespace BlazorGalaga.Static
         private static Point GetGridPoint(int index)
         {
 
-            switch (index)
+            return index switch
             {
-                case 0:
-                    return new Point(5, 5);
-                case 1:
-                   return new Point(5, 6);
-                case 2:
-                   return new Point(4, 5);
-                case 3:
-                   return new Point(4, 6);
-                case 4:
-                   return new Point(3, 4);
-                case 5:
-                   return new Point(3, 5);
-                case 6:
-                   return new Point(2, 4);
-                case 7:
-                   return new Point(2, 5);
-
-
-                case 8:
-                   return new Point(2, 6);
-                case 9:
-                   return new Point(1, 1);
-                case 10:
-                   return new Point(3, 6);
-                case 11:
-                   return new Point(1, 2);
-                case 12:
-                   return new Point(3, 3);
-                case 13:
-                   return new Point(1, 3);
-                case 14:
-                   return new Point(2, 3);
-                case 15:
-                   return new Point(1, 4);
-
-                case 16:
-                   return new Point(2, 7);
-                case 17:
-                   return new Point(2, 8);
-                case 18:
-                   return new Point(3, 7);
-                case 19:
-                   return new Point(3, 8);
-                case 20:
-                   return new Point(2, 1);
-                case 21:
-                   return new Point(2, 2);
-                case 22:
-                   return new Point(3, 1);
-                case 23:
-                   return new Point(3, 2);
-
-                case 24:
-                   return new Point(4, 7);
-                case 25:
-                   return new Point(4, 8);
-                case 26:
-                   return new Point(5, 7);
-                case 27:
-                   return new Point(5, 8);
-                case 28:
-                   return new Point(4, 4);
-                case 29:
-                   return new Point(4, 3);
-                case 30:
-                   return new Point(5, 4);
-                case 31:
-                   return new Point(5, 3);
-
-                case 32:
-                   return new Point(4, 2);
-                case 33:
-                   return new Point(4, 1);
-                case 34:
-                   return new Point(5, 2);
-                case 35:
-                   return new Point(5, 1);
-                case 36:
-                   return new Point(4, 9);
-                case 37:
-                   return new Point(4, 10);
-                case 38:
-                   return new Point(5, 9);
-                case 39:
-                   return new Point(5, 10);
-
-                default:
-                    return new Point(0,0);
-            }
+                0 => new Point(5, 5),
+                1 => new Point(5, 6),
+                2 => new Point(4, 5),
+                3 => new Point(4, 6),
+                4 => new Point(3, 4),
+                5 => new Point(3, 5),
+                6 => new Point(2, 4),
+                7 => new Point(2, 5),
+                8 => new Point(2, 6),
+                9 => new Point(1, 1),
+                10 => new Point(3, 6),
+                11 => new Point(1, 2),
+                12 => new Point(3, 3),
+                13 => new Point(1, 3),
+                14 => new Point(2, 3),
+                15 => new Point(1, 4),
+                16 => new Point(2, 7),
+                17 => new Point(2, 8),
+                18 => new Point(3, 7),
+                19 => new Point(3, 8),
+                20 => new Point(2, 1),
+                21 => new Point(2, 2),
+                22 => new Point(3, 1),
+                23 => new Point(3, 2),
+                24 => new Point(4, 7),
+                25 => new Point(4, 8),
+                26 => new Point(5, 7),
+                27 => new Point(5, 8),
+                28 => new Point(4, 4),
+                29 => new Point(4, 3),
+                30 => new Point(5, 4),
+                31 => new Point(5, 3),
+                32 => new Point(4, 2),
+                33 => new Point(4, 1),
+                34 => new Point(5, 2),
+                35 => new Point(5, 1),
+                36 => new Point(4, 9),
+                37 => new Point(4, 10),
+                38 => new Point(5, 9),
+                39 => new Point(5, 10),
+                _ => new Point(0, 0),
+            };
         }
     }
 }
