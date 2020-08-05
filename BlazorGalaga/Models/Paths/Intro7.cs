@@ -7,7 +7,7 @@ using BlazorGalaga.Interfaces;
 
 namespace BlazorGalaga.Models.Paths
 {
-    public class Intro6 : IIntro
+    public class Intro7 : IIntro
     {
         public int Offset { get; set; }
 
@@ -20,26 +20,26 @@ namespace BlazorGalaga.Models.Paths
 
             paths.Add(new BezierCurve()
             {
-                StartPoint = new PointF(666.8956F, 865.9338F - Offset),
-                ControlPoint1 = new PointF(459.1159F, 889.9542F - Offset),
-                ControlPoint2 = new PointF(307.785F + Offset, 497.2214F),
-                EndPoint = new PointF(337.8109F + Offset, 458.7888F)
+                StartPoint = new PointF(459.1159F + Offset, 0),
+                ControlPoint1 = new PointF(462.719F + Offset, 121.3028F),
+                ControlPoint2 = new PointF(166.0624F + Offset, 405.944F),
+                EndPoint = new PointF(112.0156F + Offset, 464.7939F)
             });
 
             paths.Add(new BezierCurve()
             {
-                StartPoint = new PointF(337.8109F + Offset, 453.9847F),
-                ControlPoint1 = new PointF(333.0068F + Offset, 339.888F + Offset),
-                ControlPoint2 = new PointF(550.3948F - Offset, 290.6463F + Offset),
-                EndPoint = new PointF(555.199F - Offset, 455.1858F)
+                StartPoint = new PointF(110.8146F + Offset, 467.1959F),
+                ControlPoint1 = new PointF(7.525259F + Offset , 559.6743F + Offset),
+                ControlPoint2 = new PointF(109.6136F + Offset, 682.1781F - Offset),
+                EndPoint = new PointF(191.2842F + Offset , 649.7506F - Offset)
             });
 
             paths.Add(new BezierCurve()
             {
-                StartPoint = new PointF(555.199F - Offset, 456.3868F),
-                ControlPoint1 = new PointF(563.6063F - Offset, 576.4885F - Offset),
-                ControlPoint2 = new PointF(336.6099F, 617.3232F - Offset),
-                EndPoint = new PointF(336.6099F + Offset, 467.1959F - Offset)
+                StartPoint = new PointF(193.6863F + Offset, 649.7506F - Offset),
+                ControlPoint1 = new PointF(276.558F + Offset, 587.2977F - Offset),
+                ControlPoint2 = new PointF(288.5684F + Offset, 542.86F - Offset),
+                EndPoint = new PointF(295.7746F + Offset, 491.2163F - Offset)
             });
 
             return paths;

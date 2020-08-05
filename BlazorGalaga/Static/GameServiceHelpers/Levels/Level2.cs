@@ -13,14 +13,15 @@ namespace BlazorGalaga.Static.GameServiceHelpers.Levels
         public static void Init(AnimationService animationService)
         {
 
-            animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfStackedEightFromBottom));
+            animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfStackedEightFromTop));
 
             animationService.ComputePathPoints();
 
             Task.Delay(1000).ContinueWith((task) =>
             {
                 //animationService.Animatables.Where(a => a.Index >= 8 && a.Index < 16).ToList().ForEach(bug => bug.Started = true);
-                animationService.Animatables.Where(a => a.Index >= 16 && a.Index < 32).ToList().ForEach(bug => {
+                //animationService.Animatables.Where(a => a.Index >= 16 && a.Index < 32).ToList().ForEach(bug => bug.Started = true);
+                animationService.Animatables.Where(a => a.Index <=8).ToList().ForEach(bug => {
                     bug.Started = true;
                     bug.Paths.ForEach(a => a.DrawPath = true);
                 });

@@ -1,11 +1,12 @@
 ﻿<Properties StartupConfiguration="{202B6679-81B6-4D6C-83B3-0DC9DE1151AC}|Default">
   <MonoDevelop.Ide.ItemProperties.BlazorGalaga PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Services/AnimationService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Models/Paths/Intro6.cs">
     <Files>
-      <File FileName="BlazorGalaga/Services/GameService.cs" Line="46" Column="62" />
-      <File FileName="BlazorGalaga/Static/GameServiceHelpers/Levels/Level2.cs" Line="72" Column="85" />
-      <File FileName="BlazorGalaga/Static/BugFactory.cs" Line="43" Column="1" />
+      <File FileName="BlazorGalaga/Static/GameServiceHelpers/Levels/Level2.cs" Line="24" Column="68" />
+      <File FileName="BlazorGalaga/Static/BugFactory.cs" Line="66" Column="72" />
       <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="152" Column="1" />
+      <File FileName="BlazorGalaga/Models/Paths/Intro7.cs" Line="43" Column="16" />
+      <File FileName="BlazorGalaga/Models/Paths/Intro6.cs" Line="23" Column="70" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -13,10 +14,12 @@
           <Node name="BlazorGalaga" expanded="True">
             <Node name="BlazorGalaga" expanded="True">
               <Node name="Interfaces" expanded="True" />
-              <Node name="Models" expanded="True" />
-              <Node name="Services" expanded="True">
-                <Node name="AnimationService.cs" selected="True" />
+              <Node name="Models" expanded="True">
+                <Node name="Paths" expanded="True">
+                  <Node name="Intro6.cs" selected="True" />
+                </Node>
               </Node>
+              <Node name="Services" expanded="True" />
               <Node name="Static" expanded="True">
                 <Node name="GameServiceHelpers" expanded="True">
                   <Node name="Levels" expanded="True" />

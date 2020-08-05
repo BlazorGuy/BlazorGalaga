@@ -58,6 +58,19 @@ namespace BlazorGalaga.Static
                     for (int i = 0; i < 4; i++)
                         animatables.Add(CreateAnimatable_BugIntro(i + 20, i * Constants.BugIntroSpacing, new Intro6(), Sprite.SpriteTypes.RedBug));
                     break;
+                case BugIntro.TwoGroupsOfStackedEightFromTop:
+                    for (int i = 0; i < 4; i++)
+                        animatables.Add(CreateAnimatable_BugIntro(i, i * Constants.BugIntroSpacing, new Intro2(), Sprite.SpriteTypes.BlueBug));
+
+                    for (int i = 0; i < 4; i++)
+                        animatables.Add(CreateAnimatable_BugIntro(i + 4, i * Constants.BugIntroSpacing, new Intro7(), Sprite.SpriteTypes.BlueBug));
+
+                    //for (int i = 0; i < 4; i++)
+                    //    animatables.Add(CreateAnimatable_BugIntro(i + 16, i * Constants.BugIntroSpacing, new Intro4(), Sprite.SpriteTypes.RedBug));
+
+                    //for (int i = 0; i < 4; i++)
+                    //    animatables.Add(CreateAnimatable_BugIntro(i + 20, i * Constants.BugIntroSpacing, new Intro6(), Sprite.SpriteTypes.RedBug));
+                    break;
             }
 
             return animatables;
