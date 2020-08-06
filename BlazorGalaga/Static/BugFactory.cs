@@ -105,7 +105,6 @@ namespace BlazorGalaga.Static
                         Speed = Constants.BugIntroSpeed - 3
                     }
                 };
-                ;
             }
 
             switch (spritetype)
@@ -134,10 +133,10 @@ namespace BlazorGalaga.Static
                 //For bugs coming from the left side, add an offscreen path to make the bug fly in from off screen
                 bug.Paths.Insert(0, new BezierCurve()
                 {
-                    StartPoint = new PointF(bug.Paths[0].StartPoint.X - 800, bug.Paths[0].StartPoint.Y - intro.Offset),
-                    EndPoint = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y - intro.Offset),
-                    ControlPoint1 = new PointF(bug.Paths[0].StartPoint.X - 800, bug.Paths[0].StartPoint.Y - intro.Offset),
-                    ControlPoint2 = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y - intro.Offset)
+                    StartPoint = new PointF(bug.Paths[0].StartPoint.X - 800, bug.Paths[0].StartPoint.Y),
+                    EndPoint = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y),
+                    ControlPoint1 = new PointF(bug.Paths[0].StartPoint.X - 800, bug.Paths[0].StartPoint.Y),
+                    ControlPoint2 = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y)
                 });
             else if (intro as Intro4 != null || intro as Intro6 != null)
                 //For bugs coming from the right side, add an offscreen path to make the bug fly in from off screen

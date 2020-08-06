@@ -54,36 +54,35 @@ namespace BlazorGalaga.Services
             {
                 animationService.Animatables.Where(a => a.Index < 8).ToList().ForEach(a => a.Started = true);
             });
-            //move in 1 set of 8 red and green bugs from the bottom left
+            //move red and green bugs from the bottom left
             Task.Delay(5000).ContinueWith((task) =>
             {
                 animationService.Animatables.Where(a => a.Index >= 8 && a.Index < 16).ToList().ForEach(a => a.Started = true);
             });
-            //move in 1 set of 8 red bugs from the bottom right
+            //move red bugs from the bottom right
             Task.Delay(9000).ContinueWith((task) =>
             {
                 animationService.Animatables.Where(a => a.Index >= 16 && a.Index < 24).ToList().ForEach(a => a.Started = true);
             });
-            //move in 1 set of 8 blue bugs from the top left
+            //move blue bugs from the top left
             Task.Delay(14000).ContinueWith((task) =>
             {
                 animationService.Animatables.Where(a => a.Index >= 24 && a.Index < 32).ToList().ForEach(a => a.Started = true);
             });
-            //move in 1 set of 8 blue bugs from the top right
+            //move blue bugs from the top right
             Task.Delay(18000).ContinueWith((task) =>
             {
                 animationService.Animatables.Where(a => a.Index >= 32 && a.Index < 40).ToList().ForEach(a => a.Started = true);
             });
 
-            //Task.Delay(22000).ContinueWith((task) =>
-            //{
-            //    EnemyGridManager.EnemyGridBreathing = true;
-            //    DiveAndFire();
-            //});
+            Task.Delay(22000).ContinueWith((task) =>
+            {
+                EnemyGridManager.EnemyGridBreathing = true;
+                DiveAndFire();
+            });
 
             levelInitialized = true;
         }
-
         private void DiveAndFire()
         {
             if (GetBugs().Count == 0) return;
@@ -123,6 +122,8 @@ namespace BlazorGalaga.Services
             //Begin Init - Only happens once
             if (!levelInitialized)
             {
+                await ConsoleManager.DrawConsoleLevelText(spriteService, 2);
+                await ConsoleManager.ClearConsoleLevelText(spriteService);
                 this.Ship = ship;
                 InitLevel(2);
             }
