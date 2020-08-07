@@ -19,6 +19,8 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             {
                 StartPoint = new PointF(Constants.SpriteDestSize.Width / 2, Constants.CanvasSize.Height - (Constants.SpriteDestSize.Height * 2)),
                 EndPoint = new PointF(Constants.CanvasSize.Width - (Constants.SpriteDestSize.Width / 2), Constants.CanvasSize.Height - (Constants.SpriteDestSize.Height * 2)),
+                ControlPoint1 = new PointF(Constants.SpriteDestSize.Width / 2, Constants.CanvasSize.Height - (Constants.SpriteDestSize.Height * 2)),
+                ControlPoint2 = new PointF(Constants.CanvasSize.Width - (Constants.SpriteDestSize.Width / 2), Constants.CanvasSize.Height - (Constants.SpriteDestSize.Height * 2))
             });
 
             var ship = new Ship()
@@ -35,7 +37,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 ship.PathPoints.AddRange(animationService.ComputePathPoints(a));
             });
 
-            ship.CurPathPointIndex = (int)(ship.PathPoints.Count / 3) - (int)(ship.Sprite.SpriteDestRect.Width / 2);
+            ship.CurPathPointIndex = (int)(ship.PathPoints.Count / 2) - (int)(ship.Sprite.SpriteDestRect.Width / 2);
 
             animationService.Animatables.Add(ship);
         }

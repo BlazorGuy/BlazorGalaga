@@ -113,7 +113,7 @@ namespace BlazorGalaga.Pages
             public float timestamp { get; set; }
             public bool editcurveschecked { get; set; }
             public bool pauseanimation { get; set; }
-            public bool addpath { get; set; }
+            public bool killbugs { get; set; }
             public bool resetanimation { get; set; }
             public bool spritesheetloaded { get; set; }
         }
@@ -170,8 +170,11 @@ namespace BlazorGalaga.Pages
 
                     sw.Restart();
                     if (gameService.animationService != null)
-                        gameService.Process(ship, timeStamp);
-                    Utils.dOut("gameService.Process()", sw.ElapsedMilliseconds);
+                    {
+                        if (gameService.Ship == null) gameService.Ship = ship;
+                        gameService.Process(timeStamp);
+                        Utils.dOut("gameService.Process()", sw.ElapsedMilliseconds);
+                    }
                 }
                 //End Animation Logic
 
@@ -182,6 +185,15 @@ namespace BlazorGalaga.Pages
                     CurveEditorHelper.DisableLines(animationService);
                 if (glo.resetanimation) CurveEditorHelper.ResetAnimation(animationService);
                 ////End Curve Editor Logic
+
+                if (glo.killbugs)
+                {
+                    animationService.Animatables.RemoveAll(a =>
+                    a.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug
+                    || a.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug
+                    || a.Sprite.SpriteType == Sprite.SpriteTypes.RedBug
+                    || a.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug_Blue);
+                }
 
                 Utils.LogFPS();
 

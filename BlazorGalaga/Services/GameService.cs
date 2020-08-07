@@ -21,6 +21,7 @@ namespace BlazorGalaga.Services
         public SpriteService spriteService { get; set; }
         public Ship Ship { get; set; }
         public int Lives { get; set; }
+        public int Level { get; set; }
 
         private bool levelInitialized = false;
         private bool consoledrawn = false;
@@ -29,6 +30,21 @@ namespace BlazorGalaga.Services
         {
             Lives = 2;
             ShipManager.InitShip(animationService);
+        }
+
+        private void CachPaths()
+        {
+            List<IAnimatable> animatables = new List<IAnimatable>();
+
+            animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfFourFromTop));
+            animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfEightFromBottom));
+            animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfEightFromTop));
+            animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfStackedEightFromBottom));
+            animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfStackedEightFromTop));
+
+            animatables.ForEach(a => {
+                a.Paths.ForEach(p => { a.PathPoints.AddRange(animationService.ComputePathPoints(p)); });
+            });
         }
 
         private void InitLevel(int level)
@@ -47,7 +63,9 @@ namespace BlazorGalaga.Services
                     break;
             }
 
-            animationService.ComputePathPoints();
+            animationService.Animatables.ForEach(a => {
+                a.Paths.ForEach(p => { a.PathPoints.AddRange(animationService.ComputePathPoints(p)); });
+            });
 
             //move in 2 sets of 4 (red and blue) from the top at the same time
             Task.Delay(2000).ContinueWith((task) =>
@@ -115,25 +133,41 @@ namespace BlazorGalaga.Services
             ).Select(a=> a as Bug).ToList();
         }
 
-        public async void Process(Ship ship, float timestamp)
+        public async void Process(float timestamp)
         {
-            var bugs = GetBugs();
-
             //Begin Init - Only happens once
-            if (!levelInitialized)
-            {
-                await ConsoleManager.DrawConsoleLevelText(spriteService, 2);
-                await ConsoleManager.ClearConsoleLevelText(spriteService);
-                this.Ship = ship;
-                InitLevel(2);
-            }
-
             if (!consoledrawn && Ship.Sprite.BufferCanvas != null)
             {
-                await ConsoleManager.DrawConsole(Lives, spriteService, ship);
+                Ship.Visible = false;
+                await ConsoleManager.DrawConsole(Lives, spriteService, Ship);
+                CachPaths();
                 consoledrawn = true;
             }
             //End Init - Only happens once
+
+            var bugs = GetBugs();
+
+            if (bugs.Count == 0)
+            {
+                if (WaitManager.WaitFor(2000, timestamp, WaitManager.WaitStep.enStep.Pause1))
+                {
+                    WaitManager.DoOnce(async ()=>
+                    {
+                        Level += 1;
+                        await ConsoleManager.DrawConsoleLevelText(spriteService, Level, timestamp); 
+                    }, WaitManager.WaitStep.enStep.ShowLevelText);
+                    if (WaitManager.WaitFor(2000, timestamp, WaitManager.WaitStep.enStep.Pause2))
+                    {
+                        WaitManager.DoOnce(async () =>
+                        {
+                            await ConsoleManager.ClearConsoleLevelText(spriteService);
+                            InitLevel(Level);
+                            Ship.Visible = true;
+                            WaitManager.ClearSteps();
+                        }, WaitManager.WaitStep.enStep.ClearLevelText);
+                    }
+                }
+            }
 
             if (timestamp - EnemyGridManager.LastEnemyGridMoveTimeStamp > 35)
             {
@@ -154,10 +188,10 @@ namespace BlazorGalaga.Services
                 FlapWingsManager.LastWingFlapTimeStamp = timestamp;
             }
 
-            if (ship.IsFiring)
+            if (Ship.IsFiring)
             {
-                ship.IsFiring = false;
-                ShipManager.Fire(ship, animationService);
+                Ship.IsFiring = false;
+                ShipManager.Fire(Ship, animationService);
             }
 
             ShipManager.CheckMissileCollisions(bugs, animationService);

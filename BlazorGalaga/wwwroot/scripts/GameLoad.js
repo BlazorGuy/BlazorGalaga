@@ -1,6 +1,7 @@
 ﻿let addPath = false;
 let resetAnimation = false;
 let spriteSheetLoaded = false;
+let killBugs = false;
 
 window.initFromBlazor = (instance) => {
 
@@ -22,8 +23,8 @@ window.initFromBlazor = (instance) => {
         canvas.addEventListener("mouseup", function (e) {
             DotNet.invokeMethodAsync('BlazorGalaga', 'OnMouseUp');
         });
-        document.getElementById("btnAddPath").addEventListener('click', function (e) {
-            addPath = true;
+        document.getElementById("btnKillAllBugs").addEventListener('click', function (e) {
+            killBugs = true;
         });
         document.getElementById("btnResetAnimation").addEventListener('click', function (e) {
             resetAnimation = true;
@@ -53,14 +54,14 @@ function gameLoop(timeStamp) {
         editcurveschecked: editcurveschecked,
         timestamp: timeStamp,
         pauseanimation: pauseanimation,
-        addpath: addPath,
+        killbugs: killBugs,
         resetanimation: resetAnimation,
         spritesheetloaded: spriteSheetLoaded
     };
 
     window.instance.invokeMethodAsync('GameLoop', gameloopobject);
 
-    addPath = false;
+    killBugs = false;
     resetAnimation = false;
 
     window.requestAnimationFrame(gameLoop);

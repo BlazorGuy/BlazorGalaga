@@ -173,21 +173,6 @@ namespace BlazorGalaga.Services
             return pathpoints;
         }
 
-        public void ComputePathPoints()
-        {
-           
-            foreach (var animatable in Animatables)
-            {
-                if (animatable.Paths != null)
-                {
-                    animatable.PathPoints = new List<PointF>();
-                    foreach (BezierCurve path in animatable.Paths)
-                       animatable.PathPoints.AddRange(ComputePathPoints(path, animatable.PathIsLine));
-                }
-            }
-
-        }
-
         public void Draw()
         {
             spriteService.DynamicCtx1.BeginBatchAsync();

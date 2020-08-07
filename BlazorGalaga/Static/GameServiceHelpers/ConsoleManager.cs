@@ -43,21 +43,23 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 45
             );
 
-            //await spriteService.StaticCtx.SetFillStyleAsync("Red");
-            //await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");
+            await spriteService.StaticCtx.SetFillStyleAsync("Red");
+            await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");
 
-            //await spriteService.StaticCtx.FillTextAsync("1UP", 50, 30);
-            //await spriteService.StaticCtx.FillTextAsync("HIGH SCORE", 220, 30);
+            await spriteService.StaticCtx.FillTextAsync("1UP", 50, 30);
+            await spriteService.StaticCtx.FillTextAsync("HIGH SCORE", 220, 30);
 
-            //await spriteService.StaticCtx.SetFillStyleAsync("White");
-            //await spriteService.StaticCtx.FillTextAsync("00", 50, 60);
-            //await spriteService.StaticCtx.FillTextAsync("20000", 300, 60);
+            await spriteService.StaticCtx.SetFillStyleAsync("White");
+            await spriteService.StaticCtx.FillTextAsync("00", 50, 60);
+            await spriteService.StaticCtx.FillTextAsync("20000", 300, 60);
         }
+
         public static async Task ClearConsoleLevelText(SpriteService spriteService)
         {
-            await spriteService.StaticCtx.ClearRectAsync(250, Constants.CanvasSize.Height / 2, 200, 50);
+            await spriteService.StaticCtx.ClearRectAsync(0, (Constants.CanvasSize.Height / 2)-100, Constants.CanvasSize.Width, 100);
         }
-        public static async Task DrawConsoleLevelText(SpriteService spriteService, int level)
+
+        public static async Task DrawConsoleLevelText(SpriteService spriteService, int level, float timestamp)
         {
             await spriteService.StaticCtx.SetFillStyleAsync("rgba(152, 249, 255, 1)");
             await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");
