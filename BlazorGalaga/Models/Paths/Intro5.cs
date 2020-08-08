@@ -8,6 +8,7 @@ namespace BlazorGalaga.Models.Paths
 {
     public class Intro5 : IIntro
     {
+        public bool IsChallenge { get; set; }
         public int Offset { get; set; }
 
         public List<BezierCurve> GetPaths()

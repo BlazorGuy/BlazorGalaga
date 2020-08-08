@@ -28,8 +28,10 @@ namespace BlazorGalaga.Models
         public PointF GetPointByRowCol(int row, int col)
         {
             GridPoints.Clear();
-            ComputerEnemyGrid();
-            return GridPoints.FirstOrDefault(a => a.Row == row && a.Column == col).Point;
+            ComputeEnemyGrid();
+
+            var gp = GridPoints.FirstOrDefault(a => a.Row == row && a.Column == col);
+            return  gp == null ? new PointF(0,0) : gp.Point;
         }
 
         public int GridLeft { get; set; }
@@ -42,10 +44,10 @@ namespace BlazorGalaga.Models
             HSpacing = Constants.EnemyGridHSpacing;
             VSpacing = Constants.EnemyGridHSpacing;
 
-            ComputerEnemyGrid();
+            ComputeEnemyGrid();
         }
 
-        public void ComputerEnemyGrid()
+        public void ComputeEnemyGrid()
         {
             const int GridTop = 150;
             const int XOffset = 0;

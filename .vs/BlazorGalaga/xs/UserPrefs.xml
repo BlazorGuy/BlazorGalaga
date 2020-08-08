@@ -1,12 +1,13 @@
 ﻿<Properties StartupConfiguration="{202B6679-81B6-4D6C-83B3-0DC9DE1151AC}|Default">
   <MonoDevelop.Ide.ItemProperties.BlazorGalaga PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Models/Paths/Intro6.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Models/Paths/Challenges/Challenge5.cs">
     <Files>
-      <File FileName="BlazorGalaga/Static/GameServiceHelpers/Levels/Level2.cs" Line="24" Column="68" />
-      <File FileName="BlazorGalaga/Static/BugFactory.cs" Line="66" Column="72" />
-      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="152" Column="1" />
-      <File FileName="BlazorGalaga/Models/Paths/Intro7.cs" Line="43" Column="16" />
-      <File FileName="BlazorGalaga/Models/Paths/Intro6.cs" Line="23" Column="70" />
+      <File FileName="BlazorGalaga/Services/GameService.cs" Line="139" Column="75" />
+      <File FileName="BlazorGalaga/Static/BugFactory.cs" Line="183" Column="1" />
+      <File FileName="BlazorGalaga/Services/SpriteService.cs" Line="41" Column="10" />
+      <File FileName="BlazorGalaga/Models/Paths/Challenges/Challenge6.cs" Line="37" Column="42" />
+      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="179" Column="59" />
+      <File FileName="BlazorGalaga/Models/Paths/Challenges/Challenge5.cs" Line="37" Column="48" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -16,14 +17,14 @@
               <Node name="Interfaces" expanded="True" />
               <Node name="Models" expanded="True">
                 <Node name="Paths" expanded="True">
-                  <Node name="Intro6.cs" selected="True" />
+                  <Node name="Challenges" expanded="True">
+                    <Node name="Challenge5.cs" selected="True" />
+                  </Node>
                 </Node>
               </Node>
               <Node name="Services" expanded="True" />
               <Node name="Static" expanded="True">
-                <Node name="GameServiceHelpers" expanded="True">
-                  <Node name="Levels" expanded="True" />
-                </Node>
+                <Node name="GameServiceHelpers" expanded="True" />
               </Node>
             </Node>
           </Node>

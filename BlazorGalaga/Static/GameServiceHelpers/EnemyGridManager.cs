@@ -40,16 +40,19 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             bugs.ForEach(bug =>
             {
                 var homepoint = BugFactory.EnemyGrid.GetPointByRowCol(bug.HomePoint.X, bug.HomePoint.Y);
-                if (bug.IsMoving)
+                if (!(homepoint.X == 0 && homepoint.Y == 0))
                 {
-                    //this animates the line to location logic
-                    bug.LineFromLocation = new Vector2(bug.Paths.Last().EndPoint.X, bug.Paths.Last().EndPoint.Y);
-                    bug.LineToLocation = new Vector2(homepoint.X, homepoint.Y);
-                }
-                //snap to grid if bug isn't moving
-                else
-                {
-                    bug.LineToLocation = new Vector2(homepoint.X, homepoint.Y);
+                    if (bug.IsMoving)
+                    {
+                        //this animates the line to location logic
+                        bug.LineFromLocation = new Vector2(bug.Paths.Last().EndPoint.X, bug.Paths.Last().EndPoint.Y);
+                        bug.LineToLocation = new Vector2(homepoint.X, homepoint.Y);
+                    }
+                    //snap to grid if bug isn't moving
+                    else
+                    {
+                        bug.LineToLocation = new Vector2(homepoint.X, homepoint.Y);
+                    }
                 }
             });
         }

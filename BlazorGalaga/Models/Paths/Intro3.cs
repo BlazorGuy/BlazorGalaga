@@ -9,13 +9,14 @@ namespace BlazorGalaga.Models.Paths
     public class Intro3 : IIntro
     {
         public int Offset { get; set; }
+        public bool IsChallenge { get; set; }
 
         public List<BezierCurve> GetPaths()
         {
 
             List<BezierCurve> paths = new List<BezierCurve>();
 
-            paths.Add(new BezierCurve()
+             paths.Add(new BezierCurve()
             {
                 StartPoint = new PointF(1.520065F, 865.9338F),
                 ControlPoint1 = new PointF(206.8977F, 885.1501F),

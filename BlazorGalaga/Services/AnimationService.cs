@@ -75,9 +75,9 @@ namespace BlazorGalaga.Services
                     //stop the curve animation
                     animatable.CurPathPointIndex = animatable.PathPoints.Count - 1;
                     //do we have an extra lineto to animate?
-                    if (animatable.IsMoving && !animatable.PathIsLine &&
+                    if (animatable.IsMoving && !animatable.PathIsLine && animatable.DoLineToLocation &&
                         (Vector2.Distance(animatable.LineFromLocation,new Vector2(animatable.Location.X, animatable.Location.Y)) + animatable.Speed < animatable.LineToLocationDistance ||
-                        animatable.LineToLocationDistance == 0))
+                        animatable.LineToLocationDistance == 0 && animatable.DoLineToLocation))
                     {
                         //lineto animation
                         animatable.LineToLocationDistance = Vector2.Distance(animatable.LineFromLocation, animatable.LineToLocation);
@@ -95,7 +95,7 @@ namespace BlazorGalaga.Services
                     else
                     {
                         //animation is complete
-                        if (!animatable.PathIsLine)
+                        if (!animatable.PathIsLine && animatable.DoLineToLocation)
                             animatable.Location = new PointF(animatable.LineToLocation.X,animatable.LineToLocation.Y);
                         animatable.IsMoving = false;
                         animatable.ZIndex = 0;
@@ -181,6 +181,8 @@ namespace BlazorGalaga.Services
             ResetCanvas(spriteService.DynamicCtx1);
             //ResetCanvas(spriteService.DynamicCtx2);
 
+            Utils.dOut("Animatables", Animatables.Count);
+
             foreach (IAnimatable animatable in Animatables.Where(a => a.Started && a.Visible).OrderByDescending(a => a.ZIndex))
             {
                 spriteService.DrawSprite(
@@ -189,13 +191,16 @@ namespace BlazorGalaga.Services
                     (animatable.RotateAlongPath && animatable.IsMoving) ? animatable.Rotation : 0
                     );
 
-                //foreach (BezierCurve path in animatable.Paths.Where(a => a.DrawPath == true))
-                //{
-                //    if (animatable.DrawPath)
-                //        bezierCurveService.DrawCurve(spriteService.DynamicCtx1, path);
-                //    if (animatable.DrawControlLines)
-                //        bezierCurveService.DrawCurveControlLines(spriteService.DynamicCtx1, path);
-                //}
+                if (animatable.DrawPath || animatable.DrawControlLines)
+                {
+                    foreach (BezierCurve path in animatable.Paths.Where(a => a.DrawPath == true))
+                    {
+                        if (animatable.DrawPath)
+                            bezierCurveService.DrawCurve(spriteService.DynamicCtx1, path);
+                        if (animatable.DrawControlLines)
+                            bezierCurveService.DrawCurveControlLines(spriteService.DynamicCtx1, path);
+                    }
+                }
             }
 
             spriteService.DynamicCtx1.EndBatchAsync();

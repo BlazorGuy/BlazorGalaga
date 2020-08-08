@@ -4,6 +4,7 @@ using System.Drawing;
 using BlazorGalaga.Interfaces;
 using BlazorGalaga.Models;
 using BlazorGalaga.Models.Paths;
+using BlazorGalaga.Models.Paths.Challenges;
 
 namespace BlazorGalaga.Static
 {
@@ -15,7 +16,10 @@ namespace BlazorGalaga.Static
             TwoGroupsOfEightFromBottom,
             TwoGroupsOfEightFromTop,
             TwoGroupsOfStackedEightFromBottom,
-            TwoGroupsOfStackedEightFromTop
+            TwoGroupsOfStackedEightFromTop,
+            Challenge1_TwoGroupsOfFourFromTop,
+            Challenge1_TwoGroupsOfEightFromBottom,
+            Challenge1_TwoGroupsOfEightFromTop,
         }
 
         public static EnemyGrid EnemyGrid = new EnemyGrid();
@@ -71,6 +75,26 @@ namespace BlazorGalaga.Static
                     for (int i = 0; i < 4; i++)
                         animatables.Add(CreateAnimatable_BugIntro(i + 36, i * Constants.BugIntroSpacing, new Intro8(), Sprite.SpriteTypes.BlueBug));
                     break;
+                case BugIntro.Challenge1_TwoGroupsOfFourFromTop:
+                    for (int i = 0; i < 4; i++)
+                        animatables.Add(CreateAnimatable_BugIntro(i, i * Constants.BugIntroSpacing, new Challenge1(), Sprite.SpriteTypes.BlueBug));
+
+                    for (int i = 0; i < 4; i++)
+                        animatables.Add(CreateAnimatable_BugIntro(i + 4, i * Constants.BugIntroSpacing, new Challenge2(), Sprite.SpriteTypes.BlueBug));
+                    break;
+                case BugIntro.Challenge1_TwoGroupsOfEightFromBottom:
+                    for (int i = 0; i < 8; i++)
+                        animatables.Add(CreateAnimatable_BugIntro(i + 8, i * Constants.BugIntroSpacing, new Challenge3(), i % 2 != 0 ? Sprite.SpriteTypes.GreenBug : Sprite.SpriteTypes.BlueBug));
+
+                    for (int i = 0; i < 8; i++)
+                        animatables.Add(CreateAnimatable_BugIntro(i + 16, i * Constants.BugIntroSpacing, new Challenge4(), Sprite.SpriteTypes.BlueBug));
+                    break;
+                case BugIntro.Challenge1_TwoGroupsOfEightFromTop:
+                    for (int i = 0; i < 8; i++)
+                        animatables.Add(CreateAnimatable_BugIntro(i + 24, i * Constants.BugIntroSpacing, new Challenge5(), Sprite.SpriteTypes.BlueBug));
+                    for (int i = 0; i < 8; i++)
+                        animatables.Add(CreateAnimatable_BugIntro(i + 32, i * Constants.BugIntroSpacing, new Challenge6(), Sprite.SpriteTypes.BlueBug));
+                    break;
             }
 
             return animatables;
@@ -120,7 +144,9 @@ namespace BlazorGalaga.Static
                     break;
             }
 
-            if (intro as Intro1 != null || intro as Intro2 != null || intro as Intro7 != null || (intro as Intro8) != null)
+            if (intro as Intro1 != null || intro as Intro2 != null || intro as Intro7 != null
+                || (intro as Intro8) != null || (intro as Challenge1) != null
+                || (intro as Challenge2) != null || (intro as Challenge5) != null || (intro as Challenge6) != null)
                 //For bugs dropping from the top, add an offscreen path to make the bug fly in from off screen
                 bug.Paths.Insert(0, new BezierCurve()
                 {
@@ -129,7 +155,7 @@ namespace BlazorGalaga.Static
                     ControlPoint1 = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y - 400),
                     ControlPoint2 = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y)
                 });
-            else if (intro as Intro3 != null || intro as Intro5 != null)
+            else if (intro as Intro3 != null || intro as Intro5 != null || intro as Challenge3 != null)
                 //For bugs coming from the left side, add an offscreen path to make the bug fly in from off screen
                 bug.Paths.Insert(0, new BezierCurve()
                 {
@@ -138,7 +164,7 @@ namespace BlazorGalaga.Static
                     ControlPoint1 = new PointF(bug.Paths[0].StartPoint.X - 800, bug.Paths[0].StartPoint.Y),
                     ControlPoint2 = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y)
                 });
-            else if (intro as Intro4 != null || intro as Intro6 != null)
+            else if (intro as Intro4 != null || intro as Intro6 != null || intro as Challenge4 != null)
                 //For bugs coming from the right side, add an offscreen path to make the bug fly in from off screen
                 bug.Paths.Insert(0, new BezierCurve()
                 {
@@ -148,7 +174,10 @@ namespace BlazorGalaga.Static
                     ControlPoint2 = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y)
                 });
 
-            bug.HomePoint = GetGridPoint(index);
+            if (!intro.IsChallenge)
+                bug.HomePoint = GetGridPoint(index);
+            else
+                bug.DoLineToLocation = false;
 
             return bug;
 

@@ -85,7 +85,7 @@ namespace BlazorGalaga.Static
                 string curvedata = "";
                 foreach (var animatable in animationService.Animatables.Where(a => a.Sprite.SpriteType != Sprite.SpriteTypes.Ship))
                 {
-                    foreach (var path in animatable.Paths)
+                    foreach (var path in animatable.Paths.Where(a=>a.OutPutDebug==true))
                     {
                         path.StartPointDragged = false;
                         path.EndPointDragged = false;
@@ -93,11 +93,11 @@ namespace BlazorGalaga.Static
                         path.ControlPoint2Dragged = false;
                         if (path.DrawPath)
                         {
-                            curvedata += "<br/>paths.Add(new BezierCurve() {" +
+                            curvedata += "<br/>new BezierCurve() {" +
                                 "StartPoint = new PointF(" + path.StartPoint.X + "F," + path.StartPoint.Y + "F),<br/>" +
                                 "ControlPoint1 = new PointF(" + path.ControlPoint1.X + "F," + path.ControlPoint1.Y + "F),<br/>" +
                                 "ControlPoint2 = new PointF(" + path.ControlPoint2.X + "F," + path.ControlPoint2.Y + "F),<br/>" +
-                                "EndPoint = new PointF(" + path.EndPoint.X + "F," + path.EndPoint.Y + "F)});<br/>";
+                                "EndPoint = new PointF(" + path.EndPoint.X + "F," + path.EndPoint.Y + "F)},<br/>";
                         }
                     }
                 }

@@ -38,6 +38,7 @@ namespace BlazorGalaga.Interfaces
         public bool DestroyImmediately { get; set; }
         public bool Visible { get; set; }
         public List<VSpeed> VSpeed { get; set; }
+        public bool DoLineToLocation { get; set; }
 
     }
 }

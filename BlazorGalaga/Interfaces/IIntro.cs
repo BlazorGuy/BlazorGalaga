@@ -9,5 +9,6 @@ namespace BlazorGalaga.Interfaces
     {
         public List<BezierCurve> GetPaths();
         public int Offset { get; set; }
+        public bool IsChallenge { get; set; }
     }
 }

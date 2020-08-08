@@ -23,11 +23,11 @@ namespace BlazorGalaga.Services
         public int Lives { get; set; }
         public int Level { get; set; }
 
-        private bool levelInitialized = false;
         private bool consoledrawn = false;
 
         public void Init()
         {
+            Level = 2;
             Lives = 2;
             ShipManager.InitShip(animationService);
         }
@@ -61,10 +61,19 @@ namespace BlazorGalaga.Services
                     animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfStackedEightFromBottom));
                     animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfStackedEightFromTop));
                     break;
+                case 3:
+                    animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.Challenge1_TwoGroupsOfFourFromTop));
+                    animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.Challenge1_TwoGroupsOfEightFromBottom));
+                    animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.Challenge1_TwoGroupsOfEightFromTop));
+                    break;
             }
 
             animationService.Animatables.ForEach(a => {
-                a.Paths.ForEach(p => { a.PathPoints.AddRange(animationService.ComputePathPoints(p)); });
+                a.Paths.ForEach(p => {
+                    //if (a.Index == 32 || a.Index == 24) p.DrawPath=true;
+                    //if (a.Index == 32) p.OutPutDebug = true;
+                    a.PathPoints.AddRange(animationService.ComputePathPoints(p));
+                });
             });
 
             //move in 2 sets of 4 (red and blue) from the top at the same time
@@ -93,13 +102,11 @@ namespace BlazorGalaga.Services
                 animationService.Animatables.Where(a => a.Index >= 32 && a.Index < 40).ToList().ForEach(a => a.Started = true);
             });
 
-            Task.Delay(22000).ContinueWith((task) =>
-            {
-                EnemyGridManager.EnemyGridBreathing = true;
-                DiveAndFire();
-            });
-
-            levelInitialized = true;
+            //Task.Delay(22000).ContinueWith((task) =>
+            //{
+            //    EnemyGridManager.EnemyGridBreathing = true;
+            //    DiveAndFire();
+            //});
         }
         private void DiveAndFire()
         {

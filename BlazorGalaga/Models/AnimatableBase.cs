@@ -37,12 +37,14 @@ namespace BlazorGalaga.Models
         public bool DestroyImmediately { get; set; }
         public bool Visible { get; set; }
         public List<VSpeed> VSpeed { get; set; }
+        public bool DoLineToLocation { get; set; }
 
         public AnimatableBase()
         {
             PathPoints = new List<PointF>();
             Location = new PointF(-5000, -5000);
             Visible = true;
+            DoLineToLocation = true;
         }
 
         public void Dispose()

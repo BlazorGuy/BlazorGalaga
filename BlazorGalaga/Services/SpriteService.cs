@@ -20,6 +20,7 @@ namespace BlazorGalaga.Services
         public List<Canvas> BigBufferCanvases { get; set; }
         public ElementReference SpriteSheet { get; set; }
         public List<Sprite> Sprites = new List<Sprite>();
+        public bool IsRotated { get; set; }
 
 
         public async void Init()
@@ -39,8 +40,6 @@ namespace BlazorGalaga.Services
 
         }
 
-        private bool isrotated = false;
-
         public async void DrawSprite(Sprite sprite, PointF location, float rotationangle)
         {
             //rotationangle = 0;
@@ -52,7 +51,7 @@ namespace BlazorGalaga.Services
 
             if (rotationangle != 0)
             {
-                isrotated = true;
+                IsRotated = true;
 
                 var rotation = (float)((rotationangle + sprite.InitialRotationOffset) * Math.PI / 180);
                 var x = Math.Cos(rotation);
@@ -60,10 +59,10 @@ namespace BlazorGalaga.Services
 
                 await sprite.DynamicCanvas.SetTransformAsync(x, y, -y, x, location.X, location.Y);
             }
-            else if (isrotated)
+            else if (IsRotated)
             {
                 await sprite.DynamicCanvas.SetTransformAsync(1, 0, 0, 1, 0, 0);
-                isrotated = false;
+                IsRotated = false;
             }
 
             if (sprite.BufferCanvas != null)
