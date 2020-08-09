@@ -29,7 +29,7 @@ namespace BlazorGalaga.Services
 
         public void Init()
         {
-            Level = 3;
+            //Level = 3;
             Lives = 2;
             ShipManager.InitShip(animationService);
         }
@@ -77,27 +77,27 @@ namespace BlazorGalaga.Services
             //move in 2 sets of 4 (red and blue) from the top at the same time
             Task.Delay(delays[0], cancellationTokenSource.Token).ContinueWith((task) =>
             {
-                animationService.Animatables.Where(a => a.Index < 8).ToList().ForEach(a => a.Started = true);
+                GetBugs().Where(a => a.Wave==1).ToList().ForEach(a => a.Started = true);
             });
             //move red and green bugs from the bottom left
             Task.Delay(delays[1], cancellationTokenSource.Token).ContinueWith((task) =>
             {
-                animationService.Animatables.Where(a => a.Index >= 8 && a.Index < 16).ToList().ForEach(a => a.Started = true);
+                GetBugs().Where(a => a.Wave == 2).ToList().ForEach(a => a.Started = true);
             });
             //move red bugs from the bottom right
             Task.Delay(delays[2], cancellationTokenSource.Token).ContinueWith((task) =>
             {
-                animationService.Animatables.Where(a => a.Index >= 16 && a.Index < 24).ToList().ForEach(a => a.Started = true);
+                GetBugs().Where(a => a.Wave == 3).ToList().ForEach(a => a.Started = true);
             });
             //move blue bugs from the top left
             Task.Delay(delays[3], cancellationTokenSource.Token).ContinueWith((task) =>
             {
-                animationService.Animatables.Where(a => a.Index >= 24 && a.Index < 32).ToList().ForEach(a => a.Started = true);
+                GetBugs().Where(a => a.Wave == 4).ToList().ForEach(a => a.Started = true);
             });
             //move blue bugs from the top right
             Task.Delay(delays[4], cancellationTokenSource.Token).ContinueWith((task) =>
             {
-                animationService.Animatables.Where(a => a.Index >= 32 && a.Index < 40).ToList().ForEach(a => a.Started = true);
+                GetBugs().Where(a => a.Wave == 5).ToList().ForEach(a => a.Started = true);
             });
             if (delays[5] != -1)
             {
@@ -193,7 +193,7 @@ namespace BlazorGalaga.Services
 
             if (timestamp - EnemyGridManager.LastEnemyGridMoveTimeStamp > 100 || EnemyGridManager.LastEnemyGridMoveTimeStamp == 0)
             {
-                EnemyGridManager.MoveEnemyGrid(bugs);
+                EnemyGridManager.MoveEnemyGrid(bugs,Ship);
                 EnemyGridManager.LastEnemyGridMoveTimeStamp = timestamp;
             }
 

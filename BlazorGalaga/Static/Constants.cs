@@ -13,6 +13,7 @@ namespace BlazorGalaga.Static
         public static int SpriteSourceSize = 16;
         public static int BigSpriteSourceSize = 32;
         public static int ShipMoveSpeed = 5;
+        public static int BugDiveSpeed = 5;
         public static int BugIntroSpeed = 10;
         public static int BugIntroSpacing = 70;
         public static int BugRotateIntoPlaceSpeed = 2;

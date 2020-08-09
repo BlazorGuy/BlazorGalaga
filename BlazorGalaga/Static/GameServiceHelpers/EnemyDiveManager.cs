@@ -71,7 +71,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 
             bug.RotateAlongPath = true;
             bug.ZIndex = 100;
-            bug.Speed = 5;
+            bug.Speed = Constants.BugDiveSpeed;
             bug.Paths.AddRange(paths);
 
             paths.ForEach(p => {

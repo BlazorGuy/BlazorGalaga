@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Numerics;
 using BlazorGalaga.Interfaces;
 using BlazorGalaga.Models;
 using BlazorGalaga.Models.Paths;
 using BlazorGalaga.Models.Paths.Challenges;
+using System.Linq;
 
 namespace BlazorGalaga.Static
 {
@@ -12,18 +14,25 @@ namespace BlazorGalaga.Static
     {
         public static EnemyGrid EnemyGrid = new EnemyGrid();
 
-        public static IAnimatable CreateAnimatable_BugIntro(int index, int startdelay, IIntro intro, Sprite.SpriteTypes spritetype)
+        public static IAnimatable CreateAnimatable_BugIntro(
+            int index,
+            int startdelay,
+            IIntro intro,
+            Sprite.SpriteTypes spritetype,
+            int wave,
+            bool isdivebomber = false)
         {
             var bug = new Bug(spritetype)
             {
-                Index = index,
+                Index = isdivebomber ? -1 : index,
                 Paths = intro.GetPaths(),
                 RotateAlongPath = true,
                 Speed = Constants.BugIntroSpeed,
                 StartDelay = startdelay,
                 Started = false,
                 ZIndex = 100,
-                RotatIntoPlaceSpeed = Constants.BugRotateIntoPlaceSpeed
+                RotatIntoPlaceSpeed = Constants.BugRotateIntoPlaceSpeed,
+                Wave = wave
             };
 
             if ((intro as Intro5) != null || (intro as Intro6) != null || (intro as Intro7) != null || (intro as Intro8) != null)
@@ -87,7 +96,16 @@ namespace BlazorGalaga.Static
                 });
 
             if (!intro.IsChallenge)
-                bug.HomePoint = GetGridPoint(index);
+            {
+                if (isdivebomber)
+                {
+                    bug.IsDiveBomber = true;
+                    bug.DiveBombLocation = new Vector2(Utils.Rnd(50, Constants.CanvasSize.Width - 50), Constants.CanvasSize.Height + 50);
+                    bug.Paths.Last().EndPoint = new PointF(bug.Paths.Last().EndPoint.X , bug.Paths.Last().EndPoint.Y - 100);
+                }
+                else
+                    bug.HomePoint = GetGridPoint(index);
+            }
             else
                 bug.DoLineToLocation = false;
 

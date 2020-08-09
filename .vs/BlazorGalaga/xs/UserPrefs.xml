@@ -1,20 +1,26 @@
 ﻿<Properties StartupConfiguration="{202B6679-81B6-4D6C-83B3-0DC9DE1151AC}|Default">
   <MonoDevelop.Ide.ItemProperties.BlazorGalaga PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Static/Levels/Level4.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Static/Levels/Level3.cs">
     <Files>
-      <File FileName="BlazorGalaga/Services/GameService.cs" Line="32" Column="22" />
-      <File FileName="BlazorGalaga/Static/BugFactory.cs" Line="24" Column="33" />
-      <File FileName="BlazorGalaga/Static/Levels/Level4.cs" Line="48" Column="2" />
+      <File FileName="BlazorGalaga/Services/GameService.cs" Line="208" Column="39" />
+      <File FileName="BlazorGalaga/Static/BugFactory.cs" Line="49" Column="47" />
+      <File FileName="BlazorGalaga/Static/Levels/Level4.cs" Line="44" Column="169" />
+      <File FileName="BlazorGalaga/Static/GameServiceHelpers/EnemyGridManager.cs" Line="45" Column="63" />
+      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="74" Column="18" />
+      <File FileName="BlazorGalaga/Static/Levels/Level1.cs" Line="37" Column="1" />
+      <File FileName="BlazorGalaga/Static/Levels/Level2.cs" Line="46" Column="168" />
+      <File FileName="BlazorGalaga/Static/Levels/Level3.cs" Line="23" Column="40" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="BlazorGalaga" expanded="True">
             <Node name="BlazorGalaga" expanded="True">
+              <Node name="Models" expanded="True" />
               <Node name="Services" expanded="True" />
               <Node name="Static" expanded="True">
                 <Node name="Levels" expanded="True">
-                  <Node name="Level4.cs" selected="True" />
+                  <Node name="Level3.cs" selected="True" />
                 </Node>
               </Node>
             </Node>
