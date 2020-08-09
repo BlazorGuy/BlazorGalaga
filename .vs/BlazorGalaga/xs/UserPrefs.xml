@@ -1,30 +1,21 @@
 ﻿<Properties StartupConfiguration="{202B6679-81B6-4D6C-83B3-0DC9DE1151AC}|Default">
   <MonoDevelop.Ide.ItemProperties.BlazorGalaga PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Models/Paths/Challenges/Challenge5.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Static/Levels/Level4.cs">
     <Files>
-      <File FileName="BlazorGalaga/Services/GameService.cs" Line="139" Column="75" />
-      <File FileName="BlazorGalaga/Static/BugFactory.cs" Line="183" Column="1" />
-      <File FileName="BlazorGalaga/Services/SpriteService.cs" Line="41" Column="10" />
-      <File FileName="BlazorGalaga/Models/Paths/Challenges/Challenge6.cs" Line="37" Column="42" />
-      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="179" Column="59" />
-      <File FileName="BlazorGalaga/Models/Paths/Challenges/Challenge5.cs" Line="37" Column="48" />
+      <File FileName="BlazorGalaga/Services/GameService.cs" Line="32" Column="22" />
+      <File FileName="BlazorGalaga/Static/BugFactory.cs" Line="24" Column="33" />
+      <File FileName="BlazorGalaga/Static/Levels/Level4.cs" Line="48" Column="2" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="BlazorGalaga" expanded="True">
             <Node name="BlazorGalaga" expanded="True">
-              <Node name="Interfaces" expanded="True" />
-              <Node name="Models" expanded="True">
-                <Node name="Paths" expanded="True">
-                  <Node name="Challenges" expanded="True">
-                    <Node name="Challenge5.cs" selected="True" />
-                  </Node>
-                </Node>
-              </Node>
               <Node name="Services" expanded="True" />
               <Node name="Static" expanded="True">
-                <Node name="GameServiceHelpers" expanded="True" />
+                <Node name="Levels" expanded="True">
+                  <Node name="Level4.cs" selected="True" />
+                </Node>
               </Node>
             </Node>
           </Node>

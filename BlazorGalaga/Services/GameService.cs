@@ -11,6 +11,7 @@ using BlazorGalaga.Models;
 using BlazorGalaga.Models.Paths;
 using BlazorGalaga.Static;
 using BlazorGalaga.Static.GameServiceHelpers;
+using BlazorGalaga.Static.Levels;
 using BlazorGalaganimatable.Models.Paths;
 
 namespace BlazorGalaga.Services
@@ -24,47 +25,44 @@ namespace BlazorGalaga.Services
         public int Level { get; set; }
 
         private bool consoledrawn = false;
+        private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
         public void Init()
         {
-            Level = 2;
+            Level = 3;
             Lives = 2;
             ShipManager.InitShip(animationService);
         }
 
         private void CachPaths()
         {
-            List<IAnimatable> animatables = new List<IAnimatable>();
+            //TODO init paths here
 
-            animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfFourFromTop));
-            animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfEightFromBottom));
-            animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfEightFromTop));
-            animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfStackedEightFromBottom));
-            animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfStackedEightFromTop));
-
-            animatables.ForEach(a => {
-                a.Paths.ForEach(p => { a.PathPoints.AddRange(animationService.ComputePathPoints(p)); });
-            });
+            //animatables.ForEach(a => {
+            //    a.Paths.ForEach(p => { a.PathPoints.AddRange(animationService.ComputePathPoints(p)); });
+            //});
         }
 
         private void InitLevel(int level)
         {
+            List<int> delays = null;
             switch (level)
             {
                 case 1:
-                    animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfFourFromTop));
-                    animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfEightFromBottom));
-                    animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfEightFromTop));
+                    Level1.InitIntro(animationService);
+                    delays = new List<int>() { 2000,5000,9000,14000,18000,22000 };
                     break;
                 case 2:
-                    animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfFourFromTop));
-                    animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfStackedEightFromBottom));
-                    animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.TwoGroupsOfStackedEightFromTop));
+                    Level2.InitIntro(animationService);
+                    delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
                     break;
                 case 3:
-                    animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.Challenge1_TwoGroupsOfFourFromTop));
-                    animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.Challenge1_TwoGroupsOfEightFromBottom));
-                    animationService.Animatables.AddRange(BugFactory.CreateAnimation_BugIntro(BugFactory.BugIntro.Challenge1_TwoGroupsOfEightFromTop));
+                    Level3.InitIntro(animationService);
+                    delays = new List<int>() { 2000, 5000, 10000, 17000, 22000, -1 };
+                    break;
+                case 4:
+                    Level4.InitIntro(animationService);
+                    delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
                     break;
             }
 
@@ -77,42 +75,45 @@ namespace BlazorGalaga.Services
             });
 
             //move in 2 sets of 4 (red and blue) from the top at the same time
-            Task.Delay(2000).ContinueWith((task) =>
+            Task.Delay(delays[0], cancellationTokenSource.Token).ContinueWith((task) =>
             {
                 animationService.Animatables.Where(a => a.Index < 8).ToList().ForEach(a => a.Started = true);
             });
             //move red and green bugs from the bottom left
-            Task.Delay(5000).ContinueWith((task) =>
+            Task.Delay(delays[1], cancellationTokenSource.Token).ContinueWith((task) =>
             {
                 animationService.Animatables.Where(a => a.Index >= 8 && a.Index < 16).ToList().ForEach(a => a.Started = true);
             });
             //move red bugs from the bottom right
-            Task.Delay(9000).ContinueWith((task) =>
+            Task.Delay(delays[2], cancellationTokenSource.Token).ContinueWith((task) =>
             {
                 animationService.Animatables.Where(a => a.Index >= 16 && a.Index < 24).ToList().ForEach(a => a.Started = true);
             });
             //move blue bugs from the top left
-            Task.Delay(14000).ContinueWith((task) =>
+            Task.Delay(delays[3], cancellationTokenSource.Token).ContinueWith((task) =>
             {
                 animationService.Animatables.Where(a => a.Index >= 24 && a.Index < 32).ToList().ForEach(a => a.Started = true);
             });
             //move blue bugs from the top right
-            Task.Delay(18000).ContinueWith((task) =>
+            Task.Delay(delays[4], cancellationTokenSource.Token).ContinueWith((task) =>
             {
                 animationService.Animatables.Where(a => a.Index >= 32 && a.Index < 40).ToList().ForEach(a => a.Started = true);
             });
-
-            //Task.Delay(22000).ContinueWith((task) =>
-            //{
-            //    EnemyGridManager.EnemyGridBreathing = true;
-            //    DiveAndFire();
-            //});
+            if (delays[5] != -1)
+            {
+                Task.Delay(delays[5], cancellationTokenSource.Token).ContinueWith((task) =>
+                {
+                    EnemyGridManager.EnemyGridBreathing = true;
+                    DiveAndFire();
+                });
+            }
         }
         private void DiveAndFire()
         {
-            if (GetBugs().Count == 0) return;
+            if (GetBugs().Count == 0)
+                return;
 
-            Task.Delay(Utils.Rnd(500,5000)).ContinueWith((task) =>
+            Task.Delay(Utils.Rnd(500,5000), cancellationTokenSource.Token).ContinueWith((task) =>
             {
                 var bug = EnemyDiveManager.DoEnemyDive(GetBugs(), animationService, Ship);
                 if (bug != null && bug.IsDiving)
@@ -120,10 +121,10 @@ namespace BlazorGalaga.Services
                     var maxmissleperbug = Utils.Rnd(0, 3);
                     for (int i = 1; i <= maxmissleperbug; i++)
                     {
-                        Task.Delay(Utils.Rnd(200, 1000)).ContinueWith((task) =>
-                         {
-                             EnemyDiveManager.DoEnemyFire(bug, animationService, Ship);
-                         });
+                        Task.Delay(Utils.Rnd(200, 1000), cancellationTokenSource.Token).ContinueWith((task) =>
+                        {
+                            EnemyDiveManager.DoEnemyFire(bug, animationService, Ship);
+                        });
                     }
                 }
                 DiveAndFire();
@@ -156,12 +157,19 @@ namespace BlazorGalaga.Services
 
             if (bugs.Count == 0)
             {
+                WaitManager.DoOnce(() =>
+                {
+                    cancellationTokenSource.Cancel();
+                    cancellationTokenSource = new CancellationTokenSource();
+                    EnemyGridManager.EnemyGridBreathing = false;
+                }, WaitManager.WaitStep.enStep.CleanUp);
+
                 if (WaitManager.WaitFor(2000, timestamp, WaitManager.WaitStep.enStep.Pause1))
                 {
                     WaitManager.DoOnce(async ()=>
                     {
                         Level += 1;
-                        await ConsoleManager.DrawConsoleLevelText(spriteService, Level, timestamp); 
+                        await ConsoleManager.DrawConsoleLevelText(spriteService, Level); 
                     }, WaitManager.WaitStep.enStep.ShowLevelText);
                     if (WaitManager.WaitFor(2000, timestamp, WaitManager.WaitStep.enStep.Pause2))
                     {

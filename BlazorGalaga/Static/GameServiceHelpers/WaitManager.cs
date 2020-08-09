@@ -17,6 +17,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             public enStep Step { get; set; }
             public enum enStep
             {
+                CleanUp,
                 Pause1,
                 ShowLevelText,
                 Pause2,

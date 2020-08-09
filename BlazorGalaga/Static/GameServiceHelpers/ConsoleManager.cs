@@ -59,11 +59,15 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             await spriteService.StaticCtx.ClearRectAsync(0, (Constants.CanvasSize.Height / 2)-100, Constants.CanvasSize.Width, 100);
         }
 
-        public static async Task DrawConsoleLevelText(SpriteService spriteService, int level, float timestamp)
+        public static async Task DrawConsoleLevelText(SpriteService spriteService, int level)
         {
             await spriteService.StaticCtx.SetFillStyleAsync("rgba(152, 249, 255, 1)");
             await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");
-            await spriteService.StaticCtx.FillTextAsync("STAGE " + level, 250, Constants.CanvasSize.Height / 2);
+
+            if (level==3)
+                await spriteService.StaticCtx.FillTextAsync("CHALLENGING STAGE ", 120, Constants.CanvasSize.Height / 2);
+            else
+                await spriteService.StaticCtx.FillTextAsync("STAGE " + level, 250, Constants.CanvasSize.Height / 2);
         }
     }
 }
