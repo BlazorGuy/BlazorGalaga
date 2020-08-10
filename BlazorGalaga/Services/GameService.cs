@@ -29,9 +29,14 @@ namespace BlazorGalaga.Services
         private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private int prevbugcount = 0;
 
+        private int divespeedincrease = 0;
+        private int missileincrease = 0;
+        private int introspeedincrease = 0;
+        private int maxwaittimebetweendives = 5000;
+
         public void Init()
         {
-            //Level = 5;
+            Level = 7;
             Lives = 2;
             ShipManager.InitShip(animationService);
         }
@@ -51,39 +56,67 @@ namespace BlazorGalaga.Services
             switch (level)
             {
                 case 1:
-                    Level1.InitIntro(animationService);
+                    Level1.InitIntro(animationService, introspeedincrease);
                     delays = new List<int>() { 2000,5000,9000,14000,18000,22000 };
                     break;
                 case 2:
-                    Level2.InitIntro(animationService);
+                    Level2.InitIntro(animationService, introspeedincrease);
                     delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
                     break;
                 case 3:
-                    Level3.InitIntro(animationService);
+                    Level3.InitIntro(animationService, introspeedincrease);
                     delays = new List<int>() { 2000, 5000, 10000, 17000, 22000, -1 };
                     break;
                 case 4:
-                    Level4.InitIntro(animationService);
+                    Level4.InitIntro(animationService, introspeedincrease);
                     delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
+                    maxwaittimebetweendives = 4000;
                     break;
                 case 5:
-                    Level5.InitIntro(animationService);
+                    Level5.InitIntro(animationService, introspeedincrease);
                     delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
+                    maxwaittimebetweendives = 3000;
+                    divespeedincrease = 1;
+                    missileincrease = 1;
                     break;
                 case 6:
-                    Level6.InitIntro(animationService);
+                    Level6.InitIntro(animationService, introspeedincrease);
                     delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
+                    maxwaittimebetweendives = 2500;
+                    divespeedincrease = 1;
+                    missileincrease = 1;
+                    introspeedincrease = 1;
                     break;
                 case 7:
-                    Level7.InitIntro(animationService);
+                    Level7.InitIntro(animationService, introspeedincrease);
                     delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
+                    maxwaittimebetweendives = 2500;
+                    divespeedincrease = 1;
+                    missileincrease = 2;
+                    introspeedincrease = 1;
+                    break;
+                case 8:
+                    Level8.InitIntro(animationService, introspeedincrease);
+                    delays = new List<int>() { 2000, 5000, 10000, 17000, 22000, -1 };
+                    break;
+                case 9:
+                    maxwaittimebetweendives = 2000;
+                    divespeedincrease = 2;
+                    missileincrease = 2;
+                    introspeedincrease = 1;
+                    break;
+                case 10:
+                    maxwaittimebetweendives = 5000;
+                    divespeedincrease = 0;
+                    missileincrease = 0;
+                    introspeedincrease = 0;
                     break;
             }
 
             animationService.Animatables.ForEach(a => {
                 a.Paths.ForEach(p => {
-                    //if (a.Index == 32 || a.Index == 24) p.DrawPath=true;
-                    //if (a.Index == 32) p.OutPutDebug = true;
+                    if (a.Index == 8 || a.Index==12) p.DrawPath=true;
+                    if (a.Index == 8) p.OutPutDebug = true;
                     a.PathPoints.AddRange(animationService.ComputePathPoints(p));
                 });
             });
@@ -122,12 +155,12 @@ namespace BlazorGalaga.Services
             if (GetBugs().Count == 0)
                 return;
 
-            Task.Delay(Utils.Rnd(500,5000), cancellationTokenSource.Token).ContinueWith((task) =>
+            Task.Delay(Utils.Rnd(500,maxwaittimebetweendives), cancellationTokenSource.Token).ContinueWith((task) =>
             {
-                var bug = EnemyDiveManager.DoEnemyDive(GetBugs(), animationService, Ship);
+                var bug = EnemyDiveManager.DoEnemyDive(GetBugs(), animationService, Ship, Constants.BugDiveSpeed + divespeedincrease);
                 if (bug != null && bug.IsDiving)
                 {
-                    var maxmissleperbug = Utils.Rnd(0, 3);
+                    var maxmissleperbug = Utils.Rnd(0 + missileincrease, 3 + missileincrease);
                     for (int i = 1; i <= maxmissleperbug; i++)
                     {
                         Task.Delay(Utils.Rnd(200, 1000), cancellationTokenSource.Token).ContinueWith((task) =>

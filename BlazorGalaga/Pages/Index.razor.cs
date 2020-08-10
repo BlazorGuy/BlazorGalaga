@@ -26,7 +26,7 @@ namespace BlazorGalaga.Pages
         private Canvas2DContext DynamicCtx2;
         private Canvas2DContext StaticCtx;
         private bool stopGameLoop;
-        private int targetTicksPerFrame = (1000 / 60);
+        private readonly int targetTicksPerFrame = (1000 / 60);
         private float delta;
         private float lastTimeStamp;
         private int drawmod = 2;

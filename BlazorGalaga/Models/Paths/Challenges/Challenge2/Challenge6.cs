@@ -2,21 +2,18 @@
 using System.Collections.Generic;
 using System.Drawing;
 using BlazorGalaga.Interfaces;
+using BlazorGalaga.Models.Paths.Intros;
 
-namespace BlazorGalaga.Models.Paths.Challenges
+namespace BlazorGalaga.Models.Paths.Challenges.Challenge2
 {
-    public class Challenge6 : IIntro
+    public class Challenge6 : IntroBase
     {
-        public int Offset { get; set; }
-
-        public bool IsChallenge { get; set; }
-
         public Challenge6()
         {
             IsChallenge = true;
         }
 
-        public List<BezierCurve> GetPaths()
+        public override List<BezierCurve> GetPaths()
         {
             List<BezierCurve> paths = new List<BezierCurve>
             {

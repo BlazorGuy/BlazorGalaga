@@ -19,7 +19,5 @@
   <ItemGroup>
     <Folder Include="Services\" />
     <Folder Include="Interfaces\" />
-    <Folder Include="Models\Paths\Challenges\" />
-    <Folder Include="Static\Levels\" />
   </ItemGroup>
 </Project>

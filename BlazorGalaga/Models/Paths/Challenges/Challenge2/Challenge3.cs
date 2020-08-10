@@ -2,21 +2,18 @@
 using System.Collections.Generic;
 using System.Drawing;
 using BlazorGalaga.Interfaces;
+using BlazorGalaga.Models.Paths.Intros;
 
-namespace BlazorGalaga.Models.Paths.Challenges
+namespace BlazorGalaga.Models.Paths.Challenges.Challenge2
 {
-    public class Challenge3 : IIntro
+    public class Challenge3 : IntroBase
     {
-        public int Offset { get; set; }
-
-        public bool IsChallenge { get; set; }
-
         public Challenge3()
         {
             IsChallenge = true;
         }
 
-        public List<BezierCurve> GetPaths()
+        public override List<BezierCurve> GetPaths()
         {
             List<BezierCurve> paths = new List<BezierCurve>
             {
@@ -43,7 +40,7 @@ namespace BlazorGalaga.Models.Paths.Challenges
                 new BezierCurve() {StartPoint = new PointF(410.5455F,555.99F),
                 ControlPoint1 = new PointF(423.5581F,687.2982F),
                 ControlPoint2 = new PointF(598.6375F,597.3935F),
-                EndPoint = new PointF(750,250)},
+                EndPoint = new PointF(600,250)},
             };
 
             return paths;

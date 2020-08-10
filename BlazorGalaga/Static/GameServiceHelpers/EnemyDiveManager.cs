@@ -13,7 +13,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 {
     public static class EnemyDiveManager
     {
-        public static Bug DoEnemyDive(List<Bug> bugs, AnimationService animationService, Ship ship)
+        public static Bug DoEnemyDive(List<Bug> bugs, AnimationService animationService, Ship ship, int speed)
         {
             Bug bug = null;
             int loopcount = 0;
@@ -29,7 +29,6 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             bug.IsDiving = true;
 
             IDive dive = null;
-            //dive = new GreenBugDive1();
 
             if (bug.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug)
             {
@@ -71,7 +70,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 
             bug.RotateAlongPath = true;
             bug.ZIndex = 100;
-            bug.Speed = Constants.BugDiveSpeed;
+            bug.Speed = speed;
             bug.Paths.AddRange(paths);
 
             paths.ForEach(p => {

@@ -5,14 +5,16 @@ using System.Drawing;
 using System.IO;
 using BlazorGalaga.Interfaces;
 
-namespace BlazorGalaga.Models.Paths
+namespace BlazorGalaga.Models.Paths.Intros
 {
-    public class Intro7 : IIntro
+    public class Intro7 : IntroBase
     {
-        public int Offset { get; set; }
-        public bool IsChallenge { get; set; }
+        public Intro7()
+        {
+            IntroLocation = IntroLocation.Top;
+        }
 
-        public List<BezierCurve> GetPaths()
+        public override List<BezierCurve> GetPaths()
         {
 
             List<BezierCurve> paths = new List<BezierCurve>();

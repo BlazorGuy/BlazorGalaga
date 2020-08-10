@@ -4,8 +4,7 @@ using System.Drawing;
 using System.Numerics;
 using BlazorGalaga.Interfaces;
 using BlazorGalaga.Models;
-using BlazorGalaga.Models.Paths;
-using BlazorGalaga.Models.Paths.Challenges;
+using BlazorGalaga.Models.Paths.Intros;
 using System.Linq;
 
 namespace BlazorGalaga.Static
@@ -20,6 +19,7 @@ namespace BlazorGalaga.Static
             IIntro intro,
             Sprite.SpriteTypes spritetype,
             int wave,
+            int introspeedincrease,
             bool isdivebomber = false)
         {
             var bug = new Bug(spritetype)
@@ -27,7 +27,7 @@ namespace BlazorGalaga.Static
                 Index = isdivebomber ? -1 : index,
                 Paths = intro.GetPaths(),
                 RotateAlongPath = true,
-                Speed = Constants.BugIntroSpeed,
+                Speed = Constants.BugIntroSpeed + introspeedincrease,
                 StartDelay = startdelay,
                 Started = false,
                 ZIndex = 100,
@@ -65,34 +65,32 @@ namespace BlazorGalaga.Static
                     break;
             }
 
-            if (intro as Intro1 != null || intro as Intro2 != null || intro as Intro7 != null
-                || (intro as Intro8) != null || (intro as Challenge1) != null
-                || (intro as Challenge2) != null || (intro as Challenge5) != null || (intro as Challenge6) != null)
+            if (intro.IntroLocation == IntroLocation.Top)
                 //For bugs dropping from the top, add an offscreen path to make the bug fly in from off screen
                 bug.Paths.Insert(0, new BezierCurve()
                 {
-                    StartPoint = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y - 400),
-                    EndPoint = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y),
-                    ControlPoint1 = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y - 400),
-                    ControlPoint2 = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y)
+                    StartPoint = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y - 1000),
+                    EndPoint = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y-50),
+                    ControlPoint1 = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y - 1000),
+                    ControlPoint2 = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y-50)
                 });
-            else if (intro as Intro3 != null || intro as Intro5 != null || intro as Challenge3 != null)
+            else if (intro.IntroLocation == IntroLocation.LowerLeft)
                 //For bugs coming from the left side, add an offscreen path to make the bug fly in from off screen
                 bug.Paths.Insert(0, new BezierCurve()
                 {
-                    StartPoint = new PointF(bug.Paths[0].StartPoint.X - 800, bug.Paths[0].StartPoint.Y),
-                    EndPoint = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y),
-                    ControlPoint1 = new PointF(bug.Paths[0].StartPoint.X - 800, bug.Paths[0].StartPoint.Y),
-                    ControlPoint2 = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y)
+                    StartPoint = new PointF(bug.Paths[0].StartPoint.X - 1000, bug.Paths[0].StartPoint.Y),
+                    EndPoint = new PointF(bug.Paths[0].StartPoint.X-50, bug.Paths[0].StartPoint.Y),
+                    ControlPoint1 = new PointF(bug.Paths[0].StartPoint.X - 1000, bug.Paths[0].StartPoint.Y),
+                    ControlPoint2 = new PointF(bug.Paths[0].StartPoint.X-50, bug.Paths[0].StartPoint.Y)
                 });
-            else if (intro as Intro4 != null || intro as Intro6 != null || intro as Challenge4 != null)
+            else if (intro.IntroLocation == IntroLocation.LowerRight)
                 //For bugs coming from the right side, add an offscreen path to make the bug fly in from off screen
                 bug.Paths.Insert(0, new BezierCurve()
                 {
-                    StartPoint = new PointF(bug.Paths[0].StartPoint.X + 800, bug.Paths[0].StartPoint.Y),
-                    EndPoint = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y),
-                    ControlPoint1 = new PointF(bug.Paths[0].StartPoint.X + 800, bug.Paths[0].StartPoint.Y),
-                    ControlPoint2 = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y)
+                    StartPoint = new PointF(bug.Paths[0].StartPoint.X + 1000, bug.Paths[0].StartPoint.Y),
+                    EndPoint = new PointF(bug.Paths[0].StartPoint.X+50, bug.Paths[0].StartPoint.Y),
+                    ControlPoint1 = new PointF(bug.Paths[0].StartPoint.X + 1000, bug.Paths[0].StartPoint.Y),
+                    ControlPoint2 = new PointF(bug.Paths[0].StartPoint.X+50, bug.Paths[0].StartPoint.Y)
                 });
 
             if (!intro.IsChallenge)
