@@ -54,6 +54,14 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             await spriteService.StaticCtx.FillTextAsync("20000", 300, 60);
         }
 
+
+        public static async Task DrawScore(SpriteService spriteService, int score)
+        {
+            await spriteService.StaticCtx.SetFillStyleAsync("White");
+            await spriteService.StaticCtx.ClearRectAsync(40, 30, 150, 50);
+            await spriteService.StaticCtx.FillTextAsync(score == 0 ? "00" : score.ToString(), 50, 60);
+        }
+
         public static async Task ClearConsoleLevelText(SpriteService spriteService)
         {
             await spriteService.StaticCtx.ClearRectAsync(0, (Constants.CanvasSize.Height / 2)-100, Constants.CanvasSize.Width, 100);

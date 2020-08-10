@@ -26,5 +26,19 @@ namespace BlazorGalaga.Static
         public static int EnemyGridLeft = 250;
         public static int EnemyGridHSpacing = 45;
         public static int EnemyMissileSpeed = 6 ;
+
+        public static int Score_BlueBug = 50;
+        public static int Score_BlueBugDiving = 100;
+        public static int Score_RedBug = 80;
+        public static int Score_RedBugDiving = 160;
+        public static int Score_GreenBug = 150;
+        public static int Score_GreenBugDiving = 400;
+        public static int Score_GreenBugDiving1 = 800;
+        public static int Score_GreenBugDiving2 = 1600;
+        public static int Score_CapturedFighter = 1000;
+        public static int Score_ChallengingStageGroup1 = 1000;
+        public static int Score_ChallengingStageGroup2 = 1500;
+        public static int Score_ChallengingStageGroup3 = 2000;
+        public static int Score_TransformBug = 160;
     }
 }

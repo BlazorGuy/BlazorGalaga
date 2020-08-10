@@ -25,16 +25,19 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             }
             else
             {
-                if (Math.Abs(BugFactory.EnemyGrid.GridLeft - Constants.EnemyGridLeft) <= MoveEnemyGridIncrement)
+                if (BugFactory.EnemyGrid.GridLeft == Constants.EnemyGridLeft)
+                {
                     BugFactory.EnemyGrid.GridLeft = Constants.EnemyGridLeft;
+
+                    if (BugFactory.EnemyGrid.HSpacing > 60 || BugFactory.EnemyGrid.HSpacing < 45)
+                        BreathEnemyGridIncrement *= -1;
+
+                    BugFactory.EnemyGrid.HSpacing += BreathEnemyGridIncrement;
+                    BugFactory.EnemyGrid.VSpacing += BreathEnemyGridIncrement;
+                }
                 else
                     BugFactory.EnemyGrid.GridLeft += MoveEnemyGridIncrement;
 
-                if (BugFactory.EnemyGrid.HSpacing > 60 || BugFactory.EnemyGrid.HSpacing < 45)
-                    BreathEnemyGridIncrement *= -1;
-
-                BugFactory.EnemyGrid.HSpacing += BreathEnemyGridIncrement;
-                BugFactory.EnemyGrid.VSpacing += BreathEnemyGridIncrement;
             }
 
             bugs.ForEach(bug =>

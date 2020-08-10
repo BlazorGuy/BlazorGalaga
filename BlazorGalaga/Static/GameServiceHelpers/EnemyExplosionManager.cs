@@ -12,11 +12,11 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 {
     public static class EnemyExplosionManager
     {
-        public static void DoEnemyExplosions(List<Bug> bugs, AnimationService animationService)
+        public static void DoEnemyExplosions(List<Bug> bugs, AnimationService animationService,GameService gameService)
         {
             bugs.Where(a => a.IsExploding && a.Visible).ToList().ForEach(bug => {
 
-                CreateExplosion(bug, animationService);
+                CreateExplosion(bug, animationService, gameService);
 
                 //remove bug as child bug if we are destroying it
                 bugs.ForEach(b => b.ChildBugs.RemoveAll(r => r.Index == bug.Index));
@@ -39,7 +39,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             });
         }
 
-        private static void CreateExplosion(Bug bug, AnimationService animationService)
+        private static void CreateExplosion(Bug bug, AnimationService animationService, GameService gameService)
         {
             var exp = new EnemyExplosion()
             {
@@ -61,6 +61,13 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             exp.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.EnemyExplosion5));
 
             animationService.Animatables.Add(exp);
+
+            if (bug.Sprite.SpriteType == Sprite.SpriteTypes.RedBug)
+                gameService.Score += bug.IsDiveBomber || bug.IsDiving ? Constants.Score_RedBugDiving : Constants.Score_RedBug;
+            if (bug.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug)
+                gameService.Score += bug.IsDiveBomber || bug.IsDiving ? Constants.Score_BlueBugDiving : Constants.Score_BlueBug;
+            if (bug.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug)
+                gameService.Score += bug.IsDiveBomber || bug.IsDiving ? Constants.Score_GreenBugDiving : Constants.Score_GreenBug;
         }
     }
 }

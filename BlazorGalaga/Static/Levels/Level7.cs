@@ -9,7 +9,7 @@ using BlazorGalaga.Services;
 
 namespace BlazorGalaga.Static.Levels
 {
-    public static class Level6
+    public static class Level7
     {
         public static void InitIntro(AnimationService animationService)
         {

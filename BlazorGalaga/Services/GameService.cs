@@ -23,13 +23,15 @@ namespace BlazorGalaga.Services
         public Ship Ship { get; set; }
         public int Lives { get; set; }
         public int Level { get; set; }
+        public int Score { get; set; }
 
         private bool consoledrawn = false;
         private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+        private int prevbugcount = 0;
 
         public void Init()
         {
-            //Level = 3;
+            //Level = 5;
             Lives = 2;
             ShipManager.InitShip(animationService);
         }
@@ -64,6 +66,18 @@ namespace BlazorGalaga.Services
                     Level4.InitIntro(animationService);
                     delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
                     break;
+                case 5:
+                    Level5.InitIntro(animationService);
+                    delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
+                    break;
+                case 6:
+                    Level6.InitIntro(animationService);
+                    delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
+                    break;
+                case 7:
+                    Level7.InitIntro(animationService);
+                    delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
+                    break;
             }
 
             animationService.Animatables.ForEach(a => {
@@ -74,27 +88,22 @@ namespace BlazorGalaga.Services
                 });
             });
 
-            //move in 2 sets of 4 (red and blue) from the top at the same time
             Task.Delay(delays[0], cancellationTokenSource.Token).ContinueWith((task) =>
             {
                 GetBugs().Where(a => a.Wave==1).ToList().ForEach(a => a.Started = true);
             });
-            //move red and green bugs from the bottom left
             Task.Delay(delays[1], cancellationTokenSource.Token).ContinueWith((task) =>
             {
                 GetBugs().Where(a => a.Wave == 2).ToList().ForEach(a => a.Started = true);
             });
-            //move red bugs from the bottom right
             Task.Delay(delays[2], cancellationTokenSource.Token).ContinueWith((task) =>
             {
                 GetBugs().Where(a => a.Wave == 3).ToList().ForEach(a => a.Started = true);
             });
-            //move blue bugs from the top left
             Task.Delay(delays[3], cancellationTokenSource.Token).ContinueWith((task) =>
             {
                 GetBugs().Where(a => a.Wave == 4).ToList().ForEach(a => a.Started = true);
             });
-            //move blue bugs from the top right
             Task.Delay(delays[4], cancellationTokenSource.Token).ContinueWith((task) =>
             {
                 GetBugs().Where(a => a.Wave == 5).ToList().ForEach(a => a.Started = true);
@@ -155,6 +164,12 @@ namespace BlazorGalaga.Services
 
             var bugs = GetBugs();
 
+            if (bugs.Count != prevbugcount)
+            {
+                await ConsoleManager.DrawScore(spriteService, Score);
+                prevbugcount = bugs.Count();
+            }
+
             if (bugs.Count == 0)
             {
                 WaitManager.DoOnce(() =>
@@ -186,7 +201,7 @@ namespace BlazorGalaga.Services
 
             if (timestamp - EnemyGridManager.LastEnemyGridMoveTimeStamp > 35)
             {
-                EnemyExplosionManager.DoEnemyExplosions(bugs,animationService);
+                EnemyExplosionManager.DoEnemyExplosions(bugs,animationService,this);
             }
 
             ChildBugsManager.MoveChildBugs(bugs, animationService);
