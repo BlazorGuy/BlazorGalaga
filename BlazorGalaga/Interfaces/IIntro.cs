@@ -7,6 +7,7 @@ namespace BlazorGalaga.Interfaces
 {
     public enum IntroLocation
     {
+        None,
         Top,
         LowerLeft,
         LowerRight

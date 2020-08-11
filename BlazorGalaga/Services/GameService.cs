@@ -100,23 +100,27 @@ namespace BlazorGalaga.Services
                     delays = new List<int>() { 2000, 5000, 10000, 17000, 22000, -1 };
                     break;
                 case 9:
+                    Level9.InitIntro(animationService, introspeedincrease);
+                    delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
                     maxwaittimebetweendives = 2000;
                     divespeedincrease = 2;
                     missileincrease = 2;
                     introspeedincrease = 1;
                     break;
                 case 10:
-                    maxwaittimebetweendives = 5000;
-                    divespeedincrease = 0;
-                    missileincrease = 0;
-                    introspeedincrease = 0;
+                    Level10.InitIntro(animationService, introspeedincrease);
+                    delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
+                    maxwaittimebetweendives = 1500;
+                    divespeedincrease = 3;
+                    missileincrease = 3;
+                    introspeedincrease = 2;
                     break;
             }
 
             animationService.Animatables.ForEach(a => {
                 a.Paths.ForEach(p => {
-                    if (a.Index == 8 || a.Index==12) p.DrawPath=true;
-                    if (a.Index == 8) p.OutPutDebug = true;
+                    if (a.Index == 24 || a.Index==24) p.DrawPath=true;
+                    if (a.Index == 24) p.OutPutDebug = true;
                     a.PathPoints.AddRange(animationService.ComputePathPoints(p));
                 });
             });

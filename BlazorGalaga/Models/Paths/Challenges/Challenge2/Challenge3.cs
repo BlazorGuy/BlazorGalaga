@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using BlazorGalaga.Interfaces;
 using BlazorGalaga.Models.Paths.Intros;
+using BlazorGalaga.Static;
 
 namespace BlazorGalaga.Models.Paths.Challenges.Challenge2
 {
@@ -11,36 +12,27 @@ namespace BlazorGalaga.Models.Paths.Challenges.Challenge2
         public Challenge3()
         {
             IsChallenge = true;
+            IntroLocation = IntroLocation.LowerLeft;
         }
 
         public override List<BezierCurve> GetPaths()
         {
             List<BezierCurve> paths = new List<BezierCurve>
             {
-                new BezierCurve() {StartPoint = new PointF(-798.4799F,865.9338F),
-                ControlPoint1 = new PointF(-798.4799F,865.9338F),
-                ControlPoint2 = new PointF(1.520065F,865.9338F),
-                EndPoint = new PointF(1.520065F,865.9338F)},
+                new BezierCurve() {StartPoint = new PointF(-100,785.6107F),
+                ControlPoint1 = new PointF(235.0968F,781.0853F),
+                ControlPoint2 = new PointF(665.9189F,881.5494F),
+                EndPoint = new PointF(628.8103F,235.3212F)},
 
-                new BezierCurve() {StartPoint = new PointF(1.520065F,865.9338F),
-                ControlPoint1 = new PointF(218.9046F,817.4236F),
-                ControlPoint2 = new PointF(514.6467F,785.4837F),
-                EndPoint = new PointF(511.0978F,567.8195F)},
+                new BezierCurve() {StartPoint = new PointF(627.0001F,234.4161F),
+                ControlPoint1 = new PointF(629.7154F,92.31831F),
+                ControlPoint2 = new PointF(10.63479F,18.10163F),
+                EndPoint = new PointF(60.41467F,436.2493F)},
 
-                new BezierCurve() {StartPoint = new PointF(512.2808F,565.4536F),
-                ControlPoint1 = new PointF(514.6467F,395.1078F),
-                ControlPoint2 = new PointF(509.9149F,289.8246F),
-                EndPoint = new PointF(447.2175F,306.386F)},
-
-                new BezierCurve() {StartPoint = new PointF(444.8516F,307.5689F),
-                ControlPoint1 = new PointF(383.3372F,315.8496F),
-                ControlPoint2 = new PointF(409.3625F,493.2932F),
-                EndPoint = new PointF(410.5455F,555.99F)},
-
-                new BezierCurve() {StartPoint = new PointF(410.5455F,555.99F),
-                ControlPoint1 = new PointF(423.5581F,687.2982F),
-                ControlPoint2 = new PointF(598.6375F,597.3935F),
-                EndPoint = new PointF(600,250)},
+                new BezierCurve() {StartPoint = new PointF(61.31975F,440.7747F),
+                ControlPoint1 = new PointF(76.70626F,557.5302F),
+                ControlPoint2 = new PointF(21.49585F,890.6002F),
+                EndPoint = new PointF(Constants.CanvasSize.Width+100F,753.9329F)},
             };
 
             return paths;
