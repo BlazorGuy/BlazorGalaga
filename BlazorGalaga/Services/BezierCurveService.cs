@@ -50,6 +50,20 @@ namespace BlazorGalaga.Services
 
         }
 
+        public async void DrawPathPoints(Canvas2DContext ctx, List<PointF> pathpoints)
+        {
+
+            Utils.dOut("DrawPathPoints", pathpoints.Count);
+
+            foreach (var point in pathpoints)
+            {
+                await ctx.BeginPathAsync();
+                await ctx.ArcAsync(point.X, point.Y, 2, 0, Math.PI * 2);
+                await ctx.FillAsync();
+            }
+
+        }
+
         public async void DrawCurve(Canvas2DContext ctx, BezierCurve curve)
         {
             await ctx.BeginPathAsync();

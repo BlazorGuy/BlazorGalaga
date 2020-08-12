@@ -36,7 +36,7 @@ namespace BlazorGalaga.Services
 
         public void Init()
         {
-            Level = 7;
+            //Level = 1;
             Lives = 2;
             ShipManager.InitShip(animationService);
         }
@@ -57,13 +57,13 @@ namespace BlazorGalaga.Services
             {
                 case 1:
                     Level1.InitIntro(animationService, introspeedincrease);
-                    delays = new List<int>() { 2000,5000,9000,14000,18000,22000 };
+                    delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
                     break;
                 case 2:
                     Level2.InitIntro(animationService, introspeedincrease);
                     delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
                     break;
-                case 3:
+                case 3: //challenge
                     Level3.InitIntro(animationService, introspeedincrease);
                     delays = new List<int>() { 2000, 5000, 10000, 17000, 22000, -1 };
                     break;
@@ -95,7 +95,7 @@ namespace BlazorGalaga.Services
                     missileincrease = 2;
                     introspeedincrease = 1;
                     break;
-                case 8:
+                case 8: //challenge
                     Level8.InitIntro(animationService, introspeedincrease);
                     delays = new List<int>() { 2000, 5000, 10000, 17000, 22000, -1 };
                     break;
@@ -119,10 +119,11 @@ namespace BlazorGalaga.Services
 
             animationService.Animatables.ForEach(a => {
                 a.Paths.ForEach(p => {
-                    if (a.Index == 24 || a.Index==24) p.DrawPath=true;
-                    if (a.Index == 24) p.OutPutDebug = true;
-                    a.PathPoints.AddRange(animationService.ComputePathPoints(p));
+                    //if (a.Index == 0 || a.Index==0) p.DrawPath=true;
+                    //if (a.Index == 0) p.OutPutDebug = true;
+                    a.PathPoints.AddRange(animationService.ComputePathPoints(p,false,15,true));
                 });
+                if (a as Bug != null) a.PathPoints.Add(BugFactory.EnemyGrid.GetPointByRowCol(((Bug)a).HomePoint.X, ((Bug)a).HomePoint.Y));
             });
 
             Task.Delay(delays[0], cancellationTokenSource.Token).ContinueWith((task) =>
@@ -196,6 +197,8 @@ namespace BlazorGalaga.Services
                 await ConsoleManager.DrawConsole(Lives, spriteService, Ship);
                 CachPaths();
                 consoledrawn = true;
+
+                InitLevel(1);
             }
             //End Init - Only happens once
 
@@ -207,45 +210,45 @@ namespace BlazorGalaga.Services
                 prevbugcount = bugs.Count();
             }
 
-            if (bugs.Count == 0)
-            {
-                WaitManager.DoOnce(() =>
-                {
-                    cancellationTokenSource.Cancel();
-                    cancellationTokenSource = new CancellationTokenSource();
-                    EnemyGridManager.EnemyGridBreathing = false;
-                }, WaitManager.WaitStep.enStep.CleanUp);
+            //if (bugs.Count == 0)
+            //{
+            //    WaitManager.DoOnce(() =>
+            //    {
+            //        cancellationTokenSource.Cancel();
+            //        cancellationTokenSource = new CancellationTokenSource();
+            //        EnemyGridManager.EnemyGridBreathing = false;
+            //    }, WaitManager.WaitStep.enStep.CleanUp);
 
-                if (WaitManager.WaitFor(2000, timestamp, WaitManager.WaitStep.enStep.Pause1))
-                {
-                    WaitManager.DoOnce(async ()=>
-                    {
-                        Level += 1;
-                        await ConsoleManager.DrawConsoleLevelText(spriteService, Level); 
-                    }, WaitManager.WaitStep.enStep.ShowLevelText);
-                    if (WaitManager.WaitFor(2000, timestamp, WaitManager.WaitStep.enStep.Pause2))
-                    {
-                        WaitManager.DoOnce(async () =>
-                        {
-                            await ConsoleManager.ClearConsoleLevelText(spriteService);
-                            InitLevel(Level);
-                            Ship.Visible = true;
-                            WaitManager.ClearSteps();
-                        }, WaitManager.WaitStep.enStep.ClearLevelText);
-                    }
-                }
-            }
+            //    if (WaitManager.WaitFor(2000, timestamp, WaitManager.WaitStep.enStep.Pause1))
+            //    {
+            //        WaitManager.DoOnce(async () =>
+            //        {
+            //            Level += 1;
+            //            await ConsoleManager.DrawConsoleLevelText(spriteService, Level);
+            //        }, WaitManager.WaitStep.enStep.ShowLevelText);
+            //        if (WaitManager.WaitFor(2000, timestamp, WaitManager.WaitStep.enStep.Pause2))
+            //        {
+            //            WaitManager.DoOnce(async () =>
+            //            {
+            //                await ConsoleManager.ClearConsoleLevelText(spriteService);
+            //                InitLevel(Level);
+            //                Ship.Visible = true;
+            //                WaitManager.ClearSteps();
+            //            }, WaitManager.WaitStep.enStep.ClearLevelText);
+            //        }
+            //    }
+            //}
 
             if (timestamp - EnemyGridManager.LastEnemyGridMoveTimeStamp > 35)
             {
-                EnemyExplosionManager.DoEnemyExplosions(bugs,animationService,this);
+                EnemyExplosionManager.DoEnemyExplosions(bugs, animationService, this);
             }
 
             ChildBugsManager.MoveChildBugs(bugs, animationService);
 
             if (timestamp - EnemyGridManager.LastEnemyGridMoveTimeStamp > 100 || EnemyGridManager.LastEnemyGridMoveTimeStamp == 0)
             {
-                EnemyGridManager.MoveEnemyGrid(bugs,Ship);
+                EnemyGridManager.MoveEnemyGrid(bugs, Ship);
                 EnemyGridManager.LastEnemyGridMoveTimeStamp = timestamp;
             }
 

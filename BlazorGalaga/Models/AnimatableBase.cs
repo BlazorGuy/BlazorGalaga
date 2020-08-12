@@ -39,6 +39,7 @@ namespace BlazorGalaga.Models
         public List<VSpeed> VSpeed { get; set; }
         public bool DoLineToLocation { get; set; }
 
+        public float LastDelayTimeStamp { get; set; }
         public AnimatableBase()
         {
             PathPoints = new List<PointF>();

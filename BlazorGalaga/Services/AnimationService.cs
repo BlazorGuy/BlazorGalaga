@@ -39,10 +39,55 @@ namespace BlazorGalaga.Services
 
         public void ResetCanvas(Canvas2DContext ctx)
         {
+            ctx.SetTransformAsync(1, 0, 0, 1, 0, 0);
             ctx.ClearRectAsync(0, 0, Constants.CanvasSize.Width, Constants.CanvasSize.Height);
         }
 
-        public void Animate()
+        private int loopcount = 0;
+
+        public void Animate(float timestamp)
+        {
+            foreach (IAnimatable animatable in Animatables.Where(a => a.Started))
+            {
+                if (animatable.CurPathPointIndex <= animatable.PathPoints.Count - 1)
+                {
+                    if (animatable.CurPathPointIndex == 0 || Vector2.Distance(new Vector2(animatable.Location.X, animatable.Location.Y),animatable.LineToLocation) <= animatable.Speed)
+                    {
+                        animatable.Location = animatable.PathPoints[animatable.CurPathPointIndex];
+                        if (animatable.CurPathPointIndex >= animatable.PathPoints.Count - 1)
+                        {
+                            animatable.CurPathPointIndex += 1;
+                            return;
+                        }
+                        animatable.LineFromLocation = new Vector2(animatable.Location.X, animatable.Location.Y);
+                        animatable.LineToLocation = new Vector2(animatable.PathPoints[animatable.CurPathPointIndex + 1].X, animatable.PathPoints[animatable.CurPathPointIndex + 1].Y);
+                        animatable.LineToLocationDistance = Vector2.Distance(animatable.LineFromLocation, animatable.LineToLocation);
+                        animatable.CurPathPointIndex += 1;
+                        animatable.IsMoving = true;
+                    }
+
+                    Vector2 direction = Vector2.Normalize(animatable.LineToLocation - animatable.LineFromLocation);
+
+                    animatable.PevLocation = new PointF(animatable.Location.X + direction.X, animatable.Location.Y + direction.Y);
+                    animatable.Location = new PointF(animatable.Location.X + direction.X * animatable.Speed, animatable.Location.Y + direction.Y * animatable.Speed);
+                    animatable.NextLocation = new PointF(animatable.Location.X + direction.X * (animatable.Speed * 2), animatable.Location.Y + direction.Y * (animatable.Speed * 2));
+
+                    animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
+
+                    loopcount++;
+
+                    //Utils.dOut("ppi: ", animatable.CurPathPointIndex + "<br/> lfl: " + animatable.LineFromLocation + " ltl: " + animatable.LineToLocation + "<br/> direction: " + direction + "<br/> speed: " + animatable.Speed + "<br/> location: " + animatable.Location + "<br/> loopcount: " + loopcount);
+                }
+                else
+                {
+                    animatable.IsMoving = false;
+                }
+            }
+
+            CleanUpOffScreenAnimatables();
+        }
+
+        public void Animate_Old()
         {
             foreach (IAnimatable animatable in Animatables.Where(a=>a.Started))
             {
@@ -87,7 +132,7 @@ namespace BlazorGalaga.Services
                         animatable.Location = new PointF(animatable.Location.X + direction.X * animatable.Speed, animatable.Location.Y + direction.Y * animatable.Speed);
                         animatable.NextLocation = new PointF(animatable.Location.X + direction.X * (animatable.Speed * 2), animatable.Location.Y + direction.Y * (animatable.Speed * 2));
 
-                        animatable.PathPoints.Clear();
+                        //animatable.PathPoints.Clear();
                         animatable.IsMoving = true;
 
                         animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
@@ -143,17 +188,17 @@ namespace BlazorGalaga.Services
 
         public List<PointF> ComputePathPoints(BezierCurve path, bool pathisline=false,float granularity = .1F,bool ignorecache = false)
         {
-            var cachedPath = PathCaches.FirstOrDefault(a => a.Path.StartPoint.Equals(path.StartPoint) &&
-                                                        a.Path.ControlPoint1.Equals(path.ControlPoint1) &&
-                                                        a.Path.ControlPoint2.Equals(path.ControlPoint2) &&
-                                                        a.Path.EndPoint.Equals(path.EndPoint));
+            //var cachedPath = PathCaches.FirstOrDefault(a => a.Path.StartPoint.Equals(path.StartPoint) &&
+            //                                            a.Path.ControlPoint1.Equals(path.ControlPoint1) &&
+            //                                            a.Path.ControlPoint2.Equals(path.ControlPoint2) &&
+            //                                            a.Path.EndPoint.Equals(path.EndPoint));
 
-            if (cachedPath != null && !pathisline && !ignorecache)
-            {
-                return cachedPath.PathPoints;
-            }
+            //if (cachedPath != null && !pathisline && !ignorecache)
+            //{
+            //    return cachedPath.PathPoints;
+            //}
 
-            float pointgranularity = 1F; //the lower the more granular
+            //float pointgranularity = .1F; //the lower the more granular
             List<PointF> pathpoints = new List<PointF>();
 
             for (var percent = 0F; percent <= 100; percent += granularity)
@@ -166,9 +211,9 @@ namespace BlazorGalaga.Services
                 pathpoints.Add(point);
             }
 
-            pathpoints = bezierCurveService.GetEvenlyDistributedPathPointsByLength(pathpoints, pointgranularity);
+            //pathpoints = bezierCurveService.GetEvenlyDistributedPathPointsByLength(pathpoints, pointgranularity);
 
-            PathCaches.Add(new PathCache() { Path = path, PathPoints = pathpoints });
+            //PathCaches.Add(new PathCache() { Path = path, PathPoints = pathpoints });
 
             return pathpoints;
         }
@@ -195,6 +240,7 @@ namespace BlazorGalaga.Services
                 {
                     foreach (BezierCurve path in animatable.Paths.Where(a => a.DrawPath == true))
                     {
+                        bezierCurveService.DrawPathPoints(spriteService.DynamicCtx1, animatable.PathPoints);
                         if (animatable.DrawPath)
                             bezierCurveService.DrawCurve(spriteService.DynamicCtx1, path);
                         if (animatable.DrawControlLines)
