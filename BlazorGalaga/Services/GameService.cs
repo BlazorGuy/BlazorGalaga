@@ -121,7 +121,7 @@ namespace BlazorGalaga.Services
                 a.Paths.ForEach(p => {
                     //if (a.Index == 0 || a.Index==0) p.DrawPath=true;
                     //if (a.Index == 0) p.OutPutDebug = true;
-                    a.PathPoints.AddRange(animationService.ComputePathPoints(p,false,15,true));
+                    a.PathPoints.AddRange(animationService.ComputePathPoints(p,false));
                 });
                 if (a as Bug != null) a.PathPoints.Add(BugFactory.EnemyGrid.GetPointByRowCol(((Bug)a).HomePoint.X, ((Bug)a).HomePoint.Y));
             });

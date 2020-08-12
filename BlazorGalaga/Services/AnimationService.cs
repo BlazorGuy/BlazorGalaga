@@ -72,7 +72,8 @@ namespace BlazorGalaga.Services
                     animatable.Location = new PointF(animatable.Location.X + direction.X * animatable.Speed, animatable.Location.Y + direction.Y * animatable.Speed);
                     animatable.NextLocation = new PointF(animatable.Location.X + direction.X * (animatable.Speed * 2), animatable.Location.Y + direction.Y * (animatable.Speed * 2));
 
-                    animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
+                    if (animatable.RotateAlongPath && animatable.Speed != 0)
+                        animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
 
                     loopcount++;
 
@@ -80,6 +81,8 @@ namespace BlazorGalaga.Services
                 }
                 else
                 {
+                    animatable.CurPathPointIndex = 0;
+                    animatable.PathPoints.Clear();
                     animatable.IsMoving = false;
                 }
             }
@@ -186,7 +189,7 @@ namespace BlazorGalaga.Services
 
         }
 
-        public List<PointF> ComputePathPoints(BezierCurve path, bool pathisline=false,float granularity = .1F,bool ignorecache = false)
+        public List<PointF> ComputePathPoints(BezierCurve path, bool pathisline=false)
         {
             //var cachedPath = PathCaches.FirstOrDefault(a => a.Path.StartPoint.Equals(path.StartPoint) &&
             //                                            a.Path.ControlPoint1.Equals(path.ControlPoint1) &&
@@ -200,6 +203,7 @@ namespace BlazorGalaga.Services
 
             //float pointgranularity = .1F; //the lower the more granular
             List<PointF> pathpoints = new List<PointF>();
+            var granularity = 15;
 
             for (var percent = 0F; percent <= 100; percent += granularity)
             {

@@ -74,8 +74,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             bug.Paths.AddRange(paths);
 
             paths.ForEach(p => {
-                p.DrawPath = true;
-                bug.PathPoints.AddRange(animationService.ComputePathPoints(p));
+                bug.PathPoints.AddRange(animationService.ComputePathPoints(p,false));
             });
 
             return bug;
