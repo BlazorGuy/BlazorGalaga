@@ -145,7 +145,7 @@ namespace BlazorGalaga.Pages
                 while (delta >= targetTicksPerFrame)
                 {
                     sw.Restart();
-                    animationService.Animate(timeStamp);
+                    animationService.Animate();
                     Utils.dOut("animationService.Animate()", sw.ElapsedMilliseconds);
                     delta -= targetTicksPerFrame;
                 }

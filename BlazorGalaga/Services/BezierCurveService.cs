@@ -184,6 +184,15 @@ namespace BlazorGalaga.Services
             var x = CubicPoint(percent, curve.StartPoint.X, curve.ControlPoint1.X, curve.ControlPoint2.X, curve.EndPoint.X);
             var y = CubicPoint(percent, curve.StartPoint.Y, curve.ControlPoint1.Y, curve.ControlPoint2.Y, curve.EndPoint.Y);
 
+            //if (double.IsNaN(x))
+            //{
+            //    Console.WriteLine(curve.StartPoint.X + "," + curve.ControlPoint1.X + "," + curve.ControlPoint2.X + "," + curve.EndPoint.X + " point: (" + x + "," + y + ") percent: " + percent);
+            //}
+            //if (double.IsNaN(y))
+            //{
+            //    Console.WriteLine(curve.StartPoint.Y + "," + curve.ControlPoint1.Y + "," + curve.ControlPoint2.Y + "," + curve.EndPoint.Y + " point: (" + x + "," + y + ") percent: " + percent);
+            //}
+
             return new PointF(x,y);
         }
 

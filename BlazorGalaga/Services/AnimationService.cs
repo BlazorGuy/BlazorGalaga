@@ -45,7 +45,7 @@ namespace BlazorGalaga.Services
 
         private int loopcount = 0;
 
-        public void Animate(float timestamp)
+        public void Animate()
         {
             foreach (IAnimatable animatable in Animatables.Where(a => a.Started))
             {
@@ -77,90 +77,25 @@ namespace BlazorGalaga.Services
 
                     loopcount++;
 
-                    //Utils.dOut("ppi: ", animatable.CurPathPointIndex + "<br/> lfl: " + animatable.LineFromLocation + " ltl: " + animatable.LineToLocation + "<br/> direction: " + direction + "<br/> speed: " + animatable.Speed + "<br/> location: " + animatable.Location + "<br/> loopcount: " + loopcount);
+                    if ((animatable as Bug) != null && ((animatable as Bug).Tag == "RedBug" || (animatable as Bug).Tag == "GreenBug"))
+                    {
+                        Utils.dOut("Animate Debug: ", "<br/> ppi: " + animatable.CurPathPointIndex +
+                                                      "<br/> pp: " + animatable.PathPoints.Count +
+                                                      "<br/> lfl: " + animatable.LineFromLocation.X + "," + animatable.LineFromLocation.Y +
+                                                      "<br/> ltl: " + animatable.LineToLocation.X + "," + animatable.LineToLocation.Y +
+                                                      "<br/> direction: " + direction +
+                                                      "<br/> speed: " + animatable.Speed +
+                                                      "<br/> location: " + animatable.Location +
+                                                      "<br/> loopcount: " + loopcount +
+                                                      "<br/> End Animate Debug");
+                    }
                 }
                 else
                 {
                     animatable.CurPathPointIndex = 0;
                     animatable.PathPoints.Clear();
+                    animatable.Paths.Clear();
                     animatable.IsMoving = false;
-                }
-            }
-
-            CleanUpOffScreenAnimatables();
-        }
-
-        public void Animate_Old()
-        {
-            foreach (IAnimatable animatable in Animatables.Where(a=>a.Started))
-            {
-                if (animatable.StartDelay > 0 && !animatable.StartDelayStarted)
-                {
-                    animatable.CurPathPointIndex = animatable.StartDelay;
-                    animatable.StartDelayStarted = true;
-                }
-
-                if (animatable.CurPathPointIndex - 1 > 0 && animatable.CurPathPointIndex - 1 < animatable.PathPoints.Count)
-                    animatable.PevLocation = animatable.PathPoints[animatable.CurPathPointIndex - 1];
-
-                if (animatable.CurPathPointIndex > 0 && animatable.CurPathPointIndex  < animatable.PathPoints.Count)
-                    animatable.Location = animatable.PathPoints[animatable.CurPathPointIndex];
-
-                if (animatable.CurPathPointIndex + 1 > 0 && animatable.CurPathPointIndex + 1 < animatable.PathPoints.Count)
-                    animatable.NextLocation = animatable.PathPoints[animatable.CurPathPointIndex + 1];
-
-                if (animatable.VSpeed != null)
-                {
-                    var vspeed = animatable.VSpeed.LastOrDefault(a => a.PathPointIndex <= animatable.CurPathPointIndex);
-                    animatable.CurPathPointIndex += vspeed != null ? vspeed.Speed : animatable.Speed;
-                } 
-                else
-                    animatable.CurPathPointIndex += animatable.Speed;
-
-                //are we at the end of the last path?
-                if (animatable.CurPathPointIndex > animatable.PathPoints.Count - 1)
-                {
-                    //stop the curve animation
-                    animatable.CurPathPointIndex = animatable.PathPoints.Count - 1;
-                    //do we have an extra lineto to animate?
-                    if (animatable.IsMoving && !animatable.PathIsLine && animatable.DoLineToLocation &&
-                        (Vector2.Distance(animatable.LineFromLocation,new Vector2(animatable.Location.X, animatable.Location.Y)) + animatable.Speed < animatable.LineToLocationDistance ||
-                        animatable.LineToLocationDistance == 0 && animatable.DoLineToLocation))
-                    {
-                        //lineto animation
-                        animatable.LineToLocationDistance = Vector2.Distance(animatable.LineFromLocation, animatable.LineToLocation);
-                        Vector2 direction = Vector2.Normalize(animatable.LineToLocation - animatable.LineFromLocation);
-
-                        animatable.PevLocation = new PointF(animatable.Location.X + direction.X, animatable.Location.Y + direction.Y);
-                        animatable.Location = new PointF(animatable.Location.X + direction.X * animatable.Speed, animatable.Location.Y + direction.Y * animatable.Speed);
-                        animatable.NextLocation = new PointF(animatable.Location.X + direction.X * (animatable.Speed * 2), animatable.Location.Y + direction.Y * (animatable.Speed * 2));
-
-                        //animatable.PathPoints.Clear();
-                        animatable.IsMoving = true;
-
-                        animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
-                    }
-                    else
-                    {
-                        //animation is complete
-                        if (!animatable.PathIsLine && animatable.DoLineToLocation)
-                            animatable.Location = new PointF(animatable.LineToLocation.X,animatable.LineToLocation.Y);
-                        animatable.IsMoving = false;
-                        animatable.ZIndex = 0;
-                    }
-                }
-                else if (animatable.CurPathPointIndex < 0)
-                {
-                    //this stops the animation
-                    animatable.CurPathPointIndex = 0;
-                    animatable.IsMoving = false;
-                }
-                else
-                {
-                    //animation continues
-                    animatable.IsMoving = true;
-                    if (animatable.RotateAlongPath && animatable.Speed != 0)
-                        animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
                 }
             }
 
@@ -203,7 +138,7 @@ namespace BlazorGalaga.Services
 
             //float pointgranularity = .1F; //the lower the more granular
             List<PointF> pathpoints = new List<PointF>();
-            var granularity = 15;
+            var granularity = 10;
 
             for (var percent = 0F; percent <= 100; percent += granularity)
             {

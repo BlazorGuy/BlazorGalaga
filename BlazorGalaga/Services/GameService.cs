@@ -197,8 +197,6 @@ namespace BlazorGalaga.Services
                 await ConsoleManager.DrawConsole(Lives, spriteService, Ship);
                 CachPaths();
                 consoledrawn = true;
-
-                InitLevel(1);
             }
             //End Init - Only happens once
 
@@ -210,34 +208,34 @@ namespace BlazorGalaga.Services
                 prevbugcount = bugs.Count();
             }
 
-            //if (bugs.Count == 0)
-            //{
-            //    WaitManager.DoOnce(() =>
-            //    {
-            //        cancellationTokenSource.Cancel();
-            //        cancellationTokenSource = new CancellationTokenSource();
-            //        EnemyGridManager.EnemyGridBreathing = false;
-            //    }, WaitManager.WaitStep.enStep.CleanUp);
+            if (bugs.Count == 0)
+            {
+                WaitManager.DoOnce(() =>
+                {
+                    cancellationTokenSource.Cancel();
+                    cancellationTokenSource = new CancellationTokenSource();
+                    EnemyGridManager.EnemyGridBreathing = false;
+                }, WaitManager.WaitStep.enStep.CleanUp);
 
-            //    if (WaitManager.WaitFor(2000, timestamp, WaitManager.WaitStep.enStep.Pause1))
-            //    {
-            //        WaitManager.DoOnce(async () =>
-            //        {
-            //            Level += 1;
-            //            await ConsoleManager.DrawConsoleLevelText(spriteService, Level);
-            //        }, WaitManager.WaitStep.enStep.ShowLevelText);
-            //        if (WaitManager.WaitFor(2000, timestamp, WaitManager.WaitStep.enStep.Pause2))
-            //        {
-            //            WaitManager.DoOnce(async () =>
-            //            {
-            //                await ConsoleManager.ClearConsoleLevelText(spriteService);
-            //                InitLevel(Level);
-            //                Ship.Visible = true;
-            //                WaitManager.ClearSteps();
-            //            }, WaitManager.WaitStep.enStep.ClearLevelText);
-            //        }
-            //    }
-            //}
+                if (WaitManager.WaitFor(2000, timestamp, WaitManager.WaitStep.enStep.Pause1))
+                {
+                    WaitManager.DoOnce(async () =>
+                    {
+                        Level += 1;
+                        await ConsoleManager.DrawConsoleLevelText(spriteService, Level);
+                    }, WaitManager.WaitStep.enStep.ShowLevelText);
+                    if (WaitManager.WaitFor(2000, timestamp, WaitManager.WaitStep.enStep.Pause2))
+                    {
+                        WaitManager.DoOnce(async () =>
+                        {
+                            await ConsoleManager.ClearConsoleLevelText(spriteService);
+                            InitLevel(Level);
+                            Ship.Visible = true;
+                            WaitManager.ClearSteps();
+                        }, WaitManager.WaitStep.enStep.ClearLevelText);
+                    }
+                }
+            }
 
             if (timestamp - EnemyGridManager.LastEnemyGridMoveTimeStamp > 35)
             {

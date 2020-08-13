@@ -15,8 +15,8 @@ namespace BlazorGalaga.Models
         public bool IsDiveBomber { get; set; }
         public Vector2 DiveBombLocation { get; set; }
         public int Wave { get; set; }
-
         public Point ChildBugOffset { get; set; }
+        public string Tag { get; set; }
         public Bug(Sprite.SpriteTypes spritetype)
         {
             Sprite = new Sprite(spritetype);
