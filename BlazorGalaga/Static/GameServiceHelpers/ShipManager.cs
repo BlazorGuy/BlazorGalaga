@@ -27,7 +27,6 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             {
                 Paths = paths,
                 DrawPath = false,
-                //PathIsLine = true,
                 RotateAlongPath = false,
                 Started = true,
                 Index = -999
@@ -37,10 +36,14 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 ship.PathPoints.AddRange(animationService.ComputePathPoints(a));
             });
 
-            ship.CurPathPointIndex = 2;
+            ship.Location = new PointF(0,0);
+            ship.LineToLocation = new System.Numerics.Vector2(0,0);
+            ship.CurPathPointIndex = ship.PathPoints.Count/2;
 
             animationService.Animatables.Add(ship);
         }
+        
+
 
         public static void Fire(Ship ship, AnimationService animationService)
         {
