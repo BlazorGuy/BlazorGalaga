@@ -86,6 +86,8 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 
             animationService.Animatables.ForEach(a => a.ZIndex = 0);
 
+            Utils.dOut("ship", ship.Location.X + "," + ship.Location.Y);
+
             var paths = dive.GetPaths(bug, ship);
 
             bug.RotateAlongPath = true;
@@ -94,7 +96,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             bug.Paths.AddRange(paths);
 
             paths.ForEach(p => {
-                Console.WriteLine(paths.FindIndex(a=>a==p).ToString() + " : " + bug.Tag + " - " + bug.Location.X + "," + bug.Location.Y + " | " + p.StartPoint.X + "," + p.StartPoint.Y + "," + p.ControlPoint1.X + "," + p.ControlPoint1.Y + "," + p.ControlPoint2.X + "," + p.ControlPoint2.Y + "," + p.EndPoint.X + "," + p.EndPoint.Y);
+                //Console.WriteLine(paths.FindIndex(a=>a==p).ToString() + " : " + bug.Tag + " - " + bug.Location.X + "," + bug.Location.Y + " | " + p.StartPoint.X + "," + p.StartPoint.Y + "," + p.ControlPoint1.X + "," + p.ControlPoint1.Y + "," + p.ControlPoint2.X + "," + p.ControlPoint2.Y + "," + p.EndPoint.X + "," + p.EndPoint.Y);
                 bug.PathPoints.AddRange(animationService.ComputePathPoints(p,false));
             });
 

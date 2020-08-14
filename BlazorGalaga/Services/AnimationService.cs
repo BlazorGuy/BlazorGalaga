@@ -66,7 +66,16 @@ namespace BlazorGalaga.Services
                         animatable.IsMoving = true;
                     }
 
+                    if (animatable.LineToLocation.X == animatable.LineFromLocation.X && animatable.LineToLocation.Y == animatable.LineFromLocation.Y)
+                        animatable.LineToLocation = new Vector2(animatable.LineToLocation.X + .01F, animatable.LineToLocation.Y + .01F);
+
                     Vector2 direction = Vector2.Normalize(animatable.LineToLocation - animatable.LineFromLocation);
+
+                    //if (double.IsNaN(direction.X) || double.IsNaN(direction.Y))
+                    //{
+                    //    animatable.CurPathPointIndex += 1;
+                    //    return;
+                    //}
 
                     animatable.PevLocation = new PointF(animatable.Location.X + direction.X, animatable.Location.Y + direction.Y);
                     animatable.Location = new PointF(animatable.Location.X + direction.X * animatable.Speed, animatable.Location.Y + direction.Y * animatable.Speed);
@@ -77,13 +86,13 @@ namespace BlazorGalaga.Services
 
                     loopcount++;
 
-                    if ((animatable as Bug) != null && ((animatable as Bug).Tag == "RedBug" || (animatable as Bug).Tag == "GreenBug"))
+                    if ((animatable as Bug) != null && (animatable as Bug).Tag != null && ((animatable as Bug).Tag.IndexOf("Dive") != -1))
                     {
                         Utils.dOut("Animate Debug: ", "<br/> ppi: " + animatable.CurPathPointIndex +
                                                       "<br/> pp: " + animatable.PathPoints.Count +
                                                       "<br/> lfl: " + animatable.LineFromLocation.X + "," + animatable.LineFromLocation.Y +
                                                       "<br/> ltl: " + animatable.LineToLocation.X + "," + animatable.LineToLocation.Y +
-                                                      "<br/> direction: " + direction +
+                                                      "<br/> direction: " + direction.X + "," + direction.Y +
                                                       "<br/> speed: " + animatable.Speed +
                                                       "<br/> location: " + animatable.Location +
                                                       "<br/> loopcount: " + loopcount +
