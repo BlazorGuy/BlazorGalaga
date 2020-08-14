@@ -33,28 +33,16 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             if (bug.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug)
             {
                 if (Utils.Rnd(0, 10) % 2 == 0)
-                {
                     dive = new BlueBugDive1();
-                    bug.Tag = "BlueBugDive1";
-                }
                 else
-                {
                     dive = new BlueBugDive2();
-                    bug.Tag = "BlueBugDive2";
-                }
             }
             else if (bug.Sprite.SpriteType == Sprite.SpriteTypes.RedBug)
             {
                 if (Utils.Rnd(0, 10) % 2 == 0)
-                {
                     dive = new RedBugDive1();
-                    bug.Tag = "RedBugDive1";
-                }
                 else
-                {
                     dive = new RedBugDive2();
-                    bug.Tag = "RedBugDive2";
-                }
             }
             else if (bug.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug)
             {
@@ -67,26 +55,15 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 bug.ChildBugOffset = new Point(35, 35);
 
                 if (Utils.Rnd(0, 10) % 2 == 0)
-                {
                     dive = new GreenBugDive1();
-                    bug.Tag = "GreenBugDive1";
-                }
                 else
-                {
                     dive = new GreenBugDive2();
-                    bug.Tag = "GreenBugDive2";
-                }
 
             }
             else
-            {
                 dive = new RedBugDive1();
-                bug.Tag = "RedBugDive1";
-            }
 
             animationService.Animatables.ForEach(a => a.ZIndex = 0);
-
-            Utils.dOut("ship", ship.Location.X + "," + ship.Location.Y);
 
             var paths = dive.GetPaths(bug, ship);
 
@@ -96,7 +73,6 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             bug.Paths.AddRange(paths);
 
             paths.ForEach(p => {
-                //Console.WriteLine(paths.FindIndex(a=>a==p).ToString() + " : " + bug.Tag + " - " + bug.Location.X + "," + bug.Location.Y + " | " + p.StartPoint.X + "," + p.StartPoint.Y + "," + p.ControlPoint1.X + "," + p.ControlPoint1.Y + "," + p.ControlPoint2.X + "," + p.ControlPoint2.Y + "," + p.EndPoint.X + "," + p.EndPoint.Y);
                 bug.PathPoints.AddRange(animationService.ComputePathPoints(p,false));
             });
 

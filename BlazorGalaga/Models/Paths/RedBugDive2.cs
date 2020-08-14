@@ -30,6 +30,7 @@ namespace BlazorGalaga.Models.Paths
             };
             var gohome = new BezierCurve()
             {
+                BreakPath = true,
                 StartPoint = new PointF(cx - 100, -50),
                 EndPoint = new PointF(cx, 150),
                 ControlPoint1 = new PointF(cx - 150, 150),

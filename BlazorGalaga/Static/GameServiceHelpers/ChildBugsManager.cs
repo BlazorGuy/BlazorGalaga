@@ -20,9 +20,6 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                     {
                         foreach(var childbug in bug.ChildBugs)
                         {
-                            childbug.CurPathPointIndex = 0;
-                            childbug.PathPoints.Add(new PointF(0, 0));
-                            childbug.Speed = 0;
                             childbug.IsMoving = true;
                             childbug.RotateAlongPath = true;
                             if (childbug.HomePoint.Y == bug.HomePoint.Y + 1)
@@ -34,7 +31,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                     }
                     else
                     {
-                        foreach(var childbug in bug.ChildBugs)
+                        foreach (var childbug in bug.ChildBugs)
                         {
                             childbug.PathPoints.Clear();
                             childbug.Paths.Clear();

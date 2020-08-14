@@ -16,6 +16,7 @@ namespace BlazorGalaga.Models
         public bool DrawPath { get; set; }
         public string Name { get; set; }
         public bool OutPutDebug { get; set; }
+        public bool BreakPath { get; set; }
     }
 
 }

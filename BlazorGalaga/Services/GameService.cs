@@ -41,15 +41,6 @@ namespace BlazorGalaga.Services
             ShipManager.InitShip(animationService);
         }
 
-        private void CachPaths()
-        {
-            //TODO init paths here
-
-            //animatables.ForEach(a => {
-            //    a.Paths.ForEach(p => { a.PathPoints.AddRange(animationService.ComputePathPoints(p)); });
-            //});
-        }
-
         private void InitLevel(int level)
         {
             List<int> delays = null;
@@ -195,7 +186,6 @@ namespace BlazorGalaga.Services
             {
                 Ship.Visible = false;
                 await ConsoleManager.DrawConsole(Lives, spriteService, Ship);
-                CachPaths();
                 consoledrawn = true;
             }
             //End Init - Only happens once

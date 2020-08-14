@@ -39,7 +39,8 @@ namespace BlazorGalaga.Services
 
         public void ResetCanvas(Canvas2DContext ctx)
         {
-            ctx.SetTransformAsync(1, 0, 0, 1, 0, 0);
+            if (spriteService.IsRotated)
+                ctx.SetTransformAsync(1, 0, 0, 1, 0, 0);
             ctx.ClearRectAsync(0, 0, Constants.CanvasSize.Width, Constants.CanvasSize.Height);
         }
 
@@ -51,14 +52,26 @@ namespace BlazorGalaga.Services
             {
                 if (animatable.CurPathPointIndex <= animatable.PathPoints.Count - 1)
                 {
+                    //if the next path isn't connected to the current path then jump to the next path
+                    if (animatable.PathPoints[animatable.CurPathPointIndex].Equals(new PointF(-999, -999)))
+                    {
+                        animatable.Location = new PointF(animatable.LineToLocation.X,animatable.LineToLocation.Y);
+                        animatable.CurPathPointIndex += 1;
+                    }
+
+                    //new line segmant to move on
                     if (animatable.CurPathPointIndex == 0 || Vector2.Distance(new Vector2(animatable.Location.X, animatable.Location.Y),animatable.LineToLocation) <= animatable.Speed)
                     {
                         animatable.Location = animatable.PathPoints[animatable.CurPathPointIndex];
+
+                        //are we at the end of the path?
                         if (animatable.CurPathPointIndex >= animatable.PathPoints.Count - 1)
                         {
+                            //this stops the animation
                             animatable.CurPathPointIndex += 1;
                             return;
                         }
+
                         animatable.LineFromLocation = new Vector2(animatable.Location.X, animatable.Location.Y);
                         animatable.LineToLocation = new Vector2(animatable.PathPoints[animatable.CurPathPointIndex + 1].X, animatable.PathPoints[animatable.CurPathPointIndex + 1].Y);
                         animatable.LineToLocationDistance = Vector2.Distance(animatable.LineFromLocation, animatable.LineToLocation);
@@ -66,40 +79,35 @@ namespace BlazorGalaga.Services
                         animatable.IsMoving = true;
                     }
 
+                    //if lineto == linefrom then make lineto slightly bigger so we don't hang up
                     if (animatable.LineToLocation.X == animatable.LineFromLocation.X && animatable.LineToLocation.Y == animatable.LineFromLocation.Y)
                         animatable.LineToLocation = new Vector2(animatable.LineToLocation.X + .01F, animatable.LineToLocation.Y + .01F);
 
                     Vector2 direction = Vector2.Normalize(animatable.LineToLocation - animatable.LineFromLocation);
 
-                    //if (double.IsNaN(direction.X) || double.IsNaN(direction.Y))
-                    //{
-                    //    animatable.CurPathPointIndex += 1;
-                    //    return;
-                    //}
-
                     animatable.PevLocation = new PointF(animatable.Location.X + direction.X, animatable.Location.Y + direction.Y);
                     animatable.Location = new PointF(animatable.Location.X + direction.X * animatable.Speed, animatable.Location.Y + direction.Y * animatable.Speed);
                     animatable.NextLocation = new PointF(animatable.Location.X + direction.X * (animatable.Speed * 2), animatable.Location.Y + direction.Y * (animatable.Speed * 2));
 
-                    if (animatable.RotateAlongPath && animatable.Speed != 0)
+                    if (animatable.RotateAlongPath)
                         animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
 
-                    loopcount++;
+                     loopcount++;
 
-                    if ((animatable as Bug) != null && (animatable as Bug).Tag != null && ((animatable as Bug).Tag.IndexOf("Dive") != -1))
-                    {
-                        Utils.dOut("Animate Debug: ", "<br/> ppi: " + animatable.CurPathPointIndex +
-                                                      "<br/> pp: " + animatable.PathPoints.Count +
-                                                      "<br/> lfl: " + animatable.LineFromLocation.X + "," + animatable.LineFromLocation.Y +
-                                                      "<br/> ltl: " + animatable.LineToLocation.X + "," + animatable.LineToLocation.Y +
-                                                      "<br/> direction: " + direction.X + "," + direction.Y +
-                                                      "<br/> speed: " + animatable.Speed +
-                                                      "<br/> location: " + animatable.Location +
-                                                      "<br/> loopcount: " + loopcount +
-                                                      "<br/> End Animate Debug");
-                    }
+                    //if ((animatable as Bug) != null && (animatable as Bug).Tag != null && ((animatable as Bug).Tag.IndexOf("Dive") != -1))
+                    //{
+                    //    Utils.dOut("Animate Debug: ", "<br/> ppi: " + animatable.CurPathPointIndex +
+                    //                                  "<br/> pp: " + animatable.PathPoints.Count +
+                    //                                  "<br/> lfl: " + animatable.LineFromLocation.X + "," + animatable.LineFromLocation.Y +
+                    //                                  "<br/> ltl: " + animatable.LineToLocation.X + "," + animatable.LineToLocation.Y +
+                    //                                  "<br/> direction: " + direction.X + "," + direction.Y +
+                    //                                  "<br/> speed: " + animatable.Speed +
+                    //                                  "<br/> location: " + animatable.Location +
+                    //                                  "<br/> loopcount: " + loopcount +
+                    //                                  "<br/> End Animate Debug");
+                    //}
                 }
-                else
+                else if (animatable.PathPoints.Count > 0)
                 {
                     animatable.CurPathPointIndex = 0;
                     animatable.PathPoints.Clear();
@@ -135,19 +143,19 @@ namespace BlazorGalaga.Services
 
         public List<PointF> ComputePathPoints(BezierCurve path, bool pathisline=false)
         {
-            //var cachedPath = PathCaches.FirstOrDefault(a => a.Path.StartPoint.Equals(path.StartPoint) &&
-            //                                            a.Path.ControlPoint1.Equals(path.ControlPoint1) &&
-            //                                            a.Path.ControlPoint2.Equals(path.ControlPoint2) &&
-            //                                            a.Path.EndPoint.Equals(path.EndPoint));
+            var cachedPath = PathCaches.FirstOrDefault(a => a.Path.StartPoint.Equals(path.StartPoint) &&
+                                                        a.Path.ControlPoint1.Equals(path.ControlPoint1) &&
+                                                        a.Path.ControlPoint2.Equals(path.ControlPoint2) &&
+                                                        a.Path.EndPoint.Equals(path.EndPoint));
 
-            //if (cachedPath != null && !pathisline && !ignorecache)
-            //{
-            //    return cachedPath.PathPoints;
-            //}
+            if (cachedPath != null && !pathisline)
+                return cachedPath.PathPoints;
 
-            //float pointgranularity = .1F; //the lower the more granular
             List<PointF> pathpoints = new List<PointF>();
             var granularity = 10;
+
+            if (path.BreakPath)
+                pathpoints.Add(new PointF(-999, -999));
 
             for (var percent = 0F; percent <= 100; percent += granularity)
             {
@@ -159,9 +167,7 @@ namespace BlazorGalaga.Services
                 pathpoints.Add(point);
             }
 
-            //pathpoints = bezierCurveService.GetEvenlyDistributedPathPointsByLength(pathpoints, pointgranularity);
-
-            //PathCaches.Add(new PathCache() { Path = path, PathPoints = pathpoints });
+            PathCaches.Add(new PathCache() { Path = path, PathPoints = pathpoints });
 
             return pathpoints;
         }

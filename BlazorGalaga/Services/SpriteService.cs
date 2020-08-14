@@ -22,7 +22,6 @@ namespace BlazorGalaga.Services
         public List<Sprite> Sprites = new List<Sprite>();
         public bool IsRotated { get; set; }
 
-
         public async void Init()
         {
             await DynamicCtx1.SetStrokeStyleAsync("white");
@@ -59,7 +58,7 @@ namespace BlazorGalaga.Services
 
                 await sprite.DynamicCanvas.SetTransformAsync(x, y, -y, x, location.X, location.Y);
             }
-            else if (IsRotated)
+            else if (IsRotated) 
             {
                 await sprite.DynamicCanvas.SetTransformAsync(1, 0, 0, 1, 0, 0);
                 IsRotated = false;

@@ -34,7 +34,7 @@ namespace BlazorGalaga.Static
 
         public static void EditCurves(AnimationService animationService, GameLoopObject glo)
         {
-            foreach (var animatable in animationService.Animatables.Where(a => a.Sprite.SpriteType != Sprite.SpriteTypes.Ship))
+            foreach (var animatable in animationService.Animatables)
             {
                 animatable.DrawControlLines = true;
                 animatable.DrawPath = true;

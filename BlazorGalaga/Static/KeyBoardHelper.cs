@@ -71,6 +71,19 @@ namespace BlazorGalaga.Static
 
             if (KeyDown == string.Empty)
                 ship.Speed = 0;
+
+            if (ship.Speed != 0 && ship.Location.X <= 30)
+            {
+                ship.Location = new System.Drawing.PointF(31, ship.Location.Y);
+                ship.Speed = 0;
+            }
+            else if (ship.Speed != 0 && ship.Location.X >= Constants.CanvasSize.Width - 30)
+            {
+                ship.Location = new System.Drawing.PointF(Constants.CanvasSize.Width - 31, ship.Location.Y);
+                ship.Speed = 0;
+            }
+
+            Utils.dOut("ship", ship.CurPathPointIndex);
         }
     }
 }

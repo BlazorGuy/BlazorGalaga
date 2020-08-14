@@ -17,33 +17,31 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 
             paths.Add(new BezierCurve()
             {
-                StartPoint = new PointF(Constants.SpriteDestSize.Width / 2, Constants.CanvasSize.Height - (Constants.SpriteDestSize.Height * 2)),
-                EndPoint = new PointF(Constants.CanvasSize.Width - (Constants.SpriteDestSize.Width / 2), Constants.CanvasSize.Height - (Constants.SpriteDestSize.Height * 2)),
-                ControlPoint1 = new PointF(Constants.SpriteDestSize.Width / 2, Constants.CanvasSize.Height - (Constants.SpriteDestSize.Height * 2)),
-                ControlPoint2 = new PointF(Constants.CanvasSize.Width - (Constants.SpriteDestSize.Width / 2), Constants.CanvasSize.Height - (Constants.SpriteDestSize.Height * 2))
+                StartPoint = new PointF(0, Constants.CanvasSize.Height - (Constants.SpriteDestSize.Height * 2)),
+                EndPoint = new PointF(Constants.CanvasSize.Width, Constants.CanvasSize.Height - (Constants.SpriteDestSize.Height * 2)),
+                ControlPoint1 = new PointF(0, Constants.CanvasSize.Height - (Constants.SpriteDestSize.Height * 2)),
+                ControlPoint2 = new PointF(Constants.CanvasSize.Width, Constants.CanvasSize.Height - (Constants.SpriteDestSize.Height * 2)),
             });
 
             var ship = new Ship()
             {
                 Paths = paths,
-                DrawPath = false,
                 RotateAlongPath = false,
                 Started = true,
                 Index = -999
             };
 
             ship.Paths.ForEach(a => {
+                a.DrawPath = true;
                 ship.PathPoints.AddRange(animationService.ComputePathPoints(a));
             });
 
             ship.Location = new PointF(0,0);
             ship.LineToLocation = new System.Numerics.Vector2(0,0);
-            ship.CurPathPointIndex = ship.PathPoints.Count/2;
+            ship.CurPathPointIndex = ship.PathPoints.Count / 2;
 
             animationService.Animatables.Add(ship);
         }
-        
-
 
         public static void Fire(Ship ship, AnimationService animationService)
         {
@@ -75,7 +73,6 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 
         public static void CheckMissileCollisions(List<Bug> bugs, AnimationService animationService)
         {
-
             animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.ShipMissle).ToList().ForEach(missile => {
                 var missilerect = new Rectangle((int)missile.Location.X + 5, (int)missile.Location.Y + 10, 5, 5);
                 foreach(var bug in bugs)

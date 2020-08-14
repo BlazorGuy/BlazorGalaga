@@ -57,14 +57,12 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                         if (bug.IsMoving)
                         {
                             //this animates the line to location logic
-                            //bug.LineFromLocation = new Vector2(bug.Paths.Last().EndPoint.X, bug.Paths.Last().EndPoint.Y);
-                            //bug.LineToLocation = new Vector2(homepoint.X, homepoint.Y);
-                            bug.PathPoints[bug.PathPoints.Count - 1] = homepoint;
+                            if (bug.PathPoints.Count > 0)
+                                bug.PathPoints[bug.PathPoints.Count - 1] = homepoint;
                         }
                         //snap to grid if bug isn't moving
                         else
                         {
-                            //bug.LineToLocation = new Vector2(homepoint.X, homepoint.Y);
                             bug.Location = homepoint;
                         }
                     }
