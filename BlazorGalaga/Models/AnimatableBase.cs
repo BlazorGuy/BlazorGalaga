@@ -32,7 +32,7 @@ namespace BlazorGalaga.Models
         public Vector2 LineToLocation { get; set; }
         public int ZIndex { get; set; }
         public int RotatIntoPlaceSpeed { get; set; }
-        public float LineToLocationDistance { get; set; }
+        public float LastLineToLocationDistance { get; set; }
         public bool DestroyAfterComplete { get; set; }
         public bool DestroyImmediately { get; set; }
         public bool Visible { get; set; }

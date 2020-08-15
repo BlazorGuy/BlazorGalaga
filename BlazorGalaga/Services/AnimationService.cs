@@ -59,8 +59,12 @@ namespace BlazorGalaga.Services
                         animatable.CurPathPointIndex += 1;
                     }
 
-                    //new line segmant to move on
-                    if (animatable.CurPathPointIndex == 0 || Vector2.Distance(new Vector2(animatable.Location.X, animatable.Location.Y),animatable.LineToLocation) <= animatable.Speed)
+                    //store how far the animatable is to the next destination point
+                    var linetolocationdistance = Vector2.Distance(new Vector2(animatable.Location.X, animatable.Location.Y), animatable.LineToLocation);
+
+                    //if the animatable is just starting, or it is close enough or overshot the destination
+                    //then move it to the next line segment in the path
+                    if (animatable.CurPathPointIndex == 0 || linetolocationdistance <= animatable.Speed || linetolocationdistance > animatable.LastLineToLocationDistance)
                     {
                         animatable.Location = animatable.PathPoints[animatable.CurPathPointIndex];
 
@@ -74,10 +78,11 @@ namespace BlazorGalaga.Services
 
                         animatable.LineFromLocation = new Vector2(animatable.Location.X, animatable.Location.Y);
                         animatable.LineToLocation = new Vector2(animatable.PathPoints[animatable.CurPathPointIndex + 1].X, animatable.PathPoints[animatable.CurPathPointIndex + 1].Y);
-                        animatable.LineToLocationDistance = Vector2.Distance(animatable.LineFromLocation, animatable.LineToLocation);
                         animatable.CurPathPointIndex += 1;
                         animatable.IsMoving = true;
                     }
+
+                    animatable.LastLineToLocationDistance = Vector2.Distance(new Vector2(animatable.Location.X, animatable.Location.Y), animatable.LineToLocation);
 
                     //if lineto == linefrom then make lineto slightly bigger so we don't hang up
                     if (animatable.LineToLocation.X == animatable.LineFromLocation.X && animatable.LineToLocation.Y == animatable.LineFromLocation.Y)
@@ -85,6 +90,8 @@ namespace BlazorGalaga.Services
 
                     Vector2 direction = Vector2.Normalize(animatable.LineToLocation - animatable.LineFromLocation);
 
+                    //store prev, current, and next location
+                    //this is used to calculate rotation later
                     animatable.PevLocation = new PointF(animatable.Location.X + direction.X, animatable.Location.Y + direction.Y);
                     animatable.Location = new PointF(animatable.Location.X + direction.X * animatable.Speed, animatable.Location.Y + direction.Y * animatable.Speed);
                     animatable.NextLocation = new PointF(animatable.Location.X + direction.X * (animatable.Speed * 2), animatable.Location.Y + direction.Y * (animatable.Speed * 2));

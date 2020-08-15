@@ -13,7 +13,7 @@ namespace BlazorGalaga.Models
         public bool IsExploding { get; set; }
         public List<Bug> ChildBugs { get; set; }
         public bool IsDiveBomber { get; set; }
-        public Vector2 DiveBombLocation { get; set; }
+        public PointF DiveBombLocation { get; set; }
         public int Wave { get; set; }
         public Point ChildBugOffset { get; set; }
         public string Tag { get; set; }

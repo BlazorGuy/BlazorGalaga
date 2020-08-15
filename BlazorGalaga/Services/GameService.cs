@@ -36,7 +36,7 @@ namespace BlazorGalaga.Services
 
         public void Init()
         {
-            //Level = 1;
+            Level = 3;
             Lives = 2;
             ShipManager.InitShip(animationService);
         }
@@ -110,11 +110,11 @@ namespace BlazorGalaga.Services
 
             animationService.Animatables.ForEach(a => {
                 a.Paths.ForEach(p => {
-                    //if (a.Index == 0 || a.Index==0) p.DrawPath=true;
-                    //if (a.Index == 0) p.OutPutDebug = true;
+                    if (a.Index == 0 || a.Index == 0) p.DrawPath = true;
+                    if (a.Index == 0) p.OutPutDebug = true;
                     a.PathPoints.AddRange(animationService.ComputePathPoints(p,false));
                 });
-                if (a as Bug != null) a.PathPoints.Add(BugFactory.EnemyGrid.GetPointByRowCol(((Bug)a).HomePoint.X, ((Bug)a).HomePoint.Y));
+                //if (a as Bug != null) a.PathPoints.Add(BugFactory.EnemyGrid.GetPointByRowCol(((Bug)a).HomePoint.X, ((Bug)a).HomePoint.Y));
             });
 
             Task.Delay(delays[0], cancellationTokenSource.Token).ContinueWith((task) =>
@@ -236,7 +236,7 @@ namespace BlazorGalaga.Services
 
             if (timestamp - EnemyGridManager.LastEnemyGridMoveTimeStamp > 100 || EnemyGridManager.LastEnemyGridMoveTimeStamp == 0)
             {
-                EnemyGridManager.MoveEnemyGrid(bugs, Ship);
+                EnemyGridManager.MoveEnemyGrid(bugs, Ship, animationService);
                 EnemyGridManager.LastEnemyGridMoveTimeStamp = timestamp;
             }
 

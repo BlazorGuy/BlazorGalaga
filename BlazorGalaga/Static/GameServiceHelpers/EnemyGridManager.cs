@@ -1,4 +1,5 @@
 ﻿using BlazorGalaga.Models;
+using BlazorGalaga.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
         public static bool EnemyGridBreathing = false;
         public static float LastEnemyGridMoveTimeStamp = 0;
 
-        public static void MoveEnemyGrid(List<Bug> bugs, Ship ship)
+        public static void MoveEnemyGrid(List<Bug> bugs, Ship ship, AnimationService animationService)
         {
             if (BugFactory.EnemyGrid.GridLeft > 350 || BugFactory.EnemyGrid.GridLeft < 180)
                 MoveEnemyGridIncrement *= -1;
@@ -44,10 +45,17 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             {
                 if (bug.IsDiveBomber)
                 {
-                    //if (bug.CurPathPointIndex >= bug.PathPoints.Count -1)
-                    //    bug.Speed = Constants.BugDiveSpeed + 2;
-                    //bug.LineFromLocation = new Vector2(bug.Paths.Last().EndPoint.X, bug.Paths.Last().EndPoint.Y);
-                    //bug.LineToLocation = bug.DiveBombLocation;
+                    if (bug.CurPathPointIndex >= bug.PathPoints.Count - 1)
+                    {
+                        bug.Speed = Constants.BugDiveSpeed + 2;
+                        bug.Paths.Add(new BezierCurve() {
+                            StartPoint = bug.Location,
+                            ControlPoint1 = bug.Location,
+                            ControlPoint2 = bug.DiveBombLocation,
+                            EndPoint = bug.DiveBombLocation
+                        });
+                        bug.PathPoints.AddRange(animationService.ComputePathPoints(bug.Paths.Last(), true));
+                    }
                 }
                 else
                 {
@@ -56,9 +64,13 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                     {
                         if (bug.IsMoving)
                         {
-                            //this animates the line to location logic
+                            //this makes the bugs got to their spot on the moving enemy grid
                             if (bug.PathPoints.Count > 0)
+                            {
                                 bug.PathPoints[bug.PathPoints.Count - 1] = homepoint;
+                                if (bug.CurPathPointIndex == bug.PathPoints.Count - 1)
+                                    bug.LineToLocation = new Vector2(homepoint.X, homepoint.Y);
+                            }
                         }
                         //snap to grid if bug isn't moving
                         else

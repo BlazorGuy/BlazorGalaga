@@ -35,7 +35,6 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                         {
                             childbug.PathPoints.Clear();
                             childbug.Paths.Clear();
-                            childbug.LineToLocationDistance = 0;
                             childbug.RotateAlongPath = true;
                             childbug.IsMoving = true;
                             childbug.Speed = 5;

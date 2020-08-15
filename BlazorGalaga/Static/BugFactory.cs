@@ -104,7 +104,7 @@ namespace BlazorGalaga.Static
                 if (isdivebomber)
                 {
                     bug.IsDiveBomber = true;
-                    bug.DiveBombLocation = new Vector2(Utils.Rnd(50, Constants.CanvasSize.Width - 50), Constants.CanvasSize.Height + 50);
+                    bug.DiveBombLocation = new PointF(Utils.Rnd(50, Constants.CanvasSize.Width - 50), Constants.CanvasSize.Height + 50);
                     bug.Paths.Last().EndPoint = new PointF(bug.Paths.Last().EndPoint.X , bug.Paths.Last().EndPoint.Y - 100);
                 }
                 else
