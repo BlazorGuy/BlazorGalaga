@@ -35,22 +35,38 @@ namespace BlazorGalaga.Static
                 Wave = wave
             };
 
-            if ((intro as Intro5) != null || (intro as Intro6) != null || (intro as Intro7) != null || (intro as Intro8) != null)
+            if ((intro as Intro5) != null || (intro as Intro6) != null)
             {
                 bug.VSpeed = new List<VSpeed>
                 {
                     new VSpeed()
                     {
-                        PathPointIndex = 1000,
+                        PathPointIndex = 20,
                         Speed = Constants.BugIntroSpeed - 2
                     },
                     new VSpeed()
                     {
-                        PathPointIndex = 1300,
+                        PathPointIndex = 30,
                         Speed = Constants.BugIntroSpeed - 3
                     }
                 };
             }
+            //if ((intro as Intro7) != null || (intro as Intro8) != null)
+            //{
+            //    bug.VSpeed = new List<VSpeed>
+            //    {
+            //        new VSpeed()
+            //        {
+            //            PathPointIndex = 10,
+            //            Speed = Constants.BugIntroSpeed - 2
+            //        },
+            //        new VSpeed()
+            //        {
+            //            PathPointIndex = 15,
+            //            Speed = Constants.BugIntroSpeed - 3
+            //        }
+            //    };
+            //}
 
             switch (spritetype)
             {

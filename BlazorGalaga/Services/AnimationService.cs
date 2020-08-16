@@ -90,18 +90,27 @@ namespace BlazorGalaga.Services
 
                     Vector2 direction = Vector2.Normalize(animatable.LineToLocation - animatable.LineFromLocation);
 
+                    var speed = 0;
+                    if (animatable.VSpeed != null)
+                    {
+                        var vspeed = animatable.VSpeed.LastOrDefault(a => a.PathPointIndex <= animatable.CurPathPointIndex);
+                        speed = vspeed==null ? animatable.Speed : vspeed.Speed;
+                    }
+                    else
+                        speed = animatable.Speed;
+
                     //store prev, current, and next location
                     //this is used to calculate rotation later
                     animatable.PevLocation = new PointF(animatable.Location.X + direction.X, animatable.Location.Y + direction.Y);
-                    animatable.Location = new PointF(animatable.Location.X + direction.X * animatable.Speed, animatable.Location.Y + direction.Y * animatable.Speed);
-                    animatable.NextLocation = new PointF(animatable.Location.X + direction.X * (animatable.Speed * 2), animatable.Location.Y + direction.Y * (animatable.Speed * 2));
+                    animatable.Location = new PointF(animatable.Location.X + direction.X * speed, animatable.Location.Y + direction.Y * speed);
+                    animatable.NextLocation = new PointF(animatable.Location.X + direction.X * (speed * 2), animatable.Location.Y + direction.Y * (speed * 2));
 
                     if (animatable.RotateAlongPath)
                         animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
 
                      loopcount++;
 
-                    //if ((animatable as Bug) != null && (animatable as Bug).Tag != null && ((animatable as Bug).Tag.IndexOf("Dive") != -1))
+                    //if ((animatable as Bug) != null && (animatable as Bug).Index==0)
                     //{
                     //    Utils.dOut("Animate Debug: ", "<br/> ppi: " + animatable.CurPathPointIndex +
                     //                                  "<br/> pp: " + animatable.PathPoints.Count +
@@ -159,7 +168,7 @@ namespace BlazorGalaga.Services
                 return cachedPath.PathPoints;
 
             List<PointF> pathpoints = new List<PointF>();
-            var granularity = 10;
+            var granularity = 5;
 
             if (path.BreakPath)
                 pathpoints.Add(new PointF(-999, -999));

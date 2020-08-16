@@ -1069,6 +1069,6 @@ C:/Users/bcollins/Desktop/BlazorGalaga/BlazorGalaga/obj/Debug/netstandard2.1/Bla
 C:/Users/bcollins/Desktop/BlazorGalaga/BlazorGalaga/obj/Debug/netstandard2.1/integrity/g5jJy6ypLLRMzbEoR29ouU8y-xejyziy533kOznKn1Q=.hash
 C:/Users/bcollins/Desktop/BlazorGalaga/BlazorGalaga/obj/Debug/netstandard2.1/integrity/y9WLjy3phqrFf4DDlltb46K2ClHAI0QQOxGo6Woq0kw=.hash
 C:/Users/bcollins/Desktop/BlazorGalaga/BlazorGalaga/obj/Debug/netstandard2.1/integrity/WLvzwDkFDgX9WA9TQt2lIUQ9OU1fGho6U0pmm_-g1G8=.hash
-/Users/bcollins/BlazorGalaga/BlazorGalaga/obj/Debug/netstandard2.1/integrity/QC1MjLGI-qPzabzq5GeRmEFQGczNRd8Bo-mqdTLdSy8=.hash
-/Users/bcollins/BlazorGalaga/BlazorGalaga/obj/Debug/netstandard2.1/integrity/0igX-omtoGbtO7NvJ0fKsK_gyRExL9sy-YLfMBzkSm4=.hash
-/Users/bcollins/BlazorGalaga/BlazorGalaga/obj/Debug/netstandard2.1/integrity/em15rwDIKCROw_rTHMvijWlPxmu-cEeP2Y6MEFnrUnk=.hash
+/Users/bcollins/BlazorGalaga/BlazorGalaga/obj/Debug/netstandard2.1/integrity/v6yXpkex8mcrgVDESt3Wxjg47x5yNy8sDO1mow1ycA0=.hash
+/Users/bcollins/BlazorGalaga/BlazorGalaga/obj/Debug/netstandard2.1/integrity/ROZazcp4IxZjt12-LbDSpgwcm2QyGRVY6e5w0jPkkeE=.hash
+/Users/bcollins/BlazorGalaga/BlazorGalaga/obj/Debug/netstandard2.1/integrity/l0PTM4eCEvsyUsMjNToUVBn7kBN3G4zqgq-sDLsd4vQ=.hash

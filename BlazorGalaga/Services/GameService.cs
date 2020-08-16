@@ -36,7 +36,7 @@ namespace BlazorGalaga.Services
 
         public void Init()
         {
-            Level = 3;
+            //Level = 7;
             Lives = 2;
             ShipManager.InitShip(animationService);
         }
@@ -114,7 +114,6 @@ namespace BlazorGalaga.Services
                     if (a.Index == 0) p.OutPutDebug = true;
                     a.PathPoints.AddRange(animationService.ComputePathPoints(p,false));
                 });
-                //if (a as Bug != null) a.PathPoints.Add(BugFactory.EnemyGrid.GetPointByRowCol(((Bug)a).HomePoint.X, ((Bug)a).HomePoint.Y));
             });
 
             Task.Delay(delays[0], cancellationTokenSource.Token).ContinueWith((task) =>
