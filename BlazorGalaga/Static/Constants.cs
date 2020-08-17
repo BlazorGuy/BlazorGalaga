@@ -14,13 +14,13 @@ namespace BlazorGalaga.Static
         public static int BigSpriteSourceSize = 32;
         public static int ShipMoveSpeed = 5;
         public static int BugDiveSpeed = 5;
-        public static int BugIntroSpeed = 10;
+        public static int BugIntroSpeed = 9;
         public static int BugIntroSpacing = 70;
         public static int BugRotateIntoPlaceSpeed = 2;
         public static string ArrowLeft = "ArrowLeft";
         public static string ArrowRight = "ArrowRight";
         public static string Space = "Space";
-        public static int ShipMissleDelaySpeed = 100;
+        public static int ShipMissleDelaySpeed = 50;
         public static int ShipMissleSpeed = 14;
         public static int WingFlapInterval = 500;
         public static int EnemyGridLeft = 250;

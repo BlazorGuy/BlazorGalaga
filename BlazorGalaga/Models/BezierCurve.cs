@@ -17,6 +17,7 @@ namespace BlazorGalaga.Models
         public string Name { get; set; }
         public bool OutPutDebug { get; set; }
         public bool BreakPath { get; set; }
+        public bool IsIntroPath { get; set; }
     }
 
 }

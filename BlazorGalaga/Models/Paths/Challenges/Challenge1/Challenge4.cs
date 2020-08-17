@@ -11,6 +11,7 @@ namespace BlazorGalaga.Models.Paths.Challenges.Challenge1
         public Challenge4()
         {
             IsChallenge = true;
+            IntroLocation = IntroLocation.LowerRight;
         }
 
         public override List<BezierCurve> GetPaths()

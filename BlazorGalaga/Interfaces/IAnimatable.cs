@@ -40,6 +40,7 @@ namespace BlazorGalaga.Interfaces
         public List<VSpeed> VSpeed { get; set; }
         public bool DoLineToLocation { get; set; }
         public float LastDelayTimeStamp { get; set; }
+        public bool AllowNegativeSpeed { get; set; }
 
     }
 }

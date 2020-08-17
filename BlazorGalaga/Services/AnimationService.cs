@@ -64,7 +64,8 @@ namespace BlazorGalaga.Services
 
                     //if the animatable is just starting, or it is close enough or overshot the destination
                     //then move it to the next line segment in the path
-                    if (animatable.CurPathPointIndex == 0 || linetolocationdistance <= animatable.Speed || linetolocationdistance > animatable.LastLineToLocationDistance)
+                    if (animatable.CurPathPointIndex == 0 || linetolocationdistance <= animatable.Speed ||
+                        (linetolocationdistance > animatable.LastLineToLocationDistance && !animatable.AllowNegativeSpeed))
                     {
                         animatable.Location = animatable.PathPoints[animatable.CurPathPointIndex];
 
@@ -94,7 +95,7 @@ namespace BlazorGalaga.Services
                     if (animatable.VSpeed != null)
                     {
                         var vspeed = animatable.VSpeed.LastOrDefault(a => a.PathPointIndex <= animatable.CurPathPointIndex);
-                        speed = vspeed==null ? animatable.Speed : vspeed.Speed;
+                        speed = vspeed == null ? animatable.Speed : vspeed.Speed;
                     }
                     else
                         speed = animatable.Speed;
@@ -157,7 +158,7 @@ namespace BlazorGalaga.Services
 
         }
 
-        public List<PointF> ComputePathPoints(BezierCurve path, bool pathisline=false)
+        public List<PointF> ComputePathPoints(BezierCurve path, bool pathisline=false,int granularity=10)
         {
             var cachedPath = PathCaches.FirstOrDefault(a => a.Path.StartPoint.Equals(path.StartPoint) &&
                                                         a.Path.ControlPoint1.Equals(path.ControlPoint1) &&
@@ -168,7 +169,6 @@ namespace BlazorGalaga.Services
                 return cachedPath.PathPoints;
 
             List<PointF> pathpoints = new List<PointF>();
-            var granularity = 5;
 
             if (path.BreakPath)
                 pathpoints.Add(new PointF(-999, -999));

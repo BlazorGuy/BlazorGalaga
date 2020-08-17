@@ -110,9 +110,12 @@ namespace BlazorGalaga.Services
 
             animationService.Animatables.ForEach(a => {
                 a.Paths.ForEach(p => {
-                    if (a.Index == 0 || a.Index == 0) p.DrawPath = true;
-                    if (a.Index == 0) p.OutPutDebug = true;
-                    a.PathPoints.AddRange(animationService.ComputePathPoints(p,false));
+                    //if (a.Index == 0 || a.Index == 0) p.DrawPath = true;
+                    //if (a.Index == 0) p.OutPutDebug = true;
+                    if(p.IsIntroPath)
+                        a.PathPoints.AddRange(animationService.ComputePathPoints(p, false, 20));
+                    else
+                        a.PathPoints.AddRange(animationService.ComputePathPoints(p,false));
                 });
             });
 

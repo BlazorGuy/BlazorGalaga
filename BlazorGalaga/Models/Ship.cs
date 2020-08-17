@@ -12,6 +12,7 @@ namespace BlazorGalaga.Models
         public Ship() 
         {
             Sprite = new Sprite(Sprite.SpriteTypes.Ship);
+            AllowNegativeSpeed = true;
         }
     }
 }

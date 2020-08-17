@@ -89,7 +89,8 @@ namespace BlazorGalaga.Static
                     StartPoint = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y - (1000 + bug.StartDelay)),
                     EndPoint = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y - 50),
                     ControlPoint1 = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y - 1000),
-                    ControlPoint2 = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y - 50)
+                    ControlPoint2 = new PointF(bug.Paths[0].StartPoint.X, bug.Paths[0].StartPoint.Y - 50),
+                    IsIntroPath = true
                 });
             }
             else if (intro.IntroLocation == IntroLocation.LowerLeft)
@@ -100,7 +101,8 @@ namespace BlazorGalaga.Static
                     StartPoint = new PointF(bug.Paths[0].StartPoint.X - (1000 + bug.StartDelay), bug.Paths[0].StartPoint.Y),
                     EndPoint = new PointF(bug.Paths[0].StartPoint.X - 50, bug.Paths[0].StartPoint.Y),
                     ControlPoint1 = new PointF(bug.Paths[0].StartPoint.X - 1000, bug.Paths[0].StartPoint.Y),
-                    ControlPoint2 = new PointF(bug.Paths[0].StartPoint.X - 50, bug.Paths[0].StartPoint.Y)
+                    ControlPoint2 = new PointF(bug.Paths[0].StartPoint.X - 50, bug.Paths[0].StartPoint.Y),
+                    IsIntroPath = true
                 });
             }
             else if (intro.IntroLocation == IntroLocation.LowerRight)
@@ -111,7 +113,8 @@ namespace BlazorGalaga.Static
                     StartPoint = new PointF(bug.Paths[0].StartPoint.X + (1000 + bug.StartDelay), bug.Paths[0].StartPoint.Y),
                     EndPoint = new PointF(bug.Paths[0].StartPoint.X + 50, bug.Paths[0].StartPoint.Y),
                     ControlPoint1 = new PointF(bug.Paths[0].StartPoint.X + 1000, bug.Paths[0].StartPoint.Y),
-                    ControlPoint2 = new PointF(bug.Paths[0].StartPoint.X + 50, bug.Paths[0].StartPoint.Y)
+                    ControlPoint2 = new PointF(bug.Paths[0].StartPoint.X + 50, bug.Paths[0].StartPoint.Y),
+                    IsIntroPath = true
                 });
             }
 

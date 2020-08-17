@@ -38,7 +38,7 @@ namespace BlazorGalaga.Models.Paths.Intros
                     StartPoint = new PointF(446.0345F, 655.3584F),
                     ControlPoint1 = new PointF(421.8319F, 640.6024F),
                     ControlPoint2 = new PointF(386.291F, 580.7897F),
-                    EndPoint = new PointF(375.0219F, 521.8439F)
+                    EndPoint = new PointF(375.0219F, 460)
                 }
             };
 
