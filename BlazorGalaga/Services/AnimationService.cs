@@ -39,7 +39,7 @@ namespace BlazorGalaga.Services
 
         public void ResetCanvas(Canvas2DContext ctx)
         {
-            if (spriteService.IsRotated)
+            //if (spriteService.IsRotated)
                 ctx.SetTransformAsync(1, 0, 0, 1, 0, 0);
             ctx.ClearRectAsync(0, 0, Constants.CanvasSize.Width, Constants.CanvasSize.Height);
         }
@@ -102,14 +102,17 @@ namespace BlazorGalaga.Services
 
                     //store prev, current, and next location
                     //this is used to calculate rotation later
-                    animatable.PevLocation = new PointF(animatable.Location.X + direction.X, animatable.Location.Y + direction.Y);
+                    animatable.PevLocation = animatable.Location;
                     animatable.Location = new PointF(animatable.Location.X + direction.X * speed, animatable.Location.Y + direction.Y * speed);
-                    animatable.NextLocation = new PointF(animatable.Location.X + direction.X * (speed * 2), animatable.Location.Y + direction.Y * (speed * 2));
+                    animatable.NextLocation = new PointF(animatable.Location.X + (direction.X * speed * 2) , animatable.Location.Y + (direction.Y * speed * 2));
 
                     if (animatable.RotateAlongPath)
-                        animatable.Rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
+                    {
+                        var rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
+                        animatable.Rotation = rotation;
+                    }
 
-                     loopcount++;
+                    loopcount++;
 
                     //if ((animatable as Bug) != null && (animatable as Bug).Index==0)
                     //{
@@ -183,6 +186,8 @@ namespace BlazorGalaga.Services
                 pathpoints.Add(point);
             }
 
+            pathpoints = bezierCurveService.GetEvenlyDistributedPathPointsByLength(pathpoints, 5);
+
             PathCaches.Add(new PathCache() { Path = path, PathPoints = pathpoints });
 
             return pathpoints;
@@ -191,36 +196,47 @@ namespace BlazorGalaga.Services
         public void Draw()
         {
             spriteService.DynamicCtx1.BeginBatchAsync();
-            //spriteService.DynamicCtx2.BeginBatchAsync();
 
             ResetCanvas(spriteService.DynamicCtx1);
-            //ResetCanvas(spriteService.DynamicCtx2);
 
             Utils.dOut("Animatables", Animatables.Count);
 
             foreach (IAnimatable animatable in Animatables.Where(a => a.Started && a.Visible).OrderByDescending(a => a.ZIndex))
             {
-                spriteService.DrawSprite(
-                    animatable.SpriteBankIndex == null ? animatable.Sprite : animatable.SpriteBank[(int)animatable.SpriteBankIndex],
-                    animatable.Location,
-                    (animatable.RotateAlongPath && animatable.IsMoving) ? animatable.Rotation : 0
-                    );
-
-                if (animatable.DrawPath || animatable.DrawControlLines)
+                if (!animatable.RotateManually)
                 {
+                    spriteService.DrawSprite(
+                        animatable.SpriteBankIndex == null ? animatable.Sprite : animatable.SpriteBank[(int)animatable.SpriteBankIndex],
+                        animatable.Location,
+                        ((animatable.RotateAlongPath && animatable.IsMoving) || animatable.RotateWhileStill) ? animatable.Rotation : 0
+                        );
+                }
+                else
+                {
+                    spriteService.RotateSprite(animatable.Sprite, animatable.Location, animatable.Rotation);
+                }
+
+                if ((animatable.DrawPath || animatable.DrawControlLines) && !animatable.PathDrawn)
+                {
+                    animatable.PathDrawn = true;
+                    spriteService.StaticCtx.BeginBatchAsync();
+                    spriteService.StaticCtx.SetStrokeStyleAsync("white");
+                    spriteService.StaticCtx.SetFillStyleAsync("yellow");
+                    spriteService.StaticCtx.SetFontAsync("48px serif");
+                    spriteService.StaticCtx.SetLineWidthAsync(2);
                     foreach (BezierCurve path in animatable.Paths.Where(a => a.DrawPath == true))
                     {
-                        bezierCurveService.DrawPathPoints(spriteService.DynamicCtx1, animatable.PathPoints);
+                        bezierCurveService.DrawPathPoints(spriteService.StaticCtx, animatable.PathPoints);
                         if (animatable.DrawPath)
-                            bezierCurveService.DrawCurve(spriteService.DynamicCtx1, path);
+                            bezierCurveService.DrawCurve(spriteService.StaticCtx, path);
                         if (animatable.DrawControlLines)
-                            bezierCurveService.DrawCurveControlLines(spriteService.DynamicCtx1, path);
+                            bezierCurveService.DrawCurveControlLines(spriteService.StaticCtx, path);
                     }
+                    spriteService.StaticCtx.EndBatchAsync();
                 }
             }
 
             spriteService.DynamicCtx1.EndBatchAsync();
-            //spriteService.DynamicCtx2.EndBatchAsync();
         }
     }
 }

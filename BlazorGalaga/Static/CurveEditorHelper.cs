@@ -44,6 +44,7 @@ namespace BlazorGalaga.Static
             {
                 foreach (var animatable in animationService.Animatables.Where(a => a.Sprite.SpriteType != Sprite.SpriteTypes.Ship))
                 {
+                    animatable.PathDrawn = false;
                     foreach (var path in animatable.Paths)
                     {
                         if (Utils.GetDistance(MouseHelper.Position, path.StartPoint) <= 5) path.StartPointDragged = true;

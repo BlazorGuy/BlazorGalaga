@@ -21,9 +21,9 @@ namespace BlazorGalaga.Pages
         public string DiagnosticInfo = "";
         public List<Canvas> BufferCanvases { get; set; }
         public List<Canvas> BigBufferCanvases { get; set; }
+        public List<Canvas> BiggerBufferCanvases { get; set; }
 
         private Canvas2DContext DynamicCtx1;
-        private Canvas2DContext DynamicCtx2;
         private Canvas2DContext StaticCtx;
         private bool stopGameLoop;
         private readonly int targetTicksPerFrame = (1000 / 60);
@@ -34,7 +34,6 @@ namespace BlazorGalaga.Pages
 
         protected BECanvasComponent StaticCanvas;
         protected BECanvasComponent DynamicCanvas1;
-        protected BECanvasComponent DynamicCanvas2;
         protected ElementReference spriteSheet;
 
         private static Ship ship;
@@ -70,19 +69,31 @@ namespace BlazorGalaga.Pages
                     Width = Constants.BigSpriteDestSize.Width,
                     Height = Constants.BigSpriteDestSize.Height
                 });
+
+            BiggerBufferCanvases = new List<Canvas>();
+
+            for (int i = 1; i <= Constants.BiggerSpriteBufferCount; i++)
+                BiggerBufferCanvases.Add(new Canvas()
+                {
+                    CanvasRef = new BECanvasComponent(),
+                    Width = Constants.BiggerSpriteDestSize.Width,
+                    Height = Constants.BiggerSpriteDestSize.Height
+                });
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
 
             DynamicCtx1 = await DynamicCanvas1.CreateCanvas2DAsync();
-            DynamicCtx2 = await DynamicCanvas2.CreateCanvas2DAsync();
             StaticCtx = await StaticCanvas.CreateCanvas2DAsync();
 
             foreach (var canvas in BufferCanvases)
                canvas.Context = await canvas.CanvasRef.CreateCanvas2DAsync();
 
             foreach (var canvas in BigBufferCanvases)
+                canvas.Context = await canvas.CanvasRef.CreateCanvas2DAsync();
+
+            foreach (var canvas in BiggerBufferCanvases)
                 canvas.Context = await canvas.CanvasRef.CreateCanvas2DAsync();
 
             await JsRuntime.InvokeAsync<object>("initFromBlazor", DotNetObjectReference.Create(this));
@@ -93,10 +104,10 @@ namespace BlazorGalaga.Pages
         {
 
             spriteService.DynamicCtx1 = DynamicCtx1;
-            spriteService.DynamicCtx2 = DynamicCtx2;
             spriteService.StaticCtx = StaticCtx;
             spriteService.BufferCanvases = BufferCanvases;
             spriteService.BigBufferCanvases = BigBufferCanvases;
+            spriteService.BiggerBufferCanvases = BiggerBufferCanvases;
 
             spriteService.SpriteSheet = spriteSheet;
             spriteService.Init();

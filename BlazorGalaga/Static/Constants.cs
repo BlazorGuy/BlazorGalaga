@@ -8,13 +8,16 @@ namespace BlazorGalaga.Static
         public static Rectangle CanvasSize = new Rectangle(0,0,672, 944);
         public static Rectangle SpriteDestSize = new Rectangle(0, 0, 46, 46);
         public static Rectangle BigSpriteDestSize = new Rectangle(0, 0, 90, 90);
+        public static Rectangle BiggerSpriteDestSize = new Rectangle(0, 0, 135, 280);
+        public static Rectangle BiggerSpriteSourceSize = new Rectangle(0, 0, 48, 80);
         public static int SpriteBufferCount = 25;
         public static int BigSpriteBufferCount = 10;
+        public static int BiggerSpriteBufferCount = 3;
         public static int SpriteSourceSize = 16;
         public static int BigSpriteSourceSize = 32;
         public static int ShipMoveSpeed = 5;
         public static int BugDiveSpeed = 5;
-        public static int BugIntroSpeed = 9;
+        public static int BugIntroSpeed = 10;
         public static int BugIntroSpacing = 70;
         public static int BugRotateIntoPlaceSpeed = 2;
         public static string ArrowLeft = "ArrowLeft";

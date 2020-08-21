@@ -2,6 +2,7 @@
 using BlazorGalaga.Services;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
         public static bool EnemyGridBreathing = false;
         public static float LastEnemyGridMoveTimeStamp = 0;
 
-        public static void MoveEnemyGrid(List<Bug> bugs, Ship ship, AnimationService animationService)
+        public static void MoveEnemyGrid(List<Bug> bugs, AnimationService animationService, Ship ship)
         {
             if (BugFactory.EnemyGrid.GridLeft > 350 || BugFactory.EnemyGrid.GridLeft < 180)
                 MoveEnemyGridIncrement *= -1;
@@ -57,6 +58,14 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                         bug.PathPoints.AddRange(animationService.ComputePathPoints(bug.Paths.Last(), true));
                     }
                 }
+                else if (bug.IsCapturing)
+                {
+                    if (!bug.IsMoving)
+                    {
+                        bug.Rotation = -90;
+                        GalagaCaptureManager.DoTractorBeam(bug, animationService, ship);
+                    }
+                }
                 else
                 {
                     var homepoint = BugFactory.EnemyGrid.GetPointByRowCol(bug.HomePoint.X, bug.HomePoint.Y);
@@ -64,7 +73,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                     {
                         if (bug.IsMoving)
                         {
-                            //this makes the bugs got to their spot on the moving enemy grid
+                            //this makes the bugs go to their spot on the moving enemy grid
                             if (bug.PathPoints.Count > 0)
                             {
                                 bug.PathPoints[bug.PathPoints.Count - 1] = homepoint;

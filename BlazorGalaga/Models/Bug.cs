@@ -17,6 +17,7 @@ namespace BlazorGalaga.Models
         public int Wave { get; set; }
         public Point ChildBugOffset { get; set; }
         public string Tag { get; set; }
+        public bool IsCapturing { get; set; }
         public Bug(Sprite.SpriteTypes spritetype)
         {
             Sprite = new Sprite(spritetype);

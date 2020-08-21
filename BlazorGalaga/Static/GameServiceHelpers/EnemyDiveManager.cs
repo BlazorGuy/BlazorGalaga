@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace BlazorGalaga.Static.GameServiceHelpers
@@ -18,9 +19,10 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             Bug bug = null;
             int loopcount = 0;
 
-            while (bug == null || bug.IsMoving)
+            while (bug == null || bug.IsMoving || bug.IsCapturing)
             {
-                bug = bugs[Utils.Rnd(0, bugs.Count - 1)];
+                //bug = bugs[Utils.Rnd(0, bugs.Count - 1)];
+                bug = bugs.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug).FirstOrDefault();
                 loopcount++;
                 if (loopcount > 50) return null;
             }
@@ -46,19 +48,23 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             }
             else if (bug.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug)
             {
-                var childbugs = bugs.Where(a =>
-                    (a.HomePoint == new Point(2, bug.HomePoint.Y + 1) ||
-                    a.HomePoint == new Point(2, bug.HomePoint.Y + 2))
-                    && !a.IsMoving);
+                dive = new CaptureDive();
 
-                bug.ChildBugs.AddRange(childbugs);
-                bug.ChildBugOffset = new Point(35, 35);
+                bug.RotateWhileStill = true;
+                bug.IsCapturing = true;
 
-                if (Utils.Rnd(0, 10) % 2 == 0)
-                    dive = new GreenBugDive1();
-                else
-                    dive = new GreenBugDive2();
+                //var childbugs = bugs.Where(a =>
+                //    (a.HomePoint == new Point(2, bug.HomePoint.Y + 1) ||
+                //    a.HomePoint == new Point(2, bug.HomePoint.Y + 2))
+                //    && !a.IsMoving);
 
+                //bug.ChildBugs.AddRange(childbugs);
+                //bug.ChildBugOffset = new Point(35, 35);
+
+                //if (Utils.Rnd(0, 10) % 2 == 0)
+                //    dive = new GreenBugDive1();
+                //else
+                //    dive = new GreenBugDive2();
             }
             else
                 dive = new RedBugDive1();

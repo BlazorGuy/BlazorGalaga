@@ -24,9 +24,14 @@ namespace BlazorGalaga.Models
             EnemyExplosion2,
             EnemyExplosion3,
             EnemyExplosion4,
-            EnemyExplosion5
+            EnemyExplosion5,
+            TractorBeam,
+            TractorBeam2,
+            TractorBeam3
         }
 
+        public Rectangle? SourceRect { get; set; }
+        public Rectangle? DestRect { get; set; }
         public RectangleF SpriteDestRect { get; set; }
         public SpriteTypes SpriteType { get; set; }
         public bool IsInitialized { get; set; }

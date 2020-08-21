@@ -48,7 +48,8 @@ namespace BlazorGalaga.Services
             {
                 case 1:
                     Level1.InitIntro(animationService, introspeedincrease);
-                    delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
+                    //delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
+                    delays = new List<int>() { 1000, 0,0,0,0,3000 };
                     break;
                 case 2:
                     Level2.InitIntro(animationService, introspeedincrease);
@@ -110,35 +111,35 @@ namespace BlazorGalaga.Services
 
             animationService.Animatables.ForEach(a => {
                 a.Paths.ForEach(p => {
-                    //if (a.Index == 0 || a.Index == 0) p.DrawPath = true;
-                    //if (a.Index == 0) p.OutPutDebug = true;
-                    if(p.IsIntroPath)
+                    if (a.Index == 0 || a.Index == 0) p.DrawPath = true;
+                    if (a.Index == 0) p.OutPutDebug = true;
+                    if (p.IsIntroPath)
                         a.PathPoints.AddRange(animationService.ComputePathPoints(p, false, 20));
                     else
                         a.PathPoints.AddRange(animationService.ComputePathPoints(p,false));
                 });
             });
 
-            Task.Delay(delays[0], cancellationTokenSource.Token).ContinueWith((task) =>
-            {
-                GetBugs().Where(a => a.Wave==1).ToList().ForEach(a => a.Started = true);
-            });
+            //Task.Delay(delays[0], cancellationTokenSource.Token).ContinueWith((task) =>
+            //{
+            //    GetBugs().Where(a => a.Wave==1).ToList().ForEach(a => a.Started = true);
+            //});
             Task.Delay(delays[1], cancellationTokenSource.Token).ContinueWith((task) =>
             {
                 GetBugs().Where(a => a.Wave == 2).ToList().ForEach(a => a.Started = true);
             });
-            Task.Delay(delays[2], cancellationTokenSource.Token).ContinueWith((task) =>
-            {
-                GetBugs().Where(a => a.Wave == 3).ToList().ForEach(a => a.Started = true);
-            });
-            Task.Delay(delays[3], cancellationTokenSource.Token).ContinueWith((task) =>
-            {
-                GetBugs().Where(a => a.Wave == 4).ToList().ForEach(a => a.Started = true);
-            });
-            Task.Delay(delays[4], cancellationTokenSource.Token).ContinueWith((task) =>
-            {
-                GetBugs().Where(a => a.Wave == 5).ToList().ForEach(a => a.Started = true);
-            });
+            //Task.Delay(delays[2], cancellationTokenSource.Token).ContinueWith((task) =>
+            //{
+            //    GetBugs().Where(a => a.Wave == 3).ToList().ForEach(a => a.Started = true);
+            //});
+            //Task.Delay(delays[3], cancellationTokenSource.Token).ContinueWith((task) =>
+            //{
+            //    GetBugs().Where(a => a.Wave == 4).ToList().ForEach(a => a.Started = true);
+            //});
+            //Task.Delay(delays[4], cancellationTokenSource.Token).ContinueWith((task) =>
+            //{
+            //    GetBugs().Where(a => a.Wave == 5).ToList().ForEach(a => a.Started = true);
+            //});
             if (delays[5] != -1)
             {
                 Task.Delay(delays[5], cancellationTokenSource.Token).ContinueWith((task) =>
@@ -238,7 +239,7 @@ namespace BlazorGalaga.Services
 
             if (timestamp - EnemyGridManager.LastEnemyGridMoveTimeStamp > 100 || EnemyGridManager.LastEnemyGridMoveTimeStamp == 0)
             {
-                EnemyGridManager.MoveEnemyGrid(bugs, Ship, animationService);
+                EnemyGridManager.MoveEnemyGrid(bugs, animationService, Ship);
                 EnemyGridManager.LastEnemyGridMoveTimeStamp = timestamp;
             }
 
