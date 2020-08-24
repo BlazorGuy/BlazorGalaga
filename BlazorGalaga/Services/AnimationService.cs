@@ -87,7 +87,15 @@ namespace BlazorGalaga.Services
 
                     //if lineto == linefrom then make lineto slightly bigger so we don't hang up
                     if (animatable.LineToLocation.X == animatable.LineFromLocation.X && animatable.LineToLocation.Y == animatable.LineFromLocation.Y)
-                        animatable.LineToLocation = new Vector2(animatable.LineToLocation.X + .01F, animatable.LineToLocation.Y + .01F);
+                    {
+                        //if (animatable.LineCorrectionCount < 3)
+                        //{
+                            animatable.LineToLocation = new Vector2(animatable.LineToLocation.X + .01F, animatable.LineToLocation.Y + .01F);
+                        //    animatable.LineCorrectionCount += 1;
+                        //}
+                        //else
+                        //    animatable.CurPathPointIndex += 1;
+                    }
 
                     Vector2 direction = Vector2.Normalize(animatable.LineToLocation - animatable.LineFromLocation);
 
@@ -106,33 +114,42 @@ namespace BlazorGalaga.Services
                     animatable.Location = new PointF(animatable.Location.X + direction.X * speed, animatable.Location.Y + direction.Y * speed);
                     animatable.NextLocation = new PointF(animatable.Location.X + (direction.X * speed * 2) , animatable.Location.Y + (direction.Y * speed * 2));
 
-                    if (animatable.RotateAlongPath)
+                    if (animatable.ManualRotation != 0)
+                    {
+                        animatable.Rotation = animatable.ManualRotation;
+                    }
+                    else if (animatable.RotateAlongPath)
                     {
                         var rotation = bezierCurveService.GetRotationAngleAlongPath(animatable);
                         animatable.Rotation = rotation;
                     }
 
                     loopcount++;
-
-                    //if ((animatable as Bug) != null && (animatable as Bug).Index==0)
-                    //{
-                    //    Utils.dOut("Animate Debug: ", "<br/> ppi: " + animatable.CurPathPointIndex +
-                    //                                  "<br/> pp: " + animatable.PathPoints.Count +
-                    //                                  "<br/> lfl: " + animatable.LineFromLocation.X + "," + animatable.LineFromLocation.Y +
-                    //                                  "<br/> ltl: " + animatable.LineToLocation.X + "," + animatable.LineToLocation.Y +
-                    //                                  "<br/> direction: " + direction.X + "," + direction.Y +
-                    //                                  "<br/> speed: " + animatable.Speed +
-                    //                                  "<br/> location: " + animatable.Location +
-                    //                                  "<br/> loopcount: " + loopcount +
-                    //                                  "<br/> End Animate Debug");
-                    //}
                 }
                 else if (animatable.PathPoints.Count > 0)
                 {
                     animatable.CurPathPointIndex = 0;
+                    //animatable.LineCorrectionCount = 0;
                     animatable.PathPoints.Clear();
                     animatable.Paths.Clear();
                     animatable.IsMoving = false;
+                }
+
+                if ((animatable as Bug) != null && (animatable as Bug).OutputDebugInfo)
+                {
+                    Utils.dOut("Animate Debug: ", "<br/> CurPathPointIndex: " + animatable.CurPathPointIndex +
+                                                  "<br/> PathPoints: " + animatable.PathPoints.Count +
+                                                  "<br/> LineFromLocation: " + animatable.LineFromLocation.X + "," + animatable.LineFromLocation.Y +
+                                                  "<br/> LineToLocation: " + animatable.LineToLocation.X + "," + animatable.LineToLocation.Y +
+                                                  "<br/> speed: " + animatable.Speed +
+                                                  "<br/> location: " + animatable.Location +
+                                                  "<br/> IsMoving: " + animatable.IsMoving +
+                                                  "<br/> loopcount: " + loopcount +
+                                                  "<br/> RotateWhileStill: " + animatable.RotateWhileStill +
+                                                  //"<br/> LineCorrectionCount: " + animatable.LineCorrectionCount +
+                                                  "<br/> startpoint: " + (animatable.Paths == null || animatable.Paths.Count==0 ? "NA" : animatable.Paths.First().StartPoint.ToString()) +
+                                                  "<br/> endpoint: " + (animatable.Paths == null || animatable.Paths.Count == 0 ? "NA" : animatable.Paths.Last().EndPoint.ToString()) +
+                                                  "<br/> End Animate Debug");
                 }
             }
 
@@ -203,18 +220,24 @@ namespace BlazorGalaga.Services
 
             foreach (IAnimatable animatable in Animatables.Where(a => a.Started && a.Visible).OrderByDescending(a => a.ZIndex))
             {
-                if (!animatable.RotateManually)
-                {
-                    spriteService.DrawSprite(
-                        animatable.SpriteBankIndex == null ? animatable.Sprite : animatable.SpriteBank[(int)animatable.SpriteBankIndex],
-                        animatable.Location,
-                        ((animatable.RotateAlongPath && animatable.IsMoving) || animatable.RotateWhileStill) ? animatable.Rotation : 0
-                        );
-                }
-                else
-                {
-                    spriteService.RotateSprite(animatable.Sprite, animatable.Location, animatable.Rotation);
-                }
+
+                spriteService.DrawSprite(
+                    animatable.SpriteBankIndex == null || animatable.SpriteBank == null || animatable.SpriteBank.Count == 0 ? animatable.Sprite : animatable.SpriteBank[(int)animatable.SpriteBankIndex],
+                    animatable.Location,
+                    ((animatable.RotateAlongPath && animatable.IsMoving) || animatable.RotateWhileStill) ? animatable.Rotation : 0
+                    );
+
+                //if(animatable as Bug !=null && (animatable as Bug).Tag == "capturedship")
+                //{
+                //    Utils.dOut("Draw Debug: ", "<br/> ppi: " + animatable.CurPathPointIndex +
+                //                                  "<br/> pp: " + animatable.PathPoints.Count +
+                //                                  "<br/> lfl: " + animatable.LineFromLocation.X + "," + animatable.LineFromLocation.Y +
+                //                                  "<br/> ltl: " + animatable.LineToLocation.X + "," + animatable.LineToLocation.Y +
+                //                                  "<br/> speed: " + animatable.Speed +
+                //                                  "<br/> location: " + animatable.Location +
+                //                                  "<br/> loopcount: " + loopcount +
+                //                                  "<br/> End Animate Debug");
+                //}
 
                 if ((animatable.DrawPath || animatable.DrawControlLines) && !animatable.PathDrawn)
                 {

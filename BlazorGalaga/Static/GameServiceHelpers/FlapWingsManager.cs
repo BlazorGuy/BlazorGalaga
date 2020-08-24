@@ -15,7 +15,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
         {
             WingFlapCount++;
 
-            bugs.Where(a => a.Started).ToList().ForEach(bug =>
+            bugs.Where(a => a.Started && a.SpriteBank != null).ToList().ForEach(bug =>
             {
                 if (bug.IsMoving)
                 {

@@ -157,7 +157,7 @@ namespace BlazorGalaga.Services
             Task.Delay(Utils.Rnd(500,maxwaittimebetweendives), cancellationTokenSource.Token).ContinueWith((task) =>
             {
                 var bug = EnemyDiveManager.DoEnemyDive(GetBugs(), animationService, Ship, Constants.BugDiveSpeed + divespeedincrease);
-                if (bug != null && bug.IsDiving)
+                if (bug != null && bug.IsDiving && !bug.IsCapturing)
                 {
                     var maxmissleperbug = Utils.Rnd(0 + missileincrease, 3 + missileincrease);
                     for (int i = 1; i <= maxmissleperbug; i++)
@@ -175,10 +175,7 @@ namespace BlazorGalaga.Services
         private List<Bug> GetBugs()
         {
             return animationService.Animatables.Where(a =>
-                a.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug
-                || a.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug
-                || a.Sprite.SpriteType == Sprite.SpriteTypes.RedBug
-                || a.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug_Blue
+                a as Bug !=null
             ).Select(a=> a as Bug).ToList();
         }
 

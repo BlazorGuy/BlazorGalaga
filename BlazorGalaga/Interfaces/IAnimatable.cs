@@ -43,8 +43,10 @@ namespace BlazorGalaga.Interfaces
         public bool AllowNegativeSpeed { get; set; }
         public bool RotateWhileStill { get; set; }
         public bool PathDrawn { get; set; }
+        public float ManualRotation { get; set; }
+        public int LineCorrectionCount { get; set; }
 
-        public bool RotateManually { get; set; }
+
 
     }
 }

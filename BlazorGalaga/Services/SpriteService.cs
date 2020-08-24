@@ -35,27 +35,6 @@ namespace BlazorGalaga.Services
 
         }
 
-        public async void RotateSprite(Sprite sprite, PointF location, float rotationangle)
-        {
-            if (!sprite.IsInitialized)
-                SetSpriteInfoBySpriteType(sprite);
-
-            if (sprite.DynamicCanvas == null) return;
-
-            await sprite.DynamicCanvas.SaveAsync();
-            await sprite.DynamicCanvas.TranslateAsync(location.X + (sprite.SpriteDestRect.Width /2), location.Y + (sprite.SpriteDestRect.Height /2));
-            await sprite.DynamicCanvas.RotateAsync((float)((rotationangle + sprite.InitialRotationOffset) * Math.PI / 180));
-
-            if (sprite.BufferCanvas != null)
-            {
-                await sprite.DynamicCanvas.DrawImageAsync(
-                    sprite.BufferCanvas.Canvas,
-                    (int)sprite.SpriteDestRect.Width * .5 * -1,
-                    (int)sprite.SpriteDestRect.Height * .5 * -1
-                );
-            }
-            await sprite.DynamicCanvas.RestoreAsync();
-        }
 
         public async void DrawSprite(Sprite sprite, PointF location, float rotationangle)
         {
@@ -149,6 +128,9 @@ namespace BlazorGalaga.Services
                 case Sprite.SpriteTypes.GreenBug_Blue_DownFlap:
                     SetUpSprite(BufferCanvases, sprite, 10, 127, 55, -90);
                     break;
+                case Sprite.SpriteTypes.CapturedShip:
+                    SetUpSprite(BufferCanvases, sprite, 11, 108, 19, -90);
+                    break;
                 case Sprite.SpriteTypes.EnemyExplosion1:
                     SetUpSprite(BigBufferCanvases, sprite, 0, 292, 1, 0, true);
                     break;
@@ -198,7 +180,6 @@ namespace BlazorGalaga.Services
                         Constants.BiggerSpriteDestSize.Width,
                         Constants.BiggerSpriteDestSize.Height
                     );
-                    sprite.SpriteDestRect = new RectangleF(0, 0, Constants.BiggerSpriteDestSize.Width, Constants.BiggerSpriteDestSize.Height);
                 }
                 else
                 {
@@ -213,10 +194,14 @@ namespace BlazorGalaga.Services
                         !isbig ? Constants.SpriteDestSize.Width : Constants.BigSpriteDestSize.Width,
                         !isbig ? Constants.SpriteDestSize.Height : Constants.BigSpriteDestSize.Height
                     );
-                    sprite.SpriteDestRect = new RectangleF(0, 0, !isbig ? Constants.SpriteDestSize.Width : Constants.BigSpriteDestSize.Width, !isbig ? Constants.SpriteDestSize.Height : Constants.BigSpriteDestSize.Height);
                 }
                 buffercanvases[bufferindex].IsInitialized = true;
             }
+
+            if (istracktorbeam)
+                sprite.SpriteDestRect = new RectangleF(0, 0, Constants.BiggerSpriteDestSize.Width, Constants.BiggerSpriteDestSize.Height);
+            else
+                sprite.SpriteDestRect = new RectangleF(0, 0, !isbig ? Constants.SpriteDestSize.Width : Constants.BigSpriteDestSize.Width, !isbig ? Constants.SpriteDestSize.Height : Constants.BigSpriteDestSize.Height);
 
             sprite.BufferCanvas = buffercanvases[bufferindex].Context;
             sprite.DynamicCanvas = DynamicCtx1;

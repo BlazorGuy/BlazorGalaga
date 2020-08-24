@@ -14,11 +14,11 @@ namespace BlazorGalaga.Static.GameServiceHelpers
         {
             foreach(var bug in bugs)
             {
-                if (bug != null && bug.ChildBugs != null)
+                if (bug != null && bug.ChildBugs != null && bug.ChildBugs.Count > 0)
                 {
                     if (bug.CurPathPointIndex < bug.PathPoints.Count - 1)
                     {
-                        foreach(var childbug in bug.ChildBugs)
+                        foreach (var childbug in bug.ChildBugs)
                         {
                             childbug.IsMoving = true;
                             childbug.RotateAlongPath = true;
@@ -33,8 +33,8 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                     {
                         foreach (var childbug in bug.ChildBugs)
                         {
-                            childbug.PathPoints.Clear();
-                            childbug.Paths.Clear();
+                            childbug.PathPoints = new List<PointF>();
+                            childbug.Paths = new List<BezierCurve>();
                             childbug.RotateAlongPath = true;
                             childbug.IsMoving = true;
                             childbug.Speed = 5;

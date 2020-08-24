@@ -18,32 +18,14 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 
             if (tb == null)
             {
-                tb = new TractorBeam()
-                {
-                    DrawPath = false,
-                    RotateAlongPath = false,
-                    Started = true,
-                    DestroyAfterComplete = false,
-                    IsMoving = false,
-                    PathIsLine = true,
-                    Location = new PointF(bug.Location.X - 93, bug.Location.Y - 5)
-                };
-
-                tb.SpriteBankIndex = 0;
-
-                tb.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.TractorBeam));
-                tb.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.TractorBeam2));
-                tb.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.TractorBeam3));
-                tb.SpriteBank.ForEach(a => {
-                    a.SourceRect = new Rectangle(0, 0, Constants.BiggerSpriteDestSize.Width, 0);
-                    a.DestRect = new Rectangle(0, 0, Constants.BiggerSpriteDestSize.Width, 0);
-                });
-
-                animationService.Animatables.Add(tb);
+                //create the tractor bream
+                //it's height is zero at this point
+                CreateTractorBeam(animationService, ship, bug);
             }
             else
             {
-                if (tb.SpriteBank.First().DestRect.Value.Height < Constants.BiggerSpriteDestSize.Height)
+                //extend the tractor beam over the course of a few seconds
+                if (tb.SpriteBank.First().DestRect.Value.Height < Constants.BiggerSpriteDestSize.Height && ship.Visible != false)
                 {
                     tb.SpriteBank.ForEach(a =>
                     {
@@ -53,12 +35,43 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 }
                 else
                 {
-                    ship.Visible = false;
-                    if (CapturedShip==null)
+                    if (CapturedShip == null)
+                    {
+                        //hide the real ship and create the
+                        //captured ship sprite
+                        ship.Visible = false;
                         CreateCapturedShip(animationService, ship, bug);
+                    }
                     else
                     {
-                        CapturedShip.Rotation += 5;
+                        if (CapturedShip.IsMoving)
+                        {
+                            //captured ship spins up to bug
+                            CapturedShip.ManualRotation += 25;
+                        }
+                        else
+                        {
+                            CapturedShip.ManualRotation = 0;
+                            //retract the tractor beam over the course
+                            //of a few seconds
+                            if (tb.SpriteBank.First().DestRect.Value.Height > 0)
+                            {
+                                tb.SpriteBank.ForEach(a =>
+                                {
+                                    a.SourceRect = new Rectangle(0, 0, Constants.BiggerSpriteDestSize.Width, a.SourceRect.Value.Height - 20);
+                                    a.DestRect = new Rectangle(0, 0, Constants.BiggerSpriteDestSize.Width, a.DestRect.Value.Height - 20);
+                                });
+                            }
+                            else if (bug.ChildBugs.Count == 0)
+                            {
+                                CapturedShip.Visible = false;
+                                CreateCapturedShipChildBug(animationService, bug);
+                            }
+                            else
+                            {
+                                bug.IsCapturing = false;
+                            }
+                        }
                     }
                 }
                 
@@ -68,6 +81,58 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                     tb.SpriteBankIndex = 0;
             }
         }
+        private static void CreateCapturedShipChildBug(AnimationService animationService, Bug bug)
+        {
+            //var childbug = new Bug(Sprite.SpriteTypes.CapturedShip)
+            //{
+            //    Started = true,
+            //    ZIndex = 100,
+            //    RotateAlongPath = true,
+            //    Location = bug.Location,
+            //};
+            //animationService.Animatables.Add(childbug);
+            //bug.ChildBugs.Add(childbug);
+            //bug.ChildBugOffset = new Point(0, 25);
+            bug.OutputDebugInfo = true;
+            bug.RotateWhileStill = false;
+            bug.Paths.Add(new BezierCurve()
+            {
+                StartPoint = bug.Location,
+                EndPoint = BugFactory.EnemyGrid.GetPointByRowCol(bug.HomePoint.X, bug.HomePoint.Y),
+                ControlPoint1 = bug.Location,
+                ControlPoint2 = BugFactory.EnemyGrid.GetPointByRowCol(bug.HomePoint.X, bug.HomePoint.Y)
+            });
+            bug.Paths.ForEach(a =>
+            {
+                bug.PathPoints.AddRange(animationService.ComputePathPoints(a, true));
+            });
+        }
+
+        private static void CreateTractorBeam(AnimationService animationService, Ship ship, Bug bug)
+        {
+            var tb = new TractorBeam()
+            {
+                DrawPath = false,
+                RotateAlongPath = false,
+                Started = true,
+                DestroyAfterComplete = false,
+                IsMoving = false,
+                PathIsLine = true,
+                Location = new PointF(bug.Location.X, bug.Location.Y + 160)
+            };
+
+            tb.SpriteBankIndex = 0;
+
+            tb.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.TractorBeam));
+            tb.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.TractorBeam2));
+            tb.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.TractorBeam3));
+            tb.SpriteBank.ForEach(a => {
+                a.SourceRect = new Rectangle(0, 0, Constants.BiggerSpriteDestSize.Width, 0);
+                a.DestRect = new Rectangle(0, 0, Constants.BiggerSpriteDestSize.Width, 0);
+            });
+
+            animationService.Animatables.Add(tb);
+        }
 
         private static void CreateCapturedShip(AnimationService animationService,Ship ship, Bug bug)
         {
@@ -76,19 +141,19 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             paths.Add(new BezierCurve()
             {
                 StartPoint = ship.Location,
-                EndPoint = ship.Location,
+                EndPoint = new PointF(bug.Location.X,bug.Location.Y + 50),
                 ControlPoint1 = ship.Location,
-                ControlPoint2 = ship.Location,
+                ControlPoint2 = bug.Location,
             });
 
             CapturedShip = new Ship()
             {
+                Sprite = new Sprite(Sprite.SpriteTypes.CapturedShip),
                 Paths = paths,
-                RotateAlongPath = false,
+                RotateAlongPath = true,
                 Started = true,
                 Index = -999,
-                Speed = 5,
-                RotateManually = true
+                Speed = 4
             };
 
             CapturedShip.Paths.ForEach(a => {

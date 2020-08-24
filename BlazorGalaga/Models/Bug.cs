@@ -18,6 +18,8 @@ namespace BlazorGalaga.Models
         public Point ChildBugOffset { get; set; }
         public string Tag { get; set; }
         public bool IsCapturing { get; set; }
+        public bool OutputDebugInfo { get; set; }
+
         public Bug(Sprite.SpriteTypes spritetype)
         {
             Sprite = new Sprite(spritetype);
