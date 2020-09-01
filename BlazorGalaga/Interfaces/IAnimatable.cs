@@ -44,7 +44,6 @@ namespace BlazorGalaga.Interfaces
         public bool RotateWhileStill { get; set; }
         public bool PathDrawn { get; set; }
         public float ManualRotation { get; set; }
-        public int LineCorrectionCount { get; set; }
 
 
 

@@ -88,13 +88,13 @@ namespace BlazorGalaga.Services
                     //if lineto == linefrom then make lineto slightly bigger so we don't hang up
                     if (animatable.LineToLocation.X == animatable.LineFromLocation.X && animatable.LineToLocation.Y == animatable.LineFromLocation.Y)
                     {
-                        //if (animatable.LineCorrectionCount < 3)
-                        //{
-                            animatable.LineToLocation = new Vector2(animatable.LineToLocation.X + .01F, animatable.LineToLocation.Y + .01F);
-                        //    animatable.LineCorrectionCount += 1;
-                        //}
-                        //else
-                        //    animatable.CurPathPointIndex += 1;
+                        //if we are at the last point in the line, stop the animation
+                        if (animatable.PathPoints.Last() == new PointF(animatable.LineToLocation.X, animatable.LineToLocation.Y))
+                        {
+                            animatable.CurPathPointIndex += 1;
+                            return;
+                        }
+                        animatable.LineToLocation = new Vector2(animatable.LineToLocation.X + .01F, animatable.LineToLocation.Y + .01F);
                     }
 
                     Vector2 direction = Vector2.Normalize(animatable.LineToLocation - animatable.LineFromLocation);

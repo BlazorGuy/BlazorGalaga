@@ -16,8 +16,10 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             {
                 if (bug != null && bug.ChildBugs != null && bug.ChildBugs.Count > 0)
                 {
+                    //is the parent bug still moving?
                     if (bug.CurPathPointIndex < bug.PathPoints.Count - 1)
                     {
+                        //make the child bugs follow along
                         foreach (var childbug in bug.ChildBugs)
                         {
                             childbug.IsMoving = true;
@@ -31,6 +33,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                     }
                     else
                     {
+                        //the parent bug has stopped moving
                         foreach (var childbug in bug.ChildBugs)
                         {
                             childbug.PathPoints = new List<PointF>();
@@ -50,6 +53,19 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                         }
                         bug.ChildBugs.Clear();
                     }
+                }
+            }
+
+            var bugwithcapturedbug = bugs.FirstOrDefault(a => a.CapturedBug != null && a.CaptureState == Bug.enCaptureState.Complete);
+
+            if (bugwithcapturedbug != null)
+            {
+                if (bugwithcapturedbug.IsMoving)
+                {
+                    bugwithcapturedbug.CapturedBug.IsMoving = true;
+                    bugwithcapturedbug.CapturedBug.RotateAlongPath = true;
+                    bugwithcapturedbug.CapturedBug.Location = new PointF(bugwithcapturedbug.Location.X, bugwithcapturedbug.Location.Y -50);
+                    bugwithcapturedbug.CapturedBug.Rotation = bugwithcapturedbug.Rotation;
                 }
             }
         }

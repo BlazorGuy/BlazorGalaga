@@ -13,6 +13,7 @@ using BlazorGalaga.Static;
 using BlazorGalaga.Static.GameServiceHelpers;
 using BlazorGalaga.Static.Levels;
 using BlazorGalaganimatable.Models.Paths;
+using static BlazorGalaga.Pages.Index;
 
 namespace BlazorGalaga.Services
 {
@@ -48,8 +49,7 @@ namespace BlazorGalaga.Services
             {
                 case 1:
                     Level1.InitIntro(animationService, introspeedincrease);
-                    //delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
-                    delays = new List<int>() { 1000, 0,0,0,0,3000 };
+                    delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
                     break;
                 case 2:
                     Level2.InitIntro(animationService, introspeedincrease);
@@ -120,26 +120,26 @@ namespace BlazorGalaga.Services
                 });
             });
 
-            //Task.Delay(delays[0], cancellationTokenSource.Token).ContinueWith((task) =>
-            //{
-            //    GetBugs().Where(a => a.Wave==1).ToList().ForEach(a => a.Started = true);
-            //});
+            Task.Delay(delays[0], cancellationTokenSource.Token).ContinueWith((task) =>
+            {
+                GetBugs().Where(a => a.Wave == 1).ToList().ForEach(a => a.Started = true);
+            });
             Task.Delay(delays[1], cancellationTokenSource.Token).ContinueWith((task) =>
             {
                 GetBugs().Where(a => a.Wave == 2).ToList().ForEach(a => a.Started = true);
             });
-            //Task.Delay(delays[2], cancellationTokenSource.Token).ContinueWith((task) =>
-            //{
-            //    GetBugs().Where(a => a.Wave == 3).ToList().ForEach(a => a.Started = true);
-            //});
-            //Task.Delay(delays[3], cancellationTokenSource.Token).ContinueWith((task) =>
-            //{
-            //    GetBugs().Where(a => a.Wave == 4).ToList().ForEach(a => a.Started = true);
-            //});
-            //Task.Delay(delays[4], cancellationTokenSource.Token).ContinueWith((task) =>
-            //{
-            //    GetBugs().Where(a => a.Wave == 5).ToList().ForEach(a => a.Started = true);
-            //});
+            Task.Delay(delays[2], cancellationTokenSource.Token).ContinueWith((task) =>
+            {
+                GetBugs().Where(a => a.Wave == 3).ToList().ForEach(a => a.Started = true);
+            });
+            Task.Delay(delays[3], cancellationTokenSource.Token).ContinueWith((task) =>
+            {
+                GetBugs().Where(a => a.Wave == 4).ToList().ForEach(a => a.Started = true);
+            });
+            Task.Delay(delays[4], cancellationTokenSource.Token).ContinueWith((task) =>
+            {
+                GetBugs().Where(a => a.Wave == 5).ToList().ForEach(a => a.Started = true);
+            });
             if (delays[5] != -1)
             {
                 Task.Delay(delays[5], cancellationTokenSource.Token).ContinueWith((task) =>
@@ -157,7 +157,7 @@ namespace BlazorGalaga.Services
             Task.Delay(Utils.Rnd(500,maxwaittimebetweendives), cancellationTokenSource.Token).ContinueWith((task) =>
             {
                 var bug = EnemyDiveManager.DoEnemyDive(GetBugs(), animationService, Ship, Constants.BugDiveSpeed + divespeedincrease);
-                if (bug != null && bug.IsDiving && !bug.IsCapturing)
+                if (bug != null && bug.IsDiving && bug.CaptureState == Bug.enCaptureState.NotStarted)
                 {
                     var maxmissleperbug = Utils.Rnd(0 + missileincrease, 3 + missileincrease);
                     for (int i = 1; i <= maxmissleperbug; i++)
@@ -179,7 +179,7 @@ namespace BlazorGalaga.Services
             ).Select(a=> a as Bug).ToList();
         }
 
-        public async void Process(float timestamp)
+        public async void Process(float timestamp, GameLoopObject glo)
         {
             //Begin Init - Only happens once
             if (!consoledrawn && Ship.Sprite.BufferCanvas != null)
@@ -254,6 +254,11 @@ namespace BlazorGalaga.Services
 
             ShipManager.CheckMissileCollisions(bugs, animationService);
 
+            if (glo.captureship)
+            {
+                var bug = bugs.FirstOrDefault(a => a.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug);
+                EnemyDiveManager.DoEnemyDive(bugs, animationService, Ship, Constants.BugDiveSpeed, bug, true);
+            }
         }
     }
 }

@@ -58,9 +58,9 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                         bug.PathPoints.AddRange(animationService.ComputePathPoints(bug.Paths.Last(), true));
                     }
                 }
-                else if (bug.IsCapturing)
+                else if (bug.CaptureState == Bug.enCaptureState.Started)
                 {
-                    if (!bug.IsMoving)
+                    if (bug.CurPathPointIndex >= bug.PathPoints.Count - 1)
                     {
                         bug.Rotation = -90;
                         GalagaCaptureManager.DoTractorBeam(bug, animationService, ship);
@@ -71,6 +71,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                     var homepoint = BugFactory.EnemyGrid.GetPointByRowCol(bug.HomePoint.X, bug.HomePoint.Y);
                     if (!(homepoint.X == 0 && homepoint.Y == 0))
                     {
+                        homepoint.Y += bug.HomePointYOffset;
                         if (bug.IsMoving)
                         {
                             //this makes the bugs go to their spot on the moving enemy grid
@@ -85,6 +86,11 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                         else
                         {
                             bug.Location = homepoint;
+                            if (bug.CaptureState == Bug.enCaptureState.FlyingBackHome)
+                            {
+                                bug.CaptureState = Bug.enCaptureState.Complete;
+                                Utils.dOut("Capture Complete!", "yep");
+                            }
                         }
                     }
                 }

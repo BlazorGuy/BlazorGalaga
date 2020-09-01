@@ -8,6 +8,14 @@ namespace BlazorGalaga.Models
 {
     public class Bug : AnimatableBase
     {
+        public enum enCaptureState
+        {
+            NotStarted,
+            Started,
+            FlyingBackHome,
+            Complete
+        }
+
         public Point HomePoint { get; set; }
         public bool IsDiving { get; set; }
         public bool IsExploding { get; set; }
@@ -17,14 +25,17 @@ namespace BlazorGalaga.Models
         public int Wave { get; set; }
         public Point ChildBugOffset { get; set; }
         public string Tag { get; set; }
-        public bool IsCapturing { get; set; }
         public bool OutputDebugInfo { get; set; }
+        public int HomePointYOffset { get; set; }
+        public Bug CapturedBug { get; set; }
+        public enCaptureState CaptureState { get; set; }
 
         public Bug(Sprite.SpriteTypes spritetype)
         {
             Sprite = new Sprite(spritetype);
             SpriteBank = new List<Sprite>();
             ChildBugs = new List<Bug>();
+            CaptureState = enCaptureState.NotStarted;
         }
     }
 }

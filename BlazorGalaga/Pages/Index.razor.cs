@@ -11,6 +11,7 @@ using BlazorGalaga.Interfaces;
 using BlazorGalaga.Models;
 using BlazorGalaga.Services;
 using BlazorGalaga.Static;
+using BlazorGalaga.Static.GameServiceHelpers;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
@@ -127,6 +128,7 @@ namespace BlazorGalaga.Pages
             public bool killbugs { get; set; }
             public bool resetanimation { get; set; }
             public bool spritesheetloaded { get; set; }
+            public bool captureship { get; set; }
         }
 
         Stopwatch sw = new Stopwatch();
@@ -183,7 +185,7 @@ namespace BlazorGalaga.Pages
                     if (gameService.animationService != null)
                     {
                         if (gameService.Ship == null) gameService.Ship = ship;
-                        gameService.Process(timeStamp);
+                        gameService.Process(timeStamp,glo);
                         Utils.dOut("gameService.Process()", sw.ElapsedMilliseconds);
                     }
                 }

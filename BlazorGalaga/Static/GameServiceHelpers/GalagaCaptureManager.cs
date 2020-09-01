@@ -62,14 +62,16 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                                     a.DestRect = new Rectangle(0, 0, Constants.BiggerSpriteDestSize.Width, a.DestRect.Value.Height - 20);
                                 });
                             }
-                            else if (bug.ChildBugs.Count == 0)
+                            else if (bug.CapturedBug == null)
                             {
+                                //create captured bug and send the main bug
+                                //home
                                 CapturedShip.Visible = false;
                                 CreateCapturedShipChildBug(animationService, bug);
                             }
                             else
                             {
-                                bug.IsCapturing = false;
+                                bug.CaptureState = Bug.enCaptureState.FlyingBackHome;
                             }
                         }
                     }
@@ -83,17 +85,18 @@ namespace BlazorGalaga.Static.GameServiceHelpers
         }
         private static void CreateCapturedShipChildBug(AnimationService animationService, Bug bug)
         {
-            //var childbug = new Bug(Sprite.SpriteTypes.CapturedShip)
-            //{
-            //    Started = true,
-            //    ZIndex = 100,
-            //    RotateAlongPath = true,
-            //    Location = bug.Location,
-            //};
-            //animationService.Animatables.Add(childbug);
-            //bug.ChildBugs.Add(childbug);
-            //bug.ChildBugOffset = new Point(0, 25);
-            bug.OutputDebugInfo = true;
+            bug.CapturedBug = new Bug(Sprite.SpriteTypes.CapturedShip)
+            {
+                Started = true,
+                ZIndex = 100,
+                RotateAlongPath = true,
+                Location = bug.Location,
+                HomePoint = bug.HomePoint,
+                HomePointYOffset = -50
+            };
+            animationService.Animatables.Add(bug.CapturedBug);
+            bug.ChildBugs.Add(bug.CapturedBug);
+            bug.ChildBugOffset = new Point(0, 25);
             bug.RotateWhileStill = false;
             bug.Paths.Add(new BezierCurve()
             {
@@ -118,7 +121,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 DestroyAfterComplete = false,
                 IsMoving = false,
                 PathIsLine = true,
-                Location = new PointF(bug.Location.X, bug.Location.Y + 160)
+                Location = new PointF(bug.Location.X-16, bug.Location.Y + 185)
             };
 
             tb.SpriteBankIndex = 0;

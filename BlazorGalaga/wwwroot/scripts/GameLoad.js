@@ -2,6 +2,7 @@
 let resetAnimation = false;
 let spriteSheetLoaded = false;
 let killBugs = false;
+let captureShip = false;
 
 window.initFromBlazor = (instance) => {
 
@@ -25,6 +26,9 @@ window.initFromBlazor = (instance) => {
         });
         document.getElementById("btnKillAllBugs").addEventListener('click', function (e) {
             killBugs = true;
+        });
+        document.getElementById("btnCaptureShip").addEventListener('click', function (e) {
+            captureShip = true;
         });
         document.getElementById("btnResetAnimation").addEventListener('click', function (e) {
             resetAnimation = true;
@@ -56,13 +60,15 @@ function gameLoop(timeStamp) {
         pauseanimation: pauseanimation,
         killbugs: killBugs,
         resetanimation: resetAnimation,
-        spritesheetloaded: spriteSheetLoaded
+        spritesheetloaded: spriteSheetLoaded,
+        captureship: captureShip
     };
 
     window.instance.invokeMethodAsync('GameLoop', gameloopobject);
 
     killBugs = false;
     resetAnimation = false;
+    captureShip = false;
 
     window.requestAnimationFrame(gameLoop);
 }
