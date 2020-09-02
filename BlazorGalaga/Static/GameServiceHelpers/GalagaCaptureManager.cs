@@ -121,7 +121,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 DestroyAfterComplete = false,
                 IsMoving = false,
                 PathIsLine = true,
-                Location = new PointF(bug.Location.X-16, bug.Location.Y + 185)
+                Location = new PointF(bug.Location.X, bug.Location.Y + 155)
             };
 
             tb.SpriteBankIndex = 0;

@@ -172,7 +172,7 @@ namespace BlazorGalaga.Pages
                 else
                     drawmod = 2;
 
-                if (loopCount % drawmod == 0)
+                if (loopCount % drawmod == 0 || glo.captureship)
                 {
                     sw.Restart();
                     animationService.Draw();

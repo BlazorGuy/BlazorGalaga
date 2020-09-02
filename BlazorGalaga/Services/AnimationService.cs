@@ -129,7 +129,6 @@ namespace BlazorGalaga.Services
                 else if (animatable.PathPoints.Count > 0)
                 {
                     animatable.CurPathPointIndex = 0;
-                    //animatable.LineCorrectionCount = 0;
                     animatable.PathPoints.Clear();
                     animatable.Paths.Clear();
                     animatable.IsMoving = false;

@@ -256,6 +256,15 @@ namespace BlazorGalaga.Services
 
             if (glo.captureship)
             {
+                bugs.ForEach(a => {
+                    a.Location = BugFactory.EnemyGrid.GetPointByRowCol(a.HomePoint.X, a.HomePoint.Y);
+                    a.CurPathPointIndex = 0;
+                    a.PathPoints.Clear();
+                    a.Paths.Clear();
+                    a.IsMoving = false;
+                    a.StartDelay = 0;
+                    a.Started = true;
+                });
                 var bug = bugs.FirstOrDefault(a => a.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug);
                 EnemyDiveManager.DoEnemyDive(bugs, animationService, Ship, Constants.BugDiveSpeed, bug, true);
             }

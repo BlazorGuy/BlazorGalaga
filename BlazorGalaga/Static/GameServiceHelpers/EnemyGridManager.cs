@@ -60,7 +60,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 }
                 else if (bug.CaptureState == Bug.enCaptureState.Started)
                 {
-                    if (bug.CurPathPointIndex >= bug.PathPoints.Count - 1)
+                    if (!bug.IsMoving)
                     {
                         bug.Rotation = -90;
                         GalagaCaptureManager.DoTractorBeam(bug, animationService, ship);
