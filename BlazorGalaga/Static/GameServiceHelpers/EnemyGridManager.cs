@@ -66,6 +66,10 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                         GalagaCaptureManager.DoTractorBeam(bug, animationService, ship);
                     }
                 }
+                else if (bug.CaptureState == Bug.enCaptureState.RecaptureStarted)
+                {
+                    GalagaCaptureManager.DoRecapture(bug, animationService, ship);
+                }
                 else
                 {
                     var homepoint = BugFactory.EnemyGrid.GetPointByRowCol(bug.HomePoint.X, bug.HomePoint.Y);
@@ -89,7 +93,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                             if (bug.CaptureState == Bug.enCaptureState.FlyingBackHome)
                             {
                                 bug.CaptureState = Bug.enCaptureState.Complete;
-                                Utils.dOut("Capture Complete!", "yep");
+                                ship.Visible = true;
                             }
                         }
                     }

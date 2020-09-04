@@ -81,14 +81,22 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                     if (missilerect.IntersectsWith(bugrect))
                     {
                         missile.DestroyImmediately = true;
-                        if (bug.Sprite.SpriteType== Sprite.SpriteTypes.GreenBug || bug.Sprite.SpriteType== Sprite.SpriteTypes.GreenBug_DownFlap)
+                        if (bug.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug || bug.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug_DownFlap)
                         {
                             bug.Sprite = new Sprite(Sprite.SpriteTypes.GreenBug_Blue);
                             bug.SpriteBank.Clear();
                             bug.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.GreenBug_Blue_DownFlap));
                         }
                         else
+                        {
+                            if (bug.Sprite.SpriteType == Sprite.SpriteTypes.CapturedShip)
+                            {
+                                var b = bugs.FirstOrDefault(a => a.CapturedBug != null);
+                                b.CapturedBug = null;
+                                b.CaptureState = Bug.enCaptureState.NotStarted;
+                            }
                             bug.IsExploding = true;
+                        }
                         return;
                     }
                 }

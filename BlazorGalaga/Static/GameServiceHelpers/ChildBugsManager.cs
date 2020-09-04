@@ -56,6 +56,8 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 }
             }
 
+
+            //start captured bug logic
             var bugwithcapturedbug = bugs.FirstOrDefault(a => a.CapturedBug != null && a.CaptureState == Bug.enCaptureState.Complete);
 
             if (bugwithcapturedbug != null)
@@ -67,7 +69,10 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                     bugwithcapturedbug.CapturedBug.Location = new PointF(bugwithcapturedbug.Location.X, bugwithcapturedbug.Location.Y -50);
                     bugwithcapturedbug.CapturedBug.Rotation = bugwithcapturedbug.Rotation;
                 }
+                else
+                    bugwithcapturedbug.CapturedBug.RotateAlongPath = false;
             }
+            //end captured bug logic
         }
     }
 }

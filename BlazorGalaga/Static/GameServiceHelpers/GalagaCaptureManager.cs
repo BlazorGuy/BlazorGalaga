@@ -12,6 +12,13 @@ namespace BlazorGalaga.Static.GameServiceHelpers
     {
         private static Ship CapturedShip;
 
+        public static void DoRecapture(Bug bug, AnimationService animationService, Ship ship)
+        {
+            bug.OutputDebugInfo = true;
+            bug.RotateWhileStill = true;
+            bug.ManualRotationRate = 15;
+        }
+
         public static void DoTractorBeam(Bug bug, AnimationService animationService, Ship ship)
         {
             var tb = animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.TractorBeam).FirstOrDefault();

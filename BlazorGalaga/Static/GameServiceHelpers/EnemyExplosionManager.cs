@@ -26,9 +26,14 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                     bug.Visible = false;
                     bug.DestroyAfterComplete = true;
                 }
+                else if (bug.CapturedBug != null)
+                {
+                    bug.CapturedBug.CaptureState = Bug.enCaptureState.RecaptureStarted;
+                    bug.DestroyImmediately = true;
+                }
                 else
                     bug.DestroyImmediately = true;
-        });
+            });
 
             animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.EnemyExplosion1).ToList().ForEach(exp =>
             {

@@ -13,6 +13,7 @@ namespace BlazorGalaga.Models
             NotStarted,
             Started,
             FlyingBackHome,
+            RecaptureStarted,
             Complete
         }
 

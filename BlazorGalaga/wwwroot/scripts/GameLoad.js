@@ -29,6 +29,7 @@ window.initFromBlazor = (instance) => {
         });
         document.getElementById("btnCaptureShip").addEventListener('click', function (e) {
             captureShip = true;
+            document.getElementById("btnCaptureShip").disabled = true;
         });
         document.getElementById("btnResetAnimation").addEventListener('click', function (e) {
             resetAnimation = true;
