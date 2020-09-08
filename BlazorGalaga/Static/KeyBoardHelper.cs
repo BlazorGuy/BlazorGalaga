@@ -51,7 +51,7 @@ namespace BlazorGalaga.Static
         {
             if (fire)
             {
-                if (animationService.Animatables.Count(a => a.Sprite.SpriteType == Sprite.SpriteTypes.ShipMissle) < 2)
+                if (animationService.Animatables.Count(a => a.Sprite.SpriteType == Sprite.SpriteTypes.ShipMissle) < (ship.Sprite.SpriteType == Sprite.SpriteTypes.DoubleShip ? 4 : 2))
                 {
                     ship.IsFiring = true;
                     dontfire = true;
@@ -82,8 +82,6 @@ namespace BlazorGalaga.Static
                 ship.Location = new System.Drawing.PointF(Constants.CanvasSize.Width - 31, ship.Location.Y);
                 ship.Speed = 0;
             }
-
-            Utils.dOut("ship", ship.CurPathPointIndex);
         }
     }
 }

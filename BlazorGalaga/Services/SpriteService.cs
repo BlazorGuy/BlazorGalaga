@@ -155,6 +155,9 @@ namespace BlazorGalaga.Services
                 case Sprite.SpriteTypes.TractorBeam3:
                     SetUpSprite(BiggerBufferCanvases, sprite, 2, 389, 36, 0, true, true);
                     break;
+                case Sprite.SpriteTypes.DoubleShip:
+                    SetUpDoubleSprite(BigBufferCanvases, sprite, 5, 109, 1, 0);
+                    break;
             }
 
             sprite.IsInitialized = true;
@@ -207,6 +210,37 @@ namespace BlazorGalaga.Services
             sprite.DynamicCanvas = DynamicCtx1;
             sprite.InitialRotationOffset = rotationoffset;
         }
+
+        private async void SetUpDoubleSprite(List<Canvas> buffercanvases,
+                                       Sprite sprite, int bufferindex, int sx, int sy,
+                                       int rotationoffset)
+        {
+
+            if (!buffercanvases[bufferindex].IsInitialized)
+            {
+                for (var i = 0; i <= 1; i++)
+                {
+                    await buffercanvases[bufferindex].Context.DrawImageAsync(
+                        SpriteSheet,
+                        sx,
+                        sy,
+                        Constants.SpriteSourceSize,
+                        Constants.SpriteSourceSize,
+                        i == 0 ? 0 : Constants.SpriteDestSize.Width-3,
+                        0,
+                        Constants.SpriteDestSize.Width,
+                        Constants.SpriteDestSize.Height
+                    );
+                }
+                buffercanvases[bufferindex].IsInitialized = true;
+            }
+
+            sprite.SpriteDestRect = new RectangleF(0, 0, Constants.SpriteDestSize.Width, Constants.SpriteDestSize.Height);
+            sprite.BufferCanvas = buffercanvases[bufferindex].Context;
+            sprite.DynamicCanvas = DynamicCtx1;
+            sprite.InitialRotationOffset = rotationoffset;
+        }
+
 
     }
 }

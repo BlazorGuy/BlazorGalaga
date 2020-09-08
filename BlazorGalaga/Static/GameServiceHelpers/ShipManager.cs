@@ -45,30 +45,36 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 
         public static void Fire(Ship ship, AnimationService animationService)
         {
-            List<BezierCurve> paths = new List<BezierCurve>();
-
-            paths.Add(new BezierCurve()
+            var c = ship.Sprite.SpriteType == Sprite.SpriteTypes.DoubleShip ? 1: 0;
+            
+            for (var i = 0; i <= c; i++)
             {
-                StartPoint = new PointF(ship.Location.X + (ship.Sprite.SpriteDestRect.Width / 2) - 14, ship.Location.Y - 5),
-                EndPoint = new PointF(ship.Location.X + (ship.Sprite.SpriteDestRect.Width / 2) - 16, -14)
-            });
+                List<BezierCurve> paths = new List<BezierCurve>();
 
-            var missle = new ShipMissle()
-            {
-                Paths = paths,
-                DrawPath = false,
-                PathIsLine = true,
-                RotateAlongPath = false,
-                Started = true,
-                Speed = Constants.ShipMissleSpeed,
-                DestroyAfterComplete = true
-            };
+                paths.Add(new BezierCurve()
+                {
+                    StartPoint = new PointF(ship.Location.X + ((ship.Sprite.SpriteDestRect.Width / 2) - 14) + (i * 45), ship.Location.Y - 5),
+                    EndPoint = new PointF(ship.Location.X + ((ship.Sprite.SpriteDestRect.Width / 2) - 16) + (i * 45), -14)
+                });
 
-            missle.Paths.ForEach(p => {
-                missle.PathPoints.AddRange(animationService.ComputePathPoints(p, true));
-            });
+                var missle = new ShipMissle()
+                {
+                    Paths = paths,
+                    DrawPath = false,
+                    PathIsLine = true,
+                    RotateAlongPath = false,
+                    Started = true,
+                    Speed = Constants.ShipMissleSpeed,
+                    DestroyAfterComplete = true
+                };
 
-            animationService.Animatables.Add(missle);
+                missle.Paths.ForEach(p =>
+                {
+                    missle.PathPoints.AddRange(animationService.ComputePathPoints(p, true));
+                });
+
+                animationService.Animatables.Add(missle);
+            }
         }
 
         public static void CheckMissileCollisions(List<Bug> bugs, AnimationService animationService)

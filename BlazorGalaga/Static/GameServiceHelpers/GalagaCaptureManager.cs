@@ -15,8 +15,51 @@ namespace BlazorGalaga.Static.GameServiceHelpers
         public static void DoRecapture(Bug bug, AnimationService animationService, Ship ship)
         {
             bug.OutputDebugInfo = true;
-            bug.RotateWhileStill = true;
-            bug.ManualRotationRate = 15;
+
+            if (bug.Rotation < 1500)
+            {
+                //spin for a second or two
+                bug.RotateWhileStill = true;
+                bug.ManualRotationRate = 15;
+                bug.Sprite.SpriteType = Sprite.SpriteTypes.Ship;
+                bug.Sprite.IsInitialized = false;
+                bug.HomePoint = new Point(0, 0);
+            }
+            else if (!bug.IsMoving && bug.Location.X != ship.Location.X + ship.Sprite.SpriteDestRect.Width - 3)
+            {
+                //fly horizontally to align with ship
+                bug.RotateWhileStill = false;
+                bug.ManualRotationRate = 0;
+                bug.Paths.Add(new BezierCurve()
+                {
+                    StartPoint = bug.Location,
+                    EndPoint = new PointF(ship.Location.X + ship.Sprite.SpriteDestRect.Width - 3, bug.Location.Y),
+                    ControlPoint1 = bug.Location,
+                    ControlPoint2 = new PointF(ship.Location.X + ship.Sprite.SpriteDestRect.Width - 3, bug.Location.Y)
+                });
+                bug.Paths.ForEach(a => 
+                    bug.PathPoints.AddRange(animationService.ComputePathPoints(a, true))
+                );
+            }
+            else if (!bug.IsMoving && bug.Location.Y != ship.Location.Y)
+            {
+                //fly vertically to align with ship
+                bug.Paths.Add(new BezierCurve()
+                {
+                    StartPoint = bug.Location,
+                    EndPoint = new PointF(ship.Location.X + ship.Sprite.SpriteDestRect.Width - 3, ship.Location.Y),
+                    ControlPoint1 = bug.Location,
+                    ControlPoint2 = new PointF(ship.Location.X + ship.Sprite.SpriteDestRect.Width - 3, ship.Location.Y),
+                });
+                bug.Paths.ForEach(a =>
+                    bug.PathPoints.AddRange(animationService.ComputePathPoints(a, true))
+                );
+            }
+            else if (!bug.IsMoving && bug.Location.Y == ship.Location.Y)
+            {
+                bug.DestroyImmediately = true;
+                ship.Sprite = new Sprite(Sprite.SpriteTypes.DoubleShip);
+            }
         }
 
         public static void DoTractorBeam(Bug bug, AnimationService animationService, Ship ship)

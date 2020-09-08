@@ -28,7 +28,8 @@ namespace BlazorGalaga.Models
             TractorBeam,
             TractorBeam2,
             TractorBeam3,
-            CapturedShip
+            CapturedShip,
+            DoubleShip
         }
 
         public Rectangle? SourceRect { get; set; }

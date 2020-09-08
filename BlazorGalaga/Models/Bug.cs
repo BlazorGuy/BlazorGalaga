@@ -14,7 +14,7 @@ namespace BlazorGalaga.Models
             Started,
             FlyingBackHome,
             RecaptureStarted,
-            Complete
+            Complete,
         }
 
         public Point HomePoint { get; set; }

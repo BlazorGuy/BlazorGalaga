@@ -133,11 +133,11 @@ namespace BlazorGalaga.Services
                     animatable.Paths.Clear();
                     animatable.IsMoving = false;
                 }
-                else if (animatable.RotateWhileStill && animatable.ManualRotation != 0)
+                else if (animatable.RotateWhileStill)
                 {
                     if (animatable.ManualRotationRate != 0)
                         animatable.Rotation += animatable.ManualRotationRate;
-                    else
+                    else if(animatable.ManualRotation != 0)
                         animatable.Rotation = animatable.ManualRotation;
                 }
 
@@ -154,6 +154,7 @@ namespace BlazorGalaga.Services
                                                   "<br/> RotateWhileStill: " + animatable.RotateWhileStill +
                                                   "<br/> ManualRotation: " + animatable.ManualRotation +
                                                   "<br/> Rotation: " + animatable.Rotation +
+                                                  "<br/> ManualRotationRate: " + animatable.ManualRotationRate +
                                                   "<br/> startpoint: " + (animatable.Paths == null || animatable.Paths.Count==0 ? "NA" : animatable.Paths.First().StartPoint.ToString()) +
                                                   "<br/> endpoint: " + (animatable.Paths == null || animatable.Paths.Count == 0 ? "NA" : animatable.Paths.Last().EndPoint.ToString()) +
                                                   "<br/> End Animate Debug");
