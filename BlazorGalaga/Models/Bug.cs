@@ -31,6 +31,9 @@ namespace BlazorGalaga.Models
         public Bug CapturedBug { get; set; }
         public enCaptureState CaptureState { get; set; }
 
+        public bool AligningHorizontally { get; set; }
+        public bool AligningVertically { get; set; }
+
         public Bug(Sprite.SpriteTypes spritetype)
         {
             Sprite = new Sprite(spritetype);

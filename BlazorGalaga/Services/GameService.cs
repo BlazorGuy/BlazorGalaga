@@ -246,7 +246,7 @@ namespace BlazorGalaga.Services
                 FlapWingsManager.LastWingFlapTimeStamp = timestamp;
             }
 
-            if (Ship.IsFiring)
+            if (Ship.IsFiring && !Ship.Disabled)
             {
                 Ship.IsFiring = false;
                 ShipManager.Fire(Ship, animationService);

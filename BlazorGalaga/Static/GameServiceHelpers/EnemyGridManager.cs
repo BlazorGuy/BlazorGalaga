@@ -39,11 +39,15 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 }
                 else
                     BugFactory.EnemyGrid.GridLeft += MoveEnemyGridIncrement;
-
             }
 
             bugs.ForEach(bug =>
             {
+                //if the player shoots the bug befire it's captured in the tracktor beam
+                //then destroy the tracktor beam
+                if (!bugs.Any(a => a.CaptureState == Bug.enCaptureState.Started))
+                    animationService.Animatables.RemoveAll(a => a.Sprite.SpriteType == Sprite.SpriteTypes.TractorBeam);
+
                 if (bug.IsDiveBomber)
                 {
                     if (bug.CurPathPointIndex >= bug.PathPoints.Count - 1)
@@ -87,13 +91,14 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                             }
                         }
                         //snap to grid if bug isn't moving
-                        else
+                        else if (bug.Started)
                         {
                             bug.Location = homepoint;
                             if (bug.CaptureState == Bug.enCaptureState.FlyingBackHome)
                             {
                                 bug.CaptureState = Bug.enCaptureState.Complete;
                                 ship.Visible = true;
+                                ship.Disabled = false;
                             }
                         }
                     }

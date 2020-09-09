@@ -49,6 +49,8 @@ namespace BlazorGalaga.Static
 
         public static void ControlShip(Ship ship,AnimationService animationService)
         {
+            if (ship.Disabled) return;
+
             if (fire)
             {
                 if (animationService.Animatables.Count(a => a.Sprite.SpriteType == Sprite.SpriteTypes.ShipMissle) < (ship.Sprite.SpriteType == Sprite.SpriteTypes.DoubleShip ? 4 : 2))

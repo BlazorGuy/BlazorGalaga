@@ -39,7 +39,7 @@ namespace BlazorGalaga.Services
 
         public void ResetCanvas(Canvas2DContext ctx)
         {
-            //if (spriteService.IsRotated)
+            if (spriteService.IsRotated)
                 ctx.SetTransformAsync(1, 0, 0, 1, 0, 0);
             ctx.ClearRectAsync(0, 0, Constants.CanvasSize.Width, Constants.CanvasSize.Height);
         }
@@ -148,6 +148,7 @@ namespace BlazorGalaga.Services
                                                   "<br/> LineFromLocation: " + animatable.LineFromLocation.X + "," + animatable.LineFromLocation.Y +
                                                   "<br/> LineToLocation: " + animatable.LineToLocation.X + "," + animatable.LineToLocation.Y +
                                                   "<br/> speed: " + animatable.Speed +
+                                                  "<br/> CaptureState: " + ((Bug)animatable).CaptureState.ToString() +
                                                   "<br/> location: " + animatable.Location +
                                                   "<br/> IsMoving: " + animatable.IsMoving +
                                                   "<br/> loopcount: " + loopcount +

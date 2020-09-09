@@ -8,6 +8,7 @@ namespace BlazorGalaga.Models
     public class Ship : AnimatableBase
     {
         public bool IsFiring { get; set; }
+        public bool Disabled { get; set; }
 
         public Ship() 
         {

@@ -41,15 +41,14 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                             childbug.RotateAlongPath = true;
                             childbug.IsMoving = true;
                             childbug.Speed = 5;
-                            //add a minimum path that is 2X the speed just to kick off the line to location logic
                             childbug.Paths.Add(new BezierCurve()
                             {
                                 StartPoint = childbug.Location,
                                 ControlPoint1 = childbug.Location,
                                 ControlPoint2 = childbug.Location,
-                                EndPoint = new PointF(childbug.Location.X + 10, childbug.Location.Y + 10)
+                                EndPoint = BugFactory.EnemyGrid.GetPointByRowCol(childbug.HomePoint.X,childbug.HomePoint.Y) //new PointF(childbug.Location.X + 10, childbug.Location.Y + 10)
                             });
-                            childbug.PathPoints.AddRange(animationService.ComputePathPoints(childbug.Paths.First()));
+                            childbug.PathPoints.AddRange(animationService.ComputePathPoints(childbug.Paths.First(), true));
                         }
                         bug.ChildBugs.Clear();
                     }
