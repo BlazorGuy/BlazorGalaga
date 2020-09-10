@@ -25,6 +25,8 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 if (loopcount > 50) return null;
             }
 
+            //if the captured ship bug is selected, 
+            //set the selected bug to the parent bug
             if (bug.Sprite.SpriteType == Sprite.SpriteTypes.CapturedShip)
             {
                 var parentgreenbug = bugs.FirstOrDefault(a => a.CapturedBug != null);
@@ -80,7 +82,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                             && !a.IsMoving);
 
                         bug.ChildBugs.AddRange(childbugs);
-                        bug.ChildBugOffset = new Point(35, 35);
+                        bug.ChildBugOffset = new Point(45, 35);
                     }
 
                     if (Utils.Rnd(0, 10) % 2 == 0)

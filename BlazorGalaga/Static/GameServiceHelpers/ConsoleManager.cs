@@ -25,9 +25,9 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 await spriteService.StaticCtx.DrawImageAsync(
                     ship.Sprite.BufferCanvas.Canvas,
                     left,
-                    Constants.CanvasSize.Height - ship.Sprite.SpriteDestRect.Height - 51
+                    Constants.CanvasSize.Height - ship.Sprite.SpriteDestRect.Height - 3
                 );
-                left += (int)ship.Sprite.SpriteDestRect.Width + 51;
+                left += (int)ship.Sprite.SpriteDestRect.Width + 3;
             }
 
             //draw the badges

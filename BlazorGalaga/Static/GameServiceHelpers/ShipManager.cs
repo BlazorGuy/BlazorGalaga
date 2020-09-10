@@ -80,10 +80,10 @@ namespace BlazorGalaga.Static.GameServiceHelpers
         public static void CheckMissileCollisions(List<Bug> bugs, AnimationService animationService)
         {
             animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.ShipMissle).ToList().ForEach(missile => {
-                var missilerect = new Rectangle((int)missile.Location.X + 5, (int)missile.Location.Y + 10, 8, 8);
+                var missilerect = new Rectangle((int)missile.Location.X + 5, (int)missile.Location.Y + 8, 5, 5);
                 foreach(var bug in bugs)
                 {
-                    var bugrect = new Rectangle((int)bug.Location.X, (int)bug.Location.Y, (int)bug.Sprite.SpriteDestRect.Width, (int)bug.Sprite.SpriteDestRect.Height);
+                    var bugrect = new Rectangle((int)bug.Location.X + 10, (int)bug.Location.Y + 10, (int)bug.Sprite.SpriteDestRect.Width - 10, (int)bug.Sprite.SpriteDestRect.Height - 10);
                     if (missilerect.IntersectsWith(bugrect))
                     {
                         missile.DestroyImmediately = true;

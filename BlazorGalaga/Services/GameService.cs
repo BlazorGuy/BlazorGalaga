@@ -152,8 +152,14 @@ namespace BlazorGalaga.Services
         }
         private void DiveAndFire()
         {
-            if (GetBugs().Count == 0)
+            if (GetBugs().Count == 0 || Ship.Disabled)
+            {
+                Task.Delay(1000, cancellationTokenSource.Token).ContinueWith((task) =>
+                {
+                    DiveAndFire();
+                });
                 return;
+            }
 
             Task.Delay(Utils.Rnd(500,maxwaittimebetweendives), cancellationTokenSource.Token).ContinueWith((task) =>
             {
@@ -281,6 +287,7 @@ namespace BlazorGalaga.Services
             if (!Ship.Disabled)
                 ShipManager.CheckMissileCollisions(bugs, animationService);
 
+            //for debugging purposes
             if (glo.captureship)
             {
                 bugs.ForEach(a => {

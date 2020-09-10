@@ -79,9 +79,9 @@ namespace BlazorGalaga.Static
                 ship.Location = new System.Drawing.PointF(31, ship.Location.Y);
                 ship.Speed = 0;
             }
-            else if (ship.Speed != 0 && ship.Location.X >= Constants.CanvasSize.Width - 30)
+            else if (ship.Speed != 0 && ship.Location.X >= Constants.CanvasSize.Width - (ship.Sprite.SpriteType == Sprite.SpriteTypes.DoubleShip ? 60 : 30))
             {
-                ship.Location = new System.Drawing.PointF(Constants.CanvasSize.Width - 31, ship.Location.Y);
+                ship.Location = new System.Drawing.PointF(Constants.CanvasSize.Width - (ship.Sprite.SpriteType == Sprite.SpriteTypes.DoubleShip ? 61 : 31), ship.Location.Y);
                 ship.Speed = 0;
             }
         }

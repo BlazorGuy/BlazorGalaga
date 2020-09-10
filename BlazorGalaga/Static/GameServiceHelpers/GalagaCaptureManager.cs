@@ -68,7 +68,6 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             {
                 bug.DestroyImmediately = true;
                 ship.Sprite = new Sprite(Sprite.SpriteTypes.DoubleShip);
-                ship.Disabled = false;
             }
         }
 
@@ -143,7 +142,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 {
                     //ship isn't under the tractor beam
                     TractorBeamWaitCount += 1;
-                    if (TractorBeamWaitCount > 5)
+                    if (TractorBeamWaitCount > 20)
                     {
                         if (tb.SpriteBank.First().DestRect.Value.Height > 0)
                         {
@@ -158,6 +157,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                             SendBugHome(animationService, bug);
                             TractorBeamWaitCount = 0;
                             bug.CaptureState = Bug.enCaptureState.NotStarted;
+                            bug.RotateWhileStill = false;
                         }
                     }
                 }

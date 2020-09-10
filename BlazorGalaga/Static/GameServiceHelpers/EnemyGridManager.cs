@@ -43,7 +43,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 
             bugs.ForEach(bug =>
             {
-                //if the player shoots the bug befire it's captured in the tracktor beam
+                //if the player shoots the bug befire it's captured in the tractor beam
                 //then destroy the tracktor beam
                 if (!bugs.Any(a => a.CaptureState == Bug.enCaptureState.Started))
                     animationService.Animatables.RemoveAll(a => a.Sprite.SpriteType == Sprite.SpriteTypes.TractorBeam);
@@ -76,6 +76,14 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 }
                 else
                 {
+                    //after the ship has been captured and disabled
+                    //wait for all bugs to finish diving before re-enabling it
+                    if (ship.Disabled)
+                    {
+                        if (bugs.Count(a => a.IsDiving) == 0)
+                            ship.Disabled = false;
+                    }
+
                     var homepoint = BugFactory.EnemyGrid.GetPointByRowCol(bug.HomePoint.X, bug.HomePoint.Y);
                     if (!(homepoint.X == 0 && homepoint.Y == 0))
                     {
@@ -94,6 +102,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                         else if (bug.Started)
                         {
                             bug.Location = homepoint;
+                            bug.IsDiving = false;
                             if (bug.CaptureState == Bug.enCaptureState.FlyingBackHome)
                             {
                                 bug.CaptureState = Bug.enCaptureState.Complete;
