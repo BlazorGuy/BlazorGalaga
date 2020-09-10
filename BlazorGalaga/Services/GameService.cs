@@ -29,6 +29,7 @@ namespace BlazorGalaga.Services
         private bool consoledrawn = false;
         private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private int prevbugcount = 0;
+        private bool capturehappened;
 
         private int divespeedincrease = 0;
         private int missileincrease = 0;
@@ -156,7 +157,10 @@ namespace BlazorGalaga.Services
 
             Task.Delay(Utils.Rnd(500,maxwaittimebetweendives), cancellationTokenSource.Token).ContinueWith((task) =>
             {
-                var bug = EnemyDiveManager.DoEnemyDive(GetBugs(), animationService, Ship, Constants.BugDiveSpeed + divespeedincrease);
+                var bug = EnemyDiveManager.DoEnemyDive(GetBugs(), animationService, Ship, Constants.BugDiveSpeed + divespeedincrease,null,false,capturehappened);
+
+                if (bug.CaptureState != Bug.enCaptureState.NotStarted) capturehappened = true;
+
                 if (bug != null && bug.IsDiving && bug.CaptureState == Bug.enCaptureState.NotStarted)
                 {
                     var maxmissleperbug = Utils.Rnd(0 + missileincrease, 3 + missileincrease);
@@ -192,12 +196,14 @@ namespace BlazorGalaga.Services
 
             var bugs = GetBugs();
 
+            //adjust score when bugs are destroyed
             if (bugs.Count != prevbugcount)
             {
                 await ConsoleManager.DrawScore(spriteService, Score);
                 prevbugcount = bugs.Count();
             }
 
+            //all bugs destroyed, increment to next level
             if (bugs.Count == 0)
             {
                 WaitManager.DoOnce(() =>
@@ -212,6 +218,7 @@ namespace BlazorGalaga.Services
                     WaitManager.DoOnce(async () =>
                     {
                         Level += 1;
+                        capturehappened = false;
                         await ConsoleManager.DrawConsoleLevelText(spriteService, Level);
                     }, WaitManager.WaitStep.enStep.ShowLevelText);
                     if (WaitManager.WaitFor(2000, timestamp, WaitManager.WaitStep.enStep.Pause2))
@@ -227,32 +234,52 @@ namespace BlazorGalaga.Services
                 }
             }
 
+            //animate explosions
             if (timestamp - EnemyGridManager.LastEnemyGridMoveTimeStamp > 35)
             {
                 EnemyExplosionManager.DoEnemyExplosions(bugs, animationService, this);
             }
 
+            //animate child bugs
             ChildBugsManager.MoveChildBugs(bugs, animationService);
 
+            //animated the moving enemy grid
             if (timestamp - EnemyGridManager.LastEnemyGridMoveTimeStamp > 100 || EnemyGridManager.LastEnemyGridMoveTimeStamp == 0)
             {
                 EnemyGridManager.MoveEnemyGrid(bugs, animationService, Ship);
                 EnemyGridManager.LastEnemyGridMoveTimeStamp = timestamp;
             }
 
+            //animate the flapping wings
             if (timestamp - FlapWingsManager.LastWingFlapTimeStamp > 500 || FlapWingsManager.LastWingFlapTimeStamp == 0)
             {
                 FlapWingsManager.FlapWings(bugs);
                 FlapWingsManager.LastWingFlapTimeStamp = timestamp;
             }
 
+            //animate ship missiles
             if (Ship.IsFiring && !Ship.Disabled)
             {
                 Ship.IsFiring = false;
                 ShipManager.Fire(Ship, animationService);
             }
 
-            ShipManager.CheckMissileCollisions(bugs, animationService);
+            //center the ship if it's disabled
+            //happens after a galaga capture
+            if (Ship.Disabled)
+            {
+
+                if (Ship.Location.X > 320)
+                    Ship.Speed = Constants.ShipMoveSpeed * -1;
+                else if (Ship.Location.X < 310)
+                    Ship.Speed = Constants.ShipMoveSpeed;
+                else
+                    Ship.Speed = 0;
+            }
+
+            //ship missile detection
+            if (!Ship.Disabled)
+                ShipManager.CheckMissileCollisions(bugs, animationService);
 
             if (glo.captureship)
             {

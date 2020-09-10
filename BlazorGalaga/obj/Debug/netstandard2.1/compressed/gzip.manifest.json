@@ -1,7 +1,7 @@
 {
   "FilesToCompress": [
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\8ePvl_sS4smaYtfdTy3jl1b2lpElM2uGu9Vm8xOEEkQ=.hash",
+      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\cnZf07mEJj2YYgjx4xfVzPbna7lSYKhEsI1kR01JE1Q=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\BlazorGalaga.dll",
       "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/BlazorGalaga.dll.gz"
     },
@@ -261,7 +261,7 @@
       "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.ComponentModel.DataAnnotations.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\0cShvfNZKx90rYhWk-dr-vx1OuojMecOmaik_e-p55w=.hash",
+      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\S0ZLpAObr2ID0ZGACcPe9GHhIIib-irH9UHMEQIX9-Q=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\BlazorGalaga.pdb",
       "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/BlazorGalaga.pdb.gz"
     },
@@ -291,7 +291,7 @@
       "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/blazor.webassembly.js.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\_dM5kUtL3WYSl8nGJ80o1pKTJGqSOP02DOOdT0qIkPM=.hash",
+      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\r20Hkaqko7kwEG1X3aXSi0HbJC9ar5ajpnJ3gzorX8s=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\blazor.boot.json",
       "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/blazor.boot.json.gz"
     }

@@ -14,7 +14,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 {
     public static class EnemyDiveManager
     {
-        public static Bug DoEnemyDive(List<Bug> bugs, AnimationService animationService, Ship ship, int speed, Bug bug = null, bool captureship=false)
+        public static Bug DoEnemyDive(List<Bug> bugs, AnimationService animationService, Ship ship, int speed, Bug bug = null, bool captureship = false, bool capturehappened = false)
         {
             int loopcount = 0;
 
@@ -52,6 +52,17 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             }
             else if (bug.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug)
             {
+                if (!captureship && !capturehappened)
+                {
+                    if (bug.Sprite.SpriteType != Sprite.SpriteTypes.GreenBug_Blue &&
+                        ship.Sprite.SpriteType != Sprite.SpriteTypes.DoubleShip &&
+                        bugs.Count(a=>a.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug || a.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug_Blue) > 1 &&
+                        bugs.Count(a=>a.CaptureState != Bug.enCaptureState.NotStarted) == 0)
+                    {
+                        captureship = true;
+                    }
+                }
+
                 if (captureship)
                 {
                     dive = new CaptureDive();

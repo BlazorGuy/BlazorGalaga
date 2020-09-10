@@ -17,11 +17,12 @@ namespace BlazorGalaga.Static.GameServiceHelpers
         {
             ship.Disabled = true;
 
-            bug.OutputDebugInfo = true;
-
-            if (bug.Rotation < 1500)
+            if (bug.Rotation < 1500 && !bug.AligningHorizontally && !bug.AligningVertically)
             {
                 //spin for a second or two
+                bug.PathPoints.Clear();
+                bug.Paths.Clear();
+                bug.IsMoving = false;
                 bug.RotateWhileStill = true;
                 bug.ManualRotationRate = 15;
                 bug.Sprite.SpriteType = Sprite.SpriteTypes.Ship;
@@ -34,6 +35,9 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 bug.AligningHorizontally = true;
                 bug.RotateWhileStill = false;
                 bug.ManualRotationRate = 0;
+                bug.Rotation = 0;
+                bug.ManualRotation = 0;
+                bug.RotateAlongPath = false;
                 bug.Paths.Add(new BezierCurve()
                 {
                     StartPoint = bug.Location,
@@ -89,7 +93,8 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                         a.DestRect = new Rectangle(0, 0, Constants.BiggerSpriteDestSize.Width, a.DestRect.Value.Height + 20);
                     });
                 }
-                else if((ship.Location.X >= bug.Location.X - 75 && ship.Location.X <= bug.Location.X + 75) || CapturedShip != null)
+                //if the ship is under the tractor beam and the tractor beam is extended
+                else if(((ship.Location.X >= bug.Location.X - 75 && ship.Location.X <= bug.Location.X + 75) && tb.SpriteBank.First().DestRect.Value.Height > Constants.BiggerSpriteDestSize.Height-20) || CapturedShip != null)
                 {
                     if (CapturedShip == null)
                     {
