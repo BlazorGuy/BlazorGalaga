@@ -52,7 +52,6 @@ namespace BlazorGalaga.Services
                 var rotation = (float)((rotationangle + sprite.InitialRotationOffset) * Math.PI / 180);
                 var x = Math.Cos(rotation);
                 var y = Math.Sin(rotation);
-                //await sprite.DynamicCanvas.SetTransformAsync(x, y, -y, x, location.X + (sprite.SpriteDestRect.Width / 2), location.Y + (sprite.SpriteDestRect.Height / 2));
                 await sprite.DynamicCanvas.SetTransformAsync(x, y, -y, x, location.X, location.Y);
             }
             else if (IsRotated) 

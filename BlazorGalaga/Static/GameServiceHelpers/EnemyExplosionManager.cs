@@ -26,7 +26,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                     bug.Visible = false;
                     bug.DestroyAfterComplete = true;
                 }
-                else if (bug.CapturedBug != null)
+                else if (bug.CapturedBug != null && bug.IsMoving)
                 {
                     bug.CapturedBug.CaptureState = Bug.enCaptureState.RecaptureStarted;
                     bug.DestroyImmediately = true;
