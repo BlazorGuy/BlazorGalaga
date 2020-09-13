@@ -13,6 +13,12 @@ namespace BlazorGalaga.Static.GameServiceHelpers
         private static Ship CapturedShip;
         private static int TractorBeamWaitCount;
 
+        public static void Reset()
+        {
+            CapturedShip = null;
+            TractorBeamWaitCount = 0;
+        }
+
         public static void DoRecapture(Bug bug, AnimationService animationService, Ship ship)
         {
             ship.Disabled = true;
