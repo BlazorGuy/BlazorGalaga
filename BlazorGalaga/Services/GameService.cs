@@ -30,6 +30,7 @@ namespace BlazorGalaga.Services
         private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private int prevbugcount = 0;
         private bool capturehappened;
+        private int hits = 0;
 
         private int divespeedincrease = 0;
         private int missileincrease = 0;
@@ -110,7 +111,7 @@ namespace BlazorGalaga.Services
                     break;
             }
 
-            animationService.Animatables.ForEach(a => {
+           GetBugs().ForEach(a => {
                 a.Paths.ForEach(p => {
                     if (a.Index == 0 || a.Index == 0) p.DrawPath = true;
                     if (a.Index == 0) p.OutPutDebug = true;
@@ -165,7 +166,7 @@ namespace BlazorGalaga.Services
             {
                 var bug = EnemyDiveManager.DoEnemyDive(GetBugs(), animationService, Ship, Constants.BugDiveSpeed + divespeedincrease,null,false,capturehappened);
 
-                if (bug.CaptureState != Bug.enCaptureState.NotStarted) capturehappened = true;
+                if (bug != null && bug.CaptureState == Bug.enCaptureState.Started) capturehappened = true;
 
                 if (bug != null && bug.IsDiving && bug.CaptureState == Bug.enCaptureState.NotStarted)
                 {
@@ -187,6 +188,31 @@ namespace BlazorGalaga.Services
             return animationService.Animatables.Where(a =>
                 a as Bug !=null
             ).Select(a=> a as Bug).ToList();
+        }
+
+        private void MoveToNextLevel(float timestamp)
+        {
+            if (WaitManager.WaitFor(2000, timestamp, WaitManager.WaitStep.enStep.Pause1))
+            {
+                WaitManager.DoOnce(async () =>
+                {
+                    Level += 1;
+                    capturehappened = false;
+                    hits = 0;
+                    GalagaCaptureManager.Reset();
+                    await ConsoleManager.DrawConsoleLevelText(spriteService, Level);
+                }, WaitManager.WaitStep.enStep.ShowLevelText);
+                if (WaitManager.WaitFor(2000, timestamp, WaitManager.WaitStep.enStep.Pause2))
+                {
+                    WaitManager.DoOnce(async () =>
+                    {
+                        await ConsoleManager.ClearConsoleLevelText(spriteService);
+                        InitLevel(Level);
+                        Ship.Visible = true;
+                        WaitManager.ClearSteps();
+                    }, WaitManager.WaitStep.enStep.ClearLevelText);
+                }
+            }
         }
 
         public async void Process(float timestamp, GameLoopObject glo)
@@ -219,24 +245,34 @@ namespace BlazorGalaga.Services
                     EnemyGridManager.EnemyGridBreathing = false;
                 }, WaitManager.WaitStep.enStep.CleanUp);
 
-                if (WaitManager.WaitFor(2000, timestamp, WaitManager.WaitStep.enStep.Pause1))
+                if ((Level == 3 || Level == 8) && !WaitManager.Steps.Any(a=> a.Step == WaitManager.WaitStep.enStep.Pause1))
                 {
-                    WaitManager.DoOnce(async () =>
+                    if (WaitManager.WaitFor(1500, timestamp, WaitManager.WaitStep.enStep.ShowNumberOfHitsLabel))
                     {
-                        Level += 1;
-                        capturehappened = false;
-                        await ConsoleManager.DrawConsoleLevelText(spriteService, Level);
-                    }, WaitManager.WaitStep.enStep.ShowLevelText);
-                    if (WaitManager.WaitFor(2000, timestamp, WaitManager.WaitStep.enStep.Pause2))
-                    {
-                        WaitManager.DoOnce(async () =>
+                        await ConsoleManager.DrawConsoleNumberOfHitsLabel(spriteService);
+                        if (WaitManager.WaitFor(1500, timestamp, WaitManager.WaitStep.enStep.ShowNumberOfHits))
                         {
-                            await ConsoleManager.ClearConsoleLevelText(spriteService);
-                            InitLevel(Level);
-                            Ship.Visible = true;
-                            WaitManager.ClearSteps();
-                        }, WaitManager.WaitStep.enStep.ClearLevelText);
+                            await ConsoleManager.DrawConsoleNumberOfHits(spriteService, hits);
+                            if (WaitManager.WaitFor(1500, timestamp, WaitManager.WaitStep.enStep.ShowBonusLabel))
+                            {
+                                await ConsoleManager.DrawConsoleBonusLabel(spriteService);
+                                if (WaitManager.WaitFor(1500, timestamp, WaitManager.WaitStep.enStep.ShowBonus))
+                                {
+                                    await ConsoleManager.DrawConsoleBonus(spriteService,hits * 1000);
+                                    if (WaitManager.WaitFor(2000, timestamp, WaitManager.WaitStep.enStep.Pause3))
+                                    {
+                                        Score += hits * 1000;
+                                        await ConsoleManager.ClearConsoleLevelText(spriteService);
+                                        MoveToNextLevel(timestamp);
+                                    }
+                                }
+                            }
+                        }
                     }
+                }
+                else
+                {
+                    MoveToNextLevel(timestamp);
                 }
             }
 
@@ -285,7 +321,7 @@ namespace BlazorGalaga.Services
 
             //ship missile detection
             if (!Ship.Disabled)
-                ShipManager.CheckMissileCollisions(bugs, animationService);
+                hits += (ShipManager.CheckMissileCollisions(bugs, animationService) ? 1 : 0);
 
             //for debugging purposes
             if (glo.captureship)

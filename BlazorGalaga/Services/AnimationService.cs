@@ -143,22 +143,22 @@ namespace BlazorGalaga.Services
 
                 if ((animatable as Bug) != null && (animatable as Bug).OutputDebugInfo)
                 {
-                    Utils.dOut("Animate Debug: ", "<br/> CurPathPointIndex: " + animatable.CurPathPointIndex +
-                                                  "<br/> PathPoints: " + animatable.PathPoints.Count +
-                                                  "<br/> LineFromLocation: " + animatable.LineFromLocation.X + "," + animatable.LineFromLocation.Y +
-                                                  "<br/> LineToLocation: " + animatable.LineToLocation.X + "," + animatable.LineToLocation.Y +
-                                                  "<br/> speed: " + animatable.Speed +
-                                                  "<br/> CaptureState: " + ((Bug)animatable).CaptureState.ToString() +
-                                                  "<br/> location: " + animatable.Location +
-                                                  "<br/> IsMoving: " + animatable.IsMoving +
-                                                  "<br/> loopcount: " + loopcount +
-                                                  "<br/> RotateWhileStill: " + animatable.RotateWhileStill +
-                                                  "<br/> ManualRotation: " + animatable.ManualRotation +
-                                                  "<br/> Rotation: " + animatable.Rotation +
-                                                  "<br/> ManualRotationRate: " + animatable.ManualRotationRate +
-                                                  "<br/> startpoint: " + (animatable.Paths == null || animatable.Paths.Count==0 ? "NA" : animatable.Paths.First().StartPoint.ToString()) +
-                                                  "<br/> endpoint: " + (animatable.Paths == null || animatable.Paths.Count == 0 ? "NA" : animatable.Paths.Last().EndPoint.ToString()) +
-                                                  "<br/> End Animate Debug");
+                    Utils.dOut("*** Animate Debug: *** ", "<br/><br/> CurPathPointIndex: " + animatable.CurPathPointIndex +
+                                    "<br/> PathPoints: " + animatable.PathPoints.Count +
+                                    "<br/> LineFromLocation: " + animatable.LineFromLocation.X + "," + animatable.LineFromLocation.Y +
+                                    "<br/> LineToLocation: " + animatable.LineToLocation.X + "," + animatable.LineToLocation.Y +
+                                    "<br/> speed: " + animatable.Speed +
+                                    "<br/> CaptureState: " + ((Bug)animatable).CaptureState.ToString() +
+                                    "<br/> location: " + animatable.Location +
+                                    "<br/> IsMoving: " + animatable.IsMoving +
+                                    "<br/> loopcount: " + loopcount +
+                                    "<br/> RotateWhileStill: " + animatable.RotateWhileStill +
+                                    "<br/> ManualRotation: " + animatable.ManualRotation +
+                                    "<br/> Rotation: " + animatable.Rotation +
+                                    "<br/> ManualRotationRate: " + animatable.ManualRotationRate +
+                                    "<br/> startpoint: " + (animatable.Paths == null || animatable.Paths.Count==0 ? "NA" : animatable.Paths.First().StartPoint.ToString()) +
+                                    "<br/> endpoint: " + (animatable.Paths == null || animatable.Paths.Count == 0 ? "NA" : animatable.Paths.Last().EndPoint.ToString()) +
+                                    "<br/><br/>*** End Animate Debug ***");
                 }
             }
 

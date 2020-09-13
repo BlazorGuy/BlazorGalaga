@@ -8,7 +8,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 {
     public static class WaitManager
     {
-        private static List<WaitStep> steps = new List<WaitStep>();
+        public static List<WaitStep> Steps = new List<WaitStep>();
 
         public class WaitStep
         {
@@ -21,18 +21,23 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 Pause1,
                 ShowLevelText,
                 Pause2,
-                ClearLevelText
+                ClearLevelText,
+                ShowBonusLabel,
+                ShowBonus,
+                ShowNumberOfHitsLabel,
+                ShowNumberOfHits,
+                Pause3
             }
         }
 
         public static void ClearSteps()
         {
-            steps.Clear();
+            Steps.Clear();
         }
 
         public static void DoOnce(Action action, WaitStep.enStep step)
         {
-            var waitstep = steps.FirstOrDefault(a => a.Step == step);
+            var waitstep = Steps.FirstOrDefault(a => a.Step == step);
 
             if (waitstep == null)
             {
@@ -41,14 +46,14 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                     Step = step,
                     Complete = true
                 };
-                steps.Add(waitstep);
+                Steps.Add(waitstep);
                 action.Invoke();
             }
         }
 
         public static bool WaitFor(int milliseconds, float timestamp, WaitStep.enStep step)
         {
-            var waitstep = steps.FirstOrDefault(a => a.Step == step);
+            var waitstep = Steps.FirstOrDefault(a => a.Step == step);
 
             if (waitstep == null)
             {
@@ -57,7 +62,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                     Step = step,
                     TimeStamp = timestamp
                 };
-                steps.Add(waitstep);
+                Steps.Add(waitstep);
             }
 
             if (waitstep.Complete) return true;

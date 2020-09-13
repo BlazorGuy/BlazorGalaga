@@ -45,6 +45,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 
         public static void Fire(Ship ship, AnimationService animationService)
         {
+
             var c = ship.Sprite.SpriteType == Sprite.SpriteTypes.DoubleShip ? 1: 0;
             
             for (var i = 0; i <= c; i++)
@@ -53,7 +54,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 
                 paths.Add(new BezierCurve()
                 {
-                    StartPoint = new PointF(ship.Location.X + ((ship.Sprite.SpriteDestRect.Width / 2) - 14) + (i * 45), ship.Location.Y - 5),
+                    StartPoint = new PointF(ship.Location.X + ((ship.Sprite.SpriteDestRect.Width / 2) - 14) + (i * 45), Constants.CanvasSize.Height - (Constants.SpriteDestSize.Height * 2) - 5),
                     EndPoint = new PointF(ship.Location.X + ((ship.Sprite.SpriteDestRect.Width / 2) - 16) + (i * 45), -14)
                 });
 
@@ -77,9 +78,10 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             }
         }
 
-        public static void CheckMissileCollisions(List<Bug> bugs, AnimationService animationService)
+        public static bool CheckMissileCollisions(List<Bug> bugs, AnimationService animationService)
         {
-            animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.ShipMissle).ToList().ForEach(missile => {
+           foreach(var missile in  animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.ShipMissle).ToList())
+           { 
                 var missilerect = new Rectangle((int)missile.Location.X + 5, (int)missile.Location.Y + 8, 5, 5);
                 foreach(var bug in bugs)
                 {
@@ -103,11 +105,11 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                             }
                             bug.IsExploding = true;
                         }
-                        return;
+                        return true;
                     }
                 }
-            });
-
+            }
+            return false;
         }
     }
 }

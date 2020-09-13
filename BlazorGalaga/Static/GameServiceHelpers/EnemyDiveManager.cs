@@ -22,7 +22,8 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             {
                 bug = bugs[Utils.Rnd(0, bugs.Count - 1)];
                 loopcount++;
-                if (loopcount > 50) return null;
+                if (loopcount > 50)
+                    return null;
             }
 
             //if the captured ship bug is selected, 

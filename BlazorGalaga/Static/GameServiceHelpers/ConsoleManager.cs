@@ -64,7 +64,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 
         public static async Task ClearConsoleLevelText(SpriteService spriteService)
         {
-            await spriteService.StaticCtx.ClearRectAsync(0, (Constants.CanvasSize.Height / 2)-100, Constants.CanvasSize.Width, 100);
+            await spriteService.StaticCtx.ClearRectAsync(0, (Constants.CanvasSize.Height / 2)-100, Constants.CanvasSize.Width, 300);
         }
 
         public static async Task DrawConsoleLevelText(SpriteService spriteService, int level)
@@ -72,10 +72,39 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             await spriteService.StaticCtx.SetFillStyleAsync("rgba(152, 249, 255, 1)");
             await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");
 
-            if (level==3)
+            if (level==3 || level==8)
                 await spriteService.StaticCtx.FillTextAsync("CHALLENGING STAGE ", 120, Constants.CanvasSize.Height / 2);
             else
                 await spriteService.StaticCtx.FillTextAsync("STAGE " + level, 250, Constants.CanvasSize.Height / 2);
+        }
+
+        public static async Task DrawConsoleNumberOfHitsLabel(SpriteService spriteService)
+        {
+            await spriteService.StaticCtx.SetFillStyleAsync("rgba(152, 249, 255, 1)");
+            await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");
+            await spriteService.StaticCtx.FillTextAsync("NUMBER OF HITS", 100, Constants.CanvasSize.Height / 2);
+        }
+
+        public static async Task DrawConsoleNumberOfHits(SpriteService spriteService, int numberofhits)
+        {
+            await spriteService.StaticCtx.SetFillStyleAsync("rgba(152, 249, 255, 1)");
+            await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");
+            await spriteService.StaticCtx.FillTextAsync(numberofhits.ToString(), 490, Constants.CanvasSize.Height / 2);
+        }
+
+        public static async Task DrawConsoleBonusLabel(SpriteService spriteService)
+        {
+            await spriteService.StaticCtx.SetFillStyleAsync("rgba(152, 249, 255, 1)");
+            await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");
+            await spriteService.StaticCtx.FillTextAsync("BONUS", 150, (Constants.CanvasSize.Height / 2) + 100);
+        }
+
+
+        public static async Task DrawConsoleBonus(SpriteService spriteService, int bonus)
+        {
+            await spriteService.StaticCtx.SetFillStyleAsync("rgba(152, 249, 255, 1)");
+            await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");
+            await spriteService.StaticCtx.FillTextAsync(bonus.ToString(), 400, (Constants.CanvasSize.Height / 2) + 100);
         }
     }
 }
