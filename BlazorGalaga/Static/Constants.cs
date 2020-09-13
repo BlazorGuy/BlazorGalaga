@@ -23,8 +23,8 @@ namespace BlazorGalaga.Static
         public static string ArrowLeft = "ArrowLeft";
         public static string ArrowRight = "ArrowRight";
         public static string Space = "Space";
-        public static int ShipMissleDelaySpeed = 50;
-        public static int ShipMissleSpeed = 14;
+        public static int ShipMissleDelaySpeed = 25;
+        public static int ShipMissleSpeed = 15;
         public static int WingFlapInterval = 500;
         public static int EnemyGridLeft = 250;
         public static int EnemyGridHSpacing = 45;

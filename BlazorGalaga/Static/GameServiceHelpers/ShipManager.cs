@@ -82,10 +82,10 @@ namespace BlazorGalaga.Static.GameServiceHelpers
         {
            foreach(var missile in  animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.ShipMissle).ToList())
            { 
-                var missilerect = new Rectangle((int)missile.Location.X + 5, (int)missile.Location.Y + 8, 5, 5);
+                var missilerect = new Rectangle((int)missile.Location.X + 5, (int)missile.Location.Y + 8, 2, 2);
                 foreach(var bug in bugs)
                 {
-                    var bugrect = new Rectangle((int)bug.Location.X, (int)bug.Location.Y, (int)bug.Sprite.SpriteDestRect.Width, (int)bug.Sprite.SpriteDestRect.Height + 10);
+                    var bugrect = new Rectangle((int)bug.Location.X+5, (int)bug.Location.Y+5, (int)bug.Sprite.SpriteDestRect.Width-5, (int)bug.Sprite.SpriteDestRect.Height-5);
                     if (missilerect.IntersectsWith(bugrect))
                     {
                         missile.DestroyImmediately = true;

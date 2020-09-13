@@ -1,14 +1,12 @@
 ﻿<Properties StartupConfiguration="{202B6679-81B6-4D6C-83B3-0DC9DE1151AC}|Default">
   <MonoDevelop.Ide.ItemProperties.BlazorGalaga PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Static/GameServiceHelpers/GalagaCaptureManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Static/GameServiceHelpers/ShipManager.cs">
     <Files>
-      <File FileName="BlazorGalaga/Services/GameService.cs" Line="112" Column="14" />
+      <File FileName="BlazorGalaga/Services/GameService.cs" Line="242" Column="18" />
       <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="170" Column="60" />
       <File FileName="BlazorGalaga/Static/GameServiceHelpers/EnemyDiveManager.cs" Line="37" Column="40" />
       <File FileName="BlazorGalaga/Static/GameServiceHelpers/ConsoleManager.cs" Line="107" Column="78" />
-      <File FileName="BlazorGalaga/Static/GameServiceHelpers/WaitManager.cs" Line="29" Column="23" />
-      <File FileName="BlazorGalaga/Static/GameServiceHelpers/ShipManager.cs" Line="66" Column="45" />
-      <File FileName="BlazorGalaga/Static/GameServiceHelpers/GalagaCaptureManager.cs" Line="1" Column="1" />
+      <File FileName="BlazorGalaga/Static/GameServiceHelpers/ShipManager.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -18,7 +16,7 @@
               <Node name="Services" expanded="True" />
               <Node name="Static" expanded="True">
                 <Node name="GameServiceHelpers" expanded="True">
-                  <Node name="GalagaCaptureManager.cs" selected="True" />
+                  <Node name="ShipManager.cs" selected="True" />
                 </Node>
               </Node>
             </Node>
