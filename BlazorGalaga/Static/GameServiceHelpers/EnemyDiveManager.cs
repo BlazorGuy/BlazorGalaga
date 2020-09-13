@@ -57,8 +57,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             {
                 if (!captureship && !capturehappened)
                 {
-                    if (bug.Sprite.SpriteType != Sprite.SpriteTypes.GreenBug_Blue &&
-                        ship.Sprite.SpriteType != Sprite.SpriteTypes.DoubleShip &&
+                    if (ship.Sprite.SpriteType != Sprite.SpriteTypes.DoubleShip &&
                         bugs.Count(a=>a.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug || a.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug_Blue) > 1 &&
                         bugs.Count(a=>a.CaptureState != Bug.enCaptureState.NotStarted) == 0)
                     {
