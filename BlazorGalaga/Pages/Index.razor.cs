@@ -12,6 +12,7 @@ using BlazorGalaga.Models;
 using BlazorGalaga.Services;
 using BlazorGalaga.Static;
 using BlazorGalaga.Static.GameServiceHelpers;
+using Howler.Blazor.Components;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
@@ -49,6 +50,10 @@ namespace BlazorGalaga.Pages
         public GameService gameService { get; set; }
         [Inject]
         public IJSRuntime JsRuntime { get; set; }
+        [Inject]
+        public IHowl Howl { get; set; }
+        [Inject]
+        public IHowlGlobal HowlGlobal { get; set; }
 
         protected override void OnInitialized()
         {
@@ -116,6 +121,9 @@ namespace BlazorGalaga.Pages
             gameService.animationService = animationService;
             gameService.spriteService = spriteService;
             gameService.Init();
+
+            SoundManager.Howl = Howl;
+            SoundManager.Init();
 
             ship = (Ship)animationService.Animatables.FirstOrDefault(a => a.Sprite.SpriteType == Sprite.SpriteTypes.Ship);
         }

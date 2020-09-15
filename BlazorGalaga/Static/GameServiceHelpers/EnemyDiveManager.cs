@@ -107,6 +107,9 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 bug.PathPoints.AddRange(animationService.ComputePathPoints(p,false));
             });
 
+            if (bug != null)
+                SoundManager.PlayDive();
+
             return bug;
         }
 

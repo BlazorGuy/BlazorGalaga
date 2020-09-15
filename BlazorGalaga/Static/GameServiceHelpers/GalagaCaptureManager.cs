@@ -97,6 +97,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                         a.SourceRect = new Rectangle(0, 0, Constants.BiggerSpriteDestSize.Width, a.SourceRect.Value.Height + 20);
                         a.DestRect = new Rectangle(0, 0, Constants.BiggerSpriteDestSize.Width, a.DestRect.Value.Height + 20);
                     });
+                    SoundManager.PlayTractorBeam();
                 }
                 //if the ship is under the tractor beam and the tractor beam is extended
                 else if(((ship.Location.X >= bug.Location.X - 75 && ship.Location.X <= bug.Location.X + 75) && tb.SpriteBank.First().DestRect.Value.Height > Constants.BiggerSpriteDestSize.Height-20) || CapturedShip != null)
@@ -108,6 +109,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                         ship.Visible = false;
                         ship.Disabled = true;
                         CreateCapturedShip(animationService, ship, bug);
+                        SoundManager.PlayTractorBeamCapture();
                     }
                     else
                     {

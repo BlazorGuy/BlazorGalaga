@@ -1,5 +1,0 @@
-﻿<linker>
-  <assembly fullname="BlazorGalaga">
-    <type fullname="*" required="true" />
-  </assembly>
-</linker>

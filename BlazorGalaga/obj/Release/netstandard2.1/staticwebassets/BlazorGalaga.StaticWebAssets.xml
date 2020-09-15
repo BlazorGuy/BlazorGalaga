@@ -1,4 +1,0 @@
-﻿<StaticWebAssets Version="1.0">
-  <ContentRoot BasePath="/" Path="/Users/bcollins/BlazorGalaga/BlazorGalaga/bin/Release/netstandard2.1/wwwroot/" />
-  <ContentRoot BasePath="_content/Blazor.Extensions.Canvas" Path="/Users/bcollins/.nuget/packages/blazor.extensions.canvas/1.0.0/build/../staticwebassets/" />
-</StaticWebAssets>

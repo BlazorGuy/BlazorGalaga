@@ -200,6 +200,7 @@ namespace BlazorGalaga.Services
                     capturehappened = false;
                     hits = 0;
                     GalagaCaptureManager.Reset();
+                    EnemyGridManager.BreathSoundPlayed = false;
                     await ConsoleManager.DrawConsoleLevelText(spriteService, Level);
                 }, WaitManager.WaitStep.enStep.ShowLevelText);
                 if (WaitManager.WaitFor(2000, timestamp, WaitManager.WaitStep.enStep.Pause2))

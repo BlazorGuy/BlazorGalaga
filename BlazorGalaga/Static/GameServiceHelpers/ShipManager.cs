@@ -94,6 +94,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                             bug.Sprite = new Sprite(Sprite.SpriteTypes.GreenBug_Blue);
                             bug.SpriteBank.Clear();
                             bug.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.GreenBug_Blue_DownFlap));
+                            SoundManager.PlayGalagaHit();
                         }
                         else
                         {
@@ -108,6 +109,12 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                                     b.CaptureState = Bug.enCaptureState.NotStarted;
                                 }
                             }
+                            if (bug.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug_Blue || bug.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug_Blue_DownFlap)
+                                SoundManager.PlayGalagaDestroyed();
+                            else if (bug.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug ||  bug.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug_DownFlap)
+                                SoundManager.PlayBlueBugHit();
+                            else 
+                                SoundManager.PlayRedBugHit();
                             bug.IsExploding = true;
                         }
                         return true;

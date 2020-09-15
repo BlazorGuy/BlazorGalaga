@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using BlazorGalaga.Services;
+using Howler.Blazor.Components;
 
 namespace BlazorGalaga
 {
@@ -28,6 +29,8 @@ namespace BlazorGalaga
                     )
                 );
             builder.Services.AddSingleton<GameService>();
+            builder.Services.AddScoped<IHowl, Howl>();
+            builder.Services.AddScoped<IHowlGlobal, HowlGlobal>();
 
             await builder.Build().RunAsync();
         }
