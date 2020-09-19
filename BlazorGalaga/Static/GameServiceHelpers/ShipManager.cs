@@ -94,7 +94,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                             bug.Sprite = new Sprite(Sprite.SpriteTypes.GreenBug_Blue);
                             bug.SpriteBank.Clear();
                             bug.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.GreenBug_Blue_DownFlap));
-                            SoundManager.PlayGalagaHit();
+                            SoundManager.PlaySound(SoundManager.SoundManagerSounds.galagahit);
                         }
                         else
                         {
@@ -110,11 +110,11 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                                 }
                             }
                             if (bug.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug_Blue || bug.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug_Blue_DownFlap)
-                                SoundManager.PlayGalagaDestroyed();
+                                SoundManager.PlaySound(SoundManager.SoundManagerSounds.galagadesgtroyed);
                             else if (bug.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug ||  bug.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug_DownFlap)
-                                SoundManager.PlayBlueBugHit();
-                            else 
-                                SoundManager.PlayRedBugHit();
+                                SoundManager.PlaySound(SoundManager.SoundManagerSounds.bluebughit);
+                            else
+                                SoundManager.PlaySound(SoundManager.SoundManagerSounds.redbughit);
                             bug.IsExploding = true;
                         }
                         return true;

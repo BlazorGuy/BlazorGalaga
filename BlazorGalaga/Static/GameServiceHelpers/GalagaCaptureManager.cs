@@ -86,6 +86,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 //create the tractor bream
                 //it's height is zero at this point
                 CreateTractorBeam(animationService, ship, bug);
+                SoundManager.PlaySound(SoundManager.SoundManagerSounds.tractorbeam, true, true);
             }
             else
             {
@@ -97,7 +98,6 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                         a.SourceRect = new Rectangle(0, 0, Constants.BiggerSpriteDestSize.Width, a.SourceRect.Value.Height + 20);
                         a.DestRect = new Rectangle(0, 0, Constants.BiggerSpriteDestSize.Width, a.DestRect.Value.Height + 20);
                     });
-                    SoundManager.PlayTractorBeam();
                 }
                 //if the ship is under the tractor beam and the tractor beam is extended
                 else if(((ship.Location.X >= bug.Location.X - 75 && ship.Location.X <= bug.Location.X + 75) && tb.SpriteBank.First().DestRect.Value.Height > Constants.BiggerSpriteDestSize.Height-20) || CapturedShip != null)
@@ -109,7 +109,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                         ship.Visible = false;
                         ship.Disabled = true;
                         CreateCapturedShip(animationService, ship, bug);
-                        SoundManager.PlayTractorBeamCapture();
+                        SoundManager.PlaySound(SoundManager.SoundManagerSounds.tractorbeamcapture,true,true);
                     }
                     else
                     {
@@ -135,6 +135,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                             {
                                 //create captured bug and send the main bug
                                 //home
+                                SoundManager.PlaySound(SoundManager.SoundManagerSounds.fightercapturedsong,true,true);
                                 CapturedShip.Visible = false;
                                 CreateCapturedShipChildBug(animationService, bug);
                                 SendBugHome(animationService, bug);

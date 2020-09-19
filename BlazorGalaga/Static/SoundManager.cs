@@ -10,110 +10,82 @@ namespace BlazorGalaga.Static
     public static class SoundManager
     {
         public static IHowl Howl { get; set; }
+        public static List<Sound> Sounds { get; set; }
 
-        private static bool diveplaying = false;
-        private static int divesoundid;
+        public enum SoundManagerSounds
+        {
+            fire,
+            bluebughit,
+            dive,
+            redbughit,
+            galagahit,
+            galagadesgtroyed,
+            breathing,
+            tractorbeam,
+            tractorbeamcapture,
+            fightercapturedsong
+        }
 
-        private static bool breathplaying = false;
-        private static int breathsoundid;
+        public class Sound
+        {
+            public SoundManagerSounds SoundName { get; set; }
+            public int SoundId { get; set; }
+            public bool IsPlaying { get; set; }
+        }
 
-        private static bool tractorbeamplaying = false;
-        private static int tractorbeamsoundid;
-
-        private static bool tractorbeamcaptureplaying = false;
-        private static int tractorbeamcapturesoundid;
 
         public static void Init()
         {
+            Sounds = new List<Sound>();
+
             // Register callbacks
             Howl.OnPlay += e =>
             {
-                //if (e.SoundId == divesoundid) diveplaying = true;
-                //if (e.SoundId == breathsoundid) breathplaying = true;
+                //Sounds.ForEach(a => {
+                //    if (e.SoundId == a.SoundId) a.IsPlaying = true;
+                //});
             };
 
             Howl.OnEnd += e =>
             {
-                if (e.SoundId == divesoundid) diveplaying = false;
-                if (e.SoundId == breathsoundid) breathplaying = false;
-                if (e.SoundId == tractorbeamsoundid) tractorbeamplaying = false;
-                if (e.SoundId == tractorbeamcapturesoundid) tractorbeamcaptureplaying = false;
+                Sounds.ForEach(a => {
+                    if (e.SoundId == a.SoundId) a.IsPlaying = false;
+                });
             };
 
         }
 
-        private static async ValueTask<int> PlaySound(string source)
+        public static async void PlaySound(SoundManagerSounds sound, bool oneatatime = false,bool stopallsounds =false)
         {
+            if (stopallsounds) await Howl.Stop();
+
+            if (oneatatime)
+            {
+                if (Sounds.Any(a => a.SoundName == sound && a.IsPlaying)) return;
+            }
+
             var options = new HowlOptions
             {
-                Sources = new[] { source },
+                Sources = new[] { "/Assets/sounds/" + Enum.GetName(typeof(SoundManagerSounds), sound) + ".mp3" },
                 Formats = new[] { "mp3" }
             };
 
-            return await Howl.Play(options);
-        }
+            var soundid =  await Howl.Play(options);
 
-        public static async void PlayFire()
-        {
-            await PlaySound("http://localhost:30873/Assets/sounds/fire.mp3");
-        }
-
-        public static async void PlayBlueBugHit()
-        {
-            await PlaySound("http://localhost:30873/Assets/sounds/bluebughit.mp3");
-        }
-
-        public static async void PlayDive()
-        {
-            if (diveplaying) return;
-
-            diveplaying = true; 
-
-            divesoundid = await PlaySound("http://localhost:30873/Assets/sounds/dive.mp3");
-        }
-
-        public static async void PlayRedBugHit()
-        {
-            await PlaySound("http://localhost:30873/Assets/sounds/redbughit.mp3");
-        }
-
-        public static async void PlayGalagaHit()
-        {
-            await PlaySound("http://localhost:30873/Assets/sounds/galagahit.mp3");
-        }
-
-        public static async void PlayGalagaDestroyed()
-        {
-            await PlaySound("http://localhost:30873/Assets/sounds/galagadestroyed.mp3");
-        }
-        public static async void PlayBreathing()
-        {
-            if (breathplaying) return;
-
-            breathplaying = true;
-
-            breathsoundid = await PlaySound("http://localhost:30873/Assets/sounds/breathing.mp3");
-        }
-
-        public static async void PlayTractorBeam()
-        {
-            if (tractorbeamplaying) return;
-
-            tractorbeamplaying = true;
-
-            await PlaySound("http://localhost:30873/Assets/sounds/tractorbeam.mp3");
-        }
-
-        public static async void PlayTractorBeamCapture()
-        {
-
-            if (tractorbeamcaptureplaying) return;
-
-            tractorbeamcaptureplaying = true;
-
-            await Howl.Stop();
-
-            await PlaySound("http://localhost:30873/Assets/sounds/tractorbeamcapture.mp3");
+            if (!Sounds.Any(a => a.SoundName == sound))
+            {
+                Sounds.Add(new Sound()
+                {
+                    SoundId = soundid,
+                    SoundName = sound, 
+                    IsPlaying = true
+                });
+            }
+            else
+            {
+                Sounds.FirstOrDefault(a => a.SoundName == sound).SoundId = soundid;
+                Sounds.FirstOrDefault(a => a.SoundName == sound).IsPlaying = true;
+            }
         }
     }
 }

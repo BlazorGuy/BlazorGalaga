@@ -55,7 +55,7 @@ namespace BlazorGalaga.Static
             {
                 if (animationService.Animatables.Count(a => a.Sprite.SpriteType == Sprite.SpriteTypes.ShipMissle) < (ship.Sprite.SpriteType == Sprite.SpriteTypes.DoubleShip ? 4 : 2))
                 {
-                    SoundManager.PlayFire();
+                    SoundManager.PlaySound(SoundManager.SoundManagerSounds.fire);
                     ship.IsFiring = true;
                     dontfire = true;
                     fire = false;

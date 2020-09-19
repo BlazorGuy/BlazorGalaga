@@ -108,7 +108,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             });
 
             if (bug != null)
-                SoundManager.PlayDive();
+                SoundManager.PlaySound(SoundManager.SoundManagerSounds.dive);
 
             return bug;
         }

@@ -40,7 +40,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 
                     if (!BreathSoundPlayed)
                     {
-                        SoundManager.PlayBreathing();
+                        SoundManager.PlaySound(SoundManager.SoundManagerSounds.breathing);
                         BreathSoundPlayed = true;
                     }
                 }
