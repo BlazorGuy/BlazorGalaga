@@ -28,7 +28,7 @@ namespace BlazorGalaga.Static
         public static int WingFlapInterval = 500;
         public static int EnemyGridLeft = 250;
         public static int EnemyGridHSpacing = 45;
-        public static int EnemyMissileSpeed = 6 ;
+        public static int EnemyMissileSpeed = 8 ;
 
         public static int Score_BlueBug = 50;
         public static int Score_BlueBugDiving = 100;

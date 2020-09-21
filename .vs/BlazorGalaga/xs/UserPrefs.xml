@@ -1,22 +1,25 @@
 ﻿<Properties StartupConfiguration="{202B6679-81B6-4D6C-83B3-0DC9DE1151AC}|Default">
   <MonoDevelop.Ide.ItemProperties.BlazorGalaga PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Static/GameServiceHelpers/ShipManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Static/GameServiceHelpers/ConsoleManager.cs">
     <Files>
-      <File FileName="BlazorGalaga/Services/GameService.cs" Line="242" Column="18" />
-      <File FileName="BlazorGalaga/Services/AnimationService.cs" Line="170" Column="60" />
-      <File FileName="BlazorGalaga/Static/GameServiceHelpers/EnemyDiveManager.cs" Line="37" Column="40" />
-      <File FileName="BlazorGalaga/Static/GameServiceHelpers/ConsoleManager.cs" Line="107" Column="78" />
-      <File FileName="BlazorGalaga/Static/GameServiceHelpers/ShipManager.cs" Line="1" Column="1" />
+      <File FileName="BlazorGalaga/Services/GameService.cs" Line="196" Column="20" />
+      <File FileName="BlazorGalaga/Static/GameServiceHelpers/GalagaCaptureManager.cs" Line="141" Column="107" />
+      <File FileName="BlazorGalaga/Static/SoundManager.cs" Line="50" Column="31" />
+      <File FileName="BlazorGalaga/Static/GameServiceHelpers/ConsoleManager.cs" Line="79" Column="21" />
+      <File FileName="BlazorGalaga/Services/SpriteService.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="BlazorGalaga" expanded="True">
             <Node name="BlazorGalaga" expanded="True">
+              <Node name="Pages" expanded="True">
+                <Node name="Index.razor" expanded="True" />
+              </Node>
               <Node name="Services" expanded="True" />
               <Node name="Static" expanded="True">
                 <Node name="GameServiceHelpers" expanded="True">
-                  <Node name="ShipManager.cs" selected="True" />
+                  <Node name="ConsoleManager.cs" selected="True" />
                 </Node>
               </Node>
             </Node>

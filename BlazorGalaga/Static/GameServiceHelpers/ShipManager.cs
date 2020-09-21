@@ -82,7 +82,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
         {
            foreach(var missile in  animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.ShipMissle).ToList())
            { 
-                var missilerect = new Rectangle((int)missile.Location.X + 5, (int)missile.Location.Y + 8, 2, 2);
+                var missilerect = new Rectangle((int)missile.Location.X + 5, (int)missile.Location.Y + 8, 2, 10);
                 foreach(var bug in bugs)
                 {
                     var bugrect = new Rectangle((int)bug.Location.X+5, (int)bug.Location.Y+5, (int)bug.Sprite.SpriteDestRect.Width-5, (int)bug.Sprite.SpriteDestRect.Height-5);
@@ -110,7 +110,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                                 }
                             }
                             if (bug.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug_Blue || bug.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug_Blue_DownFlap)
-                                SoundManager.PlaySound(SoundManager.SoundManagerSounds.galagadesgtroyed);
+                                SoundManager.PlaySound(SoundManager.SoundManagerSounds.galagadestroyed);
                             else if (bug.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug ||  bug.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug_DownFlap)
                                 SoundManager.PlaySound(SoundManager.SoundManagerSounds.bluebughit);
                             else

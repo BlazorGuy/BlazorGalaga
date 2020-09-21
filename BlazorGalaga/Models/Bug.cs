@@ -30,6 +30,8 @@ namespace BlazorGalaga.Models
         public int HomePointYOffset { get; set; }
         public Bug CapturedBug { get; set; }
         public enCaptureState CaptureState { get; set; }
+        public bool FighterCapturedMessageShowing { get; set; }
+        public bool ClearFighterCapturedMessage { get; set; }
 
         public bool AligningHorizontally { get; set; }
         public bool AligningVertically { get; set; }

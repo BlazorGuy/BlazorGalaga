@@ -12,11 +12,13 @@ namespace BlazorGalaga.Static.GameServiceHelpers
     {
         private static Ship CapturedShip;
         private static int TractorBeamWaitCount;
+        private static int CapturedTextWaitCount;
 
         public static void Reset()
         {
             CapturedShip = null;
             TractorBeamWaitCount = 0;
+            CapturedTextWaitCount = 0;
         }
 
         public static void DoRecapture(Bug bug, AnimationService animationService, Ship ship)
@@ -100,7 +102,9 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                     });
                 }
                 //if the ship is under the tractor beam and the tractor beam is extended
-                else if(((ship.Location.X >= bug.Location.X - 75 && ship.Location.X <= bug.Location.X + 75) && tb.SpriteBank.First().DestRect.Value.Height > Constants.BiggerSpriteDestSize.Height-20) || CapturedShip != null)
+                else if(((ship.Location.X >= bug.Location.X - 75 && ship.Location.X <= bug.Location.X + 75) &&
+                    tb.SpriteBank.First().DestRect.Value.Height > Constants.BiggerSpriteDestSize.Height-20)
+                    || CapturedShip != null)
                 {
                     if (CapturedShip == null)
                     {
@@ -116,7 +120,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                         if (CapturedShip.IsMoving)
                         {
                             //captured ship spins up to bug
-                            CapturedShip.ManualRotation += 25;
+                            CapturedShip.ManualRotation += 45;
                         }
                         else
                         {
@@ -133,12 +137,16 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                             }
                             else if (bug.CapturedBug == null)
                             {
-                                //create captured bug and send the main bug
-                                //home
+                                //create captured bug and send the main bug home
                                 SoundManager.PlaySound(SoundManager.SoundManagerSounds.fightercapturedsong,true,true);
-                                CapturedShip.Visible = false;
-                                CreateCapturedShipChildBug(animationService, bug);
-                                SendBugHome(animationService, bug);
+                                bug.FighterCapturedMessageShowing = true;
+                                CapturedTextWaitCount += 1;
+                                if (CapturedTextWaitCount >= 15)
+                                {
+                                    CapturedShip.Visible = false;
+                                    CreateCapturedShipChildBug(animationService, bug);
+                                    SendBugHome(animationService, bug);
+                                }
                             }
                             else
                             {
@@ -255,7 +263,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 RotateAlongPath = true,
                 Started = true,
                 Index = -999,
-                Speed = 4
+                Speed = 2
             };
 
             CapturedShip.Paths.ForEach(a => {

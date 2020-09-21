@@ -18,30 +18,30 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             //draw bottom black block
             await spriteService.StaticCtx.FillRectAsync(0, Constants.CanvasSize.Height - 65, Constants.CanvasSize.Width, 65);
 
-            //draw the ships
-            int left = 5;
-            for (var i = 1; i <= lives; i++)
-            {
-                await spriteService.StaticCtx.DrawImageAsync(
-                    ship.Sprite.BufferCanvas.Canvas,
-                    left,
-                    Constants.CanvasSize.Height - ship.Sprite.SpriteDestRect.Height - 3
-                );
-                left += (int)ship.Sprite.SpriteDestRect.Width + 3;
-            }
+            ////draw the ships
+            //int left = 5;
+            //for (var i = 1; i <= lives; i++)
+            //{
+            //    await spriteService.StaticCtx.DrawImageAsync(
+            //        ship.Sprite.BufferCanvas.Canvas,
+            //        left,
+            //        Constants.CanvasSize.Height - ship.Sprite.SpriteDestRect.Height - 3
+            //    );
+            //    left += (int)ship.Sprite.SpriteDestRect.Width + 3;
+            //}
 
-            //draw the badges
-            await spriteService.StaticCtx.DrawImageAsync(
-                spriteService.SpriteSheet,
-                305,
-                175,
-                10,
-                16,
-                Constants.CanvasSize.Width - 30,
-                Constants.CanvasSize.Height - 45,
-                28,
-                45
-            );
+            ////draw the badges
+            //await spriteService.StaticCtx.DrawImageAsync(
+            //    spriteService.SpriteSheet,
+            //    305,
+            //    175,
+            //    10,
+            //    16,
+            //    Constants.CanvasSize.Width - 30,
+            //    Constants.CanvasSize.Height - 45,
+            //    28,
+            //    45
+            //);
 
             await spriteService.StaticCtx.SetFillStyleAsync("Red");
             await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");
@@ -52,6 +52,50 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             await spriteService.StaticCtx.SetFillStyleAsync("White");
             await spriteService.StaticCtx.FillTextAsync("00", 50, 60);
             await spriteService.StaticCtx.FillTextAsync("20000", 300, 60);
+        }
+
+        public static async Task DrawIntroScreen(SpriteService spriteService, Ship ship)
+        {
+            await spriteService.StaticCtx.SetFillStyleAsync("rgba(152, 249, 255, 1)");
+            await spriteService.StaticCtx.SetFontAsync("24px PressStart2P");
+            await spriteService.StaticCtx.FillTextAsync("PUSH START BUTTON", 140, Constants.CanvasSize.Height / 3);
+
+            await spriteService.StaticCtx.SetFillStyleAsync("Yellow");
+            await spriteService.StaticCtx.FillTextAsync("1ST BONUS FOR 30000 PTS", 90, Constants.CanvasSize.Height / 2);
+            await spriteService.StaticCtx.FillTextAsync("2ND BONUS FOR 120000 PTS", 90, Constants.CanvasSize.Height / 2 + 75);
+            await spriteService.StaticCtx.FillTextAsync("AND FOR EVERY 120000 PTS", 90, Constants.CanvasSize.Height / 2 + 150);
+
+            await spriteService.StaticCtx.SetFillStyleAsync("White");
+            await spriteService.StaticCtx.FillTextAsync("©1981  1995  NAMCO LTD.", 70, 750);
+            await spriteService.StaticCtx.FillTextAsync("ALL RIGHTS RESERVED", 110, 780);
+
+            await spriteService.StaticCtx.SetFillStyleAsync("Red");
+            await spriteService.StaticCtx.SetFontAsync("38px PressStart2P");
+            await spriteService.StaticCtx.FillTextAsync("namco", 250, 830);
+            await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");
+            await spriteService.StaticCtx.FillTextAsync("®", 440, 827);
+
+            await spriteService.StaticCtx.DrawImageAsync(
+                ship.Sprite.BufferCanvas.Canvas,
+                25,
+                430
+            );
+
+            await spriteService.StaticCtx.DrawImageAsync(
+                ship.Sprite.BufferCanvas.Canvas,
+                25,
+                500
+            );
+
+            await spriteService.StaticCtx.DrawImageAsync(
+                ship.Sprite.BufferCanvas.Canvas,
+                25,
+                580
+            );
+
+            await spriteService.StaticCtx.SetFillStyleAsync("White");
+            await spriteService.StaticCtx.SetFontAsync("24px PressStart2P");
+            await spriteService.StaticCtx.FillTextAsync("CREDITS 0", 20, 940);
         }
 
 
@@ -106,5 +150,13 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");
             await spriteService.StaticCtx.FillTextAsync(bonus.ToString(), 400, (Constants.CanvasSize.Height / 2) + 100);
         }
+
+        public static async Task DrawConsoleFighterCaptured(SpriteService spriteService)
+        {
+            await spriteService.StaticCtx.SetFillStyleAsync("Red");
+            await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");
+            await spriteService.StaticCtx.FillTextAsync("FIGHTER CAPTURED", 125, (Constants.CanvasSize.Height / 2) + 100);
+        }
+
     }
 }

@@ -20,6 +20,5 @@
   <ItemGroup>
     <Folder Include="Services\" />
     <Folder Include="Interfaces\" />
-    <Folder Include="wwwroot\Assets\sounds\" />
   </ItemGroup>
 </Project>

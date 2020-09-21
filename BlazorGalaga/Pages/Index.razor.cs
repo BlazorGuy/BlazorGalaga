@@ -123,6 +123,7 @@ namespace BlazorGalaga.Pages
             gameService.Init();
 
             SoundManager.Howl = Howl;
+            SoundManager.HowlGlobal = HowlGlobal;
             SoundManager.Init();
 
             ship = (Ship)animationService.Animatables.FirstOrDefault(a => a.Sprite.SpriteType == Sprite.SpriteTypes.Ship);

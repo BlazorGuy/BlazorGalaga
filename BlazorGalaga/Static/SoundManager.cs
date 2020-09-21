@@ -10,6 +10,7 @@ namespace BlazorGalaga.Static
     public static class SoundManager
     {
         public static IHowl Howl { get; set; }
+        public static IHowlGlobal HowlGlobal { get; set; }
         public static List<Sound> Sounds { get; set; }
 
         public enum SoundManagerSounds
@@ -19,7 +20,7 @@ namespace BlazorGalaga.Static
             dive,
             redbughit,
             galagahit,
-            galagadesgtroyed,
+            galagadestroyed,
             breathing,
             tractorbeam,
             tractorbeamcapture,
@@ -57,7 +58,10 @@ namespace BlazorGalaga.Static
 
         public static async void PlaySound(SoundManagerSounds sound, bool oneatatime = false,bool stopallsounds =false)
         {
-            if (stopallsounds) await Howl.Stop();
+            if (stopallsounds)
+            {
+                await Howl.Stop();
+            }
 
             if (oneatatime)
             {
@@ -69,6 +73,8 @@ namespace BlazorGalaga.Static
                 Sources = new[] { "/Assets/sounds/" + Enum.GetName(typeof(SoundManagerSounds), sound) + ".mp3" },
                 Formats = new[] { "mp3" }
             };
+
+            Console.WriteLine("Playing " + "/Assets/sounds/" + Enum.GetName(typeof(SoundManagerSounds), sound) + ".mp3");
 
             var soundid =  await Howl.Play(options);
 

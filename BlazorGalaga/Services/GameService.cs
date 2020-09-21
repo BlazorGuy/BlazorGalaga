@@ -31,6 +31,7 @@ namespace BlazorGalaga.Services
         private int prevbugcount = 0;
         private bool capturehappened;
         private int hits = 0;
+        private int wave = 1;
 
         private int divespeedincrease = 0;
         private int missileincrease = 0;
@@ -46,36 +47,29 @@ namespace BlazorGalaga.Services
 
         private void InitLevel(int level)
         {
-            List<int> delays = null;
             switch (level)
             {
                 case 1:
                     Level1.InitIntro(animationService, introspeedincrease);
-                    delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
                     break;
                 case 2:
                     Level2.InitIntro(animationService, introspeedincrease);
-                    delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
                     break;
                 case 3: //challenge
                     Level3.InitIntro(animationService, introspeedincrease);
-                    delays = new List<int>() { 2000, 5000, 10000, 17000, 22000, -1 };
                     break;
                 case 4:
                     Level4.InitIntro(animationService, introspeedincrease);
-                    delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
                     maxwaittimebetweendives = 4000;
                     break;
                 case 5:
                     Level5.InitIntro(animationService, introspeedincrease);
-                    delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
                     maxwaittimebetweendives = 3000;
                     divespeedincrease = 1;
                     missileincrease = 1;
                     break;
                 case 6:
                     Level6.InitIntro(animationService, introspeedincrease);
-                    delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
                     maxwaittimebetweendives = 2500;
                     divespeedincrease = 1;
                     missileincrease = 1;
@@ -83,7 +77,6 @@ namespace BlazorGalaga.Services
                     break;
                 case 7:
                     Level7.InitIntro(animationService, introspeedincrease);
-                    delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
                     maxwaittimebetweendives = 2500;
                     divespeedincrease = 1;
                     missileincrease = 2;
@@ -91,11 +84,9 @@ namespace BlazorGalaga.Services
                     break;
                 case 8: //challenge
                     Level8.InitIntro(animationService, introspeedincrease);
-                    delays = new List<int>() { 2000, 5000, 10000, 17000, 22000, -1 };
                     break;
                 case 9:
                     Level9.InitIntro(animationService, introspeedincrease);
-                    delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
                     maxwaittimebetweendives = 2000;
                     divespeedincrease = 2;
                     missileincrease = 2;
@@ -103,7 +94,6 @@ namespace BlazorGalaga.Services
                     break;
                 case 10:
                     Level10.InitIntro(animationService, introspeedincrease);
-                    delays = new List<int>() { 2000, 5000, 9000, 14000, 18000, 22000 };
                     maxwaittimebetweendives = 1500;
                     divespeedincrease = 3;
                     missileincrease = 3;
@@ -122,35 +112,9 @@ namespace BlazorGalaga.Services
                 });
             });
 
-            Task.Delay(delays[0], cancellationTokenSource.Token).ContinueWith((task) =>
-            {
-                GetBugs().Where(a => a.Wave == 1).ToList().ForEach(a => a.Started = true);
-            });
-            Task.Delay(delays[1], cancellationTokenSource.Token).ContinueWith((task) =>
-            {
-                GetBugs().Where(a => a.Wave == 2).ToList().ForEach(a => a.Started = true);
-            });
-            Task.Delay(delays[2], cancellationTokenSource.Token).ContinueWith((task) =>
-            {
-                GetBugs().Where(a => a.Wave == 3).ToList().ForEach(a => a.Started = true);
-            });
-            Task.Delay(delays[3], cancellationTokenSource.Token).ContinueWith((task) =>
-            {
-                GetBugs().Where(a => a.Wave == 4).ToList().ForEach(a => a.Started = true);
-            });
-            Task.Delay(delays[4], cancellationTokenSource.Token).ContinueWith((task) =>
-            {
-                GetBugs().Where(a => a.Wave == 5).ToList().ForEach(a => a.Started = true);
-            });
-            if (delays[5] != -1)
-            {
-                Task.Delay(delays[5], cancellationTokenSource.Token).ContinueWith((task) =>
-                {
-                    EnemyGridManager.EnemyGridBreathing = true;
-                    DiveAndFire();
-                });
-            }
+            GetBugs().Where(a => a.Wave == 1).ToList().ForEach(a => a.Started = true);
         }
+
         private void DiveAndFire()
         {
             if (GetBugs().Count == 0 || Ship.Disabled)
@@ -173,7 +137,7 @@ namespace BlazorGalaga.Services
                     var maxmissleperbug = Utils.Rnd(0 + missileincrease, 3 + missileincrease);
                     for (int i = 1; i <= maxmissleperbug; i++)
                     {
-                        Task.Delay(Utils.Rnd(200, 1000), cancellationTokenSource.Token).ContinueWith((task) =>
+                        Task.Delay(Utils.Rnd(500, 1500), cancellationTokenSource.Token).ContinueWith((task) =>
                         {
                             EnemyDiveManager.DoEnemyFire(bug, animationService, Ship);
                         });
@@ -199,6 +163,7 @@ namespace BlazorGalaga.Services
                     Level += 1;
                     capturehappened = false;
                     hits = 0;
+                    wave = 1;
                     GalagaCaptureManager.Reset();
                     EnemyGridManager.BreathSoundPlayed = false;
                     await ConsoleManager.DrawConsoleLevelText(spriteService, Level);
@@ -227,7 +192,25 @@ namespace BlazorGalaga.Services
             }
             //End Init - Only happens once
 
+            await ConsoleManager.DrawIntroScreen(spriteService, Ship);
+            return;
+
             var bugs = GetBugs();
+
+            //if the bug intro wave is done, increment to the next wave]
+            //or start diving and firing
+            if((bugs.Count(a=>a.Started && !a.IsMoving && a.Wave == wave) > 0 || bugs.Count(a=>a.Wave==wave) == 0) && wave <= 6 && bugs.Count() > 0)
+            {
+                Console.WriteLine("next wave " + bugs.Count(a => a.Wave == wave));
+                wave += 1;
+                if (wave == 6)
+                {
+                    EnemyGridManager.EnemyGridBreathing = true;
+                    DiveAndFire();
+                }
+                else
+                    GetBugs().Where(a => a.Wave == wave).ToList().ForEach(a => a.Started = true);
+            }
 
             //adjust score when bugs are destroyed
             if (bugs.Count != prevbugcount)
@@ -323,6 +306,19 @@ namespace BlazorGalaga.Services
             //ship missile detection
             if (!Ship.Disabled)
                 hits += (ShipManager.CheckMissileCollisions(bugs, animationService) ? 1 : 0);
+
+            //draw fighter captured text if a fighter is captured
+            if (bugs.Any(a => a.FighterCapturedMessageShowing))
+                await ConsoleManager.DrawConsoleFighterCaptured(spriteService);
+
+
+            //hide fighter captured text if a fighter is captured
+            //and bug had flown back home
+            if (bugs.Any(a => a.ClearFighterCapturedMessage))
+            {
+                await ConsoleManager.ClearConsoleLevelText(spriteService);
+                bugs.FirstOrDefault(a => a.ClearFighterCapturedMessage).ClearFighterCapturedMessage = false;
+            }
 
             //for debugging purposes
             if (glo.captureship)
