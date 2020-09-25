@@ -13,12 +13,18 @@ namespace BlazorGalaga.Static.GameServiceHelpers
         private static Ship CapturedShip;
         private static int TractorBeamWaitCount;
         private static int CapturedTextWaitCount;
+        private static bool TractorBeamStartedSoundPlayed;
+        private static bool TractorBeamCatpureSoundPlayed;
+        private static bool FighterCapturedSoundPlayed;
 
         public static void Reset()
         {
             CapturedShip = null;
             TractorBeamWaitCount = 0;
             CapturedTextWaitCount = 0;
+            FighterCapturedSoundPlayed = false;
+            TractorBeamStartedSoundPlayed = false;
+            TractorBeamCatpureSoundPlayed = false;
         }
 
         public static void DoRecapture(Bug bug, AnimationService animationService, Ship ship)
@@ -36,6 +42,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 bug.Sprite.SpriteType = Sprite.SpriteTypes.Ship;
                 bug.Sprite.IsInitialized = false;
                 bug.HomePoint = new Point(0, 0);
+                SoundManager.PlaySound(SoundManager.SoundManagerSounds.fighterrescuedsong, true);
             }
             else if (!bug.IsMoving && !bug.AligningHorizontally)
             {
@@ -88,7 +95,13 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 //create the tractor bream
                 //it's height is zero at this point
                 CreateTractorBeam(animationService, ship, bug);
-                SoundManager.PlaySound(SoundManager.SoundManagerSounds.tractorbeam, true, true);
+                if (!TractorBeamStartedSoundPlayed)
+                {
+                    SoundManager.MuteAllSounds = true;
+                    SoundManager.StopAllSounds();
+                    SoundManager.PlaySound(SoundManager.SoundManagerSounds.tractorbeam, true,true);
+                    TractorBeamStartedSoundPlayed = true;
+                }
             }
             else
             {
@@ -113,7 +126,12 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                         ship.Visible = false;
                         ship.Disabled = true;
                         CreateCapturedShip(animationService, ship, bug);
-                        SoundManager.PlaySound(SoundManager.SoundManagerSounds.tractorbeamcapture,true,true);
+                        if (!TractorBeamCatpureSoundPlayed)
+                        {
+                            SoundManager.StopAllSounds();
+                            SoundManager.PlaySound(SoundManager.SoundManagerSounds.tractorbeamcapture, true,true);
+                            TractorBeamCatpureSoundPlayed = true;
+                        }
                     }
                     else
                     {
@@ -138,7 +156,12 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                             else if (bug.CapturedBug == null)
                             {
                                 //create captured bug and send the main bug home
-                                SoundManager.PlaySound(SoundManager.SoundManagerSounds.fightercapturedsong,true,true);
+                                if (!FighterCapturedSoundPlayed)
+                                {
+                                    SoundManager.StopAllSounds();
+                                    SoundManager.PlaySound(SoundManager.SoundManagerSounds.fightercapturedsong, true,true);
+                                    FighterCapturedSoundPlayed = true;
+                                }
                                 bug.FighterCapturedMessageShowing = true;
                                 CapturedTextWaitCount += 1;
                                 if (CapturedTextWaitCount >= 15)

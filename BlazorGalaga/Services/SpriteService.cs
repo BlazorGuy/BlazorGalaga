@@ -89,7 +89,7 @@ namespace BlazorGalaga.Services
 
         }
 
-        private void SetSpriteInfoBySpriteType(Sprite sprite)
+        public void SetSpriteInfoBySpriteType(Sprite sprite)
         {
 
             switch (sprite.SpriteType)

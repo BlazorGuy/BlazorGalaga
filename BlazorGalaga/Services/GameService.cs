@@ -32,6 +32,8 @@ namespace BlazorGalaga.Services
         private bool capturehappened;
         private int hits = 0;
         private int wave = 1;
+        private bool hideintroscreen;
+        private bool introsounddone;
 
         private int divespeedincrease = 0;
         private int missileincrease = 0;
@@ -132,7 +134,7 @@ namespace BlazorGalaga.Services
 
                 if (bug != null && bug.CaptureState == Bug.enCaptureState.Started) capturehappened = true;
 
-                if (bug != null && bug.IsDiving && bug.CaptureState == Bug.enCaptureState.NotStarted)
+                if (bug != null && bug.IsDiving && bug.CaptureState == Bug.enCaptureState.NotStarted && !bug.IsExploding)
                 {
                     var maxmissleperbug = Utils.Rnd(0 + missileincrease, 3 + missileincrease);
                     for (int i = 1; i <= maxmissleperbug; i++)
@@ -166,7 +168,15 @@ namespace BlazorGalaga.Services
                     wave = 1;
                     GalagaCaptureManager.Reset();
                     EnemyGridManager.BreathSoundPlayed = false;
+                    await ConsoleManager.ClearConsoleLevelText(spriteService);
                     await ConsoleManager.DrawConsoleLevelText(spriteService, Level);
+                    SoundManager.StopAllSounds();
+                    if (Level == 3 || Level == 8)
+                        SoundManager.PlaySound(SoundManager.SoundManagerSounds.challengingstage);
+                    else
+                    {
+                        SoundManager.PlaySound(SoundManager.SoundManagerSounds.levelup);
+                    }
                 }, WaitManager.WaitStep.enStep.ShowLevelText);
                 if (WaitManager.WaitFor(2000, timestamp, WaitManager.WaitStep.enStep.Pause2))
                 {
@@ -187,13 +197,34 @@ namespace BlazorGalaga.Services
             if (!consoledrawn && Ship.Sprite.BufferCanvas != null)
             {
                 Ship.Visible = false;
-                await ConsoleManager.DrawConsole(Lives, spriteService, Ship);
+                await ConsoleManager.DrawConsole(Lives, spriteService, Ship, false);
                 consoledrawn = true;
+                SoundManager.OnEnd += SoundManager_OnEnd; ;
             }
             //End Init - Only happens once
 
-            await ConsoleManager.DrawIntroScreen(spriteService, Ship);
-            return;
+            //show the intro screen if the space bar hasn't been pressed yet
+            if (!hideintroscreen)
+            {
+                if (KeyBoardHelper.SpaceBarPressed)
+                {
+                    SoundManager.PlaySound(SoundManager.SoundManagerSounds.coin, true);
+                    await ConsoleManager.ClearConsole(spriteService);
+                    await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true);
+                }
+                else
+                {
+                    await ConsoleManager.DrawIntroScreen(spriteService, Ship);
+                    return;
+                }
+            }
+
+            //if the intro sound isn't done, exit
+            if (!introsounddone)
+            {
+                await ConsoleManager.DrawConsolePlayer1(spriteService);
+                return;
+            }
 
             var bugs = GetBugs();
 
@@ -201,7 +232,6 @@ namespace BlazorGalaga.Services
             //or start diving and firing
             if((bugs.Count(a=>a.Started && !a.IsMoving && a.Wave == wave) > 0 || bugs.Count(a=>a.Wave==wave) == 0) && wave <= 6 && bugs.Count() > 0)
             {
-                Console.WriteLine("next wave " + bugs.Count(a => a.Wave == wave));
                 wave += 1;
                 if (wave == 6)
                 {
@@ -229,8 +259,10 @@ namespace BlazorGalaga.Services
                     EnemyGridManager.EnemyGridBreathing = false;
                 }, WaitManager.WaitStep.enStep.CleanUp);
 
+                //are we at a challenging stage?
                 if ((Level == 3 || Level == 8) && !WaitManager.Steps.Any(a=> a.Step == WaitManager.WaitStep.enStep.Pause1))
                 {
+                    SoundManager.PlaySound(SoundManager.SoundManagerSounds.challengingstageover, true);
                     if (WaitManager.WaitFor(1500, timestamp, WaitManager.WaitStep.enStep.ShowNumberOfHitsLabel))
                     {
                         await ConsoleManager.DrawConsoleNumberOfHitsLabel(spriteService);
@@ -336,5 +368,21 @@ namespace BlazorGalaga.Services
                 EnemyDiveManager.DoEnemyDive(bugs, animationService, Ship, Constants.BugDiveSpeed, bug, true);
             }
         }
+
+        private void SoundManager_OnEnd(Howler.Blazor.Components.Events.HowlEventArgs e)
+        {
+            var soundname = SoundManager.Sounds.FirstOrDefault(a => a.SoundId == e.SoundId).SoundName;
+
+            if (soundname == SoundManager.SoundManagerSounds.coin)
+            {
+                hideintroscreen = true;
+                SoundManager.PlaySound(SoundManager.SoundManagerSounds.introsong);
+            }
+            else if (soundname == SoundManager.SoundManagerSounds.introsong)
+            {
+                introsounddone = true;
+            }
+        }
+
     }
 }

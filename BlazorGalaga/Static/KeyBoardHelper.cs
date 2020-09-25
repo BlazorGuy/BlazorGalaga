@@ -11,6 +11,7 @@ namespace BlazorGalaga.Static
     {
 
         public static  string KeyDown { get; set; }
+        public static bool SpaceBarPressed { get; set; }
 
         private static bool ignorenextkeyup;
         private static bool fire;
@@ -31,6 +32,7 @@ namespace BlazorGalaga.Static
             if (keycode == Constants.Space && !dontfire)
             {
                 fire = true;
+                SpaceBarPressed = true;
             }
 
         }
@@ -49,7 +51,11 @@ namespace BlazorGalaga.Static
 
         public static void ControlShip(Ship ship,AnimationService animationService)
         {
-            if (ship.Disabled) return;
+            if (ship.Disabled || !ship.Visible)
+            {
+                fire = false;
+                return;
+            }
 
             if (fire)
             {

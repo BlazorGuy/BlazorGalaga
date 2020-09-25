@@ -140,14 +140,7 @@ function resizeCanvas() {
 
     // Set the new margin of the game so it will be centered
     game.canvas.style.margin = margin;
+    game.canvas.tabindex = 1;
+    game.canvas.focus();
 
 };
-
-function saveAsFile(filename, bytesBase64) {
-    var link = document.createElement('a');
-    link.download = filename;
-    link.href = "data:application/octet-stream;base64," + bytesBase64;
-    document.body.appendChild(link); // Needed for Firefox
-    link.click();
-    document.body.removeChild(link);
-}

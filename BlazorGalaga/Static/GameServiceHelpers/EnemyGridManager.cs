@@ -113,6 +113,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                             if (bug.CaptureState == Bug.enCaptureState.FlyingBackHome)
                             {
                                 bug.CaptureState = Bug.enCaptureState.Complete;
+                                SoundManager.MuteAllSounds = false;
                                 bug.FighterCapturedMessageShowing = false;
                                 bug.ClearFighterCapturedMessage = true;
                                 ship.Visible = true;

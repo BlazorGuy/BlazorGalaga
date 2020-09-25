@@ -28,7 +28,8 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 Paths = paths,
                 RotateAlongPath = false,
                 Started = true,
-                Index = -999
+                Index = -999,
+                Visible = false
             };
 
             ship.Paths.ForEach(a => {
@@ -66,7 +67,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                     RotateAlongPath = false,
                     Started = true,
                     Speed = Constants.ShipMissleSpeed,
-                    DestroyAfterComplete = true
+                    DestroyAfterComplete = true,
                 };
 
                 missle.Paths.ForEach(p =>
@@ -111,8 +112,13 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                             }
                             if (bug.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug_Blue || bug.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug_Blue_DownFlap)
                                 SoundManager.PlaySound(SoundManager.SoundManagerSounds.galagadestroyed);
-                            else if (bug.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug ||  bug.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug_DownFlap)
+                            else if (bug.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug || bug.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug_DownFlap)
                                 SoundManager.PlaySound(SoundManager.SoundManagerSounds.bluebughit);
+                            else if (bug.Sprite.SpriteType == Sprite.SpriteTypes.CapturedShip)
+                            {
+                                SoundManager.StopAllSounds();
+                                SoundManager.PlaySound(SoundManager.SoundManagerSounds.capturedfighterdestroyedsong);
+                            }
                             else
                                 SoundManager.PlaySound(SoundManager.SoundManagerSounds.redbughit);
                             bug.IsExploding = true;

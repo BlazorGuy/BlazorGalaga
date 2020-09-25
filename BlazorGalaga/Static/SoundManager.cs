@@ -12,6 +12,9 @@ namespace BlazorGalaga.Static
         public static IHowl Howl { get; set; }
         public static IHowlGlobal HowlGlobal { get; set; }
         public static List<Sound> Sounds { get; set; }
+        public static bool MuteAllSounds { get; set; }
+        public delegate void SoundStoppedEventHandler(Howler.Blazor.Components.Events.HowlEventArgs e);
+        public static SoundStoppedEventHandler OnEnd;
 
         public enum SoundManagerSounds
         {
@@ -24,7 +27,16 @@ namespace BlazorGalaga.Static
             breathing,
             tractorbeam,
             tractorbeamcapture,
-            fightercapturedsong
+            fightercapturedsong,
+            introsong,
+            coin,
+            empty,
+            levelup,
+            fighterrescuedsong,
+            challengingstage,
+            challengingstageover,
+            challengingstageperfect,
+            capturedfighterdestroyedsong
         }
 
         public class Sound
@@ -39,6 +51,8 @@ namespace BlazorGalaga.Static
         {
             Sounds = new List<Sound>();
 
+            Howl.Load();
+
             // Register callbacks
             Howl.OnPlay += e =>
             {
@@ -49,19 +63,26 @@ namespace BlazorGalaga.Static
 
             Howl.OnEnd += e =>
             {
-                Sounds.ForEach(a => {
-                    if (e.SoundId == a.SoundId) a.IsPlaying = false;
+                Sounds.Where(a=>a.SoundId==e.SoundId).ToList().ForEach(a => {
+                     a.IsPlaying = false;
                 });
+                SoundStoppedEventHandler handler = OnEnd;
+                if (handler != null) handler(e);
             };
 
+            PlaySound(SoundManagerSounds.empty);
         }
 
-        public static async void PlaySound(SoundManagerSounds sound, bool oneatatime = false,bool stopallsounds =false)
+        public static void StopAllSounds()
         {
-            if (stopallsounds)
-            {
-                await Howl.Stop();
-            }
+            Howl.Stop();
+            Sounds.ForEach(a => Howl.Pause(a.SoundId));
+        }
+
+        public static async void PlaySound(SoundManagerSounds sound, bool oneatatime = false,bool excludefrommute=false)
+        {
+
+            if (MuteAllSounds && !excludefrommute) return;
 
             if (oneatatime)
             {
@@ -73,8 +94,6 @@ namespace BlazorGalaga.Static
                 Sources = new[] { "/Assets/sounds/" + Enum.GetName(typeof(SoundManagerSounds), sound) + ".mp3" },
                 Formats = new[] { "mp3" }
             };
-
-            Console.WriteLine("Playing " + "/Assets/sounds/" + Enum.GetName(typeof(SoundManagerSounds), sound) + ".mp3");
 
             var soundid =  await Howl.Play(options);
 

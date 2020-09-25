@@ -9,7 +9,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 {
     public static class ConsoleManager
     {
-        public static async Task DrawConsole(int lives, SpriteService spriteService, Ship ship)
+        public static async Task DrawConsole(int lives, SpriteService spriteService, Ship ship, bool drawships)
         {
             //draw top black block
             await spriteService.StaticCtx.SetFillStyleAsync("Black");
@@ -18,30 +18,33 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             //draw bottom black block
             await spriteService.StaticCtx.FillRectAsync(0, Constants.CanvasSize.Height - 65, Constants.CanvasSize.Width, 65);
 
-            ////draw the ships
-            //int left = 5;
-            //for (var i = 1; i <= lives; i++)
-            //{
-            //    await spriteService.StaticCtx.DrawImageAsync(
-            //        ship.Sprite.BufferCanvas.Canvas,
-            //        left,
-            //        Constants.CanvasSize.Height - ship.Sprite.SpriteDestRect.Height - 3
-            //    );
-            //    left += (int)ship.Sprite.SpriteDestRect.Width + 3;
-            //}
+            if (drawships)
+            {
+                //draw the ships
+                int left = 5;
+                for (var i = 1; i <= lives; i++)
+                {
+                    await spriteService.StaticCtx.DrawImageAsync(
+                        ship.Sprite.BufferCanvas.Canvas,
+                        left,
+                        Constants.CanvasSize.Height - ship.Sprite.SpriteDestRect.Height - 3
+                    );
+                    left += (int)ship.Sprite.SpriteDestRect.Width + 3;
+                }
 
-            ////draw the badges
-            //await spriteService.StaticCtx.DrawImageAsync(
-            //    spriteService.SpriteSheet,
-            //    305,
-            //    175,
-            //    10,
-            //    16,
-            //    Constants.CanvasSize.Width - 30,
-            //    Constants.CanvasSize.Height - 45,
-            //    28,
-            //    45
-            //);
+                //draw the badges
+                await spriteService.StaticCtx.DrawImageAsync(
+                    spriteService.SpriteSheet,
+                    305,
+                    175,
+                    10,
+                    16,
+                    Constants.CanvasSize.Width - 30,
+                    Constants.CanvasSize.Height - 45,
+                    28,
+                    45
+                );
+            }
 
             await spriteService.StaticCtx.SetFillStyleAsync("Red");
             await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");
@@ -75,6 +78,8 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");
             await spriteService.StaticCtx.FillTextAsync("®", 440, 827);
 
+            spriteService.SetSpriteInfoBySpriteType(ship.Sprite);
+
             await spriteService.StaticCtx.DrawImageAsync(
                 ship.Sprite.BufferCanvas.Canvas,
                 25,
@@ -104,6 +109,11 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             await spriteService.StaticCtx.SetFillStyleAsync("White");
             await spriteService.StaticCtx.ClearRectAsync(40, 30, 150, 50);
             await spriteService.StaticCtx.FillTextAsync(score == 0 ? "00" : score.ToString(), 50, 60);
+        }
+
+        public static async Task ClearConsole(SpriteService spriteService)
+        {
+            await spriteService.StaticCtx.ClearRectAsync(0,0, Constants.CanvasSize.Width, Constants.CanvasSize.Height);
         }
 
         public static async Task ClearConsoleLevelText(SpriteService spriteService)
@@ -157,6 +167,13 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");
             await spriteService.StaticCtx.FillTextAsync("FIGHTER CAPTURED", 125, (Constants.CanvasSize.Height / 2) + 100);
         }
+        public static async Task DrawConsolePlayer1(SpriteService spriteService)
+        {
+            await spriteService.StaticCtx.SetFillStyleAsync("rgba(152, 249, 255, 1)");
+            await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");
+            await spriteService.StaticCtx.FillTextAsync("PLAYER 1", 250, Constants.CanvasSize.Height / 2);
+        }
+
 
     }
 }
