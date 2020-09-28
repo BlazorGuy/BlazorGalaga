@@ -18,7 +18,10 @@ namespace BlazorGalaga.Static.GameServiceHelpers
         {
             int loopcount = 0;
 
-            while (bug == null || bug.IsMoving || bug.CaptureState == Bug.enCaptureState.Started || bug.CaptureState == Bug.enCaptureState.FlyingBackHome)
+            while (bug == null || bug.IsMoving ||
+                bug.CaptureState == Bug.enCaptureState.Started ||
+                bug.CaptureState == Bug.enCaptureState.FlyingBackHome ||
+                bug.CaptureState == Bug.enCaptureState.RecaptureStarted)
             {
                 bug = bugs[Utils.Rnd(0, bugs.Count - 1)];
                 loopcount++;

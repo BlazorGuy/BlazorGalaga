@@ -25,6 +25,7 @@ namespace BlazorGalaga.Services
         public int Lives { get; set; }
         public int Level { get; set; }
         public int Score { get; set; }
+        public bool Started { get; set; }
 
         private bool consoledrawn = false;
         private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
@@ -117,36 +118,33 @@ namespace BlazorGalaga.Services
             GetBugs().Where(a => a.Wave == 1).ToList().ForEach(a => a.Started = true);
         }
 
-        private void DiveAndFire()
+        private float LastDiveTimeStamp = 0;
+        private int NextDiveWaitTime = 0;
+        private float LastMissileFireTimeStamp;
+        private int NextMissleFireTime = 0;
+
+        private void DiveAndFire(float timestamp)
         {
             if (GetBugs().Count == 0 || Ship.Disabled)
-            {
-                Task.Delay(1000, cancellationTokenSource.Token).ContinueWith((task) =>
-                {
-                    DiveAndFire();
-                });
                 return;
-            }
 
-            Task.Delay(Utils.Rnd(500,maxwaittimebetweendives), cancellationTokenSource.Token).ContinueWith((task) =>
+            var bug = EnemyDiveManager.DoEnemyDive(GetBugs(), animationService, Ship, Constants.BugDiveSpeed + divespeedincrease,null,false,capturehappened);
+
+            if (bug != null && bug.CaptureState == Bug.enCaptureState.Started) capturehappened = true;
+
+            if (bug != null && bug.IsDiving && bug.CaptureState == Bug.enCaptureState.NotStarted && !bug.IsExploding)
             {
-                var bug = EnemyDiveManager.DoEnemyDive(GetBugs(), animationService, Ship, Constants.BugDiveSpeed + divespeedincrease,null,false,capturehappened);
-
-                if (bug != null && bug.CaptureState == Bug.enCaptureState.Started) capturehappened = true;
-
-                if (bug != null && bug.IsDiving && bug.CaptureState == Bug.enCaptureState.NotStarted && !bug.IsExploding)
+                if (timestamp - LastMissileFireTimeStamp > NextMissleFireTime)
                 {
+                    LastMissileFireTimeStamp = timestamp;
+                    NextMissleFireTime = Utils.Rnd(500, 1500);
                     var maxmissleperbug = Utils.Rnd(0 + missileincrease, 3 + missileincrease);
                     for (int i = 1; i <= maxmissleperbug; i++)
                     {
-                        Task.Delay(Utils.Rnd(500, 1500), cancellationTokenSource.Token).ContinueWith((task) =>
-                        {
-                            EnemyDiveManager.DoEnemyFire(bug, animationService, Ship);
-                        });
+                        EnemyDiveManager.DoEnemyFire(bug, animationService, Ship);
                     }
                 }
-                DiveAndFire();
-            });
+            }
         }
 
         private List<Bug> GetBugs()
@@ -167,7 +165,6 @@ namespace BlazorGalaga.Services
                     hits = 0;
                     wave = 1;
                     GalagaCaptureManager.Reset();
-                    EnemyGridManager.BreathSoundPlayed = false;
                     await ConsoleManager.ClearConsoleLevelText(spriteService);
                     await ConsoleManager.DrawConsoleLevelText(spriteService, Level);
                     SoundManager.StopAllSounds();
@@ -185,6 +182,7 @@ namespace BlazorGalaga.Services
                         await ConsoleManager.ClearConsoleLevelText(spriteService);
                         InitLevel(Level);
                         Ship.Visible = true;
+                        EnemyGridManager.BreathSoundPlayed = false;
                         WaitManager.ClearSteps();
                     }, WaitManager.WaitStep.enStep.ClearLevelText);
                 }
@@ -211,6 +209,7 @@ namespace BlazorGalaga.Services
                     SoundManager.PlaySound(SoundManager.SoundManagerSounds.coin, true);
                     await ConsoleManager.ClearConsole(spriteService);
                     await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true);
+                    Started = true;
                 }
                 else
                 {
@@ -228,22 +227,35 @@ namespace BlazorGalaga.Services
 
             var bugs = GetBugs();
 
+            if (timestamp - LastDiveTimeStamp > NextDiveWaitTime && EnemyGridManager.EnemyGridBreathing)
+            {
+                DiveAndFire(timestamp);
+                LastDiveTimeStamp = timestamp;
+                NextDiveWaitTime = Utils.Rnd(500, maxwaittimebetweendives);
+            }
+
             //if the bug intro wave is done, increment to the next wave]
             //or start diving and firing
-            if((bugs.Count(a=>a.Started && !a.IsMoving && a.Wave == wave) > 0 || bugs.Count(a=>a.Wave==wave) == 0) && wave <= 6 && bugs.Count() > 0)
+            if ((bugs.Count(a=>a.Started && !a.IsMoving && a.Wave == wave) > 0 || bugs.Count(a=>a.Wave==wave) == 0) && wave <= 6 && bugs.Count() > 0)
             {
                 wave += 1;
                 if (wave == 6)
                 {
                     EnemyGridManager.EnemyGridBreathing = true;
-                    DiveAndFire();
+                    NextDiveWaitTime = Utils.Rnd(500, maxwaittimebetweendives);
+                    NextMissleFireTime = Utils.Rnd(500, 1500);
+                    //DiveAndFire();
                 }
                 else
                     GetBugs().Where(a => a.Wave == wave).ToList().ForEach(a => a.Started = true);
             }
+            if (EnemyGridManager.EnemyGridBreathing)
+            {
 
-            //adjust score when bugs are destroyed
-            if (bugs.Count != prevbugcount)
+            }
+
+                //adjust score when bugs are destroyed
+                if (bugs.Count != prevbugcount)
             {
                 await ConsoleManager.DrawScore(spriteService, Score);
                 prevbugcount = bugs.Count();

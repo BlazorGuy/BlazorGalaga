@@ -24,6 +24,7 @@ namespace BlazorGalaga.Pages
         public List<Canvas> BufferCanvases { get; set; }
         public List<Canvas> BigBufferCanvases { get; set; }
         public List<Canvas> BiggerBufferCanvases { get; set; }
+        public string BackGroundClass { get; set; }
 
         private Canvas2DContext DynamicCtx1;
         private Canvas2DContext StaticCtx;
@@ -57,6 +58,8 @@ namespace BlazorGalaga.Pages
 
         protected override void OnInitialized()
         {
+            BackGroundClass = "background";
+
             BufferCanvases = new List<Canvas>();
 
             for (int i = 1; i <= Constants.SpriteBufferCount; i++)
@@ -195,6 +198,11 @@ namespace BlazorGalaga.Pages
                     {
                         if (gameService.Ship == null) gameService.Ship = ship;
                         gameService.Process(timeStamp,glo);
+                        if (gameService.Started && BackGroundClass == "background")
+                        {
+                            BackGroundClass = "background backgroundmoving";
+                            StateHasChanged();
+                        }
                         Utils.dOut("gameService.Process()", sw.ElapsedMilliseconds);
                     }
                 }

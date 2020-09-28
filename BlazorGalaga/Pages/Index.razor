@@ -50,6 +50,9 @@
         position: absolute;
         background-image: url('Assets/Background.png');
         z-index: -100;
+    }
+
+    .backgroundmoving {
         -webkit-animation: animatedBackground 5s linear infinite;
         -moz-animation: animatedBackground 5s linear infinite;
         -o-animation: animatedBackground 5s linear infinite;
@@ -126,7 +129,7 @@
     <BECanvas Width="672" Height="944" @ref="DynamicCanvas1"></BECanvas>
     <BECanvas Width="672" Height="944" @ref="StaticCanvas"></BECanvas>
     <div class="twinkle"></div>
-    <div class="background"></div>
+    <div class="@BackGroundClass"></div>
 </div>
 
 <img id="imgSpriteSheet" style="display:none" @ref="spriteSheet" src="Assets/spritesheet.png" />
