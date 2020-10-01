@@ -21,7 +21,7 @@ namespace BlazorGalaga.Models.Paths
             };
             var dive = new BezierCurve()
             {
-                StartPoint = new PointF(animatable.Location.X + 100, animatable.Location.Y),
+                StartPoint = new PointF(animatable.Location.X + 100, animatable.Location.Y+1),
                 EndPoint = new PointF(ship.Location.X, Constants.CanvasSize.Height/2 + 130),
                 ControlPoint1 = new PointF(animatable.Location.X + 100, animatable.Location.Y),
                 ControlPoint2 = new PointF(ship.Location.X + 90, Constants.CanvasSize.Height / 2),

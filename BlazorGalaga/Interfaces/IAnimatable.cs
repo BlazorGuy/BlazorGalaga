@@ -45,6 +45,7 @@ namespace BlazorGalaga.Interfaces
         public bool PathDrawn { get; set; }
         public float ManualRotation { get; set; }
         public float ManualRotationRate { get; set; }
+        public bool IsMovingDown { get; set; }
 
 
     }

@@ -43,7 +43,7 @@ namespace BlazorGalaga.Services
 
         public void Init()
         {
-            //Level = 7;
+            //Level = 6;
             Lives = 2;
             ShipManager.InitShip(animationService);
         }
@@ -59,7 +59,7 @@ namespace BlazorGalaga.Services
                     Level2.InitIntro(animationService, introspeedincrease);
                     break;
                 case 3: //challenge
-                    Level3.InitIntro(animationService, introspeedincrease);
+                    Level3.InitIntro(animationService, -2);
                     break;
                 case 4:
                     Level4.InitIntro(animationService, introspeedincrease);
@@ -86,7 +86,7 @@ namespace BlazorGalaga.Services
                     introspeedincrease = 1;
                     break;
                 case 8: //challenge
-                    Level8.InitIntro(animationService, introspeedincrease);
+                    Level8.InitIntro(animationService, -2);
                     break;
                 case 9:
                     Level9.InitIntro(animationService, introspeedincrease);
@@ -120,10 +120,8 @@ namespace BlazorGalaga.Services
 
         private float LastDiveTimeStamp = 0;
         private int NextDiveWaitTime = 0;
-        private float LastMissileFireTimeStamp;
-        private int NextMissleFireTime = 0;
 
-        private void DiveAndFire(float timestamp)
+        private void Dive()
         {
             if (GetBugs().Count == 0 || Ship.Disabled)
                 return;
@@ -132,19 +130,18 @@ namespace BlazorGalaga.Services
 
             if (bug != null && bug.CaptureState == Bug.enCaptureState.Started) capturehappened = true;
 
-            if (bug != null && bug.IsDiving && bug.CaptureState == Bug.enCaptureState.NotStarted && !bug.IsExploding)
+            foreach (var b in GetBugs())
             {
-                if (timestamp - LastMissileFireTimeStamp > NextMissleFireTime)
+                if (b.IsDiving && b.CaptureState == Bug.enCaptureState.NotStarted && !b.IsExploding && b.MissileCountDowns.Count==0)
                 {
-                    LastMissileFireTimeStamp = timestamp;
-                    NextMissleFireTime = Utils.Rnd(500, 1500);
                     var maxmissleperbug = Utils.Rnd(0 + missileincrease, 3 + missileincrease);
                     for (int i = 1; i <= maxmissleperbug; i++)
                     {
-                        EnemyDiveManager.DoEnemyFire(bug, animationService, Ship);
+                        b.MissileCountDowns.Add(Utils.Rnd(4, 10));
                     }
                 }
             }
+           
         }
 
         private List<Bug> GetBugs()
@@ -227,9 +224,10 @@ namespace BlazorGalaga.Services
 
             var bugs = GetBugs();
 
+            //dive the bugs
             if (timestamp - LastDiveTimeStamp > NextDiveWaitTime && EnemyGridManager.EnemyGridBreathing)
             {
-                DiveAndFire(timestamp);
+                Dive();
                 LastDiveTimeStamp = timestamp;
                 NextDiveWaitTime = Utils.Rnd(500, maxwaittimebetweendives);
             }
@@ -243,19 +241,13 @@ namespace BlazorGalaga.Services
                 {
                     EnemyGridManager.EnemyGridBreathing = true;
                     NextDiveWaitTime = Utils.Rnd(500, maxwaittimebetweendives);
-                    NextMissleFireTime = Utils.Rnd(500, 1500);
-                    //DiveAndFire();
                 }
                 else
                     GetBugs().Where(a => a.Wave == wave).ToList().ForEach(a => a.Started = true);
             }
-            if (EnemyGridManager.EnemyGridBreathing)
-            {
 
-            }
-
-                //adjust score when bugs are destroyed
-                if (bugs.Count != prevbugcount)
+            //adjust score when bugs are destroyed
+            if (bugs.Count != prevbugcount)
             {
                 await ConsoleManager.DrawScore(spriteService, Score);
                 prevbugcount = bugs.Count();
@@ -318,6 +310,21 @@ namespace BlazorGalaga.Services
             {
                 EnemyGridManager.MoveEnemyGrid(bugs, animationService, Ship);
                 EnemyGridManager.LastEnemyGridMoveTimeStamp = timestamp;
+               
+               //fire missiles
+               foreach(var bug in bugs.Where(a=>a.MissileCountDowns.Count>0 && a.IsDiving))
+                { 
+                    for (int i = 0; i <= bug.MissileCountDowns.Count - 1; i++)
+                    {
+                        bug.MissileCountDowns[i] -= 1;
+                        Console.WriteLine(bug.MissileCountDowns[i]);
+                        if (bug.MissileCountDowns[i] <= 0 && bug.Location.Y <= Constants.CanvasSize.Height-200 && bug.IsMovingDown)
+                        {
+                            EnemyDiveManager.DoEnemyFire(bug, animationService, Ship);
+                        }
+                    }
+                    bug.MissileCountDowns.RemoveAll(a => a == 0);
+                }
             }
 
             //animate the flapping wings

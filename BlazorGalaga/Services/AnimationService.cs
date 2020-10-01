@@ -94,7 +94,7 @@ namespace BlazorGalaga.Services
                             animatable.CurPathPointIndex += 1;
                             return;
                         }
-                        animatable.LineToLocation = new Vector2(animatable.LineToLocation.X + .01F, animatable.LineToLocation.Y + .01F);
+                        //animatable.LineToLocation = new Vector2(animatable.LineToLocation.X + .01F, animatable.LineToLocation.Y + .01F);
                     }
 
                     Vector2 direction = Vector2.Normalize(animatable.LineToLocation - animatable.LineFromLocation);
@@ -113,6 +113,8 @@ namespace BlazorGalaga.Services
                     animatable.PevLocation = animatable.Location;
                     animatable.Location = new PointF(animatable.Location.X + direction.X * speed, animatable.Location.Y + direction.Y * speed);
                     animatable.NextLocation = new PointF(animatable.Location.X + (direction.X * speed * 2) , animatable.Location.Y + (direction.Y * speed * 2));
+
+                    animatable.IsMovingDown = animatable.NextLocation.Y - animatable.PevLocation.Y > 0;
 
                     if (animatable.ManualRotation != 0)
                     {

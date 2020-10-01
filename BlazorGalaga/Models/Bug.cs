@@ -36,12 +36,15 @@ namespace BlazorGalaga.Models
         public bool AligningHorizontally { get; set; }
         public bool AligningVertically { get; set; }
 
+        public List<int> MissileCountDowns { get; set; }
+
         public Bug(Sprite.SpriteTypes spritetype)
         {
             Sprite = new Sprite(spritetype);
             SpriteBank = new List<Sprite>();
             ChildBugs = new List<Bug>();
             CaptureState = enCaptureState.NotStarted;
+            MissileCountDowns = new List<int>();
         }
     }
 }

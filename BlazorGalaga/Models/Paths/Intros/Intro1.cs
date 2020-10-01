@@ -27,7 +27,7 @@ namespace BlazorGalaga.Models.Paths.Intros
 
                 new BezierCurve()
                 {
-                    StartPoint = new PointF(558.4166F, 476.7318F),
+                    StartPoint = new PointF(559, 477),
                     ControlPoint1 = new PointF(664.8837F, 566.6366F),
                     ControlPoint2 = new PointF(573.7952F, 728.7018F),
                     EndPoint = new PointF(448.4005F, 656.5414F)
