@@ -44,7 +44,7 @@ namespace BlazorGalaga.Services
 
         public void Init()
         {
-            //Level = 2;
+            Level = 8;
             Lives = 2;
             ShipManager.InitShip(animationService);
         }
@@ -328,7 +328,7 @@ namespace BlazorGalaga.Services
                     {
                         bug.MissileCountDowns[i] -= 1;
                         Console.WriteLine(bug.MissileCountDowns[i]);
-                        if (bug.MissileCountDowns[i] <= 0 && bug.Location.Y <= Constants.CanvasSize.Height-200 && bug.IsMovingDown)
+                        if (bug.MissileCountDowns[i] <= 0 && bug.Location.Y <= Constants.CanvasSize.Height-300 && bug.IsMovingDown)
                         {
                             EnemyDiveManager.DoEnemyFire(bug, animationService, Ship);
                         }
