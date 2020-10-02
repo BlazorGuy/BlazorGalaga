@@ -173,10 +173,10 @@ namespace BlazorGalaga.Services
             {
                 if ((!Animatables[i].IsMoving
                 && Animatables[i].Started
-                && (Animatables[i].Location.X < 0 ||
+                && ((Animatables[i].Location.X < 0 ||
                     Animatables[i].Location.Y < 0 ||
                     Animatables[i].Location.X > Constants.CanvasSize.Width ||
-                    Animatables[i].Location.Y > Constants.CanvasSize.Height)) ||
+                    Animatables[i].Location.Y > Constants.CanvasSize.Height) && !Animatables[i].NeverDestroyOffScreen)) ||
                     (!Animatables[i].IsMoving && Animatables[i].DestroyAfterComplete) ||
                     (Animatables[i].DestroyImmediately))
                 {

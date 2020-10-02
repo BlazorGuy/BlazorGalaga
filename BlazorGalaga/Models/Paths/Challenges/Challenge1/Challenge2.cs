@@ -31,7 +31,7 @@ namespace BlazorGalaga.Models.Paths.Challenges.Challenge1
                 new BezierCurve() {StartPoint = new PointF(578.527F,519.3183F),
                 ControlPoint1 = new PointF(521.7445F,438.8772F),
                 ControlPoint2 = new PointF(94.69292F,424.6817F),
-                EndPoint = new PointF(-1000F,398.6566F)},
+                EndPoint = new PointF(-50F,398.6566F)},
             };
 
             return paths;

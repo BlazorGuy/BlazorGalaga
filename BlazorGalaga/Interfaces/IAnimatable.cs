@@ -46,7 +46,7 @@ namespace BlazorGalaga.Interfaces
         public float ManualRotation { get; set; }
         public float ManualRotationRate { get; set; }
         public bool IsMovingDown { get; set; }
-
+        public bool NeverDestroyOffScreen { get; set; }
 
     }
 }

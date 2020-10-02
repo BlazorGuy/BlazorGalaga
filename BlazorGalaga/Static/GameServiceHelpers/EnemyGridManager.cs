@@ -71,7 +71,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 }
                 else if (bug.CaptureState == Bug.enCaptureState.Started)
                 {
-                    if (!bug.IsMoving)
+                    if (!bug.IsMoving && (bug.Location.Y > Constants.CanvasSize.Height / 3 || bug.FighterCapturedMessageShowing))
                     {
                         bug.Rotation = -90;
                         GalagaCaptureManager.DoTractorBeam(bug, animationService, ship);
@@ -110,6 +110,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                         {
                             bug.Location = homepoint;
                             bug.IsDiving = false;
+                            bug.NeverDestroyOffScreen = true;
                             if (bug.CaptureState == Bug.enCaptureState.FlyingBackHome)
                             {
                                 bug.CaptureState = Bug.enCaptureState.Complete;

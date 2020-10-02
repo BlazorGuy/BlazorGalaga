@@ -81,7 +81,7 @@ namespace BlazorGalaga.Static
 
         public static async void PlaySound(SoundManagerSounds sound, bool oneatatime = false,bool excludefrommute=false)
         {
-            //await HowlGlobal.Mute(true);
+            await HowlGlobal.Mute(true);
            
             if (MuteAllSounds && !excludefrommute) return;
 

@@ -35,15 +35,16 @@ namespace BlazorGalaga.Services
         private int wave = 1;
         private bool hideintroscreen;
         private bool introsounddone;
-
         private int divespeedincrease = 0;
         private int missileincrease = 0;
         private int introspeedincrease = 0;
         private int maxwaittimebetweendives = 5000;
+        private bool skipintro = true;
+
 
         public void Init()
         {
-            //Level = 6;
+            //Level = 2;
             Lives = 2;
             ShipManager.InitShip(animationService);
         }
@@ -197,6 +198,15 @@ namespace BlazorGalaga.Services
                 SoundManager.OnEnd += SoundManager_OnEnd; ;
             }
             //End Init - Only happens once
+
+            if (skipintro)
+            {
+                skipintro = false;
+                hideintroscreen = true;
+                introsounddone = true;
+                Started = true;
+                Ship.Visible = true;
+            }
 
             //show the intro screen if the space bar hasn't been pressed yet
             if (!hideintroscreen)

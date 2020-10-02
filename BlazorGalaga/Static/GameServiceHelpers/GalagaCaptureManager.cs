@@ -89,7 +89,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
         public static void DoTractorBeam(Bug bug, AnimationService animationService, Ship ship)
         {
             bug.OutputDebugInfo = true;
-
+       
             var tb = animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.TractorBeam).FirstOrDefault();
 
             if (tb == null)
