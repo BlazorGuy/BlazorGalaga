@@ -38,6 +38,8 @@ namespace BlazorGalaga.Models
 
         public List<int> MissileCountDowns { get; set; }
 
+        public bool IsInIntro { get; set; }
+
         public Bug(Sprite.SpriteTypes spritetype)
         {
             Sprite = new Sprite(spritetype);

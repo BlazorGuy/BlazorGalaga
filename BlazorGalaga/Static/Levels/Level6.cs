@@ -11,7 +11,7 @@ namespace BlazorGalaga.Static.Levels
 {
     public static class Level6
     {
-        public static void InitIntro(AnimationService animationService, int introspeedincrease)
+        public static void InitIntro(AnimationService animationService, int introspeedincrease, int maxintromissiles)
         {
             //two groups of four from top
             for (int i = 0; i < 5; i++)

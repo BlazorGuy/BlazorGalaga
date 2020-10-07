@@ -38,13 +38,14 @@ namespace BlazorGalaga.Services
         private int divespeedincrease = 0;
         private int missileincrease = 0;
         private int introspeedincrease = 0;
+        private int maxintromissiles = 0;
         private int maxwaittimebetweendives = 5000;
         private bool skipintro = true;
 
 
         public void Init()
         {
-            Level = 8;
+            //Level = 8;
             Lives = 2;
             ShipManager.InitShip(animationService);
         }
@@ -54,50 +55,50 @@ namespace BlazorGalaga.Services
             switch (level)
             {
                 case 1:
-                    Level1.InitIntro(animationService, introspeedincrease);
+                    Level1.InitIntro(animationService, introspeedincrease, maxintromissiles);
                     break;
                 case 2:
-                    Level2.InitIntro(animationService, introspeedincrease);
+                    Level2.InitIntro(animationService, introspeedincrease, maxintromissiles);
                     break;
                 case 3: //challenge
-                    Level3.InitIntro(animationService, -2);
+                    Level3.InitIntro(animationService, -2, maxintromissiles);
                     break;
                 case 4:
-                    Level4.InitIntro(animationService, introspeedincrease);
+                    Level4.InitIntro(animationService, introspeedincrease, maxintromissiles);
                     maxwaittimebetweendives = 4000;
                     break;
                 case 5:
-                    Level5.InitIntro(animationService, introspeedincrease);
+                    Level5.InitIntro(animationService, introspeedincrease, maxintromissiles);
                     maxwaittimebetweendives = 3000;
                     divespeedincrease = 1;
                     missileincrease = 1;
                     break;
                 case 6:
-                    Level6.InitIntro(animationService, introspeedincrease);
+                    Level6.InitIntro(animationService, introspeedincrease, maxintromissiles);
                     maxwaittimebetweendives = 2500;
                     divespeedincrease = 1;
                     missileincrease = 1;
                     introspeedincrease = 1;
                     break;
                 case 7:
-                    Level7.InitIntro(animationService, introspeedincrease);
+                    Level7.InitIntro(animationService, introspeedincrease, maxintromissiles);
                     maxwaittimebetweendives = 2500;
                     divespeedincrease = 1;
                     missileincrease = 2;
                     introspeedincrease = 1;
                     break;
                 case 8: //challenge
-                    Level8.InitIntro(animationService, -2);
+                    Level8.InitIntro(animationService, -2, maxintromissiles);
                     break;
                 case 9:
-                    Level9.InitIntro(animationService, introspeedincrease);
+                    Level9.InitIntro(animationService, introspeedincrease, maxintromissiles);
                     maxwaittimebetweendives = 2000;
                     divespeedincrease = 2;
                     missileincrease = 2;
                     introspeedincrease = 1;
                     break;
                 case 10:
-                    Level10.InitIntro(animationService, introspeedincrease);
+                    Level10.InitIntro(animationService, introspeedincrease, maxintromissiles);
                     maxwaittimebetweendives = 1500;
                     divespeedincrease = 3;
                     missileincrease = 3;
@@ -322,18 +323,19 @@ namespace BlazorGalaga.Services
                 EnemyGridManager.LastEnemyGridMoveTimeStamp = timestamp;
                
                //fire missiles
-               foreach(var bug in bugs.Where(a=>a.MissileCountDowns.Count>0 && a.IsDiving))
-                { 
+               foreach(var bug in bugs.Where(a=>(a.MissileCountDowns.Count > 0 && a.Started) &&
+               ((a.IsDiving && a.Location.Y <= Constants.CanvasSize.Height - 300 && a.IsMovingDown) || //for diving bugs
+               (a.IsInIntro && a.Wave==wave && a.CurPathPointIndex >= (a.PathPoints.Count / 2 ))))) //for intro bugs
+                {
                     for (int i = 0; i <= bug.MissileCountDowns.Count - 1; i++)
                     {
                         bug.MissileCountDowns[i] -= 1;
-                        Console.WriteLine(bug.MissileCountDowns[i]);
-                        if (bug.MissileCountDowns[i] <= 0 && bug.Location.Y <= Constants.CanvasSize.Height-300 && bug.IsMovingDown)
+                        if (bug.MissileCountDowns[i] <= 0)
                         {
                             EnemyDiveManager.DoEnemyFire(bug, animationService, Ship);
+                            bug.MissileCountDowns.RemoveAll(a => a <= 0);
                         }
                     }
-                    bug.MissileCountDowns.RemoveAll(a => a == 0);
                 }
             }
 

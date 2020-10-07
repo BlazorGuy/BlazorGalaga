@@ -32,8 +32,11 @@ namespace BlazorGalaga.Static
                 Started = false,
                 ZIndex = 100,
                 RotatIntoPlaceSpeed = Constants.BugRotateIntoPlaceSpeed,
-                Wave = wave
+                Wave = wave,
+                IsInIntro = true
             };
+
+            bug.MissileCountDowns.Add(Utils.Rnd(1, 10));
 
             if ((intro as Intro5) != null || (intro as Intro6) != null)
             {

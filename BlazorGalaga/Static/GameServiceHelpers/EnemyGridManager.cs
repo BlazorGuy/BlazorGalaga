@@ -106,11 +106,13 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                             }
                         }
                         //snap to grid if bug isn't moving
-                        else if (bug.Started)
+                        else if (bug.Started && bug.PathPoints.Count == 0)
                         {
                             bug.Location = homepoint;
                             bug.IsDiving = false;
                             bug.NeverDestroyOffScreen = true;
+                            bug.IsInIntro = false;
+                            bug.MissileCountDowns.Clear();
                             if (bug.CaptureState == Bug.enCaptureState.FlyingBackHome)
                             {
                                 bug.CaptureState = Bug.enCaptureState.Complete;

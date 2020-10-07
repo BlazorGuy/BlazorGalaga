@@ -12,7 +12,7 @@ namespace BlazorGalaga.Static.Levels
 {
     public static class Level1
     {
-        public static void InitIntro(AnimationService animationService, int introspeedincrease)
+        public static void InitIntro(AnimationService animationService, int introspeedincrease, int maxintromissiles)
         {
             //animationService.Animatables.Add(BugFactory.CreateAnimatable_BugIntro(0, Constants.BugIntroSpacing, new Intro1(), Sprite.SpriteTypes.BlueBug, 1, introspeedincrease));
             //two groups of four from top
