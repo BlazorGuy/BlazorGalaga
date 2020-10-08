@@ -17,6 +17,12 @@ namespace BlazorGalaga.Models
             Complete,
         }
 
+        public enum enMorphState
+        {
+            NotStarted,
+            Started
+        }
+
         public Point HomePoint { get; set; }
         public bool IsDiving { get; set; }
         public bool IsExploding { get; set; }
@@ -32,10 +38,12 @@ namespace BlazorGalaga.Models
         public enCaptureState CaptureState { get; set; }
         public bool FighterCapturedMessageShowing { get; set; }
         public bool ClearFighterCapturedMessage { get; set; }
-
+        public enMorphState MorphState { get; set; }
         public bool AligningHorizontally { get; set; }
         public bool AligningVertically { get; set; }
-
+        public bool IsMorphedBug { get; set; }
+        public Sprite PreMorphedSprite { get; set; }
+        public Sprite PreMorphedSpriteDownFlap { get; set; }
         public List<int> MissileCountDowns { get; set; }
 
         public bool IsInIntro { get; set; }

@@ -1,4 +1,6 @@
-﻿using BlazorGalaga.Models;
+﻿using BlazorGalaga.Interfaces;
+using BlazorGalaga.Models;
+using BlazorGalaga.Models.Paths;
 using BlazorGalaga.Services;
 using System;
 using System.Collections.Generic;
@@ -122,7 +124,32 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                                 ship.Visible = true;
                                 ship.Disabled = false;
                             }
+                            //if the bug is morphing, do the morph animation
+                            //and created the morphed bugs
+                            if (bug.MorphState == Bug.enMorphState.Started)
+                            {
+                                BugMorphMananger.DoMorph(bugs, bug, animationService, ship);
+                            }
+                            if (bug.IsMorphedBug)
+                            {
+                                bug.IsMorphedBug = false;
+                                bug.Sprite = bug.PreMorphedSprite;
+                                bug.SpriteBank.Add(bug.PreMorphedSpriteDownFlap);
+                            }
                         }
+                    }
+                    else if (bug.Started && bug.PathPoints.Count == 0)
+                    {
+                        //no homepoint means this is a morphed bug and we need to make it dive off screen
+
+                        IDive dive;
+
+                        if (Utils.Rnd(0, 10) % 2 == 0)
+                            dive = new RedBugDive1();
+                        else
+                            dive = new RedBugDive2();
+
+                        EnemyDiveManager.DoEnemyDive(bugs, animationService, ship, Constants.BugDiveSpeed, bug, false, false, dive);
                     }
                 }
             });

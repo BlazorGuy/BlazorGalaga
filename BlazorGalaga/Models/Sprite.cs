@@ -29,7 +29,13 @@ namespace BlazorGalaga.Models
             TractorBeam2,
             TractorBeam3,
             CapturedShip,
-            DoubleShip
+            DoubleShip,
+            YelloBug,
+            GreenBugShip,
+            YellowBugShip,
+            MosquitoBug,
+            RedGreenBug,
+            RedGreenBug_DownFlap
         }
 
         public Rectangle? SourceRect { get; set; }

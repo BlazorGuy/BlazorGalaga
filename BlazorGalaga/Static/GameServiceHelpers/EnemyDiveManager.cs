@@ -14,7 +14,17 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 {
     public static class EnemyDiveManager
     {
-        public static Bug DoEnemyDive(List<Bug> bugs, AnimationService animationService, Ship ship, int speed, Bug bug = null, bool captureship = false, bool capturehappened = false)
+        public static Bug DoEnemyDive(
+            List<Bug> bugs,
+            AnimationService animationService,
+            Ship ship, 
+            int speed,
+            Bug bug = null,
+            bool captureship = false,
+            bool capturehappened = false,
+            IDive overriddive = null
+        )
+
         {
             int loopcount = 0;
 
@@ -37,12 +47,9 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 if (parentgreenbug != null) bug = parentgreenbug;
             }
 
-            bug.SpriteBankIndex = null;
-            bug.IsDiving = true;
-
             IDive dive = null;
 
-            if (bug.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug)
+            if (bug.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug || bug.Sprite.SpriteType == Sprite.SpriteTypes.GreenBugShip)
             {
                 if (Utils.Rnd(0, 10) % 2 == 0)
                     dive = new BlueBugDive1();
@@ -55,6 +62,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                     dive = new RedBugDive1();
                 else
                     dive = new RedBugDive2();
+
             }
             else if (bug.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug)
             {
@@ -99,8 +107,12 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 
             animationService.Animatables.ForEach(a => a.ZIndex = 0);
 
+            if (overriddive != null) dive = overriddive;
+
             var paths = dive.GetPaths(bug, ship);
 
+            bug.SpriteBankIndex = null;
+            bug.IsDiving = true;
             bug.RotateAlongPath = true;
             bug.ZIndex = 100;
             bug.Speed = speed;

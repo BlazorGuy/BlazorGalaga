@@ -38,14 +38,13 @@ namespace BlazorGalaga.Services
         private int divespeedincrease = 0;
         private int missileincrease = 0;
         private int introspeedincrease = 0;
-        private int maxintromissiles = 0;
         private int maxwaittimebetweendives = 5000;
         private bool skipintro = true;
-
+        private bool soundoff = true;
 
         public void Init()
         {
-            //Level = 8;
+            //Level = 1;
             Lives = 2;
             ShipManager.InitShip(animationService);
         }
@@ -55,50 +54,50 @@ namespace BlazorGalaga.Services
             switch (level)
             {
                 case 1:
-                    Level1.InitIntro(animationService, introspeedincrease, maxintromissiles);
+                    Level1.InitIntro(animationService, introspeedincrease);
                     break;
                 case 2:
-                    Level2.InitIntro(animationService, introspeedincrease, maxintromissiles);
+                    Level2.InitIntro(animationService, introspeedincrease);
                     break;
                 case 3: //challenge
-                    Level3.InitIntro(animationService, -2, maxintromissiles);
+                    Level3.InitIntro(animationService, -2);
                     break;
                 case 4:
-                    Level4.InitIntro(animationService, introspeedincrease, maxintromissiles);
+                    Level4.InitIntro(animationService, introspeedincrease);
                     maxwaittimebetweendives = 4000;
                     break;
                 case 5:
-                    Level5.InitIntro(animationService, introspeedincrease, maxintromissiles);
+                    Level5.InitIntro(animationService, introspeedincrease);
                     maxwaittimebetweendives = 3000;
                     divespeedincrease = 1;
                     missileincrease = 1;
                     break;
                 case 6:
-                    Level6.InitIntro(animationService, introspeedincrease, maxintromissiles);
+                    Level6.InitIntro(animationService, introspeedincrease);
                     maxwaittimebetweendives = 2500;
                     divespeedincrease = 1;
                     missileincrease = 1;
                     introspeedincrease = 1;
                     break;
                 case 7:
-                    Level7.InitIntro(animationService, introspeedincrease, maxintromissiles);
+                    Level7.InitIntro(animationService, introspeedincrease);
                     maxwaittimebetweendives = 2500;
                     divespeedincrease = 1;
                     missileincrease = 2;
                     introspeedincrease = 1;
                     break;
                 case 8: //challenge
-                    Level8.InitIntro(animationService, -2, maxintromissiles);
+                    Level8.InitIntro(animationService, -2);
                     break;
                 case 9:
-                    Level9.InitIntro(animationService, introspeedincrease, maxintromissiles);
+                    Level9.InitIntro(animationService, introspeedincrease);
                     maxwaittimebetweendives = 2000;
                     divespeedincrease = 2;
                     missileincrease = 2;
                     introspeedincrease = 1;
                     break;
                 case 10:
-                    Level10.InitIntro(animationService, introspeedincrease, maxintromissiles);
+                    Level10.InitIntro(animationService, introspeedincrease);
                     maxwaittimebetweendives = 1500;
                     divespeedincrease = 3;
                     missileincrease = 3;
@@ -207,6 +206,11 @@ namespace BlazorGalaga.Services
                 introsounddone = true;
                 Started = true;
                 Ship.Visible = true;
+            }
+
+            if (soundoff && !SoundManager.SoundIsOff)
+            {
+                SoundManager.TurnSoundOff();
             }
 
             //show the intro screen if the space bar hasn't been pressed yet
@@ -325,7 +329,7 @@ namespace BlazorGalaga.Services
                //fire missiles
                foreach(var bug in bugs.Where(a=>(a.MissileCountDowns.Count > 0 && a.Started) &&
                ((a.IsDiving && a.Location.Y <= Constants.CanvasSize.Height - 300 && a.IsMovingDown) || //for diving bugs
-               (a.IsInIntro && a.Wave==wave && a.CurPathPointIndex >= (a.PathPoints.Count / 2 ))))) //for intro bugs
+               (a.IsInIntro && a.Wave==wave && a.Location.Y > 100 && a.Location.X > 150 & a.Location.X < Constants.CanvasSize.Width-150 && a.Location.Y <= Constants.CanvasSize.Height - 400)))) //for intro bugs
                 {
                     for (int i = 0; i <= bug.MissileCountDowns.Count - 1; i++)
                     {
@@ -383,6 +387,9 @@ namespace BlazorGalaga.Services
                 bugs.FirstOrDefault(a => a.ClearFighterCapturedMessage).ClearFighterCapturedMessage = false;
             }
 
+            //if morphed bugs go offscreen, destroy them immediately
+            bugs.Where(a => a.IsMorphedBug && a.Location.Y >= Constants.CanvasSize.Height).ToList().ForEach(a => a.DestroyImmediately = true);
+
             //for debugging purposes
             if (glo.captureship)
             {
@@ -397,6 +404,23 @@ namespace BlazorGalaga.Services
                 });
                 var bug = bugs.FirstOrDefault(a => a.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug);
                 EnemyDiveManager.DoEnemyDive(bugs, animationService, Ship, Constants.BugDiveSpeed, bug, true);
+            }
+
+            //for debugging purposes
+            if (glo.morphbug)
+            {
+                bugs.ForEach(a => {
+                    a.Location = BugFactory.EnemyGrid.GetPointByRowCol(a.HomePoint.X, a.HomePoint.Y);
+                    a.CurPathPointIndex = 0;
+                    a.PathPoints.Clear();
+                    a.Paths.Clear();
+                    a.IsMoving = false;
+                    a.StartDelay = 0;
+                    a.Started = true;
+                });
+                var bug = bugs.FirstOrDefault(a => a.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug);
+                bug.MorphState = Bug.enMorphState.Started;
+                //EnemyDiveManager.DoEnemyDive(bugs, animationService, Ship, Constants.BugDiveSpeed, bug,false,false,true);
             }
         }
 

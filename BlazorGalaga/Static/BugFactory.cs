@@ -20,6 +20,7 @@ namespace BlazorGalaga.Static
             Sprite.SpriteTypes spritetype,
             int wave,
             int introspeedincrease,
+            bool firemissileonintro,
             bool isdivebomber = false)
         {
             var bug = new Bug(spritetype)
@@ -36,7 +37,8 @@ namespace BlazorGalaga.Static
                 IsInIntro = true
             };
 
-            bug.MissileCountDowns.Add(Utils.Rnd(1, 10));
+            if(firemissileonintro)
+                bug.MissileCountDowns.Add(Utils.Rnd(1, 10));
 
             if ((intro as Intro5) != null || (intro as Intro6) != null)
             {

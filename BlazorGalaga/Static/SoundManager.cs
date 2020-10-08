@@ -15,6 +15,7 @@ namespace BlazorGalaga.Static
         public static bool MuteAllSounds { get; set; }
         public delegate void SoundStoppedEventHandler(Howler.Blazor.Components.Events.HowlEventArgs e);
         public static SoundStoppedEventHandler OnEnd;
+        public static bool SoundIsOff { get; set; }
 
         public enum SoundManagerSounds
         {
@@ -73,6 +74,13 @@ namespace BlazorGalaga.Static
             PlaySound(SoundManagerSounds.empty);
         }
 
+        public static async void TurnSoundOff()
+        {
+            await HowlGlobal.Mute(true);
+
+            SoundIsOff = true;
+        }
+
         public static void StopAllSounds()
         {
             Howl.Stop();
@@ -81,8 +89,7 @@ namespace BlazorGalaga.Static
 
         public static async void PlaySound(SoundManagerSounds sound, bool oneatatime = false,bool excludefrommute=false)
         {
-            await HowlGlobal.Mute(true);
-           
+          
             if (MuteAllSounds && !excludefrommute) return;
 
             if (oneatatime)

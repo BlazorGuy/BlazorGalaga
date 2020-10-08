@@ -141,6 +141,7 @@ namespace BlazorGalaga.Pages
             public bool resetanimation { get; set; }
             public bool spritesheetloaded { get; set; }
             public bool captureship { get; set; }
+            public bool morphbug { get; set; }
         }
 
         Stopwatch sw = new Stopwatch();
@@ -184,7 +185,7 @@ namespace BlazorGalaga.Pages
                 else
                     drawmod = 2;
 
-                if (loopCount % drawmod == 0 || glo.captureship)
+                if (loopCount % drawmod == 0 || glo.captureship || glo.morphbug)
                 {
                     sw.Restart();
                     animationService.Draw();

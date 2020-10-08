@@ -130,6 +130,24 @@ namespace BlazorGalaga.Services
                 case Sprite.SpriteTypes.CapturedShip:
                     SetUpSprite(BufferCanvases, sprite, 11, 108, 19, -90);
                     break;
+                case Sprite.SpriteTypes.YelloBug:
+                    SetUpSprite(BufferCanvases, sprite, 12, 108, 109, -90);
+                    break;
+                case Sprite.SpriteTypes.GreenBugShip:
+                    SetUpSprite(BufferCanvases, sprite, 13, 108, 126, -90);
+                    break;
+                case Sprite.SpriteTypes.YellowBugShip:
+                    SetUpSprite(BufferCanvases, sprite, 14, 108, 143, -90);
+                    break;
+                case Sprite.SpriteTypes.MosquitoBug:
+                    SetUpSprite(BufferCanvases, sprite, 15, 108, 161, -90);
+                    break;
+                case Sprite.SpriteTypes.RedGreenBug:
+                    SetUpSprite(BufferCanvases, sprite, 16, 145, 181, -90);
+                    break;
+                case Sprite.SpriteTypes.RedGreenBug_DownFlap:
+                    SetUpSprite(BufferCanvases, sprite, 17, 163, 181, -90);
+                    break;
                 case Sprite.SpriteTypes.EnemyExplosion1:
                     SetUpSprite(BigBufferCanvases, sprite, 0, 292, 1, 0, true);
                     break;
