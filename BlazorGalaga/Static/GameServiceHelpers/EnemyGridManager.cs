@@ -125,11 +125,13 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                                 ship.Disabled = false;
                             }
                             //if the bug is morphing, do the morph animation
-                            //and created the morphed bugs
+                            //and create the morphed bugs
                             if (bug.MorphState == Bug.enMorphState.Started)
                             {
                                 BugMorphMananger.DoMorph(bugs, bug, animationService, ship);
                             }
+                            //if the bug is a morphed bug and has flown back home
+                            //change back into it's previous form
                             if (bug.IsMorphedBug)
                             {
                                 bug.IsMorphedBug = false;

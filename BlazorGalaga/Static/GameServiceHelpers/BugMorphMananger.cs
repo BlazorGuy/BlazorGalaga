@@ -13,11 +13,13 @@ namespace BlazorGalaga.Static.GameServiceHelpers
         private static int MorphCount = 0;
         private static Sprite preMorphedSprite;
         private static Sprite preMorphedSpriteDownFlap;
+        private static Sprite.SpriteTypes spriteType;
 
         public static void DoMorph(List<Bug> bugs, Bug bug, AnimationService animationService, Ship ship)
         {
             if (MorphCount == 1)
             {
+                SetSpriteType();
                 preMorphedSpriteDownFlap = bug.SpriteBank[0];
                 preMorphedSprite = bug.Sprite;
                 bug.SpriteBank.Clear();
@@ -45,6 +47,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             else if (MorphCount == 20)
             {
                 bug.DestroyImmediately = true;
+                MorphCount = 0;
             }
 
             MorphCount++;
@@ -52,7 +55,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 
         private static Bug CreateMorphedBug(AnimationService animationService, Bug bug, bool hashomepoint)
         {
-            var morphedbug = new Bug(Sprite.SpriteTypes.GreenBugShip)
+            var morphedbug = new Bug(spriteType)
             {
                 Paths = new List<BezierCurve>(),
                 Started = true,
@@ -70,6 +73,18 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             animationService.Animatables.Add(morphedbug);
 
             return morphedbug;
+        }
+
+        private static void SetSpriteType()
+        {
+            var r = Utils.Rnd(1, 300);
+
+            if (r <= 100)
+                spriteType = Sprite.SpriteTypes.GreenBugShip;
+            else if (r <= 200)
+                spriteType = Sprite.SpriteTypes.YellowBugShip;
+            else
+                spriteType = Sprite.SpriteTypes.YelloBug;
         }
     }
 }

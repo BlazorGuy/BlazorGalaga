@@ -409,7 +409,7 @@ namespace BlazorGalaga.Services
             //for debugging purposes
             if (glo.morphbug)
             {
-                bugs.ForEach(a => {
+                bugs.Where(a=>a.IsInIntro).ToList().ForEach(a => {
                     a.Location = BugFactory.EnemyGrid.GetPointByRowCol(a.HomePoint.X, a.HomePoint.Y);
                     a.CurPathPointIndex = 0;
                     a.PathPoints.Clear();
@@ -418,9 +418,9 @@ namespace BlazorGalaga.Services
                     a.StartDelay = 0;
                     a.Started = true;
                 });
-                var bug = bugs.FirstOrDefault(a => a.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug);
+                var redblubugs = bugs.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug || a.Sprite.SpriteType == Sprite.SpriteTypes.RedBug).ToList();
+                var bug = redblubugs[Utils.Rnd(0, redblubugs.Count - 1)];
                 bug.MorphState = Bug.enMorphState.Started;
-                //EnemyDiveManager.DoEnemyDive(bugs, animationService, Ship, Constants.BugDiveSpeed, bug,false,false,true);
             }
         }
 

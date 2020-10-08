@@ -49,7 +49,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 
             IDive dive = null;
 
-            if (bug.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug || bug.Sprite.SpriteType == Sprite.SpriteTypes.GreenBugShip)
+            if (bug.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug || bug.IsMorphedBug)
             {
                 if (Utils.Rnd(0, 10) % 2 == 0)
                     dive = new BlueBugDive1();

@@ -33,7 +33,7 @@ window.initFromBlazor = (instance) => {
             document.getElementById("btnCaptureShip").disabled = true;
         });
         document.getElementById("btnMorphBug").addEventListener('click', function (e) {
-            document.getElementById("btnMorphBug").disabled = true;
+            //document.getElementById("btnMorphBug").disabled = true;
             morphBug = true;
         });
         document.getElementById("btnResetAnimation").addEventListener('click', function (e) {
