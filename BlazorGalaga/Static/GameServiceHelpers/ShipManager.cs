@@ -85,7 +85,10 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             SoundManager.PlaySound(SoundManager.SoundManagerSounds.shipexplode,true);
 
             if (!animationService.Animatables.Any(a => a.Sprite.SpriteType == Sprite.SpriteTypes.ShipExplosion1))
+            {
                 CreateExplosion(ship, animationService, gameService);
+                ship.Visible = false;
+            }
 
             animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.ShipExplosion1).ToList().ForEach(exp =>
             {
@@ -95,7 +98,6 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 {
                     exp.DestroyImmediately = true;
                     ship.IsExploding = false;
-                    ship.Visible = false;
                     ship.HasExploded = true;
                 }
             });

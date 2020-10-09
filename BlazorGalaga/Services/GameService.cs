@@ -323,7 +323,7 @@ namespace BlazorGalaga.Services
             {
                 EnemyExplosionManager.DoEnemyExplosions(bugs, animationService, this);
 
-                if (Ship.IsExploding && Ship.Visible) 
+                if (Ship.IsExploding) 
                     ShipManager.DoShipExplosion(Ship, animationService, this);
             }
 
