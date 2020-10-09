@@ -10,6 +10,8 @@ namespace BlazorGalaga.Models
         public bool IsFiring { get; set; }
         public bool Disabled { get; set; }
 
+        public bool  IsExploding { get; set; }
+
         public Ship() 
         {
             Sprite = new Sprite(Sprite.SpriteTypes.Ship);

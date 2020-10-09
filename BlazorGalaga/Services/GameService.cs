@@ -28,7 +28,6 @@ namespace BlazorGalaga.Services
         public bool Started { get; set; }
 
         private bool consoledrawn = false;
-        private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private int prevbugcount = 0;
         private bool capturehappened;
         private int hits = 0;
@@ -41,7 +40,7 @@ namespace BlazorGalaga.Services
         private int maxwaittimebetweendives = 5000;
         private bool canmorph = true;
         private bool skipintro = true;
-        private bool soundoff = false;
+        private bool soundoff = true;
 
         public void Init()
         {
@@ -282,8 +281,6 @@ namespace BlazorGalaga.Services
             {
                 WaitManager.DoOnce(() =>
                 {
-                    cancellationTokenSource.Cancel();
-                    cancellationTokenSource = new CancellationTokenSource();
                     EnemyGridManager.EnemyGridBreathing = false;
                 }, WaitManager.WaitStep.enStep.CleanUp);
 
@@ -324,6 +321,9 @@ namespace BlazorGalaga.Services
             if (timestamp - EnemyGridManager.LastEnemyGridMoveTimeStamp > 35)
             {
                 EnemyExplosionManager.DoEnemyExplosions(bugs, animationService, this);
+
+                if (Ship.IsExploding && Ship.Visible) 
+                    ShipManager.DoShipExplosion(Ship, animationService, this);
             }
 
             //animate child bugs
@@ -335,7 +335,7 @@ namespace BlazorGalaga.Services
                 EnemyGridManager.MoveEnemyGrid(bugs, animationService, Ship);
                 EnemyGridManager.LastEnemyGridMoveTimeStamp = timestamp;
                
-               //fire missiles
+               //fire enemy missiles
                foreach(var bug in bugs.Where(a=>(a.MissileCountDowns.Count > 0 && a.Started) &&
                ((a.IsDiving && a.Location.Y <= Constants.CanvasSize.Height - 300 && a.IsMovingDown) || //for diving bugs
                (a.IsInIntro && a.Wave==wave && a.Location.Y > 100 && a.Location.X > 150 & a.Location.X < Constants.CanvasSize.Width-150 && a.Location.Y <= Constants.CanvasSize.Height - 400)))) //for intro bugs
@@ -381,7 +381,16 @@ namespace BlazorGalaga.Services
 
             //ship missile detection
             if (!Ship.Disabled)
+            {
+                //ship mission collision with bug
                 hits += (ShipManager.CheckMissileCollisions(bugs, animationService) ? 1 : 0);
+                
+                //bug or missile collision with ship
+                if(!Ship.IsExploding && Ship.Visible && ShipManager.CheckShipCollisions(bugs, animationService, Ship))
+                {
+                    Ship.IsExploding = true;
+                }
+            }
 
             //draw fighter captured text if a fighter is captured
             if (bugs.Any(a => a.FighterCapturedMessageShowing))

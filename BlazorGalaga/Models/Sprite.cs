@@ -35,7 +35,11 @@ namespace BlazorGalaga.Models
             YellowBugShip,
             MosquitoBug,
             RedGreenBug,
-            RedGreenBug_DownFlap
+            RedGreenBug_DownFlap,
+            ShipExplosion1,
+            ShipExplosion2,
+            ShipExplosion3,
+            ShipExplosion4,
         }
 
         public Rectangle? SourceRect { get; set; }

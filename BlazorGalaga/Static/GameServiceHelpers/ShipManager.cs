@@ -79,6 +79,75 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             }
         }
 
+        public static void DoShipExplosion(Ship ship, AnimationService animationService, GameService gameService)
+        {
+            if (!animationService.Animatables.Any(a => a.Sprite.SpriteType == Sprite.SpriteTypes.ShipExplosion1))
+                CreateExplosion(ship, animationService, gameService);
+
+            animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.ShipExplosion1).ToList().ForEach(exp =>
+            {
+                if (exp.SpriteBankIndex < 3)
+                    exp.SpriteBankIndex += 1;
+                else
+                {
+                    exp.DestroyImmediately = true;
+                    ship.IsExploding = false;
+                    ship.Visible = false;
+                }
+            });
+        }
+
+        private static void CreateExplosion(Ship ship, AnimationService animationService, GameService gameService)
+        {
+            var exp = new ShipExplosion()
+            {
+                DrawPath = false,
+                RotateAlongPath = false,
+                Started = true,
+                DestroyAfterComplete = false,
+                IsMoving = false,
+                PathIsLine = true,
+                Location = new PointF(ship.Location.X, ship.Location.Y)
+            };
+
+            exp.SpriteBankIndex = -1;
+
+            exp.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.ShipExplosion1));
+            exp.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.ShipExplosion2));
+            exp.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.ShipExplosion3));
+            exp.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.ShipExplosion4));
+
+            animationService.Animatables.Add(exp);
+        }
+
+        public static bool CheckShipCollisions(List<Bug> bugs, AnimationService animationService, Ship ship)
+        {
+            bool shiphit = false;
+            RectangleF shiprect = new RectangleF(ship.Location.X, ship.Location.Y, 25, 25);
+
+            foreach(var bug in bugs)
+            { 
+                var bugrect = new RectangleF((int)bug.Location.X + 5, (int)bug.Location.Y + 5, (int)bug.Sprite.SpriteDestRect.Width - 15, (int)bug.Sprite.SpriteDestRect.Height - 15);
+                if (bugrect.IntersectsWith(shiprect))
+                {
+                    shiphit = true;
+                    break;
+                }
+            }
+
+            foreach (var missile in animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.BugMissle).ToList())
+            {
+                var missilerect = new RectangleF((int)missile.Location.X + 5, (int)missile.Location.Y + 8, 10, 20);
+                if (missilerect.IntersectsWith(shiprect))
+                {
+                    shiphit = true;
+                    break;
+                }
+            }
+
+            return shiphit;
+        }
+
         public static bool CheckMissileCollisions(List<Bug> bugs, AnimationService animationService)
         {
            foreach(var missile in  animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.ShipMissle).ToList())

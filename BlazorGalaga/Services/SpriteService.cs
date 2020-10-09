@@ -163,6 +163,18 @@ namespace BlazorGalaga.Services
                 case Sprite.SpriteTypes.EnemyExplosion5:
                     SetUpSprite(BigBufferCanvases, sprite, 4, 420, 1, 0, true);
                     break;
+                case Sprite.SpriteTypes.ShipExplosion1:
+                    SetUpSprite(BigBufferCanvases, sprite, 6, 145, 1, 0, true);
+                    break;
+                case Sprite.SpriteTypes.ShipExplosion2:
+                    SetUpSprite(BigBufferCanvases, sprite, 7, 178, 1, 0, true);
+                    break;
+                case Sprite.SpriteTypes.ShipExplosion3:
+                    SetUpSprite(BigBufferCanvases, sprite, 8, 213, 1, 0, true);
+                    break;
+                case Sprite.SpriteTypes.ShipExplosion4:
+                    SetUpSprite(BigBufferCanvases, sprite, 9, 247, 1, 0, true);
+                    break;
                 case Sprite.SpriteTypes.TractorBeam:
                     SetUpSprite(BiggerBufferCanvases, sprite, 0, 289, 36, 0, true,true);
                     break;
