@@ -179,7 +179,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                         }
                     }
                 }
-                else if (ship.Visible)
+                else if (ship.Visible || ship.HasExploded)
                 {
                     //ship isn't under the tractor beam
                     TractorBeamWaitCount += 1;

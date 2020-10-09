@@ -81,18 +81,22 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 
         public static void DoShipExplosion(Ship ship, AnimationService animationService, GameService gameService)
         {
+
+            SoundManager.PlaySound(SoundManager.SoundManagerSounds.shipexplode,true);
+
             if (!animationService.Animatables.Any(a => a.Sprite.SpriteType == Sprite.SpriteTypes.ShipExplosion1))
                 CreateExplosion(ship, animationService, gameService);
 
             animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.ShipExplosion1).ToList().ForEach(exp =>
             {
-                if (exp.SpriteBankIndex < 3)
+                if (exp.SpriteBankIndex < 7)
                     exp.SpriteBankIndex += 1;
                 else
                 {
                     exp.DestroyImmediately = true;
                     ship.IsExploding = false;
                     ship.Visible = false;
+                    ship.HasExploded = true;
                 }
             });
         }
@@ -113,8 +117,12 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             exp.SpriteBankIndex = -1;
 
             exp.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.ShipExplosion1));
+            exp.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.ShipExplosion1));
+            exp.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.ShipExplosion2));
             exp.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.ShipExplosion2));
             exp.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.ShipExplosion3));
+            exp.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.ShipExplosion3));
+            exp.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.ShipExplosion4));
             exp.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.ShipExplosion4));
 
             animationService.Animatables.Add(exp);
@@ -127,7 +135,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 
             foreach(var bug in bugs)
             { 
-                var bugrect = new RectangleF((int)bug.Location.X + 5, (int)bug.Location.Y + 5, (int)bug.Sprite.SpriteDestRect.Width - 15, (int)bug.Sprite.SpriteDestRect.Height - 15);
+                var bugrect = new RectangleF((int)bug.Location.X, (int)bug.Location.Y, (int)bug.Sprite.SpriteDestRect.Width - 15, (int)bug.Sprite.SpriteDestRect.Height - 15);
                 if (bugrect.IntersectsWith(shiprect))
                 {
                     shiphit = true;

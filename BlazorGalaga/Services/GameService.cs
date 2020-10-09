@@ -39,8 +39,9 @@ namespace BlazorGalaga.Services
         private int introspeedincrease = 0;
         private int maxwaittimebetweendives = 5000;
         private bool canmorph = true;
-        private bool skipintro = true;
-        private bool soundoff = true;
+
+        private bool skipintro = false;
+        private bool soundoff = false;
 
         public void Init()
         {
@@ -407,6 +408,12 @@ namespace BlazorGalaga.Services
 
             //if morphed bugs go offscreen, destroy them immediately
             bugs.Where(a => a.IsMorphedBug && a.Location.Y >= Constants.CanvasSize.Height).ToList().ForEach(a => a.DestroyImmediately = true);
+
+            //ship exploded
+            if (Ship.HasExploded)
+            {
+
+            }
 
             //for debugging purposes
             if (glo.captureship)

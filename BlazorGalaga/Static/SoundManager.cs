@@ -38,7 +38,8 @@ namespace BlazorGalaga.Static
             challengingstageover,
             challengingstageperfect,
             capturedfighterdestroyedsong,
-            morph
+            morph,
+            shipexplode
         }
 
         public class Sound
