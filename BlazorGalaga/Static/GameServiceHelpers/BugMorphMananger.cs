@@ -48,6 +48,8 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             {
                 bug.DestroyImmediately = true;
                 MorphCount = 0;
+                preMorphedSprite = null;
+                preMorphedSpriteDownFlap = null;
             }
 
             MorphCount++;

@@ -22,7 +22,8 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             Bug bug = null,
             bool captureship = false,
             bool capturehappened = false,
-            IDive overriddive = null
+            IDive overriddive = null,
+            bool canmorph = false
         )
 
         {
@@ -31,7 +32,8 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             while (bug == null || bug.IsMoving ||
                 bug.CaptureState == Bug.enCaptureState.Started ||
                 bug.CaptureState == Bug.enCaptureState.FlyingBackHome ||
-                bug.CaptureState == Bug.enCaptureState.RecaptureStarted)
+                bug.CaptureState == Bug.enCaptureState.RecaptureStarted ||
+                bug.MorphState == Bug.enMorphState.Started)
             {
                 bug = bugs[Utils.Rnd(0, bugs.Count - 1)];
                 loopcount++;
@@ -45,6 +47,18 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             {
                 var parentgreenbug = bugs.FirstOrDefault(a => a.CapturedBug != null);
                 if (parentgreenbug != null) bug = parentgreenbug;
+            }
+
+            //if morphing is enabled, 30% of the time morph instead of dive
+            if (canmorph && Utils.Rnd(1, 100) < 30)
+            {
+                if (bug.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug || bug.Sprite.SpriteType == Sprite.SpriteTypes.RedBug)
+                {
+                    bug.MorphState = Bug.enMorphState.Started;
+                    bug.IsDiving = true;
+                    SoundManager.PlaySound(SoundManager.SoundManagerSounds.morph);
+                    return null;
+                }
             }
 
             IDive dive = null;
@@ -122,7 +136,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 bug.PathPoints.AddRange(animationService.ComputePathPoints(p,false));
             });
 
-            if (bug != null)
+            if (bug != null && !bug.IsMorphedBug)
                 SoundManager.PlaySound(SoundManager.SoundManagerSounds.dive);
 
             return bug;

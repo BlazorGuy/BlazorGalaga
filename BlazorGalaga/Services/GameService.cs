@@ -39,8 +39,9 @@ namespace BlazorGalaga.Services
         private int missileincrease = 0;
         private int introspeedincrease = 0;
         private int maxwaittimebetweendives = 5000;
+        private bool canmorph = true;
         private bool skipintro = true;
-        private bool soundoff = true;
+        private bool soundoff = false;
 
         public void Init()
         {
@@ -55,9 +56,11 @@ namespace BlazorGalaga.Services
             {
                 case 1:
                     Level1.InitIntro(animationService, introspeedincrease);
+                    canmorph = false;
                     break;
                 case 2:
                     Level2.InitIntro(animationService, introspeedincrease);
+                    canmorph = false;
                     break;
                 case 3: //challenge
                     Level3.InitIntro(animationService, -2);
@@ -65,12 +68,14 @@ namespace BlazorGalaga.Services
                 case 4:
                     Level4.InitIntro(animationService, introspeedincrease);
                     maxwaittimebetweendives = 4000;
+                    canmorph = true;
                     break;
                 case 5:
                     Level5.InitIntro(animationService, introspeedincrease);
                     maxwaittimebetweendives = 3000;
                     divespeedincrease = 1;
                     missileincrease = 1;
+                    canmorph = true;
                     break;
                 case 6:
                     Level6.InitIntro(animationService, introspeedincrease);
@@ -78,6 +83,7 @@ namespace BlazorGalaga.Services
                     divespeedincrease = 1;
                     missileincrease = 1;
                     introspeedincrease = 1;
+                    canmorph = true;
                     break;
                 case 7:
                     Level7.InitIntro(animationService, introspeedincrease);
@@ -85,6 +91,7 @@ namespace BlazorGalaga.Services
                     divespeedincrease = 1;
                     missileincrease = 2;
                     introspeedincrease = 1;
+                    canmorph = true;
                     break;
                 case 8: //challenge
                     Level8.InitIntro(animationService, -2);
@@ -95,6 +102,7 @@ namespace BlazorGalaga.Services
                     divespeedincrease = 2;
                     missileincrease = 2;
                     introspeedincrease = 1;
+                    canmorph = true;
                     break;
                 case 10:
                     Level10.InitIntro(animationService, introspeedincrease);
@@ -102,6 +110,7 @@ namespace BlazorGalaga.Services
                     divespeedincrease = 3;
                     missileincrease = 3;
                     introspeedincrease = 2;
+                    canmorph = false;
                     break;
             }
 
@@ -127,7 +136,7 @@ namespace BlazorGalaga.Services
             if (GetBugs().Count == 0 || Ship.Disabled)
                 return;
 
-            var bug = EnemyDiveManager.DoEnemyDive(GetBugs(), animationService, Ship, Constants.BugDiveSpeed + divespeedincrease,null,false,capturehappened);
+            var bug = EnemyDiveManager.DoEnemyDive(GetBugs(), animationService, Ship, Constants.BugDiveSpeed + divespeedincrease,null,false,capturehappened,null, canmorph);
 
             if (bug != null && bug.CaptureState == Bug.enCaptureState.Started) capturehappened = true;
 
@@ -418,7 +427,7 @@ namespace BlazorGalaga.Services
                     a.StartDelay = 0;
                     a.Started = true;
                 });
-                var redblubugs = bugs.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug || a.Sprite.SpriteType == Sprite.SpriteTypes.RedBug).ToList();
+                var redblubugs = bugs.Where(a => (a.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug || a.Sprite.SpriteType == Sprite.SpriteTypes.RedBug) && a.MorphState != Bug.enMorphState.Started && !a.IsDiving).ToList();
                 var bug = redblubugs[Utils.Rnd(0, redblubugs.Count - 1)];
                 bug.MorphState = Bug.enMorphState.Started;
             }
