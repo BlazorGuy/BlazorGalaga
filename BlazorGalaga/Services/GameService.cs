@@ -46,8 +46,8 @@ namespace BlazorGalaga.Services
         private int NextDiveWaitTime;
 
         //for debugging
-        private bool skipintro = true;
-        private bool soundoff = true;
+        private bool skipintro = false;
+        private bool soundoff = false;
 
         #endregion
 
@@ -357,7 +357,8 @@ namespace BlazorGalaga.Services
 
                 if (Ship.IsExploding)
                 {
-                    Ship.Disabled = true;
+                    if (!Ship.IsDoubleShip)
+                        Ship.Disabled = true;
                     ShipManager.DoShipExplosion(Ship, animationService, this);
                 }
             }
@@ -368,7 +369,7 @@ namespace BlazorGalaga.Services
             //animated the moving enemy grid
             if (timestamp - EnemyGridManager.LastEnemyGridMoveTimeStamp > 100 || EnemyGridManager.LastEnemyGridMoveTimeStamp == 0)
             {
-                EnemyGridManager.MoveEnemyGrid(bugs, animationService, Ship);
+                EnemyGridManager.MoveEnemyGrid(bugs, animationService, Ship, gameover);
                 EnemyGridManager.LastEnemyGridMoveTimeStamp = timestamp;
                
                 //fire enemy missiles
@@ -404,7 +405,7 @@ namespace BlazorGalaga.Services
 
             //center the ship if it's disabled
             //happens after a galaga capture
-            if (Ship.Disabled)
+            if (Ship.Disabled && !Ship.IsDoubleShip)
             {
 
                 if (Ship.Location.X > 320)
@@ -448,6 +449,17 @@ namespace BlazorGalaga.Services
             //ship exploded
             if (Ship.HasExploded)
             {
+                if (Ship.IsDoubleShip)
+                {
+                    Ship.IsDoubleShip = false;
+                    Ship.HasExploded = false;
+                    Ship.IsExploding = false;
+                    Ship.Visible = true;
+                    Ship.Disabled = false;
+                    Ship.LeftShipHit = false;
+                    Ship.RightShipHit = false;
+                    return;
+                }
                 WaitManager.DoOnce(async () =>
                 {
                     if (Lives >= 1)
@@ -466,18 +478,21 @@ namespace BlazorGalaga.Services
 
                 if (WaitManager.WaitFor(3000, timestamp, WaitManager.WaitStep.enStep.WaitReady))
                 {
-                    Lives -= 1;
-                    Ship.HasExploded = false;
-                    Ship.IsExploding = false;
-                    if (Lives >= 0)
-                    { //load next life
-                        Ship.Visible = true;
-                        Ship.Disabled = false;
-                        await ConsoleManager.ClearConsole(spriteService);
-                        await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true);
-                        await ConsoleManager.ClearConsoleLevelText(spriteService);
+                    if (!animationService.Animatables.Any(a => a.Sprite.SpriteType == Sprite.SpriteTypes.BugMissle))
+                    {
+                        Lives -= 1;
+                        Ship.HasExploded = false;
+                        Ship.IsExploding = false;
+                        if (Lives >= 0)
+                        { //load next life
+                            Ship.Visible = true;
+                            Ship.Disabled = false;
+                            await ConsoleManager.ClearConsole(spriteService);
+                            await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true);
+                            await ConsoleManager.ClearConsoleLevelText(spriteService);
+                        }
+                        WaitManager.ClearSteps();
                     }
-                    WaitManager.ClearSteps();
                 }
             }
 

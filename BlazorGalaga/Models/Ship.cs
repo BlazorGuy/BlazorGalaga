@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 using BlazorGalaga.Interfaces;
 
 namespace BlazorGalaga.Models
@@ -12,6 +13,12 @@ namespace BlazorGalaga.Models
         public bool  IsExploding { get; set; }
 
         public bool HasExploded { get; set; }
+
+        public bool LeftShipHit { get; set; }
+
+        public bool RightShipHit { get; set; }
+
+        public bool IsDoubleShip { get; set; }
 
         public Ship() 
         {

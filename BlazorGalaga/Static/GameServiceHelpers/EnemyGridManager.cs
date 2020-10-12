@@ -19,7 +19,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
         public static float LastEnemyGridMoveTimeStamp = 0;
         public static bool BreathSoundPlayed = false;
 
-        public static void MoveEnemyGrid(List<Bug> bugs, AnimationService animationService, Ship ship)
+        public static void MoveEnemyGrid(List<Bug> bugs, AnimationService animationService, Ship ship, bool gameover)
         {
             if (BugFactory.EnemyGrid.GridLeft > 330 || BugFactory.EnemyGrid.GridLeft < 160)
                 MoveEnemyGridIncrement *= -1;
@@ -40,7 +40,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                     BugFactory.EnemyGrid.HSpacing += BreathEnemyGridIncrement;
                     BugFactory.EnemyGrid.VSpacing += BreathEnemyGridIncrement;
 
-                    if (!BreathSoundPlayed)
+                    if (!BreathSoundPlayed && !gameover)
                     {
                         SoundManager.PlaySound(SoundManager.SoundManagerSounds.breathing);
                         BreathSoundPlayed = true;

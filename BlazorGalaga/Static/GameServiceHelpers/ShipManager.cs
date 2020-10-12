@@ -87,7 +87,12 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             if (!animationService.Animatables.Any(a => a.Sprite.SpriteType == Sprite.SpriteTypes.ShipExplosion1))
             {
                 CreateExplosion(ship, animationService, gameService);
-                ship.Visible = false;
+                
+                if (!ship.IsDoubleShip)
+                    ship.Visible = false;
+
+                else if (ship.LeftShipHit)
+                    ship.Location = new PointF(ship.Location.X + Constants.SpriteDestSize.Width-3, ship.Location.Y);
             }
 
             animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.ShipExplosion1).ToList().ForEach(exp =>
@@ -116,6 +121,17 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 Location = new PointF(ship.Location.X, ship.Location.Y)
             };
 
+            if (ship.LeftShipHit)
+                exp.Location = new PointF(ship.Location.X, ship.Location.Y);
+            else if (ship.RightShipHit)
+                exp.Location = new PointF(ship.Location.X + Constants.SpriteDestSize.Width, ship.Location.Y);
+
+            if(ship.Sprite.SpriteType == Sprite.SpriteTypes.DoubleShip)
+            {
+                ship.IsDoubleShip = true;
+                ship.Sprite = new Sprite(Sprite.SpriteTypes.Ship);
+            }
+
             exp.SpriteBankIndex = -1;
 
             exp.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.ShipExplosion1));
@@ -133,8 +149,9 @@ namespace BlazorGalaga.Static.GameServiceHelpers
         public static bool CheckShipCollisions(List<Bug> bugs, AnimationService animationService, Ship ship)
         {
             bool shiphit = false;
-            var shipwidth = ship.Sprite.SpriteType == Sprite.SpriteTypes.DoubleShip ? 75 : 25;
+            var shipwidth = 25;
             RectangleF shiprect = new RectangleF(ship.Location.X, ship.Location.Y, shipwidth, 25);
+            RectangleF ship2rect = new RectangleF(ship.Location.X + Constants.SpriteDestSize.Width, ship.Location.Y, shipwidth, 25);
 
             foreach(var bug in bugs)
             { 
@@ -142,6 +159,15 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 if (bugrect.IntersectsWith(shiprect))
                 {
                     shiphit = true;
+                    ship.LeftShipHit = true;
+                }
+                else if (ship.Sprite.SpriteType == Sprite.SpriteTypes.DoubleShip && bugrect.IntersectsWith(ship2rect))
+                {
+                    shiphit = true;
+                    ship.RightShipHit = true;
+                }
+                if (shiphit)
+                {
                     bug.IsExploding = true;
                     break;
                 }
@@ -153,6 +179,15 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 if (missilerect.IntersectsWith(shiprect))
                 {
                     shiphit = true;
+                    ship.LeftShipHit = true;
+                }
+                else if (ship.Sprite.SpriteType == Sprite.SpriteTypes.DoubleShip && missilerect.IntersectsWith(ship2rect))
+                {
+                    shiphit = true;
+                    ship.RightShipHit = true;
+                }
+                if (shiphit)
+                {
                     break;
                 }
             }
