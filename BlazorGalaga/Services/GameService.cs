@@ -19,6 +19,8 @@ namespace BlazorGalaga.Services
 {
     public class GameService
     {
+        #region Vars
+
         public AnimationService animationService { get; set; }
         public SpriteService spriteService { get; set; }
         public Ship Ship { get; set; }
@@ -27,27 +29,60 @@ namespace BlazorGalaga.Services
         public int Score { get; set; }
         public bool Started { get; set; }
 
-        private bool consoledrawn = false;
-        private int prevbugcount = 0;
+        private bool consoledrawn;
+        private int prevbugcount;
         private bool capturehappened;
-        private int hits = 0;
-        private int wave = 1;
+        private int hits;
+        private int wave;
         private bool hideintroscreen;
         private bool introsounddone;
-        private int divespeedincrease = 0;
-        private int missileincrease = 0;
-        private int introspeedincrease = 0;
-        private int maxwaittimebetweendives = 5000;
-        private bool canmorph = true;
+        private int divespeedincrease;
+        private int missileincrease;
+        private int introspeedincrease;
+        private int maxwaittimebetweendives;
+        private bool canmorph;
+        private bool gameover;
+        private float LastDiveTimeStamp;
+        private int NextDiveWaitTime;
 
-        private bool skipintro = false;
-        private bool soundoff = false;
+        //for debugging
+        private bool skipintro = true;
+        private bool soundoff = true;
+
+        #endregion
+
+        #region Init
 
         public void Init()
         {
+            InitVars();
             //Level = 1;
-            Lives = 2;
             ShipManager.InitShip(animationService);
+        }
+
+        private void InitVars()
+        {
+            consoledrawn = false;
+            prevbugcount = 0;
+            capturehappened = false;
+            hits = 0;
+            wave = 1;
+            hideintroscreen = false;
+            introsounddone = false;
+            divespeedincrease = 0;
+            missileincrease = 0;
+            introspeedincrease = 0;
+            maxwaittimebetweendives = 5000;
+            canmorph = true;
+            gameover = false;
+            Started = false;
+            Lives = 2;
+            Level = 0;
+            Score = 0;
+            LastDiveTimeStamp = 0;
+            NextDiveWaitTime = 0;
+            if(Ship != null)
+                Ship.Sprite = new Sprite(Sprite.SpriteTypes.Ship);
         }
 
         private void InitLevel(int level)
@@ -114,7 +149,7 @@ namespace BlazorGalaga.Services
                     break;
             }
 
-           GetBugs().ForEach(a => {
+            GetBugs().ForEach(a => {
                 a.Paths.ForEach(p => {
                     if (a.Index == 0 || a.Index == 0) p.DrawPath = true;
                     if (a.Index == 0) p.OutPutDebug = true;
@@ -128,12 +163,11 @@ namespace BlazorGalaga.Services
             GetBugs().Where(a => a.Wave == 1).ToList().ForEach(a => a.Started = true);
         }
 
-        private float LastDiveTimeStamp = 0;
-        private int NextDiveWaitTime = 0;
+        #endregion
 
         private void Dive()
         {
-            if (GetBugs().Count == 0 || Ship.Disabled)
+            if (GetBugs().Count == 0 || Ship.Disabled || gameover || Ship.HasExploded || Ship.IsExploding)
                 return;
 
             var bug = EnemyDiveManager.DoEnemyDive(GetBugs(), animationService, Ship, Constants.BugDiveSpeed + divespeedincrease,null,false,capturehappened,null, canmorph);
@@ -151,7 +185,6 @@ namespace BlazorGalaga.Services
                     }
                 }
             }
-           
         }
 
         private List<Bug> GetBugs()
@@ -218,9 +251,7 @@ namespace BlazorGalaga.Services
             }
 
             if (soundoff && !SoundManager.SoundIsOff)
-            {
                 SoundManager.TurnSoundOff();
-            }
 
             //show the intro screen if the space bar hasn't been pressed yet
             if (!hideintroscreen)
@@ -234,6 +265,7 @@ namespace BlazorGalaga.Services
                 }
                 else
                 {
+                    await ConsoleManager.ClearConsole(spriteService);
                     await ConsoleManager.DrawIntroScreen(spriteService, Ship);
                     return;
                 }
@@ -323,8 +355,11 @@ namespace BlazorGalaga.Services
             {
                 EnemyExplosionManager.DoEnemyExplosions(bugs, animationService, this);
 
-                if (Ship.IsExploding) 
+                if (Ship.IsExploding)
+                {
+                    Ship.Disabled = true;
                     ShipManager.DoShipExplosion(Ship, animationService, this);
+                }
             }
 
             //animate child bugs
@@ -336,10 +371,10 @@ namespace BlazorGalaga.Services
                 EnemyGridManager.MoveEnemyGrid(bugs, animationService, Ship);
                 EnemyGridManager.LastEnemyGridMoveTimeStamp = timestamp;
                
-               //fire enemy missiles
-               foreach(var bug in bugs.Where(a=>(a.MissileCountDowns.Count > 0 && a.Started) &&
-               ((a.IsDiving && a.Location.Y <= Constants.CanvasSize.Height - 300 && a.IsMovingDown) || //for diving bugs
-               (a.IsInIntro && a.Wave==wave && a.Location.Y > 100 && a.Location.X > 150 & a.Location.X < Constants.CanvasSize.Width-150 && a.Location.Y <= Constants.CanvasSize.Height - 400)))) //for intro bugs
+                //fire enemy missiles
+                foreach(var bug in bugs.Where(a=>(a.MissileCountDowns.Count > 0 && a.Started) &&
+                ((a.IsDiving && a.Location.Y <= Constants.CanvasSize.Height - 300 && a.IsMovingDown) || //for diving bugs
+                (a.IsInIntro && a.Wave==wave && a.Location.Y > 100 && a.Location.X > 150 & a.Location.X < Constants.CanvasSize.Width-150 && a.Location.Y <= Constants.CanvasSize.Height - 400)))) //for intro bugs
                 {
                     for (int i = 0; i <= bug.MissileCountDowns.Count - 1; i++)
                     {
@@ -389,6 +424,7 @@ namespace BlazorGalaga.Services
                 //bug or missile collision with ship
                 if(!Ship.IsExploding && Ship.Visible && ShipManager.CheckShipCollisions(bugs, animationService, Ship))
                 {
+                    SoundManager.StopAllSounds();
                     Ship.IsExploding = true;
                 }
             }
@@ -412,7 +448,37 @@ namespace BlazorGalaga.Services
             //ship exploded
             if (Ship.HasExploded)
             {
+                WaitManager.DoOnce(async () =>
+                {
+                    if (Lives >= 1)
+                    {   //display ready for next life
+                        await ConsoleManager.DrawConsoleReady(spriteService);
+                        Ship.Disabled = true;
+                    }
+                    else
+                    { //game over
+                        await ConsoleManager.DrawConsoleGameOver(spriteService);
+                        gameover = true;
+                        SoundManager.MuteAllSounds = false;
+                        SoundManager.PlaySound(SoundManager.SoundManagerSounds.gameoversong, true);
+                    }
+                }, WaitManager.WaitStep.enStep.ShowReady);
 
+                if (WaitManager.WaitFor(3000, timestamp, WaitManager.WaitStep.enStep.WaitReady))
+                {
+                    Lives -= 1;
+                    Ship.HasExploded = false;
+                    Ship.IsExploding = false;
+                    if (Lives >= 0)
+                    { //load next life
+                        Ship.Visible = true;
+                        Ship.Disabled = false;
+                        await ConsoleManager.ClearConsole(spriteService);
+                        await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true);
+                        await ConsoleManager.ClearConsoleLevelText(spriteService);
+                    }
+                    WaitManager.ClearSteps();
+                }
             }
 
             //for debugging purposes
@@ -434,6 +500,7 @@ namespace BlazorGalaga.Services
             //for debugging purposes
             if (glo.morphbug)
             {
+                Ship.Sprite = new Sprite(Sprite.SpriteTypes.DoubleShip);
                 bugs.Where(a=>a.IsInIntro).ToList().ForEach(a => {
                     a.Location = BugFactory.EnemyGrid.GetPointByRowCol(a.HomePoint.X, a.HomePoint.Y);
                     a.CurPathPointIndex = 0;
@@ -461,6 +528,12 @@ namespace BlazorGalaga.Services
             else if (soundname == SoundManager.SoundManagerSounds.introsong)
             {
                 introsounddone = true;
+            }
+            else if (soundname == SoundManager.SoundManagerSounds.gameoversong)
+            {
+                InitVars();
+                KeyBoardHelper.SpaceBarPressed = false;
+                GetBugs().ForEach(a => a.DestroyImmediately = true);
             }
         }
 

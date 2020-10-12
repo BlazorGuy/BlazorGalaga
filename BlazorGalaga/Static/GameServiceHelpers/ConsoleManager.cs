@@ -174,6 +174,18 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             await spriteService.StaticCtx.FillTextAsync("PLAYER 1", 250, Constants.CanvasSize.Height / 2);
         }
 
+        public static async Task DrawConsoleReady(SpriteService spriteService)
+        {
+            await spriteService.StaticCtx.SetFillStyleAsync("rgba(152, 249, 255, 1)");
+            await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");
+            await spriteService.StaticCtx.FillTextAsync("READY", 250, Constants.CanvasSize.Height / 2);
+        }
 
+        public static async Task DrawConsoleGameOver(SpriteService spriteService)
+        {
+            await spriteService.StaticCtx.SetFillStyleAsync("rgba(152, 249, 255, 1)");
+            await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");
+            await spriteService.StaticCtx.FillTextAsync("GAME OVER", 210, Constants.CanvasSize.Height / 2);
+        }
     }
 }

@@ -55,7 +55,10 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 //if the player shoots the bug befire it's captured in the tractor beam
                 //then destroy the tracktor beam
                 if (!bugs.Any(a => a.CaptureState == Bug.enCaptureState.Started))
+                {
                     animationService.Animatables.RemoveAll(a => a.Sprite.SpriteType == Sprite.SpriteTypes.TractorBeam);
+                    SoundManager.MuteAllSounds = false;
+                }
 
                 if (bug.IsDiveBomber)
                 {

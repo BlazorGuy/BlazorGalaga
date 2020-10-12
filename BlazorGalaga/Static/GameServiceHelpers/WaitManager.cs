@@ -26,7 +26,9 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 ShowBonus,
                 ShowNumberOfHitsLabel,
                 ShowNumberOfHits,
-                Pause3
+                Pause3,
+                ShowReady,
+                WaitReady
             }
         }
 

@@ -1,13 +1,31 @@
 ﻿<Properties StartupConfiguration="{202B6679-81B6-4D6C-83B3-0DC9DE1151AC}|Default">
   <MonoDevelop.Ide.ItemProperties.BlazorGalaga PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Services/GameService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Pages/Index.razor">
     <Files>
-      <File FileName="BlazorGalaga/Services/GameService.cs" Line="230" Column="46" />
-      <File FileName="BlazorGalaga/Static/GameServiceHelpers/EnemyGridManager.cs" />
-      <File FileName="BlazorGalaga/Pages/Index.razor" />
-      <File FileName="BlazorGalaga/wwwroot/scripts/GameLoad.js" />
-      <File FileName="BlazorGalaga/Pages/Index.razor.cs" />
+      <File FileName="BlazorGalaga/Services/GameService.cs" Line="188" Column="10" />
+      <File FileName="BlazorGalaga/Static/GameServiceHelpers/ShipManager.cs" Line="142" Column="18" />
+      <File FileName="BlazorGalaga/Pages/Index.razor" Line="1" Column="1" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="BlazorGalaga" expanded="True">
+            <Node name="BlazorGalaga" expanded="True">
+              <Node name="Pages" expanded="True">
+                <Node name="Index.razor" expanded="True" selected="True" />
+              </Node>
+              <Node name="Services" expanded="True" />
+              <Node name="Static" expanded="True">
+                <Node name="GameServiceHelpers" expanded="True" />
+              </Node>
+              <Node name="wwwroot" expanded="True">
+                <Node name="Assets" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

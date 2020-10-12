@@ -133,7 +133,8 @@ namespace BlazorGalaga.Static.GameServiceHelpers
         public static bool CheckShipCollisions(List<Bug> bugs, AnimationService animationService, Ship ship)
         {
             bool shiphit = false;
-            RectangleF shiprect = new RectangleF(ship.Location.X, ship.Location.Y, 25, 25);
+            var shipwidth = ship.Sprite.SpriteType == Sprite.SpriteTypes.DoubleShip ? 75 : 25;
+            RectangleF shiprect = new RectangleF(ship.Location.X, ship.Location.Y, shipwidth, 25);
 
             foreach(var bug in bugs)
             { 
@@ -141,13 +142,14 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 if (bugrect.IntersectsWith(shiprect))
                 {
                     shiphit = true;
+                    bug.IsExploding = true;
                     break;
                 }
             }
 
             foreach (var missile in animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.BugMissle).ToList())
             {
-                var missilerect = new RectangleF((int)missile.Location.X + 5, (int)missile.Location.Y + 8, 10, 20);
+                var missilerect = new RectangleF((int)missile.Location.X, (int)missile.Location.Y + 8, 25, 20);
                 if (missilerect.IntersectsWith(shiprect))
                 {
                     shiphit = true;

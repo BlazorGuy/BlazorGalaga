@@ -204,6 +204,11 @@ namespace BlazorGalaga.Pages
                             BackGroundClass = "background backgroundmoving";
                             StateHasChanged();
                         }
+                        else if (!gameService.Started && BackGroundClass == "background backgroundmoving")
+                        {
+                            BackGroundClass = "background";
+                            StateHasChanged();
+                        }
                         Utils.dOut("gameService.Process()", sw.ElapsedMilliseconds);
                     }
                 }
