@@ -479,7 +479,7 @@ namespace BlazorGalaga.Services
                 if (WaitManager.WaitFor(3000, timestamp, WaitManager.WaitStep.enStep.WaitReady))
                 {
                     if (!animationService.Animatables.Any(a => a.Sprite.SpriteType == Sprite.SpriteTypes.BugMissle) &&
-                        !bugs.Any(a=>a.CaptureState != Bug.enCaptureState.NotStarted))
+                        !bugs.Any(a=>a.CaptureState == Bug.enCaptureState.Started))
                     {
                         Lives -= 1;
                         Ship.HasExploded = false;
