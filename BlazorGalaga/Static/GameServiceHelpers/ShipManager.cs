@@ -82,12 +82,12 @@ namespace BlazorGalaga.Static.GameServiceHelpers
         public static void DoShipExplosion(Ship ship, AnimationService animationService, GameService gameService)
         {
 
-            SoundManager.PlaySound(SoundManager.SoundManagerSounds.shipexplode,true);
-
             if (!animationService.Animatables.Any(a => a.Sprite.SpriteType == Sprite.SpriteTypes.ShipExplosion1))
             {
                 CreateExplosion(ship, animationService, gameService);
-                
+
+                SoundManager.PlaySound(SoundManager.SoundManagerSounds.shipexplode);
+
                 if (!ship.IsDoubleShip)
                     ship.Visible = false;
 
@@ -148,6 +148,8 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 
         public static bool CheckShipCollisions(List<Bug> bugs, AnimationService animationService, Ship ship)
         {
+            if (!ship.Visible || ship.Disabled) return false;
+
             bool shiphit = false;
             var shipwidth = 25;
             RectangleF shiprect = new RectangleF(ship.Location.X, ship.Location.Y, shipwidth, 25);

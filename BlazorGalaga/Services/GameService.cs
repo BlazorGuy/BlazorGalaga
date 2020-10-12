@@ -47,7 +47,7 @@ namespace BlazorGalaga.Services
 
         //for debugging
         private bool skipintro = false;
-        private bool soundoff = false;
+        private bool soundoff = true;
 
         #endregion
 
@@ -310,7 +310,7 @@ namespace BlazorGalaga.Services
             }
 
             //all bugs destroyed, increment to next level
-            if (bugs.Count == 0)
+            if (bugs.Count == 0 && !Ship.Disabled)
             {
                 WaitManager.DoOnce(() =>
                 {
@@ -374,8 +374,8 @@ namespace BlazorGalaga.Services
                
                 //fire enemy missiles
                 foreach(var bug in bugs.Where(a=>(a.MissileCountDowns.Count > 0 && a.Started) &&
-                ((a.IsDiving && a.Location.Y <= Constants.CanvasSize.Height - 300 && a.IsMovingDown) || //for diving bugs
-                (a.IsInIntro && a.Wave==wave && a.Location.Y > 100 && a.Location.X > 150 & a.Location.X < Constants.CanvasSize.Width-150 && a.Location.Y <= Constants.CanvasSize.Height - 400)))) //for intro bugs
+                ((a.IsDiving && a.Location.Y <= Constants.CanvasSize.Height - 400 && a.IsMovingDown) || //for diving bugs
+                (a.IsInIntro && a.Wave==wave && a.Location.Y > 100 && a.Location.X > 150 & a.Location.X < Constants.CanvasSize.Width-150 && a.Location.Y <= Constants.CanvasSize.Height - 500)))) //for intro bugs
                 {
                     for (int i = 0; i <= bug.MissileCountDowns.Count - 1; i++)
                     {
@@ -478,13 +478,15 @@ namespace BlazorGalaga.Services
 
                 if (WaitManager.WaitFor(3000, timestamp, WaitManager.WaitStep.enStep.WaitReady))
                 {
-                    if (!animationService.Animatables.Any(a => a.Sprite.SpriteType == Sprite.SpriteTypes.BugMissle))
+                    if (!animationService.Animatables.Any(a => a.Sprite.SpriteType == Sprite.SpriteTypes.BugMissle) &&
+                        !bugs.Any(a=>a.CaptureState != Bug.enCaptureState.NotStarted))
                     {
                         Lives -= 1;
                         Ship.HasExploded = false;
                         Ship.IsExploding = false;
                         if (Lives >= 0)
                         { //load next life
+                            Ship.CurPathPointIndex = Ship.PathPoints.Count / 2;
                             Ship.Visible = true;
                             Ship.Disabled = false;
                             await ConsoleManager.ClearConsole(spriteService);
