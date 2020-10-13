@@ -583,7 +583,7 @@ namespace BlazorGalaga.Services
 
             foreach (var b in bugs)
             {
-                var bugrect = new RectangleF(b.Location.X, b.Location.Y, 100, 150);
+                var bugrect = new RectangleF(b.Location.X, b.Location.Y, 100, 200);
                 var shiprect = new RectangleF(Ship.Location.X, Ship.Location.Y, 80, 80);
                 if (shiprect.IntersectsWith(bugrect))
                 {
