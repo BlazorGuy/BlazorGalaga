@@ -723,6 +723,6 @@ C:\Users\bcollins\Desktop\BlazorGalaga\BlazorGalaga\obj\Debug\netstandard2.1\sta
 C:\Users\bcollins\Desktop\BlazorGalaga\BlazorGalaga\obj\Debug\netstandard2.1\BlazorGalaga.dll
 C:\Users\bcollins\Desktop\BlazorGalaga\BlazorGalaga\obj\Debug\netstandard2.1\BlazorGalaga.pdb
 C:\Users\bcollins\Desktop\BlazorGalaga\BlazorGalaga\obj\Debug\netstandard2.1\BlazorGalaga.csprojAssemblyReference.cache
-C:\Users\bcollins\Desktop\BlazorGalaga\BlazorGalaga\obj\Debug\netstandard2.1\integrity\bbfmnvo5DnjRRHeqkprjXseG94rHfdrC1Zs9UspNUeQ=.hash
-C:\Users\bcollins\Desktop\BlazorGalaga\BlazorGalaga\obj\Debug\netstandard2.1\integrity\_yy9ApuG1rtxx0mN4n1zERdHAdsJHne732CT4vEq2_s=.hash
-C:\Users\bcollins\Desktop\BlazorGalaga\BlazorGalaga\obj\Debug\netstandard2.1\integrity\EDIJRAz4gQY7wtgSHe3Okqy43ODf7rP4JGjoaqFM9O8=.hash
+C:\Users\bcollins\Desktop\BlazorGalaga\BlazorGalaga\obj\Debug\netstandard2.1\integrity\9E1aVqgv74WfQBtlWbi46fjRuRIPN8t_2dBZ6JuDrbQ=.hash
+C:\Users\bcollins\Desktop\BlazorGalaga\BlazorGalaga\obj\Debug\netstandard2.1\integrity\EYPvXD4_2n4OW64GL3XaUSSfEpS1Z8U1T79C3r6xtqE=.hash
+C:\Users\bcollins\Desktop\BlazorGalaga\BlazorGalaga\obj\Debug\netstandard2.1\integrity\zaCCvTQIkLGEmZCtQhFBTf3YVSXej2jEnpJNE7ORUDQ=.hash

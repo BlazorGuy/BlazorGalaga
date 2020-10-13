@@ -20,6 +20,8 @@ namespace BlazorGalaga.Services
         public List<Canvas> BigBufferCanvases { get; set; }
         public List<Canvas> BiggerBufferCanvases { get; set; }
         public ElementReference SpriteSheet { get; set; }
+        public ElementReference BlazorImage { get; set; }
+
         public List<Sprite> Sprites = new List<Sprite>();
         public bool IsRotated { get; set; }
 
@@ -35,6 +37,14 @@ namespace BlazorGalaga.Services
 
         }
 
+        public async void DrawBlazorImage(PointF location)
+        {
+            await StaticCtx.DrawImageAsync(
+                      BlazorImage,
+                      location.X,
+                      location.Y
+                   );
+        }
 
         public async void DrawSprite(Sprite sprite, PointF location, float rotationangle)
         {

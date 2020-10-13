@@ -38,6 +38,7 @@ namespace BlazorGalaga.Pages
         protected BECanvasComponent StaticCanvas;
         protected BECanvasComponent DynamicCanvas1;
         protected ElementReference spriteSheet;
+        protected ElementReference blazorImage;
 
         private static Ship ship;
 
@@ -119,6 +120,7 @@ namespace BlazorGalaga.Pages
             spriteService.BiggerBufferCanvases = BiggerBufferCanvases;
 
             spriteService.SpriteSheet = spriteSheet;
+            spriteService.BlazorImage = blazorImage;
             spriteService.Init();
 
             gameService.animationService = animationService;

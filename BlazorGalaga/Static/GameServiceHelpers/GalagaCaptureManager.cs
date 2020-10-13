@@ -117,7 +117,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 }
                 //if the ship is under the tractor beam and the tractor beam is extended
                 else if(((ship.Location.X >= bug.Location.X - 75 && ship.Location.X <= bug.Location.X + 75) &&
-                    tb.SpriteBank.First().DestRect.Value.Height > Constants.BiggerSpriteDestSize.Height-20)
+                    tb.SpriteBank.First().DestRect.Value.Height > Constants.BiggerSpriteDestSize.Height-20 && !ship.IsExploding && !ship.HasExploded)
                     || CapturedShip != null)
                 {
                     if (CapturedShip == null)

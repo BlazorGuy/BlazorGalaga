@@ -49,8 +49,8 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 if (parentgreenbug != null) bug = parentgreenbug;
             }
 
-            //if morphing is enabled, 30% of the time morph instead of dive
-            if (canmorph && Utils.Rnd(1, 100) < 30)
+            //if morphing is enabled, 20% of the time morph instead of dive
+            if (canmorph && Utils.Rnd(1, 100) < 20)
             {
                 if (bug.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug || bug.Sprite.SpriteType == Sprite.SpriteTypes.RedBug)
                 {

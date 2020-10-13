@@ -6,6 +6,7 @@ using System.Linq;
 using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
+using Blazor.Extensions.Canvas.WebGL;
 using BlazorGalaga.Interfaces;
 using BlazorGalaga.Models;
 using BlazorGalaga.Models.Paths;
@@ -56,7 +57,7 @@ namespace BlazorGalaga.Services
         public void Init()
         {
             InitVars();
-            //Level = 1;
+            //Level = 2;
             ShipManager.InitShip(animationService);
         }
 
@@ -142,7 +143,7 @@ namespace BlazorGalaga.Services
                 case 10:
                     Level10.InitIntro(animationService, introspeedincrease);
                     maxwaittimebetweendives = 1500;
-                    divespeedincrease = 3;
+                    divespeedincrease = 1;
                     missileincrease = 3;
                     introspeedincrease = 2;
                     canmorph = false;
@@ -178,7 +179,7 @@ namespace BlazorGalaga.Services
             {
                 if (b.IsDiving && b.CaptureState == Bug.enCaptureState.NotStarted && !b.IsExploding && b.MissileCountDowns.Count==0)
                 {
-                    var maxmissleperbug = Utils.Rnd(0 + missileincrease, 3 + missileincrease);
+                    var maxmissleperbug = Utils.Rnd(0,  missileincrease + 1);
                     for (int i = 1; i <= maxmissleperbug; i++)
                     {
                         b.MissileCountDowns.Add(Utils.Rnd(4, 10));
@@ -265,6 +266,7 @@ namespace BlazorGalaga.Services
                 }
                 else
                 {
+                    spriteService.DrawBlazorImage(new PointF(10, 10));
                     await ConsoleManager.ClearConsole(spriteService);
                     await ConsoleManager.DrawIntroScreen(spriteService, Ship);
                     return;
@@ -280,6 +282,8 @@ namespace BlazorGalaga.Services
 
             var bugs = GetBugs();
 
+            AI(bugs);
+
             //dive the bugs
             if (timestamp - LastDiveTimeStamp > NextDiveWaitTime && EnemyGridManager.EnemyGridBreathing)
             {
@@ -290,7 +294,7 @@ namespace BlazorGalaga.Services
 
             //if the bug intro wave is done, increment to the next wave]
             //or start diving and firing
-            if ((bugs.Count(a=>a.Started && !a.IsMoving && a.Wave == wave) > 0 || bugs.Count(a=>a.Wave==wave) == 0) && wave <= 6 && bugs.Count() > 0)
+            if ((bugs.Count(a=>a.Started && !a.IsMoving && a.Wave == wave) > 0 || bugs.Count(a=>a.Wave==wave) == 0) && wave <= 6 && bugs.Count() > 0 && Ship.Visible)
             {
                 wave += 1;
                 if (wave == 6)
@@ -374,7 +378,7 @@ namespace BlazorGalaga.Services
                
                 //fire enemy missiles
                 foreach(var bug in bugs.Where(a=>(a.MissileCountDowns.Count > 0 && a.Started) &&
-                ((a.IsDiving && a.Location.Y <= Constants.CanvasSize.Height - 400 && a.IsMovingDown) || //for diving bugs
+                ((a.IsDiving && a.Location.Y <= Constants.CanvasSize.Height - 400 && a.IsMovingDown && !a.IsMorphedBug) || //for diving bugs
                 (a.IsInIntro && a.Wave==wave && a.Location.Y > 100 && a.Location.X > 150 & a.Location.X < Constants.CanvasSize.Width-150 && a.Location.Y <= Constants.CanvasSize.Height - 500)))) //for intro bugs
                 {
                     for (int i = 0; i <= bug.MissileCountDowns.Count - 1; i++)
@@ -397,7 +401,7 @@ namespace BlazorGalaga.Services
             }
 
             //animate ship missiles
-            if (Ship.IsFiring && !Ship.Disabled)
+            if (Ship.IsFiring && !Ship.Disabled && Ship.Visible)
             {
                 Ship.IsFiring = false;
                 ShipManager.Fire(Ship, animationService);
@@ -405,7 +409,7 @@ namespace BlazorGalaga.Services
 
             //center the ship if it's disabled
             //happens after a galaga capture
-            if (Ship.Disabled && !Ship.IsDoubleShip)
+            if ((Ship.Disabled && !Ship.IsDoubleShip) || (Ship.HasExploded && !Ship.IsDoubleShip))
             {
 
                 if (Ship.Location.X > 320)
@@ -441,6 +445,7 @@ namespace BlazorGalaga.Services
             {
                 await ConsoleManager.ClearConsoleLevelText(spriteService);
                 bugs.FirstOrDefault(a => a.ClearFighterCapturedMessage).ClearFighterCapturedMessage = false;
+                Lives -= 1;
             }
 
             //if morphed bugs go offscreen, destroy them immediately
@@ -486,7 +491,6 @@ namespace BlazorGalaga.Services
                         Ship.IsExploding = false;
                         if (Lives >= 0)
                         { //load next life
-                            Ship.CurPathPointIndex = Ship.PathPoints.Count / 2;
                             Ship.Visible = true;
                             Ship.Disabled = false;
                             await ConsoleManager.ClearConsole(spriteService);
@@ -531,6 +535,86 @@ namespace BlazorGalaga.Services
                 var bug = redblubugs[Utils.Rnd(0, redblubugs.Count - 1)];
                 bug.MorphState = Bug.enMorphState.Started;
             }
+        }
+
+        private Bug aibug;
+        private bool aifred = false;
+        private bool aidodgeing = false;
+
+        private void AIFire()
+        {
+            if (!aifred)
+            {
+                Ship.IsFiring = true;
+                aifred = true;
+                Task.Delay(Utils.Rnd(100, 350)).ContinueWith((task) =>
+                {
+                    aifred = false;
+                });
+            }
+        }
+
+        private void AI(List<Bug> bugs)
+        {
+            if (aidodgeing) return;
+
+            if (bugs == null || bugs.Count == 0 || !bugs.Any(a=>a.Started)) return;
+
+            bugs = bugs.Where(a => a.Started).ToList();
+
+            if (aibug == null || !bugs.Contains(aibug)) aibug = bugs[Utils.Rnd(0,bugs.Count-1)];
+
+            //always choose a diving bug when there is one
+            if (!aibug.IsDiving && bugs.Any(a => a.IsDiving)) aibug = bugs.FirstOrDefault(a => a.IsDiving);
+
+            foreach (var missile in animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.BugMissle))
+            {
+                var missilerect = new RectangleF(missile.Location.X, missile.Location.Y, 100, 150);
+                var shiprect = new RectangleF(Ship.Location.X, Ship.Location.Y, 80, 80);
+                if (shiprect.IntersectsWith(missilerect))
+                {
+                    if (Ship.Location.X <= missile.Location.X)
+                        Ship.Speed = Constants.ShipMoveSpeed * -1;
+                    else
+                        Ship.Speed = Constants.ShipMoveSpeed;
+                    aidodgeing = true;
+                }
+            }
+
+            foreach (var b in bugs)
+            {
+                var bugrect = new RectangleF(b.Location.X, b.Location.Y, 100, 150);
+                var shiprect = new RectangleF(Ship.Location.X, Ship.Location.Y, 80, 80);
+                if (shiprect.IntersectsWith(bugrect))
+                {
+                    if (Ship.Location.X <= b.Location.X)
+                        Ship.Speed = Constants.ShipMoveSpeed * -1;
+                    else
+                        Ship.Speed = Constants.ShipMoveSpeed;
+                    aidodgeing = true;
+                }
+            }
+
+            if (aidodgeing)
+            {
+                AIFire();
+                Task.Delay(250).ContinueWith((task) =>
+                {
+                    aidodgeing = false;
+                });
+                return;
+            }
+
+            if (Ship.Location.X <= aibug.Location.X - Constants.ShipMoveSpeed)
+                Ship.Speed = Constants.ShipMoveSpeed;
+            else if (Ship.Location.X >= aibug.Location.X + 16 + Constants.ShipMoveSpeed)
+                Ship.Speed = Constants.ShipMoveSpeed * -1;
+            else
+            {
+                AIFire();
+                Ship.Speed = 0;
+            }
+               
         }
 
         private void SoundManager_OnEnd(Howler.Blazor.Components.Events.HowlEventArgs e)

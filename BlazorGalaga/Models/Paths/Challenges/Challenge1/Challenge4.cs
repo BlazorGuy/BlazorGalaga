@@ -19,7 +19,7 @@ namespace BlazorGalaga.Models.Paths.Challenges.Challenge1
         {
             List<BezierCurve> paths = new List<BezierCurve>
             {
-                new BezierCurve() {StartPoint = new PointF(Constants.CanvasSize.Width + 50,866F),
+                new BezierCurve() {StartPoint = new PointF(Constants.CanvasSize.Width + 50,700F),
                 ControlPoint1 = new PointF(459.1159F,889.9542F),
                 ControlPoint2 = new PointF(183.4156F,726.3358F),
                 EndPoint = new PointF(172.7688F,565.4536F)},
