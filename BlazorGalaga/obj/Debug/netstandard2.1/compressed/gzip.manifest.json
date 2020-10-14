@@ -1,304 +1,304 @@
 {
   "FilesToCompress": [
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\7RB_xCgkxidjetWhzQ2R4cFPWFG1mkmqD7HZcuNUoKE=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\BlazorGalaga.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/BlazorGalaga.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/p_u5mfcddMxuOZ7wHpVc7JGJb8zK7g9JKf4fyhKklQI=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/BlazorGalaga.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/BlazorGalaga.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\ycn-UHLnjC77BNvsurP4mkuYP8oud1oVyfSSlZKMymc=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\Microsoft.Extensions.DependencyInjection.Abstractions.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.Extensions.DependencyInjection.Abstractions.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/ycn-UHLnjC77BNvsurP4mkuYP8oud1oVyfSSlZKMymc=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/Microsoft.Extensions.DependencyInjection.Abstractions.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\-zcPVM75OAY_joGVM8yIC1gO1SFYWP1CFERgQ8PJkfA=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\netstandard.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/netstandard.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/-zcPVM75OAY_joGVM8yIC1gO1SFYWP1CFERgQ8PJkfA=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/netstandard.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/netstandard.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\IPbQMdJxZXdk8HTlaPyXdQ6Zb82iZLphnM74yO4EURQ=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\System.Xml.Linq.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.Xml.Linq.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/IPbQMdJxZXdk8HTlaPyXdQ6Zb82iZLphnM74yO4EURQ=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/System.Xml.Linq.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/System.Xml.Linq.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\Zw2-5aDWjgMedporhjigwhi-UCLcfl0tfa0LXUyD9HE=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\System.Core.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.Core.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/Zw2-5aDWjgMedporhjigwhi-UCLcfl0tfa0LXUyD9HE=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/System.Core.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/System.Core.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\r6QdEXq0KfB8oZDzhnV4xskSbzJA0yBVi6XFpa3TGHM=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\System.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/r6QdEXq0KfB8oZDzhnV4xskSbzJA0yBVi6XFpa3TGHM=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/System.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/System.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\ob5gN-szfb1CwWnyQWvWvuid3u4df593KvZeoJQEaKc=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\WebAssembly.Net.WebSockets.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/WebAssembly.Net.WebSockets.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/ob5gN-szfb1CwWnyQWvWvuid3u4df593KvZeoJQEaKc=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/WebAssembly.Net.WebSockets.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/WebAssembly.Net.WebSockets.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\-cPXlNTX8GKF-lIn-2DIjtxTe0Wpy4ZDcyAj67b6JYk=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\System.Memory.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.Memory.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/-cPXlNTX8GKF-lIn-2DIjtxTe0Wpy4ZDcyAj67b6JYk=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/System.Memory.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/System.Memory.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\BaZPMj95_YNe3G4ckTGD6szZFwZeA2MOHn91zTGKDeU=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\mscorlib.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/mscorlib.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/BaZPMj95_YNe3G4ckTGD6szZFwZeA2MOHn91zTGKDeU=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/mscorlib.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/mscorlib.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\6XMT1eT3svGdg6hFzAHJscYdTQjakoYccYTdHmKSr7Y=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\WebAssembly.Bindings.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/WebAssembly.Bindings.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/6XMT1eT3svGdg6hFzAHJscYdTQjakoYccYTdHmKSr7Y=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/WebAssembly.Bindings.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/WebAssembly.Bindings.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\8g0neeYVmPrxWgbMI0ZTVO6257qMisUTPZ78egAnIMw=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\System.Numerics.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.Numerics.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/8g0neeYVmPrxWgbMI0ZTVO6257qMisUTPZ78egAnIMw=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/System.Numerics.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/System.Numerics.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\RMOYBniHZkD8OZrBV3ONIMTZqsBhSAcBFm4pVuY9dv4=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\System.Xml.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.Xml.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/RMOYBniHZkD8OZrBV3ONIMTZqsBhSAcBFm4pVuY9dv4=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/System.Xml.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/System.Xml.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\fMngt4py0YmfHqV6eONyCI6R5m_YOE7KZ3U4MzCrskE=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\Mono.Security.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/Mono.Security.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/fMngt4py0YmfHqV6eONyCI6R5m_YOE7KZ3U4MzCrskE=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/Mono.Security.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/Mono.Security.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\VAHA4LWcsdHUBgFG1-xwhc4IyJ0ZH9UyK9_qSPzDa6Y=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\System.Transactions.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.Transactions.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/VAHA4LWcsdHUBgFG1-xwhc4IyJ0ZH9UyK9_qSPzDa6Y=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/System.Transactions.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/System.Transactions.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\C09aqx1vDLK7zQ9XnZcUqAgTDRwybxhRg-FR8HSk1v8=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\System.Runtime.Serialization.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.Runtime.Serialization.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/C09aqx1vDLK7zQ9XnZcUqAgTDRwybxhRg-FR8HSk1v8=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/System.Runtime.Serialization.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/System.Runtime.Serialization.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\6mtLxbGMMGcIfch8cp0W9gmBoI493AxBRUPGEzOn3nU=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\System.ServiceModel.Internals.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.ServiceModel.Internals.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/6mtLxbGMMGcIfch8cp0W9gmBoI493AxBRUPGEzOn3nU=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/System.ServiceModel.Internals.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/System.ServiceModel.Internals.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\moW4EYN6ExD6T0vSBMMggn62cZaTd8dSr9b-yj-9dPM=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\System.Net.Http.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.Net.Http.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/moW4EYN6ExD6T0vSBMMggn62cZaTd8dSr9b-yj-9dPM=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/System.Net.Http.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/System.Net.Http.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\LUtkiqNd5ABTiuiYaqzaJxVjPq_Z4FqezuIWk-faqSA=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\System.Net.Http.WebAssemblyHttpHandler.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.Net.Http.WebAssemblyHttpHandler.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/LUtkiqNd5ABTiuiYaqzaJxVjPq_Z4FqezuIWk-faqSA=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/System.Net.Http.WebAssemblyHttpHandler.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/System.Net.Http.WebAssemblyHttpHandler.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\R8CUbbWAKar388eFQJhUgiTgLEv2Mih9wr9iO0P7ImU=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\System.ComponentModel.Composition.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.ComponentModel.Composition.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/R8CUbbWAKar388eFQJhUgiTgLEv2Mih9wr9iO0P7ImU=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/System.ComponentModel.Composition.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/System.ComponentModel.Composition.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\ptCMHBy9q8MMLU0ukLMuvvhQk-yYljw37MTKtfsvuFQ=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\System.IO.Compression.FileSystem.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.IO.Compression.FileSystem.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/ptCMHBy9q8MMLU0ukLMuvvhQk-yYljw37MTKtfsvuFQ=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/System.IO.Compression.FileSystem.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/System.IO.Compression.FileSystem.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\hLbkXBzxUk9DSXYTLGRowe_80rxmpXsqEZbPIL4_5zs=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\System.IO.Compression.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.IO.Compression.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/hLbkXBzxUk9DSXYTLGRowe_80rxmpXsqEZbPIL4_5zs=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/System.IO.Compression.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/System.IO.Compression.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\vcCLMX4xAsUqKuQjjIkzu1O9pHGO-tdvysgSmEjL6oo=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\System.Drawing.Common.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.Drawing.Common.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/vcCLMX4xAsUqKuQjjIkzu1O9pHGO-tdvysgSmEjL6oo=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/System.Drawing.Common.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/System.Drawing.Common.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\eejp4oI3sQBq-tI6GsJNaPu3Dkdot5Vbn8_R3w2vYLE=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\System.Data.DataSetExtensions.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.Data.DataSetExtensions.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/eejp4oI3sQBq-tI6GsJNaPu3Dkdot5Vbn8_R3w2vYLE=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/System.Data.DataSetExtensions.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/System.Data.DataSetExtensions.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\dxfTuT6ffPMmvuUUTfv7_bpLtOZZZHQdz77hjhy9qHw=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\System.Data.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.Data.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/dxfTuT6ffPMmvuUUTfv7_bpLtOZZZHQdz77hjhy9qHw=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/System.Data.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/System.Data.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\vNvcW46moEXkmXrqhdA-_IWXsqDZA-GcoE5LdJVa5fk=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\Blazor.Extensions.Canvas.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/Blazor.Extensions.Canvas.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/vNvcW46moEXkmXrqhdA-_IWXsqDZA-GcoE5LdJVa5fk=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/Blazor.Extensions.Canvas.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/Blazor.Extensions.Canvas.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\TkH6yxFQlTfY8NfznePrCdYJiEVpM9Dqy4Uu4H9qk10=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\System.Threading.Tasks.Extensions.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.Threading.Tasks.Extensions.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/TkH6yxFQlTfY8NfznePrCdYJiEVpM9Dqy4Uu4H9qk10=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/System.Threading.Tasks.Extensions.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/System.Threading.Tasks.Extensions.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\K3dpli228kQQ75WVqoiIdmn8u8q8gZHixcWDdCHCRgU=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\Microsoft.JSInterop.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.JSInterop.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/K3dpli228kQQ75WVqoiIdmn8u8q8gZHixcWDdCHCRgU=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/Microsoft.JSInterop.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/Microsoft.JSInterop.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\hbEA2pdvgll2bWeJXCtehEV3kl3WFnBgQj6ttcesEA4=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\System.Text.Encodings.Web.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.Text.Encodings.Web.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/hbEA2pdvgll2bWeJXCtehEV3kl3WFnBgQj6ttcesEA4=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/System.Text.Encodings.Web.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/System.Text.Encodings.Web.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\pzCorxTCjbUODF5JuRgcHc8gVYEdSaKD9NWA6wZhTPE=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\System.Text.Json.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.Text.Json.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/pzCorxTCjbUODF5JuRgcHc8gVYEdSaKD9NWA6wZhTPE=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/System.Text.Json.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/System.Text.Json.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\kL-omZDwqByAi_lPdMeDmr3XjHcn4RVb_LmZ4mut1Yc=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\System.Runtime.CompilerServices.Unsafe.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.Runtime.CompilerServices.Unsafe.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/kL-omZDwqByAi_lPdMeDmr3XjHcn4RVb_LmZ4mut1Yc=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/System.Runtime.CompilerServices.Unsafe.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/System.Runtime.CompilerServices.Unsafe.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\ZxXy75PYbzJxNfAc-SAP1nUYm4gt1jSaOpFnBb9m85M=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\System.Buffers.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.Buffers.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/ZxXy75PYbzJxNfAc-SAP1nUYm4gt1jSaOpFnBb9m85M=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/System.Buffers.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/System.Buffers.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\OBWh2or_2mU6elwqPfmL72FBZVKl2WzTJ4L-IrKeXM4=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\Microsoft.Bcl.AsyncInterfaces.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.Bcl.AsyncInterfaces.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/OBWh2or_2mU6elwqPfmL72FBZVKl2WzTJ4L-IrKeXM4=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/Microsoft.Bcl.AsyncInterfaces.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/Microsoft.Bcl.AsyncInterfaces.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\qAKfFnquY_7UC-MzLi04rjqEhLzTryCoLg-S6MxI19I=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\System.Numerics.Vectors.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.Numerics.Vectors.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/qAKfFnquY_7UC-MzLi04rjqEhLzTryCoLg-S6MxI19I=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/System.Numerics.Vectors.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/System.Numerics.Vectors.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\jqp6xS5jDFDsISGorhiYZQ2if3hAiols6d4C5BNnMQ4=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\Microsoft.AspNetCore.Components.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.AspNetCore.Components.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/jqp6xS5jDFDsISGorhiYZQ2if3hAiols6d4C5BNnMQ4=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/Microsoft.AspNetCore.Components.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/Microsoft.AspNetCore.Components.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\45ia6XmGIa5WI3cHUIE9KhVornlZleYW_B5FPpfD1wQ=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\Microsoft.Extensions.Logging.Abstractions.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.Extensions.Logging.Abstractions.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/45ia6XmGIa5WI3cHUIE9KhVornlZleYW_B5FPpfD1wQ=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/Microsoft.Extensions.Logging.Abstractions.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/Microsoft.Extensions.Logging.Abstractions.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\GavE4ega8q51nYYDqbKk4JnE7VfP8rHum5ez04QINdk=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\Howler.Blazor.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/Howler.Blazor.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/GavE4ega8q51nYYDqbKk4JnE7VfP8rHum5ez04QINdk=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/Howler.Blazor.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/Howler.Blazor.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\sifIvl02zqfSiv67ZRAsSa_NCvhMgTGrIUNuK8LmCNM=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\Microsoft.AspNetCore.Components.WebAssembly.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.AspNetCore.Components.WebAssembly.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/sifIvl02zqfSiv67ZRAsSa_NCvhMgTGrIUNuK8LmCNM=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/Microsoft.AspNetCore.Components.WebAssembly.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/Microsoft.AspNetCore.Components.WebAssembly.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\8Y81cOKaNJHZZvHu0TROikruBOenBHdE5WwI2BOkNNE=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\Microsoft.Extensions.DependencyInjection.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.Extensions.DependencyInjection.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/8Y81cOKaNJHZZvHu0TROikruBOenBHdE5WwI2BOkNNE=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/Microsoft.Extensions.DependencyInjection.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/Microsoft.Extensions.DependencyInjection.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\DG1MjidH81NA50uWH63eWmXLCxt18sJzoF2oXVlyvlY=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\Microsoft.Extensions.Primitives.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.Extensions.Primitives.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/DG1MjidH81NA50uWH63eWmXLCxt18sJzoF2oXVlyvlY=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/Microsoft.Extensions.Primitives.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/Microsoft.Extensions.Primitives.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\iUTfpj7A29tIp2gl2fLM_w1MwyI8XMmUV8gFe_mJBZI=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\Microsoft.Extensions.Configuration.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.Extensions.Configuration.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/iUTfpj7A29tIp2gl2fLM_w1MwyI8XMmUV8gFe_mJBZI=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/Microsoft.Extensions.Configuration.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/Microsoft.Extensions.Configuration.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\D1gbYUWxCdwEKvWRcGQoVikKs0zgWMUenGMDEaDRxrc=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\Microsoft.Extensions.Configuration.Abstractions.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.Extensions.Configuration.Abstractions.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/D1gbYUWxCdwEKvWRcGQoVikKs0zgWMUenGMDEaDRxrc=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/Microsoft.Extensions.Configuration.Abstractions.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/Microsoft.Extensions.Configuration.Abstractions.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\iqCTExKPC76hORseVGmhVc1uwSgrTDloPHWYiyzt36Q=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\Microsoft.Extensions.Configuration.Json.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.Extensions.Configuration.Json.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/iqCTExKPC76hORseVGmhVc1uwSgrTDloPHWYiyzt36Q=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/Microsoft.Extensions.Configuration.Json.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/Microsoft.Extensions.Configuration.Json.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\rDxOhAkkG0rzM8mDToRsneyatLZ3m_OyLTXPRA81ZKw=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\Microsoft.Extensions.Configuration.FileExtensions.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.Extensions.Configuration.FileExtensions.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/rDxOhAkkG0rzM8mDToRsneyatLZ3m_OyLTXPRA81ZKw=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/Microsoft.Extensions.Configuration.FileExtensions.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/Microsoft.Extensions.Configuration.FileExtensions.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\ROy00p56saSEbyOGgwnu8op__-jeRfR6GYOOLp_fVw4=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\Microsoft.Extensions.FileProviders.Physical.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.Extensions.FileProviders.Physical.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/ROy00p56saSEbyOGgwnu8op__-jeRfR6GYOOLp_fVw4=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/Microsoft.Extensions.FileProviders.Physical.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/Microsoft.Extensions.FileProviders.Physical.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\K3YFmrW2bw2nAvgBqWJvZD2KN9q1vRVzOyp6AOSojMo=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\Microsoft.Extensions.FileSystemGlobbing.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.Extensions.FileSystemGlobbing.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/K3YFmrW2bw2nAvgBqWJvZD2KN9q1vRVzOyp6AOSojMo=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/Microsoft.Extensions.FileSystemGlobbing.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/Microsoft.Extensions.FileSystemGlobbing.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\X3n9B0GKwWD1R7H_6ydrvoazqRQrQRjS_NH5VG6VJNY=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\Microsoft.Extensions.FileProviders.Abstractions.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.Extensions.FileProviders.Abstractions.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/X3n9B0GKwWD1R7H_6ydrvoazqRQrQRjS_NH5VG6VJNY=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/Microsoft.Extensions.FileProviders.Abstractions.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/Microsoft.Extensions.FileProviders.Abstractions.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\zNP4aHLW-rhi6gW72YV8xGy1rLa_RQZtwvWEpiwBSrs=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\Microsoft.Extensions.Logging.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.Extensions.Logging.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/zNP4aHLW-rhi6gW72YV8xGy1rLa_RQZtwvWEpiwBSrs=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/Microsoft.Extensions.Logging.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/Microsoft.Extensions.Logging.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\oAIlpv09S-0jXnze744E1V88Oaw8Ql1x3Alw0hsVYdw=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\Microsoft.Extensions.Options.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.Extensions.Options.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/oAIlpv09S-0jXnze744E1V88Oaw8Ql1x3Alw0hsVYdw=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/Microsoft.Extensions.Options.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/Microsoft.Extensions.Options.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\dwm_rKImjhxtOmHHVpSxOgl2oh2R26xOWihLaZSv7Vs=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\Microsoft.JSInterop.WebAssembly.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.JSInterop.WebAssembly.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/dwm_rKImjhxtOmHHVpSxOgl2oh2R26xOWihLaZSv7Vs=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/Microsoft.JSInterop.WebAssembly.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/Microsoft.JSInterop.WebAssembly.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\v4LhihP26fP-dVajppSCZIrCVbkiALCJgAisyG2cmJQ=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\Microsoft.AspNetCore.Components.Web.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.AspNetCore.Components.Web.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/v4LhihP26fP-dVajppSCZIrCVbkiALCJgAisyG2cmJQ=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/Microsoft.AspNetCore.Components.Web.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/Microsoft.AspNetCore.Components.Web.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\e0FY4g2Vt8TsXfafkXU2XnUgcYzjzPiFqb3KCylDb74=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\Microsoft.AspNetCore.Components.Forms.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.AspNetCore.Components.Forms.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/e0FY4g2Vt8TsXfafkXU2XnUgcYzjzPiFqb3KCylDb74=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/Microsoft.AspNetCore.Components.Forms.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/Microsoft.AspNetCore.Components.Forms.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\tmnkCmP9OzLUkpQ3LP7PRosi7gt5pyfEZCM6aqAokFI=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\System.ComponentModel.Annotations.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.ComponentModel.Annotations.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/tmnkCmP9OzLUkpQ3LP7PRosi7gt5pyfEZCM6aqAokFI=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/System.ComponentModel.Annotations.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/System.ComponentModel.Annotations.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\LIfCYwg_PHltTK4z3EnbSkA7m2cn8JS4jHVthdKrDF8=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\System.ComponentModel.DataAnnotations.dll",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/System.ComponentModel.DataAnnotations.dll.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/LIfCYwg_PHltTK4z3EnbSkA7m2cn8JS4jHVthdKrDF8=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/System.ComponentModel.DataAnnotations.dll",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/System.ComponentModel.DataAnnotations.dll.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\zP6x1MhcVRG-w-N4lWXmJ36YgqlwEAe1pffIzRG8kF8=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\BlazorGalaga.pdb",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/BlazorGalaga.pdb.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/u8TAWFJubCPJo7pO7jDfs7-vB8UPL8eoZ2EcBP6_5VI=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/BlazorGalaga.pdb",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/BlazorGalaga.pdb.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\uonb1I-3OKsiqOyQDHpkYYTot4LXlJIJX-wPZBWRo-s=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\unlinked\\Blazor.Extensions.Canvas.pdb",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/_bin\/Blazor.Extensions.Canvas.pdb.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/uonb1I-3OKsiqOyQDHpkYYTot4LXlJIJX-wPZBWRo-s=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/unlinked\/Blazor.Extensions.Canvas.pdb",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/_bin\/Blazor.Extensions.Canvas.pdb.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\mPoqx7XczFHBWk3gRNn0hc9ekG1OvkKY4XiKRY5Mj5U=.hash",
-      "Source": "C:\\Users\\bcollins\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly.runtime\\3.2.0\\tools\\dotnetwasm\\wasm\\dotnet.3.2.0.js",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/wasm\/dotnet.3.2.0.js.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/mPoqx7XczFHBWk3gRNn0hc9ekG1OvkKY4XiKRY5Mj5U=.hash",
+      "Source": "\/Users\/bcollins\/.nuget\/packages\/microsoft.aspnetcore.components.webassembly.runtime\/3.2.0\/tools\/dotnetwasm\/wasm\/dotnet.3.2.0.js",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/wasm\/dotnet.3.2.0.js.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\3S0qzYaBEKOBXarzVLNzNAFXlwJr6nI3lFlYUpQTPH8=.hash",
-      "Source": "C:\\Users\\bcollins\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly.runtime\\3.2.0\\tools\\dotnetwasm\\wasm\\dotnet.timezones.dat",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/wasm\/dotnet.timezones.dat.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/3S0qzYaBEKOBXarzVLNzNAFXlwJr6nI3lFlYUpQTPH8=.hash",
+      "Source": "\/Users\/bcollins\/.nuget\/packages\/microsoft.aspnetcore.components.webassembly.runtime\/3.2.0\/tools\/dotnetwasm\/wasm\/dotnet.timezones.dat",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/wasm\/dotnet.timezones.dat.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\UC-3Rm1NkdNdlIrzYARo_dO-HDlS5mhPxo0IQv7kma8=.hash",
-      "Source": "C:\\Users\\bcollins\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly.runtime\\3.2.0\\tools\\dotnetwasm\\wasm\\dotnet.wasm",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/wasm\/dotnet.wasm.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/UC-3Rm1NkdNdlIrzYARo_dO-HDlS5mhPxo0IQv7kma8=.hash",
+      "Source": "\/Users\/bcollins\/.nuget\/packages\/microsoft.aspnetcore.components.webassembly.runtime\/3.2.0\/tools\/dotnetwasm\/wasm\/dotnet.wasm",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/wasm\/dotnet.wasm.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\oU0moF6IIkna1pMoSD6Ze63s6aHfjCtUflz7xDmENPg=.hash",
-      "Source": "C:\\Users\\bcollins\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly.build\\3.2.0\\tools\\blazor\\blazor.webassembly.js",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/blazor.webassembly.js.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/oU0moF6IIkna1pMoSD6Ze63s6aHfjCtUflz7xDmENPg=.hash",
+      "Source": "\/Users\/bcollins\/.nuget\/packages\/microsoft.aspnetcore.components.webassembly.build\/3.2.0\/tools\/blazor\/blazor.webassembly.js",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/blazor.webassembly.js.gz"
     },
     {
-      "InputSource": "obj\\Debug\\netstandard2.1\\integrity\\6086b6Tz7u3zrBBhPGkBqavYmObutT3oNACvlIePGOg=.hash",
-      "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Debug\\netstandard2.1\\blazor\\blazor.boot.json",
-      "Target": "obj\\Debug\\netstandard2.1\\compressed\\_framework\/blazor.boot.json.gz"
+      "InputSource": "obj\/Debug\/netstandard2.1\/integrity\/3LdehRReKw-0QrBI6PyXY-Jds9TcBMwE312yFUgazuQ=.hash",
+      "Source": "\/Users\/bcollins\/BlazorGalaga\/BlazorGalaga\/obj\/Debug\/netstandard2.1\/blazor\/blazor.boot.json",
+      "Target": "obj\/Debug\/netstandard2.1\/compressed\/_framework\/blazor.boot.json.gz"
     }
   ]
 }

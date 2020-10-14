@@ -49,6 +49,7 @@ namespace BlazorGalaga.Services
         //for debugging
         private bool skipintro = false;
         private bool soundoff = true;
+        private bool aion = true;
 
         #endregion
 
@@ -282,7 +283,7 @@ namespace BlazorGalaga.Services
 
             var bugs = GetBugs();
 
-            AI(bugs);
+            if (aion) AI(bugs);
 
             //dive the bugs
             if (timestamp - LastDiveTimeStamp > NextDiveWaitTime && EnemyGridManager.EnemyGridBreathing)
@@ -403,6 +404,7 @@ namespace BlazorGalaga.Services
             //animate ship missiles
             if (Ship.IsFiring && !Ship.Disabled && Ship.Visible)
             {
+                SoundManager.PlaySound(SoundManager.SoundManagerSounds.fire);
                 Ship.IsFiring = false;
                 ShipManager.Fire(Ship, animationService);
             }
@@ -565,11 +567,11 @@ namespace BlazorGalaga.Services
             if (aibug == null || !bugs.Contains(aibug)) aibug = bugs[Utils.Rnd(0,bugs.Count-1)];
 
             //always choose a diving bug when there is one
-            if (!aibug.IsDiving && bugs.Any(a => a.IsDiving)) aibug = bugs.FirstOrDefault(a => a.IsDiving);
+            if (!aibug.IsDiving && bugs.Any(a => a.IsDiving)) aibug = bugs.OrderByDescending(a=>a.Location.Y).FirstOrDefault(a => a.IsDiving);
 
-            foreach (var missile in animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.BugMissle))
+            foreach (var missile in animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.BugMissle).OrderByDescending(a=>a.Location.Y))
             {
-                var missilerect = new RectangleF(missile.Location.X, missile.Location.Y, 100, 150);
+                var missilerect = new RectangleF(missile.Location.X, missile.Location.Y, 100, 200);
                 var shiprect = new RectangleF(Ship.Location.X, Ship.Location.Y, 80, 80);
                 if (shiprect.IntersectsWith(missilerect))
                 {
@@ -578,10 +580,11 @@ namespace BlazorGalaga.Services
                     else
                         Ship.Speed = Constants.ShipMoveSpeed;
                     aidodgeing = true;
+                    break;
                 }
             }
 
-            foreach (var b in bugs)
+            foreach (var b in bugs.OrderByDescending(a=>a.Location.Y))
             {
                 var bugrect = new RectangleF(b.Location.X, b.Location.Y, 100, 200);
                 var shiprect = new RectangleF(Ship.Location.X, Ship.Location.Y, 80, 80);
@@ -592,6 +595,7 @@ namespace BlazorGalaga.Services
                     else
                         Ship.Speed = Constants.ShipMoveSpeed;
                     aidodgeing = true;
+                    break;
                 }
             }
 
@@ -605,7 +609,7 @@ namespace BlazorGalaga.Services
                 return;
             }
 
-            if (Ship.Location.X <= aibug.Location.X - Constants.ShipMoveSpeed)
+            if (Ship.Location.X <= aibug.Location.X)
                 Ship.Speed = Constants.ShipMoveSpeed;
             else if (Ship.Location.X >= aibug.Location.X + 16 + Constants.ShipMoveSpeed)
                 Ship.Speed = Constants.ShipMoveSpeed * -1;
