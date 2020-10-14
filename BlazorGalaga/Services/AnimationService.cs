@@ -132,7 +132,7 @@ namespace BlazorGalaga.Services
                 {
                     animatable.CurPathPointIndex = 0;
                     animatable.PathPoints.Clear();
-                    animatable.Paths.Clear();
+                    if (!animatable.DrawPath && !animatable.DrawControlLines) animatable.Paths.Clear();
                     animatable.IsMoving = false;
                 }
                 else if (animatable.RotateWhileStill)
@@ -221,7 +221,7 @@ namespace BlazorGalaga.Services
             return pathpoints;
         }
 
-        public void Draw()
+        public void Draw(bool drawpath)
         {
             spriteService.DynamicCtx1.BeginBatchAsync();
 
@@ -235,38 +235,19 @@ namespace BlazorGalaga.Services
                 spriteService.DrawSprite(
                     animatable.SpriteBankIndex == null || animatable.SpriteBank == null || animatable.SpriteBank.Count == 0 ? animatable.Sprite : animatable.SpriteBank[(int)animatable.SpriteBankIndex],
                     animatable.Location,
-                    ((animatable.RotateAlongPath && animatable.IsMoving) || animatable.RotateWhileStill) ? animatable.Rotation : 0
+                    (((animatable.RotateAlongPath && animatable.IsMoving) || animatable.RotateWhileStill) && !drawpath) ? animatable.Rotation : 0
                     );
+            }
 
-                //if(animatable as Bug !=null && (animatable as Bug).Tag == "capturedship")
-                //{
-                //    Utils.dOut("Draw Debug: ", "<br/> ppi: " + animatable.CurPathPointIndex +
-                //                                  "<br/> pp: " + animatable.PathPoints.Count +
-                //                                  "<br/> lfl: " + animatable.LineFromLocation.X + "," + animatable.LineFromLocation.Y +
-                //                                  "<br/> ltl: " + animatable.LineToLocation.X + "," + animatable.LineToLocation.Y +
-                //                                  "<br/> speed: " + animatable.Speed +
-                //                                  "<br/> location: " + animatable.Location +
-                //                                  "<br/> loopcount: " + loopcount +
-                //                                  "<br/> End Animate Debug");
-                //}
-
-                if ((animatable.DrawPath || animatable.DrawControlLines) && !animatable.PathDrawn)
+            //path drawing for debugging
+            foreach (IAnimatable animatable in Animatables)
+            {
+                foreach (BezierCurve path in animatable.Paths)
                 {
-                    animatable.PathDrawn = true;
-                    spriteService.StaticCtx.BeginBatchAsync();
-                    spriteService.StaticCtx.SetStrokeStyleAsync("white");
-                    spriteService.StaticCtx.SetFillStyleAsync("yellow");
-                    spriteService.StaticCtx.SetFontAsync("48px serif");
-                    spriteService.StaticCtx.SetLineWidthAsync(2);
-                    foreach (BezierCurve path in animatable.Paths.Where(a => a.DrawPath == true))
-                    {
-                        bezierCurveService.DrawPathPoints(spriteService.StaticCtx, animatable.PathPoints);
-                        if (animatable.DrawPath)
-                            bezierCurveService.DrawCurve(spriteService.StaticCtx, path);
-                        if (animatable.DrawControlLines)
-                            bezierCurveService.DrawCurveControlLines(spriteService.StaticCtx, path);
-                    }
-                    spriteService.StaticCtx.EndBatchAsync();
+                    if (animatable.DrawPath)
+                        bezierCurveService.DrawCurve(spriteService.DynamicCtx1, path);
+                    if (animatable.DrawControlLines)
+                        bezierCurveService.DrawCurveControlLines(spriteService.DynamicCtx1, path);
                 }
             }
 

@@ -33,7 +33,6 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             };
 
             ship.Paths.ForEach(a => {
-                a.DrawPath = true;
                 ship.PathPoints.AddRange(animationService.ComputePathPoints(a));
             });
 

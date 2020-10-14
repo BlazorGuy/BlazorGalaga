@@ -88,7 +88,7 @@ function setImageSmoothingForCanvases() {
     for (let cnv of canvaslist) {
         var ctx = cnv.getContext("2d");
         ctx.imageSmoothingEnabled = false;
-        ctx.globalCompositeOperation = 'destination-over';
+        //ctx.globalCompositeOperation = 'destination-over';
     }
 }
 

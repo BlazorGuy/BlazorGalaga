@@ -43,7 +43,7 @@
           "dependencies": {
             "Blazor.Extensions.Canvas": {
               "target": "Package",
-              "version": "[1.0.0, )"
+              "version": "[1.1.0-preview1, )"
             },
             "Howler.Blazor": {
               "target": "Package",
@@ -51,21 +51,21 @@
             },
             "Microsoft.AspNetCore.Components.WebAssembly": {
               "target": "Package",
-              "version": "[3.2.0, )"
+              "version": "[3.2.1, )"
             },
             "Microsoft.AspNetCore.Components.WebAssembly.Build": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.2.0, )"
+              "version": "[5.0.0-preview.6.20312.15, )"
             },
             "Microsoft.AspNetCore.Components.WebAssembly.DevServer": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.2.0, )"
+              "version": "[5.0.0-rc.2.20475.17, )"
             },
             "System.Net.Http.Json": {
               "target": "Package",
-              "version": "[3.2.0, )"
+              "version": "[5.0.0-rc.2.20475.5, )"
             }
           },
           "imports": [

@@ -50,7 +50,7 @@ namespace BlazorGalaga.Services
         public bool debugmode = true;
         private bool skipintro = true;
         private bool soundoff = true;
-        private bool aion = true;
+        private bool aion = false;
         private bool shipinvincable = true;
         
         #endregion
@@ -60,7 +60,7 @@ namespace BlazorGalaga.Services
         public void Init()
         {
             InitVars();
-            //Level = 2;
+            //Level = 3;
             ShipManager.InitShip(animationService);
         }
 
@@ -154,9 +154,12 @@ namespace BlazorGalaga.Services
             }
 
             GetBugs().ForEach(a => {
+                if (a.Index == 10)
+                {
+                    a.DrawPath = true;
+                    a.DrawControlLines = true;
+                }
                 a.Paths.ForEach(p => {
-                    if (a.Index == 0 || a.Index == 0) p.DrawPath = true;
-                    if (a.Index == 0) p.OutPutDebug = true;
                     if (p.IsIntroPath)
                         a.PathPoints.AddRange(animationService.ComputePathPoints(p, false, 20));
                     else

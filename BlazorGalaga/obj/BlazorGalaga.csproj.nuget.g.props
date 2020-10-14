@@ -17,13 +17,13 @@
   </PropertyGroup>
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <Import Project="$(NuGetPackageRoot)microsoft.aspnetcore.components.webassembly.runtime\3.2.0\build\netstandard1.0\Microsoft.AspNetCore.Components.WebAssembly.Runtime.props" Condition="Exists('$(NuGetPackageRoot)microsoft.aspnetcore.components.webassembly.runtime\3.2.0\build\netstandard1.0\Microsoft.AspNetCore.Components.WebAssembly.Runtime.props')" />
-    <Import Project="$(NuGetPackageRoot)microsoft.aspnetcore.components.webassembly.build\3.2.0\build\netstandard1.0\Microsoft.AspNetCore.Components.WebAssembly.Build.props" Condition="Exists('$(NuGetPackageRoot)microsoft.aspnetcore.components.webassembly.build\3.2.0\build\netstandard1.0\Microsoft.AspNetCore.Components.WebAssembly.Build.props')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.aspnetcore.components.webassembly.build\5.0.0-preview.6.20312.15\build\netstandard1.0\Microsoft.AspNetCore.Components.WebAssembly.Build.props" Condition="Exists('$(NuGetPackageRoot)microsoft.aspnetcore.components.webassembly.build\5.0.0-preview.6.20312.15\build\netstandard1.0\Microsoft.AspNetCore.Components.WebAssembly.Build.props')" />
     <Import Project="$(NuGetPackageRoot)howler.blazor\0.9.3\buildTransitive\Howler.Blazor.props" Condition="Exists('$(NuGetPackageRoot)howler.blazor\0.9.3\buildTransitive\Howler.Blazor.props')" />
-    <Import Project="$(NuGetPackageRoot)blazor.extensions.canvas\1.0.0\buildTransitive\Blazor.Extensions.Canvas.props" Condition="Exists('$(NuGetPackageRoot)blazor.extensions.canvas\1.0.0\buildTransitive\Blazor.Extensions.Canvas.props')" />
+    <Import Project="$(NuGetPackageRoot)blazor.extensions.canvas\1.1.0-preview1\buildTransitive\Blazor.Extensions.Canvas.props" Condition="Exists('$(NuGetPackageRoot)blazor.extensions.canvas\1.1.0-preview1\buildTransitive\Blazor.Extensions.Canvas.props')" />
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <PkgMicrosoft_AspNetCore_Components_WebAssembly_Runtime Condition=" '$(PkgMicrosoft_AspNetCore_Components_WebAssembly_Runtime)' == '' ">C:\Users\bcollins\.nuget\packages\microsoft.aspnetcore.components.webassembly.runtime\3.2.0</PkgMicrosoft_AspNetCore_Components_WebAssembly_Runtime>
-    <PkgMicrosoft_AspNetCore_Components_WebAssembly_DevServer Condition=" '$(PkgMicrosoft_AspNetCore_Components_WebAssembly_DevServer)' == '' ">C:\Users\bcollins\.nuget\packages\microsoft.aspnetcore.components.webassembly.devserver\3.2.0</PkgMicrosoft_AspNetCore_Components_WebAssembly_DevServer>
-    <PkgMicrosoft_AspNetCore_Components_WebAssembly_Build Condition=" '$(PkgMicrosoft_AspNetCore_Components_WebAssembly_Build)' == '' ">C:\Users\bcollins\.nuget\packages\microsoft.aspnetcore.components.webassembly.build\3.2.0</PkgMicrosoft_AspNetCore_Components_WebAssembly_Build>
+    <PkgMicrosoft_AspNetCore_Components_WebAssembly_DevServer Condition=" '$(PkgMicrosoft_AspNetCore_Components_WebAssembly_DevServer)' == '' ">C:\Users\bcollins\.nuget\packages\microsoft.aspnetcore.components.webassembly.devserver\5.0.0-rc.2.20475.17</PkgMicrosoft_AspNetCore_Components_WebAssembly_DevServer>
+    <PkgMicrosoft_AspNetCore_Components_WebAssembly_Build Condition=" '$(PkgMicrosoft_AspNetCore_Components_WebAssembly_Build)' == '' ">C:\Users\bcollins\.nuget\packages\microsoft.aspnetcore.components.webassembly.build\5.0.0-preview.6.20312.15</PkgMicrosoft_AspNetCore_Components_WebAssembly_Build>
   </PropertyGroup>
 </Project>

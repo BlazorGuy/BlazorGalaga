@@ -34,12 +34,6 @@ namespace BlazorGalaga.Static
 
         public static void EditCurves(AnimationService animationService, GameLoopObject glo)
         {
-            foreach (var animatable in animationService.Animatables)
-            {
-                animatable.DrawControlLines = true;
-                animatable.DrawPath = true;
-            }
-
             if (MouseHelper.MouseIsDown)
             {
                 foreach (var animatable in animationService.Animatables.Where(a => a.Sprite.SpriteType != Sprite.SpriteTypes.Ship))
@@ -86,7 +80,7 @@ namespace BlazorGalaga.Static
                 string curvedata = "";
                 foreach (var animatable in animationService.Animatables.Where(a => a.Sprite.SpriteType != Sprite.SpriteTypes.Ship))
                 {
-                    foreach (var path in animatable.Paths.Where(a=>a.OutPutDebug==true))
+                     foreach (var path in animatable.Paths.Where(a=>a.OutPutDebug==true))
                     {
                         path.StartPointDragged = false;
                         path.EndPointDragged = false;

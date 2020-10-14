@@ -195,7 +195,7 @@ namespace BlazorGalaga.Pages
                 if (loopCount % drawmod == 0 || glo.captureship || glo.morphbug)
                 {
                     sw.Restart();
-                    animationService.Draw();
+                    animationService.Draw(glo.editcurveschecked);
                     if (sw.ElapsedMilliseconds >=8)
                         totaldraw += sw.ElapsedMilliseconds;
                     if (sw.ElapsedMilliseconds > maxdraw && sw.ElapsedMilliseconds < 50) maxdraw = sw.ElapsedMilliseconds;

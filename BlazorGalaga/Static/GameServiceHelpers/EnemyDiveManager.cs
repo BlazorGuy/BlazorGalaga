@@ -33,7 +33,8 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 bug.CaptureState == Bug.enCaptureState.Started ||
                 bug.CaptureState == Bug.enCaptureState.FlyingBackHome ||
                 bug.CaptureState == Bug.enCaptureState.RecaptureStarted ||
-                bug.MorphState == Bug.enMorphState.Started)
+                bug.MorphState == Bug.enMorphState.Started ||
+                bug.DrawPath)
             {
                 bug = bugs[Utils.Rnd(0, bugs.Count - 1)];
                 loopcount++;
