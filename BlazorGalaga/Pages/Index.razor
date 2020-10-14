@@ -3,18 +3,14 @@
     <style>
 
         html {
-            background: url(Assets/bezel.png) no-repeat center center fixed;
+            background: @(DebugMode ? "" : "url(Assets/bezel.png) no-repeat center center fixed");
             -webkit-background-size: cover;
             -moz-background-size: cover;
             -o-background-size: cover;
             background-size: cover;
         }
         body {
-            background-color: black;
-        }
-
-        #divDebug{
-            visibility:hidden;
+            background-color: @(DebugMode ? "white" : "black");
         }
 
         .content {
@@ -97,7 +93,7 @@
         }
     </style>
 
-<div id="divDebug">
+<div id="divDebug" style="@(DebugMode ? "visibility:visible" : "visibility:hidden")">
     <div id="divDebugDash" style="position:absolute;left:15px;top:15px;width:300px;height:250px;background-color:lightgray;padding:5px;font-size:10px;font-size:10px">
         <input type="checkbox" id="PauseAnimation" />
         <label for="PauseAnimation">Pause Animation</label>

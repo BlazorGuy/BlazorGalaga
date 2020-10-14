@@ -106,8 +106,8 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                             if (bug.PathPoints.Count > 0)
                             {
                                 bug.PathPoints[bug.PathPoints.Count - 1] = homepoint;
-                                if (bug.CurPathPointIndex == bug.PathPoints.Count - 1)
-                                    bug.LineToLocation = new Vector2(homepoint.X, homepoint.Y);
+                                //if (bug.CurPathPointIndex == bug.PathPoints.Count - 1)
+                                //    bug.LineToLocation = new Vector2(homepoint.X, homepoint.Y);
                             }
                         }
                         //snap to grid if bug isn't moving

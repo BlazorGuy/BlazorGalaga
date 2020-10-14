@@ -26,6 +26,8 @@ namespace BlazorGalaga.Pages
         public List<Canvas> BiggerBufferCanvases { get; set; }
         public string BackGroundClass { get; set; }
 
+        public bool DebugMode { get; set; }
+
         private Canvas2DContext DynamicCtx1;
         private Canvas2DContext StaticCtx;
         private bool stopGameLoop;
@@ -127,6 +129,9 @@ namespace BlazorGalaga.Pages
             gameService.spriteService = spriteService;
             gameService.Init();
 
+            DebugMode = gameService.debugmode;
+            StateHasChanged();
+
             SoundManager.Howl = Howl;
             SoundManager.HowlGlobal = HowlGlobal;
             SoundManager.Init();
@@ -160,8 +165,8 @@ namespace BlazorGalaga.Pages
                 return;
             }
 
-            try
-            {
+            //try
+            //{
                 loopCount++;
 
                 var timeStamp = glo.timestamp;
@@ -238,14 +243,14 @@ namespace BlazorGalaga.Pages
                 KeyBoardHelper.ControlShip(ship,animationService);
 
                 await JsRuntime.InvokeAsync<object>("logDiagnosticInfo", Utils.DiagnosticInfo);
-            }
-            catch (Exception ex)
-            {
-                stopGameLoop = true;
-                Utils.dOut("<p style=\"color: red\">Exception", ex.Message + "</p><br/>" + ex.StackTrace);
-                await JsRuntime.InvokeAsync<object>("logDiagnosticInfo", Utils.DiagnosticInfo);
-                throw ex;
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    stopGameLoop = true;
+            //    Utils.dOut("<p style=\"color: red\">Exception", ex.Message + "</p><br/>" + ex.StackTrace);
+            //    await JsRuntime.InvokeAsync<object>("logDiagnosticInfo", Utils.DiagnosticInfo);
+            //    throw ex;
+            //}
         }
 
     }

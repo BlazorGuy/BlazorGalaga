@@ -47,10 +47,12 @@ namespace BlazorGalaga.Services
         private int NextDiveWaitTime;
 
         //for debugging
-        private bool skipintro = false;
+        public bool debugmode = true;
+        private bool skipintro = true;
         private bool soundoff = true;
         private bool aion = true;
-
+        private bool shipinvincable = true;
+        
         #endregion
 
         #region Init
@@ -172,7 +174,16 @@ namespace BlazorGalaga.Services
             if (GetBugs().Count == 0 || Ship.Disabled || gameover || Ship.HasExploded || Ship.IsExploding)
                 return;
 
-            var bug = EnemyDiveManager.DoEnemyDive(GetBugs(), animationService, Ship, Constants.BugDiveSpeed + divespeedincrease,null,false,capturehappened,null, canmorph);
+            var bug = EnemyDiveManager.DoEnemyDive(
+                GetBugs(),
+                animationService,
+                Ship,
+                Constants.BugDiveSpeed + divespeedincrease,
+                null,
+                false,
+                capturehappened,
+                null,
+                GetBugs().Any(a=>a.IsMorphedBug) ? false : canmorph);
 
             if (bug != null && bug.CaptureState == Bug.enCaptureState.Started) capturehappened = true;
 
@@ -427,12 +438,15 @@ namespace BlazorGalaga.Services
             {
                 //ship mission collision with bug
                 hits += (ShipManager.CheckMissileCollisions(bugs, animationService) ? 1 : 0);
-                
+
                 //bug or missile collision with ship
-                if(!Ship.IsExploding && Ship.Visible && ShipManager.CheckShipCollisions(bugs, animationService, Ship))
+                if (!shipinvincable)
                 {
-                    SoundManager.StopAllSounds();
-                    Ship.IsExploding = true;
+                    if (!Ship.IsExploding && Ship.Visible && ShipManager.CheckShipCollisions(bugs, animationService, Ship))
+                    {
+                        SoundManager.StopAllSounds();
+                        Ship.IsExploding = true;
+                    }
                 }
             }
 
@@ -486,7 +500,7 @@ namespace BlazorGalaga.Services
                 if (WaitManager.WaitFor(3000, timestamp, WaitManager.WaitStep.enStep.WaitReady))
                 {
                     if (!animationService.Animatables.Any(a => a.Sprite.SpriteType == Sprite.SpriteTypes.BugMissle) &&
-                        !bugs.Any(a=>a.CaptureState == Bug.enCaptureState.Started))
+                        !bugs.Any(a=>a.CaptureState == Bug.enCaptureState.Started) && !bugs.Any(a=>a.IsDiving))
                     {
                         Lives -= 1;
                         Ship.HasExploded = false;
@@ -560,18 +574,9 @@ namespace BlazorGalaga.Services
         {
             if (aidodgeing) return;
 
-            if (bugs == null || bugs.Count == 0 || !bugs.Any(a=>a.Started)) return;
-
-            bugs = bugs.Where(a => a.Started).ToList();
-
-            if (aibug == null || !bugs.Contains(aibug)) aibug = bugs[Utils.Rnd(0,bugs.Count-1)];
-
-            //always choose a diving bug when there is one
-            if (!aibug.IsDiving && bugs.Any(a => a.IsDiving)) aibug = bugs.OrderByDescending(a=>a.Location.Y).FirstOrDefault(a => a.IsDiving);
-
             foreach (var missile in animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.BugMissle).OrderByDescending(a=>a.Location.Y))
             {
-                var missilerect = new RectangleF(missile.Location.X, missile.Location.Y, 100, 200);
+                var missilerect = new RectangleF(missile.Location.X, missile.Location.Y, 100, 300);
                 var shiprect = new RectangleF(Ship.Location.X, Ship.Location.Y, 80, 80);
                 if (shiprect.IntersectsWith(missilerect))
                 {
@@ -583,6 +588,15 @@ namespace BlazorGalaga.Services
                     break;
                 }
             }
+
+            if (bugs == null || bugs.Count == 0 || !bugs.Any(a => a.Started)) return;
+
+            bugs = bugs.Where(a => a.Started).ToList();
+
+            if (aibug == null || !bugs.Contains(aibug)) aibug = bugs[Utils.Rnd(0, bugs.Count - 1)];
+
+            //always choose a diving bug when there is one
+            if (!aibug.IsDiving && bugs.Any(a => a.IsDiving)) aibug = bugs.OrderByDescending(a => a.Location.Y).FirstOrDefault(a => a.IsDiving);
 
             foreach (var b in bugs.OrderByDescending(a=>a.Location.Y))
             {
