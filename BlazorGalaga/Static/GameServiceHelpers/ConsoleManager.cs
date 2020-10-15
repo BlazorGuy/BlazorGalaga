@@ -9,7 +9,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 {
     public static class ConsoleManager
     {
-        public static async Task DrawConsole(int lives, SpriteService spriteService, Ship ship, bool drawships)
+        public static async Task DrawConsole(int lives, SpriteService spriteService, Ship ship, bool drawships, int level)
         {
             //draw top black block
             await spriteService.StaticCtx.SetFillStyleAsync("Black");
@@ -32,18 +32,73 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                     left += (int)ship.Sprite.SpriteDestRect.Width + 3;
                 }
 
-                //draw the badges
-                await spriteService.StaticCtx.DrawImageAsync(
-                    spriteService.SpriteSheet,
-                    305,
-                    175,
-                    10,
-                    16,
-                    Constants.CanvasSize.Width - 30,
-                    Constants.CanvasSize.Height - 45,
-                    28,
-                    45
-                );
+                level += 1;
+
+                int badgeleftoffset = 0;
+
+                //draw the 10 badges
+                if (level >= 10)
+                {
+                    for (int i = 1; i <= (int)(level / 10); i++)
+                    {
+                        await spriteService.StaticCtx.DrawImageAsync(
+                            spriteService.SpriteSheet,
+                            329,
+                            175,
+                            10,
+                            16,
+                            Constants.CanvasSize.Width - 30 - badgeleftoffset,
+                            Constants.CanvasSize.Height - 45,
+                            28,
+                            45
+                        );
+                        badgeleftoffset += 30;
+                    }
+                }
+                
+                if (level >= 10) level = level - ((int)(level / 10) * 10);
+
+                //draw the 5 badges
+                if (level >= 5)
+                {
+                    for (int i = 1; i <= (int)(level / 5); i++)
+                    {
+                        await spriteService.StaticCtx.DrawImageAsync(
+                            spriteService.SpriteSheet,
+                            315,
+                            175,
+                            10,
+                            16,
+                            Constants.CanvasSize.Width - 30 - badgeleftoffset,
+                            Constants.CanvasSize.Height - 45,
+                            28,
+                            45
+                        );
+                        badgeleftoffset += 30;
+                    }
+                }
+
+                if (level >= 5) level = level - ((int)(level / 5) * 5);
+
+                //draw 1 the badges
+                if (level <= 4)
+                {
+                    for (int i = 1; i <= level; i++)
+                    {
+                        await spriteService.StaticCtx.DrawImageAsync(
+                            spriteService.SpriteSheet,
+                            305,
+                            175,
+                            10,
+                            16,
+                            Constants.CanvasSize.Width - 30 - badgeleftoffset,
+                            Constants.CanvasSize.Height - 45,
+                            28,
+                            45
+                        );
+                        badgeleftoffset += 30;
+                    }
+                }
             }
 
             await spriteService.StaticCtx.SetFillStyleAsync("Red");

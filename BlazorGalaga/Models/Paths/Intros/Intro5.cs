@@ -16,35 +16,27 @@ namespace BlazorGalaga.Models.Paths.Intros
         public override List<BezierCurve> GetPaths()
         {
 
-            List<BezierCurve> paths = new List<BezierCurve>();
-            
-            Offset = 52;
-
-            paths.Add(new BezierCurve()
+            List<BezierCurve> paths = new List<BezierCurve>
             {
-                StartPoint = new PointF(1.520065F, 665.9338F - Offset),
-                ControlPoint1 = new PointF(206.8977F, 885.1501F - Offset),
-                ControlPoint2 = new PointF(377.4452F - Offset, 484.0102F),
-                EndPoint = new PointF(337.8109F - Offset, 458.7888F)
-            });
+                new BezierCurve() {StartPoint = new PointF(1.520065F,613.9338F),
+                ControlPoint1 = new PointF(170.4448F,760.2277F),
+                ControlPoint2 = new PointF(257.13F,535.7135F),
+                EndPoint = new PointF(248.8109F,458.7888F)},
 
-            paths.Add(new BezierCurve()
-            {
-                StartPoint = new PointF(337.8109F - Offset, 453.9847F),
-                ControlPoint1 = new PointF(343.8161F - Offset, 351.8982F + Offset),
-                ControlPoint2 = new PointF(116.8198F + Offset, 302.6565F + Offset),
-                EndPoint = new PointF(130.0312F + Offset, 480.4071F)
-            });
+                new BezierCurve() {StartPoint = new PointF(248.8109F,453.9847F),
+                ControlPoint1 = new PointF(247.5946F,411.7539F),
+                ControlPoint2 = new PointF(171.3116F,396.1506F),
+                EndPoint = new PointF(169.5779F,469.8329F)},
 
-            paths.Add(new BezierCurve()
-            {
-                StartPoint = new PointF(131.2323F + Offset, 487.6132F),
-                ControlPoint1 = new PointF(133.6343F + Offset, 580.0916F - Offset),
-                ControlPoint2 = new PointF(324.5995F, 610.1171F - Offset),
-                EndPoint = new PointF(340.213F - Offset, 461.1908F - Offset)
-            });
+                new BezierCurve() {StartPoint = new PointF(169.5779F,478.5014F),
+                ControlPoint1 = new PointF(147.0398F,514.9091F),
+                ControlPoint2 = new PointF(309.1411F,575.5886F),
+                EndPoint = new PointF(233.725F,405.6859F)},
+
+            };
 
             return paths;
+           
         }
     }
 }

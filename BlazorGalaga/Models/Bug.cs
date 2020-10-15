@@ -45,6 +45,7 @@ namespace BlazorGalaga.Models
         public Sprite PreMorphedSprite { get; set; }
         public Sprite PreMorphedSpriteDownFlap { get; set; }
         public List<int> MissileCountDowns { get; set; }
+        public IIntro Intro { get; set; }
 
         public bool IsInIntro { get; set; }
 

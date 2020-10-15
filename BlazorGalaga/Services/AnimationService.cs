@@ -240,14 +240,17 @@ namespace BlazorGalaga.Services
             }
 
             //path drawing for debugging
-            foreach (IAnimatable animatable in Animatables)
+            if (drawpath)
             {
-                foreach (BezierCurve path in animatable.Paths)
+                foreach (IAnimatable animatable in Animatables)
                 {
-                    if (animatable.DrawPath)
-                        bezierCurveService.DrawCurve(spriteService.DynamicCtx1, path);
-                    if (animatable.DrawControlLines)
-                        bezierCurveService.DrawCurveControlLines(spriteService.DynamicCtx1, path);
+                    foreach (BezierCurve path in animatable.Paths)
+                    {
+                        if (animatable.DrawPath)
+                            bezierCurveService.DrawCurve(spriteService.DynamicCtx1, path);
+                        if (animatable.DrawControlLines)
+                            bezierCurveService.DrawCurveControlLines(spriteService.DynamicCtx1, path);
+                    }
                 }
             }
 

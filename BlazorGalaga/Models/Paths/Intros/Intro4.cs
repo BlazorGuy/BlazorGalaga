@@ -18,29 +18,20 @@ namespace BlazorGalaga.Models.Paths.Intros
 
             List<BezierCurve> paths = new List<BezierCurve>
             {
-                new BezierCurve()
-                {
-                    StartPoint = new PointF(666.8956F, 665.9338F),
-                    ControlPoint1 = new PointF(459.1159F, 889.9542F),
-                    ControlPoint2 = new PointF(307.785F, 497.2214F),
-                    EndPoint = new PointF(337.8109F, 458.7888F)
-                },
+                new BezierCurve() {StartPoint = new PointF(666.8956F,665.9338F),
+                ControlPoint1 = new PointF(461.7071F,813.9725F),
+                ControlPoint2 = new PointF(367.2202F,513.1754F),
+                EndPoint = new PointF(368.0871F,474.1671F)},
 
-                new BezierCurve()
-                {
-                    StartPoint = new PointF(337.8109F, 453.9847F),
-                    ControlPoint1 = new PointF(333.0068F, 339.888F),
-                    ControlPoint2 = new PointF(550.3948F, 290.6463F),
-                    EndPoint = new PointF(555.199F, 455.1858F)
-                },
+                new BezierCurve() {StartPoint = new PointF(368.0871F,463.7649F),
+                ControlPoint1 = new PointF(369.8208F,358.876F),
+                ControlPoint2 = new PointF(524.9873F,354.5418F),
+                EndPoint = new PointF(526.721F,450.7622F)},
 
-                new BezierCurve()
-                {
-                    StartPoint = new PointF(555.199F, 456.3868F),
-                    ControlPoint1 = new PointF(563.6063F, 576.4885F),
-                    ControlPoint2 = new PointF(336.6099F, 617.3232F),
-                    EndPoint = new PointF(336.6099F, 467.1959F)
-                }
+                new BezierCurve() {StartPoint = new PointF(527.5878F,459.4307F),
+                ControlPoint1 = new PointF(537.1232F,565.1864F),
+                ControlPoint2 = new PointF(369.8208F,595.5262F),
+                EndPoint = new PointF(360.2854F,464.6318F)},
             };
 
             return paths;

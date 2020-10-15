@@ -34,7 +34,8 @@ namespace BlazorGalaga.Static
                 ZIndex = 100,
                 RotatIntoPlaceSpeed = Constants.BugRotateIntoPlaceSpeed,
                 Wave = wave,
-                IsInIntro = true
+                IsInIntro = true,
+                Intro = intro
             };
 
             if(firemissileonintro)

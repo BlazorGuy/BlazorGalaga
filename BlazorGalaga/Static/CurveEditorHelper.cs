@@ -39,7 +39,7 @@ namespace BlazorGalaga.Static
                 foreach (var animatable in animationService.Animatables.Where(a => a.Sprite.SpriteType != Sprite.SpriteTypes.Ship))
                 {
                     animatable.PathDrawn = false;
-                    foreach (var path in animatable.Paths)
+                    foreach (var path in animatable.Paths.Where(a=>a.OutPutDebug))
                     {
                         if (Utils.GetDistance(MouseHelper.Position, path.StartPoint) <= 5) path.StartPointDragged = true;
                         else if (Utils.GetDistance(MouseHelper.Position, path.EndPoint) <= 5) path.EndPointDragged = true;
@@ -76,11 +76,12 @@ namespace BlazorGalaga.Static
             else if (isDraggingCurve)
             {
                 isDraggingCurve = false;
-                //animationService.ComputePathPoints();
+
                 string curvedata = "";
-                foreach (var animatable in animationService.Animatables.Where(a => a.Sprite.SpriteType != Sprite.SpriteTypes.Ship))
+
+                foreach (var animatable in animationService.Animatables.Where(a => a.DrawPath))
                 {
-                     foreach (var path in animatable.Paths.Where(a=>a.OutPutDebug==true))
+                    foreach (var path in animatable.Paths.Where(a=>a.OutPutDebug==true))
                     {
                         path.StartPointDragged = false;
                         path.EndPointDragged = false;
@@ -96,6 +97,7 @@ namespace BlazorGalaga.Static
                         }
                     }
                 }
+
                 Utils.dOut("CurveData", curvedata);
             }
         }

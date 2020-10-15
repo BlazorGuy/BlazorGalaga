@@ -10,6 +10,7 @@ using Blazor.Extensions.Canvas.WebGL;
 using BlazorGalaga.Interfaces;
 using BlazorGalaga.Models;
 using BlazorGalaga.Models.Paths;
+using BlazorGalaga.Models.Paths.Intros;
 using BlazorGalaga.Static;
 using BlazorGalaga.Static.GameServiceHelpers;
 using BlazorGalaga.Static.Levels;
@@ -47,10 +48,10 @@ namespace BlazorGalaga.Services
         private int NextDiveWaitTime;
 
         //for debugging
-        public bool debugmode = true;
-        private bool skipintro = true;
+        public bool debugmode = false;
+        private bool skipintro = false;
         private bool soundoff = true;
-        private bool aion = false;
+        private bool aion = true;
         private bool shipinvincable = true;
         
         #endregion
@@ -60,7 +61,7 @@ namespace BlazorGalaga.Services
         public void Init()
         {
             InitVars();
-            //Level = 3;
+            //Level = 10;
             ShipManager.InitShip(animationService);
         }
 
@@ -154,11 +155,6 @@ namespace BlazorGalaga.Services
             }
 
             GetBugs().ForEach(a => {
-                if (a.Index == 10)
-                {
-                    a.DrawPath = true;
-                    a.DrawControlLines = true;
-                }
                 a.Paths.ForEach(p => {
                     if (p.IsIntroPath)
                         a.PathPoints.AddRange(animationService.ComputePathPoints(p, false, 20));
@@ -166,6 +162,31 @@ namespace BlazorGalaga.Services
                         a.PathPoints.AddRange(animationService.ComputePathPoints(p,false));
                 });
             });
+
+            ////draw path logic for debuggin only
+            //var drawpathbug1 = GetBugs().FirstOrDefault(a => a.Intro is Intro4);
+            //var drawpathbug2 = GetBugs().FirstOrDefault(a => a.Intro is Intro6);
+
+            //var drawpathbug3 = GetBugs().FirstOrDefault(a => a.Intro is Intro3);
+            //var drawpathbug4 = GetBugs().FirstOrDefault(a => a.Intro is Intro5);
+
+            //drawpathbug1.DrawPath = true;
+            //drawpathbug1.DrawControlLines = true;
+
+            //drawpathbug2.DrawPath = true;
+            //drawpathbug2.DrawControlLines = true;
+
+            //drawpathbug3.DrawPath = true;
+            //drawpathbug3.DrawControlLines = true;
+
+            //drawpathbug4.DrawPath = true;
+            //drawpathbug4.DrawControlLines = true;
+
+            //drawpathbug2.Paths.ForEach(a => {
+            //    a.OutPutDebug = true;
+            //    a.DrawPath = true;
+            //});
+            ////end draw path debuggin logic
 
             GetBugs().Where(a => a.Wave == 1).ToList().ForEach(a => a.Started = true);
         }
@@ -220,7 +241,9 @@ namespace BlazorGalaga.Services
                     capturehappened = false;
                     hits = 0;
                     wave = 1;
+                    aidodgeing = false;
                     GalagaCaptureManager.Reset();
+                    await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level-1);
                     await ConsoleManager.ClearConsoleLevelText(spriteService);
                     await ConsoleManager.DrawConsoleLevelText(spriteService, Level);
                     SoundManager.StopAllSounds();
@@ -251,7 +274,7 @@ namespace BlazorGalaga.Services
             if (!consoledrawn && Ship.Sprite.BufferCanvas != null)
             {
                 Ship.Visible = false;
-                await ConsoleManager.DrawConsole(Lives, spriteService, Ship, false);
+                await ConsoleManager.DrawConsole(Lives, spriteService, Ship, false, Level);
                 consoledrawn = true;
                 SoundManager.OnEnd += SoundManager_OnEnd; ;
             }
@@ -264,6 +287,7 @@ namespace BlazorGalaga.Services
                 introsounddone = true;
                 Started = true;
                 Ship.Visible = true;
+                KeyBoardHelper.SpaceBarPressed = true;
             }
 
             if (soundoff && !SoundManager.SoundIsOff)
@@ -276,7 +300,7 @@ namespace BlazorGalaga.Services
                 {
                     SoundManager.PlaySound(SoundManager.SoundManagerSounds.coin, true);
                     await ConsoleManager.ClearConsole(spriteService);
-                    await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true);
+                    await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level);
                     Started = true;
                 }
                 else
@@ -300,7 +324,7 @@ namespace BlazorGalaga.Services
             if (aion) AI(bugs);
 
             //dive the bugs
-            if (timestamp - LastDiveTimeStamp > NextDiveWaitTime && EnemyGridManager.EnemyGridBreathing)
+            if (timestamp - LastDiveTimeStamp > NextDiveWaitTime && EnemyGridManager.EnemyGridBreathing && !glo.editcurveschecked)
             {
                 Dive();
                 LastDiveTimeStamp = timestamp;
@@ -465,6 +489,8 @@ namespace BlazorGalaga.Services
                 await ConsoleManager.ClearConsoleLevelText(spriteService);
                 bugs.FirstOrDefault(a => a.ClearFighterCapturedMessage).ClearFighterCapturedMessage = false;
                 Lives -= 1;
+                await ConsoleManager.ClearConsole(spriteService);
+                await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level);
             }
 
             //if morphed bugs go offscreen, destroy them immediately
@@ -513,7 +539,7 @@ namespace BlazorGalaga.Services
                             Ship.Visible = true;
                             Ship.Disabled = false;
                             await ConsoleManager.ClearConsole(spriteService);
-                            await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true);
+                            await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level);
                             await ConsoleManager.ClearConsoleLevelText(spriteService);
                         }
                         WaitManager.ClearSteps();
@@ -579,12 +605,14 @@ namespace BlazorGalaga.Services
 
             foreach (var missile in animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.BugMissle).OrderByDescending(a=>a.Location.Y))
             {
-                var missilerect = new RectangleF(missile.Location.X, missile.Location.Y, 100, 300);
+                var missilerect = new RectangleF(missile.Location.X, missile.Location.Y, 100, 400);
                 var shiprect = new RectangleF(Ship.Location.X, Ship.Location.Y, 80, 80);
                 if (shiprect.IntersectsWith(missilerect))
                 {
                     if (Ship.Location.X <= missile.Location.X)
+                    {
                         Ship.Speed = Constants.ShipMoveSpeed * -1;
+                    }
                     else
                         Ship.Speed = Constants.ShipMoveSpeed;
                     aidodgeing = true;
