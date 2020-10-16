@@ -53,7 +53,8 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             //if morphing is enabled, 20% of the time morph instead of dive
             if (canmorph && Utils.Rnd(1, 100) < 20)
             {
-                if (bug.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug || bug.Sprite.SpriteType == Sprite.SpriteTypes.RedBug)
+                if ((bug.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug || bug.Sprite.SpriteType == Sprite.SpriteTypes.RedBug) &&
+                    !bug.IsMorphedBug)
                 {
                     bug.MorphState = Bug.enMorphState.Started;
                     bug.IsDiving = true;

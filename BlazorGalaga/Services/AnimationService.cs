@@ -143,24 +143,36 @@ namespace BlazorGalaga.Services
                         animatable.Rotation = animatable.ManualRotation;
                 }
 
-                if ((animatable as Bug) != null && (animatable as Bug).OutputDebugInfo)
+                if (!Animatables.Where(a => a as Bug != null).Select(a => a as Bug).Any(a => a.OutputDebugInfo))
+                    Utils.dOut("*** Animate Debug: *** ", "None Selected");
+                else
                 {
-                    Utils.dOut("*** Animate Debug: *** ", "<br/><br/> CurPathPointIndex: " + animatable.CurPathPointIndex +
-                                    "<br/> PathPoints: " + animatable.PathPoints.Count +
-                                    "<br/> LineFromLocation: " + animatable.LineFromLocation.X + "," + animatable.LineFromLocation.Y +
-                                    "<br/> LineToLocation: " + animatable.LineToLocation.X + "," + animatable.LineToLocation.Y +
-                                    "<br/> speed: " + animatable.Speed +
-                                    "<br/> CaptureState: " + ((Bug)animatable).CaptureState.ToString() +
-                                    "<br/> location: " + animatable.Location +
-                                    "<br/> IsMoving: " + animatable.IsMoving +
-                                    "<br/> loopcount: " + loopcount +
-                                    "<br/> RotateWhileStill: " + animatable.RotateWhileStill +
-                                    "<br/> ManualRotation: " + animatable.ManualRotation +
-                                    "<br/> Rotation: " + animatable.Rotation +
-                                    "<br/> ManualRotationRate: " + animatable.ManualRotationRate +
-                                    "<br/> startpoint: " + (animatable.Paths == null || animatable.Paths.Count==0 ? "NA" : animatable.Paths.First().StartPoint.ToString()) +
-                                    "<br/> endpoint: " + (animatable.Paths == null || animatable.Paths.Count == 0 ? "NA" : animatable.Paths.Last().EndPoint.ToString()) +
-                                    "<br/><br/>*** End Animate Debug ***");
+                    if ((animatable as Bug) != null && (animatable as Bug).OutputDebugInfo)
+                    {
+                        Utils.dOut("*** Animate Debug: *** ",
+                                        "<br/><br/> Index: " + ((Bug)animatable).Index +
+                                        "<br/> Wave: " + ((Bug)animatable).Wave.ToString() +
+                                        "<br/> SpriteType: " + ((Bug)animatable).Sprite.SpriteType.ToString() +
+                                        "<br/><br/> CurPathPointIndex: " + animatable.CurPathPointIndex +
+                                        "<br/> PathPoints: " + animatable.PathPoints.Count +
+                                        "<br/> LineFromLocation: " + animatable.LineFromLocation.X + "," + animatable.LineFromLocation.Y +
+                                        "<br/> LineToLocation: " + animatable.LineToLocation.X + "," + animatable.LineToLocation.Y +
+                                        "<br/> speed: " + animatable.Speed +
+                                        "<br/> CaptureState: " + ((Bug)animatable).CaptureState.ToString() +
+                                        "<br/> location: " + animatable.Location +
+                                        "<br/> IsMoving: " + animatable.IsMoving +
+                                        "<br/> loopcount: " + loopcount +
+                                        "<br/> RotateWhileStill: " + animatable.RotateWhileStill +
+                                        "<br/> ManualRotation: " + animatable.ManualRotation +
+                                        "<br/> Rotation: " + animatable.Rotation +
+                                        "<br/> ManualRotationRate: " + animatable.ManualRotationRate +
+                                        "<br/> startpoint: " + (animatable.Paths == null || animatable.Paths.Count == 0 ? "NA" : animatable.Paths.First().StartPoint.ToString()) +
+                                        "<br/> endpoint: " + (animatable.Paths == null || animatable.Paths.Count == 0 ? "NA" : animatable.Paths.Last().EndPoint.ToString()) +
+                                        "<br/> IsMorphedBug: " + ((Bug)animatable).IsMorphedBug +
+                                        "<br/> MorphState: " + ((Bug)animatable).MorphState.ToString() +
+                                        "<br/> PreMorphedSprite: " + ((Bug)animatable).PreMorphedSprite.SpriteType.ToString() +
+                                        "<br/><br/>*** End Animate Debug ***<br/><br/>");
+                    }
                 }
             }
 

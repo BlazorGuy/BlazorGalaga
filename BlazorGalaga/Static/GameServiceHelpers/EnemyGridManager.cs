@@ -105,9 +105,14 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                             //this makes the bugs go to their spot on the moving enemy grid
                             if (bug.PathPoints.Count > 0)
                             {
+                                //update the last point to be the moving homepoint on the enemy grid
                                 bug.PathPoints[bug.PathPoints.Count - 1] = homepoint;
-                                //if (bug.CurPathPointIndex == bug.PathPoints.Count - 1)
-                                //    bug.LineToLocation = new Vector2(homepoint.X, homepoint.Y);
+                                //if we are moving to the home point, recalc our vector each time it moves
+                                if (bug.CurPathPointIndex == bug.PathPoints.Count - 1)
+                                {
+                                    bug.LineFromLocation = new Vector2(bug.Location.X, bug.Location.Y);
+                                    bug.LineToLocation = new Vector2(homepoint.X, homepoint.Y);
+                                }
                             }
                         }
                         //snap to grid if bug isn't moving
@@ -140,6 +145,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                                 bug.IsMorphedBug = false;
                                 bug.Sprite = bug.PreMorphedSprite;
                                 bug.SpriteBank.Add(bug.PreMorphedSpriteDownFlap);
+                                bug.MorphState = Bug.enMorphState.NotStarted;
                             }
                         }
                     }

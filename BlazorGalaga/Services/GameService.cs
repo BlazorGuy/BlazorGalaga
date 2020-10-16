@@ -10,6 +10,7 @@ using Blazor.Extensions.Canvas.WebGL;
 using BlazorGalaga.Interfaces;
 using BlazorGalaga.Models;
 using BlazorGalaga.Models.Paths;
+using BlazorGalaga.Models.Paths.Challenges.Challenge3;
 using BlazorGalaga.Models.Paths.Intros;
 using BlazorGalaga.Static;
 using BlazorGalaga.Static.GameServiceHelpers;
@@ -48,9 +49,9 @@ namespace BlazorGalaga.Services
         private int NextDiveWaitTime;
 
         //for debugging
-        public bool debugmode = false;
-        private bool skipintro = false;
-        private bool soundoff = false;
+        public bool debugmode = true;
+        private bool skipintro = true;
+        private bool soundoff = true;
         private bool aion = false;
         private bool shipinvincable = true;
         
@@ -61,7 +62,7 @@ namespace BlazorGalaga.Services
         public void Init()
         {
             InitVars();
-            //Level = 10;
+            Level = 10;
             ShipManager.InitShip(animationService);
         }
 
@@ -152,6 +153,9 @@ namespace BlazorGalaga.Services
                     introspeedincrease = 2;
                     canmorph = false;
                     break;
+                case 11: //challenge
+                    Level11.InitIntro(animationService, -2);
+                    break;
             }
 
             GetBugs().ForEach(a => {
@@ -163,30 +167,22 @@ namespace BlazorGalaga.Services
                 });
             });
 
-            ////draw path logic for debuggin only
-            //var drawpathbug1 = GetBugs().FirstOrDefault(a => a.Intro is Intro4);
+            //draw path logic for debugging only
+            var drawpathbug1 = GetBugs().FirstOrDefault(a => a.Intro is Challenge1);
             //var drawpathbug2 = GetBugs().FirstOrDefault(a => a.Intro is Intro6);
 
-            //var drawpathbug3 = GetBugs().FirstOrDefault(a => a.Intro is Intro3);
-            //var drawpathbug4 = GetBugs().FirstOrDefault(a => a.Intro is Intro5);
-
-            //drawpathbug1.DrawPath = true;
-            //drawpathbug1.DrawControlLines = true;
+            drawpathbug1.DrawPath = true;
+            drawpathbug1.DrawControlLines = true;
 
             //drawpathbug2.DrawPath = true;
             //drawpathbug2.DrawControlLines = true;
 
-            //drawpathbug3.DrawPath = true;
-            //drawpathbug3.DrawControlLines = true;
-
-            //drawpathbug4.DrawPath = true;
-            //drawpathbug4.DrawControlLines = true;
-
-            //drawpathbug2.Paths.ForEach(a => {
-            //    a.OutPutDebug = true;
-            //    a.DrawPath = true;
-            //});
-            ////end draw path debuggin logic
+            drawpathbug1.Paths.ForEach(a =>
+            {
+                a.OutPutDebug = true;
+                a.DrawPath = true;
+            });
+            //end draw path debugging logic
 
             GetBugs().Where(a => a.Wave == 1).ToList().ForEach(a => a.Started = true);
         }
@@ -546,6 +542,18 @@ namespace BlazorGalaga.Services
                         WaitManager.ClearSteps();
                     }
                 }
+            }
+
+
+            //for debugging purposes
+            if (MouseHelper.MouseIsDown)
+            {
+                bugs.ForEach(a => a.OutputDebugInfo = false);
+                bugs.ForEach(a => {
+                    var bugrect = new RectangleF(a.Location.X, a.Location.Y, 32, 32);
+                    var mouserect = new RectangleF(MouseHelper.Position.X, MouseHelper.Position.Y, 10, 10);
+                    if (bugrect.IntersectsWith(mouserect)) a.OutputDebugInfo = true;
+                });
             }
 
             //for debugging purposes

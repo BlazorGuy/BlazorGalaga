@@ -10,54 +10,51 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 {
     public static class BugMorphMananger
     {
-        private static int MorphCount = 0;
-        private static Sprite preMorphedSprite;
-        private static Sprite preMorphedSpriteDownFlap;
-        private static Sprite.SpriteTypes spriteType;
-
         public static void DoMorph(List<Bug> bugs, Bug bug, AnimationService animationService, Ship ship)
         {
-            if (MorphCount == 1)
+
+            bug.MorphCount++;
+
+            if (bug.MorphCount == 1)
             {
-                SetSpriteType();
-                preMorphedSpriteDownFlap = bug.SpriteBank[0];
-                preMorphedSprite = bug.Sprite;
+                SetSpriteType(bug);
+                bug.preMorphedSpriteDownFlap = bug.SpriteBank[0];
+                bug.preMorphedSprite = bug.Sprite;
                 bug.SpriteBank.Clear();
                 bug.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.RedGreenBug_DownFlap));
             }
-            else if (MorphCount == 10)
+            else if (bug.MorphCount == 10)
             {
                 bug.Sprite = new Sprite(Sprite.SpriteTypes.RedGreenBug);
             }
-            else if (MorphCount == 15)
+            else if (bug.MorphCount == 15)
             {
                 var morphedbug = CreateMorphedBug(animationService, bug, true);
                 EnemyDiveManager.DoEnemyDive(bugs, animationService, ship, Constants.BugDiveSpeed, morphedbug, false, false);
             }
-            else if (MorphCount == 17)
+            else if (bug.MorphCount == 17)
             {
                 var morphedbug = CreateMorphedBug(animationService, bug, false);
                 EnemyDiveManager.DoEnemyDive(bugs, animationService, ship, Constants.BugDiveSpeed, morphedbug, false, false);
             }
-            else if (MorphCount == 19)
+            else if (bug.MorphCount == 19)
             {
                 var morphedbug = CreateMorphedBug(animationService, bug, false);
                 EnemyDiveManager.DoEnemyDive(bugs, animationService, ship, Constants.BugDiveSpeed, morphedbug, false, false);
             }
-            else if (MorphCount == 20)
+            else if (bug.MorphCount == 20)
             {
                 bug.DestroyImmediately = true;
-                MorphCount = 0;
-                preMorphedSprite = null;
-                preMorphedSpriteDownFlap = null;
+                bug.MorphCount = 0;
+                bug.preMorphedSprite = null;
+                bug.preMorphedSpriteDownFlap = null;
             }
 
-            MorphCount++;
         }
 
         private static Bug CreateMorphedBug(AnimationService animationService, Bug bug, bool hashomepoint)
         {
-            var morphedbug = new Bug(spriteType)
+            var morphedbug = new Bug(bug.MorphedspriteType)
             {
                 Paths = new List<BezierCurve>(),
                 Started = true,
@@ -65,8 +62,8 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 RotateAlongPath = true,
                 Location = bug.Location,
                 IsMorphedBug = true,
-                PreMorphedSprite = preMorphedSprite,
-                PreMorphedSpriteDownFlap = preMorphedSpriteDownFlap
+                PreMorphedSprite = bug.preMorphedSprite,
+                PreMorphedSpriteDownFlap = bug.preMorphedSpriteDownFlap
             };
 
             if (hashomepoint)
@@ -77,16 +74,16 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             return morphedbug;
         }
 
-        private static void SetSpriteType()
+        private static void SetSpriteType(Bug bug)
         {
             var r = Utils.Rnd(1, 300);
 
             if (r <= 100)
-                spriteType = Sprite.SpriteTypes.GreenBugShip;
+                bug.MorphedspriteType = Sprite.SpriteTypes.GreenBugShip;
             else if (r <= 200)
-                spriteType = Sprite.SpriteTypes.YellowBugShip;
+                bug.MorphedspriteType = Sprite.SpriteTypes.YellowBugShip;
             else
-                spriteType = Sprite.SpriteTypes.YelloBug;
+                bug.MorphedspriteType = Sprite.SpriteTypes.YelloBug;
         }
     }
 }

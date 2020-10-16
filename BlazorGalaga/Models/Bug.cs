@@ -47,6 +47,12 @@ namespace BlazorGalaga.Models
         public List<int> MissileCountDowns { get; set; }
         public IIntro Intro { get; set; }
 
+
+        public Sprite preMorphedSprite { get; set; }
+        public Sprite preMorphedSpriteDownFlap { get; set; }
+        public Sprite.SpriteTypes MorphedspriteType { get; set; }
+
+        public int MorphCount { get; set; }
         public bool IsInIntro { get; set; }
 
         public Bug(Sprite.SpriteTypes spritetype)
@@ -56,6 +62,7 @@ namespace BlazorGalaga.Models
             ChildBugs = new List<Bug>();
             CaptureState = enCaptureState.NotStarted;
             MissileCountDowns = new List<int>();
+            MorphState = enMorphState.NotStarted;
         }
     }
 }
