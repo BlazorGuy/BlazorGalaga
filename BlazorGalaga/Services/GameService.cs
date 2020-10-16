@@ -50,8 +50,8 @@ namespace BlazorGalaga.Services
         //for debugging
         public bool debugmode = false;
         private bool skipintro = false;
-        private bool soundoff = true;
-        private bool aion = true;
+        private bool soundoff = false;
+        private bool aion = false;
         private bool shipinvincable = true;
         
         #endregion
@@ -489,6 +489,7 @@ namespace BlazorGalaga.Services
                 await ConsoleManager.ClearConsoleLevelText(spriteService);
                 bugs.FirstOrDefault(a => a.ClearFighterCapturedMessage).ClearFighterCapturedMessage = false;
                 Lives -= 1;
+                if (Lives < 0) gameover = true;
                 await ConsoleManager.ClearConsole(spriteService);
                 await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level);
             }

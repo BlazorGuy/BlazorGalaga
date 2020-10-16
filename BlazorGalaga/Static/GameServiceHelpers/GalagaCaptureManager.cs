@@ -100,7 +100,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                 {
                     SoundManager.MuteAllSounds = true;
                     SoundManager.StopAllSounds();
-                    SoundManager.PlaySound(SoundManager.SoundManagerSounds.tractorbeam, true,true);
+                    SoundManager.PlaySound(SoundManager.SoundManagerSounds.tractorbeam);
                     TractorBeamStartedSoundPlayed = true;
                 }
             }
