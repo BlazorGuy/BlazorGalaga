@@ -7,9 +7,9 @@ using BlazorGalaga.Static;
 
 namespace BlazorGalaga.Models.Paths.Challenges.Challenge3
 {
-    public class Challenge1 : IntroBase
+    public class Challenge2 : IntroBase
     {
-        public Challenge1()
+        public Challenge2()
         {
             IsChallenge = true;
             IntroLocation = IntroLocation.Top;
@@ -19,15 +19,18 @@ namespace BlazorGalaga.Models.Paths.Challenges.Challenge3
         {
             List<BezierCurve> paths = new List<BezierCurve>
             {
-                new BezierCurve() {StartPoint = new PointF(281.0104F,1F),
-                ControlPoint1 = new PointF(285.7423F,130.1253F),
-                ControlPoint2 = new PointF(340.1589F,739.3484F),
-                EndPoint = new PointF(3.012873F,671.9198F)},
 
-                new BezierCurve() {StartPoint = new PointF(12.47662F,670.7368F),
-                ControlPoint1 = new PointF(337.7929F,738.1654F),
-                ControlPoint2 = new PointF(288.1083F,124.2105F),
+                new BezierCurve() {StartPoint = new PointF(281.0104F,1F),
+                ControlPoint1 = new PointF(294.0231F,431.7794F),
+                ControlPoint2 = new PointF(224.228F,702.6767F),
+                EndPoint = new PointF(628.8032F,664.8221F)},
+
+                new BezierCurve() {StartPoint = new PointF(627.6202F,664.8221F),
+                ControlPoint1 = new PointF(225.4109F,695.5789F),
+                ControlPoint2 = new PointF(310.5847F,467.2682F),
                 EndPoint = new PointF(282.1934F,-50F)},
+
+
             };
 
             return paths;

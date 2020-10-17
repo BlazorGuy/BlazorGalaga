@@ -47,12 +47,13 @@ namespace BlazorGalaga.Services
         private bool gameover;
         private float LastDiveTimeStamp;
         private int NextDiveWaitTime;
+        private int LevelOffset = 0;
 
         //for debugging
-        public bool debugmode = true;
-        private bool skipintro = true;
+        public bool debugmode = false;
+        private bool skipintro = false;
         private bool soundoff = true;
-        private bool aion = false;
+        private bool aion = true;
         private bool shipinvincable = true;
         
         #endregion
@@ -62,7 +63,7 @@ namespace BlazorGalaga.Services
         public void Init()
         {
             InitVars();
-            Level = 10;
+            //Level = 10;
             ShipManager.InitShip(animationService);
         }
 
@@ -154,7 +155,7 @@ namespace BlazorGalaga.Services
                     canmorph = false;
                     break;
                 case 11: //challenge
-                    Level11.InitIntro(animationService, -2);
+                    Level11.InitIntro(animationService, -3);
                     break;
             }
 
@@ -167,22 +168,22 @@ namespace BlazorGalaga.Services
                 });
             });
 
-            //draw path logic for debugging only
-            var drawpathbug1 = GetBugs().FirstOrDefault(a => a.Intro is Challenge1);
-            //var drawpathbug2 = GetBugs().FirstOrDefault(a => a.Intro is Intro6);
+            ////draw path logic for debugging only
+            //var drawpathbug1 = GetBugs().FirstOrDefault(a => a.Intro is Challenge3);
+            //var drawpathbug2 = GetBugs().FirstOrDefault(a => a.Intro is Challenge4);
 
-            drawpathbug1.DrawPath = true;
-            drawpathbug1.DrawControlLines = true;
+            //drawpathbug1.DrawPath = true;
+            //drawpathbug1.DrawControlLines = true;
 
             //drawpathbug2.DrawPath = true;
             //drawpathbug2.DrawControlLines = true;
 
-            drawpathbug1.Paths.ForEach(a =>
-            {
-                a.OutPutDebug = true;
-                a.DrawPath = true;
-            });
-            //end draw path debugging logic
+            //drawpathbug2.Paths.ForEach(a =>
+            //{
+            //    a.OutPutDebug = true;
+            //    a.DrawPath = true;
+            //});
+            ////end draw path debugging logic
 
             GetBugs().Where(a => a.Wave == 1).ToList().ForEach(a => a.Started = true);
         }
@@ -234,16 +235,21 @@ namespace BlazorGalaga.Services
                 WaitManager.DoOnce(async () =>
                 {
                     Level += 1;
+                    if (Level == 12)
+                    {
+                        LevelOffset = 10;
+                        Level = 1;
+                    }
                     capturehappened = false;
                     hits = 0;
                     wave = 1;
                     aidodgeing = false;
                     GalagaCaptureManager.Reset();
-                    await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level-1);
+                    await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level-1 + LevelOffset);
                     await ConsoleManager.ClearConsoleLevelText(spriteService);
-                    await ConsoleManager.DrawConsoleLevelText(spriteService, Level);
+                    await ConsoleManager.DrawConsoleLevelText(spriteService, Level + LevelOffset);
                     SoundManager.StopAllSounds();
-                    if (Level == 3 || Level == 8)
+                    if (Level == 3 || Level == 8 || Level == 11)
                         SoundManager.PlaySound(SoundManager.SoundManagerSounds.challengingstage);
                     else
                     {
@@ -270,7 +276,7 @@ namespace BlazorGalaga.Services
             if (!consoledrawn && Ship.Sprite.BufferCanvas != null)
             {
                 Ship.Visible = false;
-                await ConsoleManager.DrawConsole(Lives, spriteService, Ship, false, Level);
+                await ConsoleManager.DrawConsole(Lives, spriteService, Ship, false, Level + LevelOffset);
                 consoledrawn = true;
                 SoundManager.OnEnd += SoundManager_OnEnd; ;
             }
@@ -296,7 +302,7 @@ namespace BlazorGalaga.Services
                 {
                     SoundManager.PlaySound(SoundManager.SoundManagerSounds.coin, true);
                     await ConsoleManager.ClearConsole(spriteService);
-                    await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level);
+                    await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level + LevelOffset);
                     Started = true;
                 }
                 else
@@ -357,7 +363,7 @@ namespace BlazorGalaga.Services
                 }, WaitManager.WaitStep.enStep.CleanUp);
 
                 //are we at a challenging stage?
-                if ((Level == 3 || Level == 8) && !WaitManager.Steps.Any(a=> a.Step == WaitManager.WaitStep.enStep.Pause1))
+                if ((Level == 3 || Level == 8 || Level == 11) && !WaitManager.Steps.Any(a=> a.Step == WaitManager.WaitStep.enStep.Pause1))
                 {
                     SoundManager.PlaySound(SoundManager.SoundManagerSounds.challengingstageover, true);
                     if (WaitManager.WaitFor(1500, timestamp, WaitManager.WaitStep.enStep.ShowNumberOfHitsLabel))
@@ -487,7 +493,7 @@ namespace BlazorGalaga.Services
                 Lives -= 1;
                 if (Lives < 0) gameover = true;
                 await ConsoleManager.ClearConsole(spriteService);
-                await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level);
+                await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level + LevelOffset);
             }
 
             //if morphed bugs go offscreen, destroy them immediately
@@ -536,7 +542,7 @@ namespace BlazorGalaga.Services
                             Ship.Visible = true;
                             Ship.Disabled = false;
                             await ConsoleManager.ClearConsole(spriteService);
-                            await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level);
+                            await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level + LevelOffset);
                             await ConsoleManager.ClearConsoleLevelText(spriteService);
                         }
                         WaitManager.ClearSteps();
