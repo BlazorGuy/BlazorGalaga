@@ -30,7 +30,6 @@ namespace BlazorGalaga.Pages
 
         private Canvas2DContext DynamicCtx1;
         private Canvas2DContext StaticCtx;
-        private bool stopGameLoop;
         private readonly int targetTicksPerFrame = (1000 / 60);
         private float delta;
         private float lastTimeStamp;
@@ -158,99 +157,81 @@ namespace BlazorGalaga.Pages
         [JSInvokable]
         public async void GameLoop(GameLoopObject glo)
         {
-            if (stopGameLoop || glo.pauseanimation)
+            if (glo.pauseanimation)
             {
                 lastTimeStamp = glo.timestamp;
                 Utils.dOut("Exited GameLoop", true);
                 return;
             }
 
-            //try
-            //{
-                loopCount++;
+            loopCount++;
 
-                var timeStamp = glo.timestamp;
+            var timeStamp = glo.timestamp;
 
-                //Start Animation Logic
-                delta += (int)(timeStamp - lastTimeStamp);
-                lastTimeStamp = timeStamp;
+            //Start Animation Logic
+            delta += (int)(timeStamp - lastTimeStamp);
+            lastTimeStamp = timeStamp;
 
-                while (delta >= targetTicksPerFrame)
+            while (delta >= targetTicksPerFrame)
+            {
+                sw.Restart();
+                animationService.Animate();
+                Utils.dOut("animationService.Animate()", sw.ElapsedMilliseconds);
+                delta -= targetTicksPerFrame;
+            }
+
+            if (Utils.FPS > 50 && Utils.FPS <= 55)
+                drawmod = 3;
+            else if (Utils.FPS > 45 && Utils.FPS <= 50)
+                drawmod = 4;
+            else if (Utils.FPS <= 45)
+                drawmod = 5;
+            else
+                drawmod = 2;
+
+            if (loopCount % drawmod == 0 || glo.captureship || glo.morphbug)
+            {
+                sw.Restart();
+                animationService.Draw(glo.editcurveschecked);
+                if (sw.ElapsedMilliseconds >=8)
+                    totaldraw += sw.ElapsedMilliseconds;
+                if (sw.ElapsedMilliseconds > maxdraw && sw.ElapsedMilliseconds < 50) maxdraw = sw.ElapsedMilliseconds;
+                Utils.dOut("animationService.Draw()", sw.ElapsedMilliseconds + " Avg: " + ((int)totaldraw/(loopCount/drawmod)) + " Max: " + maxdraw);
+
+                sw.Restart();
+                if (gameService.animationService != null)
                 {
-                    sw.Restart();
-                    animationService.Animate();
-                    Utils.dOut("animationService.Animate()", sw.ElapsedMilliseconds);
-                    delta -= targetTicksPerFrame;
-                }
-
-                if (Utils.FPS > 50 && Utils.FPS <= 55)
-                    drawmod = 3;
-                else if (Utils.FPS > 45 && Utils.FPS <= 50)
-                    drawmod = 4;
-                else if (Utils.FPS <= 45)
-                    drawmod = 5;
-                else
-                    drawmod = 2;
-
-                if (loopCount % drawmod == 0 || glo.captureship || glo.morphbug)
-                {
-                    sw.Restart();
-                    animationService.Draw(glo.editcurveschecked);
-                    if (sw.ElapsedMilliseconds >=8)
-                        totaldraw += sw.ElapsedMilliseconds;
-                    if (sw.ElapsedMilliseconds > maxdraw && sw.ElapsedMilliseconds < 50) maxdraw = sw.ElapsedMilliseconds;
-                    Utils.dOut("animationService.Draw()", sw.ElapsedMilliseconds + " Avg: " + ((int)totaldraw/(loopCount/drawmod)) + " Max: " + maxdraw);
-
-                    sw.Restart();
-                    if (gameService.animationService != null)
+                    if (gameService.Ship == null) gameService.Ship = ship;
+                    gameService.Process(timeStamp,glo);
+                    if (gameService.Started && BackGroundClass == "background")
                     {
-                        if (gameService.Ship == null) gameService.Ship = ship;
-                        gameService.Process(timeStamp,glo);
-                        if (gameService.Started && BackGroundClass == "background")
-                        {
-                            BackGroundClass = "background backgroundmoving";
-                            StateHasChanged();
-                        }
-                        else if (!gameService.Started && BackGroundClass == "background backgroundmoving")
-                        {
-                            BackGroundClass = "background";
-                            StateHasChanged();
-                        }
-                        Utils.dOut("gameService.Process()", sw.ElapsedMilliseconds);
+                        BackGroundClass = "background backgroundmoving";
+                        StateHasChanged();
                     }
+                    else if (!gameService.Started && BackGroundClass == "background backgroundmoving")
+                    {
+                        BackGroundClass = "background";
+                        StateHasChanged();
+                    }
+                    Utils.dOut("gameService.Process()", sw.ElapsedMilliseconds);
                 }
-                //End Animation Logic
+            }
+            //End Animation Logic
 
-                //Start Curve Editor Logic
-                if (glo.editcurveschecked)
-                    CurveEditorHelper.EditCurves(animationService, glo);
-                else
-                    CurveEditorHelper.DisableLines(animationService);
-                if (glo.resetanimation) CurveEditorHelper.ResetAnimation(animationService);
-                ////End Curve Editor Logic
+            //Start Curve Editor Logic
+            if (glo.editcurveschecked)
+                CurveEditorHelper.EditCurves(animationService, glo);
+            else
+                CurveEditorHelper.DisableLines(animationService);
+            if (glo.resetanimation) CurveEditorHelper.ResetAnimation(animationService);
+            ////End Curve Editor Logic
 
-                if (glo.killbugs)
-                {
-                    animationService.Animatables.RemoveAll(a =>
-                    a.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug
-                    || a.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug
-                    || a.Sprite.SpriteType == Sprite.SpriteTypes.RedBug
-                    || a.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug_Blue);
-                }
+            Utils.LogFPS();
 
-                Utils.LogFPS();
+            KeyBoardHelper.ControlShip(ship,animationService);
 
-                KeyBoardHelper.ControlShip(ship,animationService);
+            await JsRuntime.InvokeAsync<object>("logDiagnosticInfo", Utils.DiagnosticInfo);
 
-                await JsRuntime.InvokeAsync<object>("logDiagnosticInfo", Utils.DiagnosticInfo);
-            //}
-            //catch (Exception ex)
-            //{
-            //    stopGameLoop = true;
-            //    Utils.dOut("<p style=\"color: red\">Exception", ex.Message + "</p><br/>" + ex.StackTrace);
-            //    await JsRuntime.InvokeAsync<object>("logDiagnosticInfo", Utils.DiagnosticInfo);
-            //    throw ex;
-            //}
         }
 
     }

@@ -2,25 +2,19 @@
   <MonoDevelop.Ide.ItemProperties.BlazorGalaga PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Services/GameService.cs">
     <Files>
-      <File FileName="BlazorGalaga/Services/GameService.cs" Line="237" Column="48" />
+      <File FileName="BlazorGalaga/Services/GameService.cs" Line="384" Column="95" />
+      <File FileName="BlazorGalaga/Static/GameServiceHelpers/ConsoleManager.cs" Line="211" Column="70" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="BlazorGalaga" expanded="True">
             <Node name="BlazorGalaga" expanded="True">
-              <Node name="Models" expanded="True">
-                <Node name="Paths" expanded="True">
-                  <Node name="Challenges" expanded="True">
-                    <Node name="Challenge3" expanded="True" />
-                  </Node>
-                </Node>
-              </Node>
               <Node name="Services" expanded="True">
                 <Node name="GameService.cs" selected="True" />
               </Node>
               <Node name="Static" expanded="True">
-                <Node name="Levels" expanded="True" />
+                <Node name="GameServiceHelpers" expanded="True" />
               </Node>
             </Node>
           </Node>

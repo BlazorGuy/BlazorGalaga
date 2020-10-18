@@ -196,7 +196,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             return shiphit;
         }
 
-        public static bool CheckMissileCollisions(List<Bug> bugs, AnimationService animationService)
+        public static int CheckMissileCollisions(List<Bug> bugs, AnimationService animationService)
         {
            foreach(var missile in  animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.ShipMissle).ToList())
            { 
@@ -213,6 +213,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                             bug.SpriteBank.Clear();
                             bug.SpriteBank.Add(new Sprite(Sprite.SpriteTypes.GreenBug_Blue_DownFlap));
                             SoundManager.PlaySound(SoundManager.SoundManagerSounds.galagahit);
+                            return 0;
                         }
                         else
                         {
@@ -240,11 +241,11 @@ namespace BlazorGalaga.Static.GameServiceHelpers
                                 SoundManager.PlaySound(SoundManager.SoundManagerSounds.redbughit);
                             bug.IsExploding = true;
                         }
-                        return true;
+                        return 1;
                     }
                 }
             }
-            return false;
+            return 0;
         }
     }
 }

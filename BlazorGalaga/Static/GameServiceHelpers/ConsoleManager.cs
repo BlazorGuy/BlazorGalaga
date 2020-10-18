@@ -126,6 +126,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             await spriteService.StaticCtx.SetFillStyleAsync("White");
             await spriteService.StaticCtx.FillTextAsync("©1981  1995  NAMCO LTD.", 70, 750);
             await spriteService.StaticCtx.FillTextAsync("ALL RIGHTS RESERVED", 110, 780);
+            await spriteService.StaticCtx.FillTextAsync("BLAZORGUY.COM", 300, 100);
 
             await spriteService.StaticCtx.SetFillStyleAsync("Red");
             await spriteService.StaticCtx.SetFontAsync("38px PressStart2P");
@@ -173,47 +174,75 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 
         public static async Task ClearConsoleLevelText(SpriteService spriteService)
         {
-            await spriteService.StaticCtx.ClearRectAsync(0, (Constants.CanvasSize.Height / 2)-100, Constants.CanvasSize.Width, 300);
+            await spriteService.StaticCtx.ClearRectAsync(0, (Constants.CanvasSize.Height / 2)-300, Constants.CanvasSize.Width, 400);
         }
 
-        public static async Task DrawConsoleLevelText(SpriteService spriteService, int level)
+        public static async Task DrawConsoleLevelText(SpriteService spriteService, int level, bool ischallengelevel)
         {
             await spriteService.StaticCtx.SetFillStyleAsync("rgba(152, 249, 255, 1)");
             await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");
 
-            if (level==3 || level==8)
+            if (ischallengelevel)
                 await spriteService.StaticCtx.FillTextAsync("CHALLENGING STAGE ", 120, Constants.CanvasSize.Height / 2);
             else
                 await spriteService.StaticCtx.FillTextAsync("STAGE " + level, 250, Constants.CanvasSize.Height / 2);
         }
 
-        public static async Task DrawConsoleNumberOfHitsLabel(SpriteService spriteService)
+        public static async Task DrawConsoleNumberOfHitsLabel(SpriteService spriteService, int hits)
         {
+
+            if (hits == 40)
+            {
+                await spriteService.StaticCtx.SetFillStyleAsync("Red");
+                await spriteService.StaticCtx.FillTextAsync("PERFECT !", 225, (Constants.CanvasSize.Height / 2) - 100);
+            }
+
             await spriteService.StaticCtx.SetFillStyleAsync("rgba(152, 249, 255, 1)");
             await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");
             await spriteService.StaticCtx.FillTextAsync("NUMBER OF HITS", 100, Constants.CanvasSize.Height / 2);
         }
 
-        public static async Task DrawConsoleNumberOfHits(SpriteService spriteService, int numberofhits)
+        public static async Task DrawConsoleNumberOfHits(SpriteService spriteService, int hits)
         {
             await spriteService.StaticCtx.SetFillStyleAsync("rgba(152, 249, 255, 1)");
             await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");
-            await spriteService.StaticCtx.FillTextAsync(numberofhits.ToString(), 490, Constants.CanvasSize.Height / 2);
+            await spriteService.StaticCtx.FillTextAsync(hits.ToString(), 490, Constants.CanvasSize.Height / 2);
         }
 
-        public static async Task DrawConsoleBonusLabel(SpriteService spriteService)
+        public static async Task DrawConsoleBonusLabel(SpriteService spriteService, int hits)
         {
-            await spriteService.StaticCtx.SetFillStyleAsync("rgba(152, 249, 255, 1)");
             await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");
-            await spriteService.StaticCtx.FillTextAsync("BONUS", 150, (Constants.CanvasSize.Height / 2) + 100);
+
+            if (hits == 40)
+            {
+                await spriteService.StaticCtx.SetFillStyleAsync("Yellow");
+                await spriteService.StaticCtx.FillTextAsync("SPECIAL BONUS", 50, (Constants.CanvasSize.Height / 2) + 100);
+            }
+            else
+            {
+                await spriteService.StaticCtx.SetFillStyleAsync("rgba(152, 249, 255, 1)");
+                await spriteService.StaticCtx.FillTextAsync("BONUS", 150, (Constants.CanvasSize.Height / 2) + 100);
+            }
         }
 
 
-        public static async Task DrawConsoleBonus(SpriteService spriteService, int bonus)
+        public static async Task DrawConsoleBonus(SpriteService spriteService, int hits)
         {
-            await spriteService.StaticCtx.SetFillStyleAsync("rgba(152, 249, 255, 1)");
+            var bonus = hits == 40 ? 10000 : hits * 100;
+
             await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");
-            await spriteService.StaticCtx.FillTextAsync(bonus.ToString(), 400, (Constants.CanvasSize.Height / 2) + 100);
+
+            if (hits == 40)
+            {
+                await spriteService.StaticCtx.SetFillStyleAsync("Yellow");
+                await spriteService.StaticCtx.FillTextAsync(bonus.ToString(), 450, (Constants.CanvasSize.Height / 2) + 100);
+            }
+            else
+            {
+                await spriteService.StaticCtx.FillTextAsync(bonus.ToString(), 400, (Constants.CanvasSize.Height / 2) + 100);
+                await spriteService.StaticCtx.SetFillStyleAsync("rgba(152, 249, 255, 1)");
+            }
+
         }
 
         public static async Task DrawConsoleFighterCaptured(SpriteService spriteService)

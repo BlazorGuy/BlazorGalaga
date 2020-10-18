@@ -32,7 +32,6 @@ namespace BlazorGalaga.Services
         public int Score { get; set; }
         public bool Started { get; set; }
 
-        private bool consoledrawn;
         private int prevbugcount;
         private bool capturehappened;
         private int hits;
@@ -52,9 +51,9 @@ namespace BlazorGalaga.Services
         //for debugging
         public bool debugmode = false;
         private bool skipintro = false;
-        private bool soundoff = true;
-        private bool aion = true;
-        private bool shipinvincable = true;
+        private bool soundoff = false;
+        private bool aion = false;
+        private bool shipinvincable = false;
         
         #endregion
 
@@ -63,13 +62,13 @@ namespace BlazorGalaga.Services
         public void Init()
         {
             InitVars();
-            //Level = 10;
+            //Level = 2;
             ShipManager.InitShip(animationService);
+            SoundManager.OnEnd += SoundManager_OnEnd; 
         }
 
         private void InitVars()
         {
-            consoledrawn = false;
             prevbugcount = 0;
             capturehappened = false;
             hits = 0;
@@ -127,16 +126,16 @@ namespace BlazorGalaga.Services
                     introspeedincrease = 1;
                     canmorph = true;
                     break;
-                case 7:
+                case 7: //challenge
+                    Level8.InitIntro(animationService, -2);
+                    break;
+                case 8:
                     Level7.InitIntro(animationService, introspeedincrease);
                     maxwaittimebetweendives = 2500;
                     divespeedincrease = 1;
                     missileincrease = 2;
                     introspeedincrease = 1;
                     canmorph = true;
-                    break;
-                case 8: //challenge
-                    Level8.InitIntro(animationService, -2);
                     break;
                 case 9:
                     Level9.InitIntro(animationService, introspeedincrease);
@@ -192,6 +191,8 @@ namespace BlazorGalaga.Services
 
         private void Dive()
         {
+            if (IsChallengeLevel()) return;
+
             if (GetBugs().Count == 0 || Ship.Disabled || gameover || Ship.HasExploded || Ship.IsExploding)
                 return;
 
@@ -228,6 +229,11 @@ namespace BlazorGalaga.Services
             ).Select(a=> a as Bug).ToList();
         }
 
+        private bool IsChallengeLevel()
+        {
+            return (Level == 3 || Level == 7 || Level == 11);
+        }
+
         private void MoveToNextLevel(float timestamp)
         {
             if (WaitManager.WaitFor(2000, timestamp, WaitManager.WaitStep.enStep.Pause1))
@@ -237,8 +243,8 @@ namespace BlazorGalaga.Services
                     Level += 1;
                     if (Level == 12)
                     {
-                        LevelOffset = 10;
-                        Level = 1;
+                        LevelOffset += 8;
+                        Level = 4;
                     }
                     capturehappened = false;
                     hits = 0;
@@ -247,9 +253,9 @@ namespace BlazorGalaga.Services
                     GalagaCaptureManager.Reset();
                     await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level-1 + LevelOffset);
                     await ConsoleManager.ClearConsoleLevelText(spriteService);
-                    await ConsoleManager.DrawConsoleLevelText(spriteService, Level + LevelOffset);
+                    await ConsoleManager.DrawConsoleLevelText(spriteService, Level + LevelOffset, IsChallengeLevel());
                     SoundManager.StopAllSounds();
-                    if (Level == 3 || Level == 8 || Level == 11)
+                    if (IsChallengeLevel())
                         SoundManager.PlaySound(SoundManager.SoundManagerSounds.challengingstage);
                     else
                     {
@@ -272,16 +278,6 @@ namespace BlazorGalaga.Services
 
         public async void Process(float timestamp, GameLoopObject glo)
         {
-            //Begin Init - Only happens once
-            if (!consoledrawn && Ship.Sprite.BufferCanvas != null)
-            {
-                Ship.Visible = false;
-                await ConsoleManager.DrawConsole(Lives, spriteService, Ship, false, Level + LevelOffset);
-                consoledrawn = true;
-                SoundManager.OnEnd += SoundManager_OnEnd; ;
-            }
-            //End Init - Only happens once
-
             if (skipintro)
             {
                 skipintro = false;
@@ -363,24 +359,27 @@ namespace BlazorGalaga.Services
                 }, WaitManager.WaitStep.enStep.CleanUp);
 
                 //are we at a challenging stage?
-                if ((Level == 3 || Level == 8 || Level == 11) && !WaitManager.Steps.Any(a=> a.Step == WaitManager.WaitStep.enStep.Pause1))
+                if ((IsChallengeLevel()) && !WaitManager.Steps.Any(a=> a.Step == WaitManager.WaitStep.enStep.Pause1))
                 {
-                    SoundManager.PlaySound(SoundManager.SoundManagerSounds.challengingstageover, true);
+                    if (hits==40)
+                        SoundManager.PlaySound(SoundManager.SoundManagerSounds.challengingstageperfect, true);
+                    else
+                        SoundManager.PlaySound(SoundManager.SoundManagerSounds.challengingstageover, true);
                     if (WaitManager.WaitFor(1500, timestamp, WaitManager.WaitStep.enStep.ShowNumberOfHitsLabel))
                     {
-                        await ConsoleManager.DrawConsoleNumberOfHitsLabel(spriteService);
+                        await ConsoleManager.DrawConsoleNumberOfHitsLabel(spriteService, hits);
                         if (WaitManager.WaitFor(1500, timestamp, WaitManager.WaitStep.enStep.ShowNumberOfHits))
                         {
                             await ConsoleManager.DrawConsoleNumberOfHits(spriteService, hits);
                             if (WaitManager.WaitFor(1500, timestamp, WaitManager.WaitStep.enStep.ShowBonusLabel))
                             {
-                                await ConsoleManager.DrawConsoleBonusLabel(spriteService);
+                                await ConsoleManager.DrawConsoleBonusLabel(spriteService, hits);
                                 if (WaitManager.WaitFor(1500, timestamp, WaitManager.WaitStep.enStep.ShowBonus))
                                 {
-                                    await ConsoleManager.DrawConsoleBonus(spriteService,hits * 1000);
+                                    await ConsoleManager.DrawConsoleBonus(spriteService,hits);
                                     if (WaitManager.WaitFor(2000, timestamp, WaitManager.WaitStep.enStep.Pause3))
                                     {
-                                        Score += hits * 1000;
+                                        Score += hits == 40 ? 10000 : hits * 100;
                                         await ConsoleManager.ClearConsoleLevelText(spriteService);
                                         MoveToNextLevel(timestamp);
                                     }
@@ -466,7 +465,9 @@ namespace BlazorGalaga.Services
             if (!Ship.Disabled)
             {
                 //ship mission collision with bug
-                hits += (ShipManager.CheckMissileCollisions(bugs, animationService) ? 1 : 0);
+                hits += ShipManager.CheckMissileCollisions(bugs, animationService);
+
+                Utils.dOut("hits", hits);
 
                 //bug or missile collision with ship
                 if (!shipinvincable)
@@ -594,6 +595,13 @@ namespace BlazorGalaga.Services
                 var redblubugs = bugs.Where(a => (a.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug || a.Sprite.SpriteType == Sprite.SpriteTypes.RedBug) && a.MorphState != Bug.enMorphState.Started && !a.IsDiving).ToList();
                 var bug = redblubugs[Utils.Rnd(0, redblubugs.Count - 1)];
                 bug.MorphState = Bug.enMorphState.Started;
+            }
+
+            //for debugging purposes
+            if (glo.killbugs)
+            {
+                bugs.All(a => a.IsExploding = true);
+                hits = bugs.Count();
             }
         }
 
