@@ -51,9 +51,9 @@ namespace BlazorGalaga.Services
         //for debugging
         public bool debugmode = false;
         private bool skipintro = false;
-        private bool soundoff = false;
-        private bool aion = false;
-        private bool shipinvincable = false;
+        private bool soundoff = true;
+        private bool aion = true;
+        private bool shipinvincable = true;
         
         #endregion
 
@@ -344,7 +344,7 @@ namespace BlazorGalaga.Services
             }
 
             //adjust score when bugs are destroyed
-            if (bugs.Count != prevbugcount)
+            if (bugs.Count != prevbugcount || bugs.Count==0)
             {
                 await ConsoleManager.DrawScore(spriteService, Score);
                 prevbugcount = bugs.Count();
