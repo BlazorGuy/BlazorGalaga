@@ -116,7 +116,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
         {
             await spriteService.StaticCtx.SetFillStyleAsync("rgba(152, 249, 255, 1)");
             await spriteService.StaticCtx.SetFontAsync("24px PressStart2P");
-            await spriteService.StaticCtx.FillTextAsync("PUSH START BUTTON", 140, Constants.CanvasSize.Height / 3);
+            await spriteService.StaticCtx.FillTextAsync("PRESS SPACE BAR", 160, Constants.CanvasSize.Height / 3);
 
             await spriteService.StaticCtx.SetFillStyleAsync("Yellow");
             await spriteService.StaticCtx.FillTextAsync("1ST BONUS FOR 30000 PTS", 90, Constants.CanvasSize.Height / 2);
@@ -126,9 +126,9 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             await spriteService.StaticCtx.SetFillStyleAsync("White");
             await spriteService.StaticCtx.FillTextAsync("©1981  1995  NAMCO LTD.", 70, 750);
             await spriteService.StaticCtx.FillTextAsync("ALL RIGHTS RESERVED", 110, 780);
-            await spriteService.StaticCtx.FillTextAsync("BLAZORGUY.COM", 300, 100);
 
             await spriteService.StaticCtx.SetFillStyleAsync("Red");
+            await spriteService.StaticCtx.FillTextAsync("BLAZORGUY.COM", 300, 100);
             await spriteService.StaticCtx.SetFontAsync("38px PressStart2P");
             await spriteService.StaticCtx.FillTextAsync("namco", 250, 830);
             await spriteService.StaticCtx.SetFontAsync("26px PressStart2P");

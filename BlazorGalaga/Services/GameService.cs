@@ -49,12 +49,13 @@ namespace BlazorGalaga.Services
         private int LevelOffset = 0;
 
         //for debugging
-        public bool debugmode = false;
+        public bool debugmode = true;
         private bool skipintro = false;
         private bool soundoff = true;
         private bool aion = true;
-        private bool shipinvincable = true;
-        
+        private bool shipinvincable = false;
+        private bool showdebugdetails = true;
+
         #endregion
 
         #region Init
@@ -303,7 +304,7 @@ namespace BlazorGalaga.Services
                 }
                 else
                 {
-                    spriteService.DrawBlazorImage(new PointF(10, 10));
+                    spriteService.DrawBlazorImage(new PointF(25, 10));
                     await ConsoleManager.ClearConsole(spriteService);
                     await ConsoleManager.DrawIntroScreen(spriteService, Ship);
                     return;
@@ -551,6 +552,17 @@ namespace BlazorGalaga.Services
                 }
             }
 
+            if (showdebugdetails)
+            {
+                Utils.dOut("Ship.IsExploding", Ship.IsExploding);
+                Utils.dOut("Ship.HasExploded", Ship.HasExploded);
+                Utils.dOut("Ship.Disabled", Ship.Disabled);
+                Utils.dOut("gameover", gameover);
+                Utils.dOut("Lives", Lives);
+                Utils.dOut("Level", Level);
+                Utils.dOut("LevelOffset", LevelOffset);
+                Utils.dOut("Score", Score);
+            }
 
             //for debugging purposes
             if (MouseHelper.MouseIsDown)

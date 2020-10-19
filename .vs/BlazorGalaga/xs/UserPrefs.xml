@@ -1,10 +1,10 @@
 ﻿<Properties StartupConfiguration="{202B6679-81B6-4D6C-83B3-0DC9DE1151AC}|Default">
   <MonoDevelop.Ide.ItemProperties.BlazorGalaga PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Static/GameServiceHelpers/ShipManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BlazorGalaga/Services/SpriteService.cs">
     <Files>
-      <File FileName="BlazorGalaga/Services/GameService.cs" Line="191" Column="1" />
-      <File FileName="BlazorGalaga/Static/GameServiceHelpers/ConsoleManager.cs" Line="129" Column="75" />
-      <File FileName="BlazorGalaga/Static/GameServiceHelpers/ShipManager.cs" Line="203" Column="112" />
+      <File FileName="BlazorGalaga/Services/GameService.cs" Line="11" Column="27" />
+      <File FileName="BlazorGalaga/Static/GameServiceHelpers/ConsoleManager.cs" Line="136" Column="1" />
+      <File FileName="BlazorGalaga/Services/SpriteService.cs" Line="40" Column="42" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -14,11 +14,11 @@
               <Node name="Pages" expanded="True">
                 <Node name="Index.razor" expanded="True" />
               </Node>
-              <Node name="Services" expanded="True" />
+              <Node name="Services" expanded="True">
+                <Node name="SpriteService.cs" selected="True" />
+              </Node>
               <Node name="Static" expanded="True">
-                <Node name="GameServiceHelpers" expanded="True">
-                  <Node name="ShipManager.cs" selected="True" />
-                </Node>
+                <Node name="GameServiceHelpers" expanded="True" />
               </Node>
             </Node>
           </Node>
