@@ -1,5 +1,5 @@
 ﻿<StaticWebAssets Version="1.0">
   <ContentRoot BasePath="/" Path="C:\Users\bcollins\Desktop\BlazorGalaga\BlazorGalaga\bin\Release\netstandard2.1\wwwroot\" />
-  <ContentRoot BasePath="_content/Blazor.Extensions.Canvas" Path="C:\Users\bcollins\.nuget\packages\blazor.extensions.canvas\1.0.0\build\..\staticwebassets\" />
+  <ContentRoot BasePath="_content/Blazor.Extensions.Canvas" Path="C:\Users\bcollins\.nuget\packages\blazor.extensions.canvas\1.1.0-preview1\build\..\staticwebassets\" />
   <ContentRoot BasePath="_content/Howler.Blazor" Path="C:\Users\bcollins\.nuget\packages\howler.blazor\0.9.3\build\..\staticwebassets\" />
 </StaticWebAssets>

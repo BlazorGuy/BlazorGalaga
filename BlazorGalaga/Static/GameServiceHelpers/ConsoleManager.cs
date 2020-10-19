@@ -109,7 +109,6 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 
             await spriteService.StaticCtx.SetFillStyleAsync("White");
             await spriteService.StaticCtx.FillTextAsync("00", 50, 60);
-            await spriteService.StaticCtx.FillTextAsync("20000", 300, 60);
         }
 
         public static async Task DrawIntroScreen(SpriteService spriteService, Ship ship)
@@ -160,11 +159,12 @@ namespace BlazorGalaga.Static.GameServiceHelpers
         }
 
 
-        public static async Task DrawScore(SpriteService spriteService, int score)
+        public static async Task DrawScore(SpriteService spriteService, int score, int highscore)
         {
             await spriteService.StaticCtx.SetFillStyleAsync("White");
             await spriteService.StaticCtx.ClearRectAsync(40, 30, 150, 50);
             await spriteService.StaticCtx.FillTextAsync(score == 0 ? "00" : score.ToString(), 50, 60);
+            await spriteService.StaticCtx.FillTextAsync(highscore.ToString(), 300, 60);
         }
 
         public static async Task ClearConsole(SpriteService spriteService)

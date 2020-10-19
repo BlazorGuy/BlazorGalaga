@@ -29,6 +29,8 @@ namespace BlazorGalaga.Static
         public static int EnemyGridLeft = 250;
         public static int EnemyGridHSpacing = 45;
         public static int EnemyMissileSpeed = 8 ;
+        public static int ExtraLifeIncrement = 30000;
+        public static int MinHighScore = 20000;
 
         public static int Score_BlueBug = 50;
         public static int Score_BlueBugDiving = 100;

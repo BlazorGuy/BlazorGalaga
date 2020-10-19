@@ -25,21 +25,21 @@ namespace BlazorGalaganimatable.Models.Paths
             };
             var dive = new BezierCurve()
             {
-                StartPoint = new PointF(animatable.Location.X + 100, animatable.Location.Y+1),
+                StartPoint = new PointF(animatable.Location.X + 101, animatable.Location.Y+1),
                 EndPoint = new PointF(cx, Constants.CanvasSize.Height-50),
                 ControlPoint1 = new PointF(animatable.Location.X + 100, Constants.CanvasSize.Height / 2),
                 ControlPoint2 = new PointF(0, Constants.CanvasSize.Height / 2),
             };
             var swoopcounterclockwise = new BezierCurve()
             {
-                StartPoint = new PointF(cx, Constants.CanvasSize.Height - 49),
+                StartPoint = new PointF(cx-1, Constants.CanvasSize.Height - 49),
                 EndPoint = new PointF(cx + 250, Constants.CanvasSize.Height - 200),
                 ControlPoint1 = new PointF(cx + 50, Constants.CanvasSize.Height + 25),
                 ControlPoint2 = new PointF(cx + 250, Constants.CanvasSize.Height-20)
             };
             var gohome = new BezierCurve()
             {
-                StartPoint = new PointF(cx + 250, Constants.CanvasSize.Height - 199),
+                StartPoint = new PointF(cx + 249, Constants.CanvasSize.Height - 199),
                 EndPoint = new PointF(cx + 150,375),
                 ControlPoint1 = new PointF(cx + 250, Constants.CanvasSize.Height - 300),
                 ControlPoint2 = new PointF(Constants.CanvasSize.Width, Constants.CanvasSize.Height / 2)

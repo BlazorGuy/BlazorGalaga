@@ -20,7 +20,7 @@ using static BlazorGalaga.Pages.Index;
 
 namespace BlazorGalaga.Services
 {
-    public class GameService
+    public partial class GameService
     {
         #region Vars
 
@@ -31,6 +31,7 @@ namespace BlazorGalaga.Services
         public int Level { get; set; }
         public int Score { get; set; }
         public bool Started { get; set; }
+        public int HighScore { get; set; }
 
         private int prevbugcount;
         private bool capturehappened;
@@ -47,6 +48,7 @@ namespace BlazorGalaga.Services
         private float LastDiveTimeStamp;
         private int NextDiveWaitTime;
         private int LevelOffset = 0;
+        private int nextextralifescore;
 
         //for debugging
         public bool debugmode = true;
@@ -55,6 +57,7 @@ namespace BlazorGalaga.Services
         private bool aion = true;
         private bool shipinvincable = false;
         private bool showdebugdetails = true;
+        private bool infinitelives = true;
 
         #endregion
 
@@ -86,10 +89,12 @@ namespace BlazorGalaga.Services
             Lives = 2;
             Level = 0;
             Score = 0;
+            nextextralifescore = Constants.ExtraLifeIncrement;
             LastDiveTimeStamp = 0;
             NextDiveWaitTime = 0;
             if(Ship != null)
                 Ship.Sprite = new Sprite(Sprite.SpriteTypes.Ship);
+            if (HighScore == 0) HighScore = Constants.MinHighScore;
         }
 
         private void InitLevel(int level)
@@ -186,6 +191,9 @@ namespace BlazorGalaga.Services
             ////end draw path debugging logic
 
             GetBugs().Where(a => a.Wave == 1).ToList().ForEach(a => a.Started = true);
+
+            AIManager.aidodgeing = false;
+          
         }
 
         #endregion
@@ -235,48 +243,6 @@ namespace BlazorGalaga.Services
             return (Level == 3 || Level == 7 || Level == 11);
         }
 
-        private void MoveToNextLevel(float timestamp)
-        {
-            if (WaitManager.WaitFor(2000, timestamp, WaitManager.WaitStep.enStep.Pause1))
-            {
-                WaitManager.DoOnce(async () =>
-                {
-                    Level += 1;
-                    if (Level == 12)
-                    {
-                        LevelOffset += 8;
-                        Level = 4;
-                    }
-                    capturehappened = false;
-                    hits = 0;
-                    wave = 1;
-                    aidodgeing = false;
-                    GalagaCaptureManager.Reset();
-                    await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level-1 + LevelOffset);
-                    await ConsoleManager.ClearConsoleLevelText(spriteService);
-                    await ConsoleManager.DrawConsoleLevelText(spriteService, Level + LevelOffset, IsChallengeLevel());
-                    SoundManager.StopAllSounds();
-                    if (IsChallengeLevel())
-                        SoundManager.PlaySound(SoundManager.SoundManagerSounds.challengingstage);
-                    else
-                    {
-                        SoundManager.PlaySound(SoundManager.SoundManagerSounds.levelup);
-                    }
-                }, WaitManager.WaitStep.enStep.ShowLevelText);
-                if (WaitManager.WaitFor(2000, timestamp, WaitManager.WaitStep.enStep.Pause2))
-                {
-                    WaitManager.DoOnce(async () =>
-                    {
-                        await ConsoleManager.ClearConsoleLevelText(spriteService);
-                        InitLevel(Level);
-                        Ship.Visible = true;
-                        EnemyGridManager.BreathSoundPlayed = false;
-                        WaitManager.ClearSteps();
-                    }, WaitManager.WaitStep.enStep.ClearLevelText);
-                }
-            }
-        }
-
         public async void Process(float timestamp, GameLoopObject glo)
         {
             if (skipintro)
@@ -320,7 +286,8 @@ namespace BlazorGalaga.Services
 
             var bugs = GetBugs();
 
-            if (aion) AI(bugs);
+            //do AI if enabled for debugging
+            if (aion) AIManager.AI(bugs, animationService, Ship);
 
             //dive the bugs
             if (timestamp - LastDiveTimeStamp > NextDiveWaitTime && EnemyGridManager.EnemyGridBreathing && !glo.editcurveschecked)
@@ -347,53 +314,21 @@ namespace BlazorGalaga.Services
             //adjust score when bugs are destroyed
             if (bugs.Count != prevbugcount || bugs.Count==0)
             {
-                await ConsoleManager.DrawScore(spriteService, Score);
+                if (Score >= nextextralifescore)
+                {
+                    Lives += 1;
+                    nextextralifescore += 30000;
+                    SoundManager.PlaySound(SoundManager.SoundManagerSounds.extralife);
+                    await ConsoleManager.ClearConsole(spriteService);
+                    await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level + LevelOffset);
+                }
+                if (Score > HighScore) HighScore = Score;
+                await ConsoleManager.DrawScore(spriteService, Score, HighScore);
                 prevbugcount = bugs.Count();
             }
 
             //all bugs destroyed, increment to next level
-            if (bugs.Count == 0 && !Ship.Disabled)
-            {
-                WaitManager.DoOnce(() =>
-                {
-                    EnemyGridManager.EnemyGridBreathing = false;
-                }, WaitManager.WaitStep.enStep.CleanUp);
-
-                //are we at a challenging stage?
-                if ((IsChallengeLevel()) && !WaitManager.Steps.Any(a=> a.Step == WaitManager.WaitStep.enStep.Pause1))
-                {
-                    if (hits==40)
-                        SoundManager.PlaySound(SoundManager.SoundManagerSounds.challengingstageperfect, true);
-                    else
-                        SoundManager.PlaySound(SoundManager.SoundManagerSounds.challengingstageover, true);
-                    if (WaitManager.WaitFor(1500, timestamp, WaitManager.WaitStep.enStep.ShowNumberOfHitsLabel))
-                    {
-                        await ConsoleManager.DrawConsoleNumberOfHitsLabel(spriteService, hits);
-                        if (WaitManager.WaitFor(1500, timestamp, WaitManager.WaitStep.enStep.ShowNumberOfHits))
-                        {
-                            await ConsoleManager.DrawConsoleNumberOfHits(spriteService, hits);
-                            if (WaitManager.WaitFor(1500, timestamp, WaitManager.WaitStep.enStep.ShowBonusLabel))
-                            {
-                                await ConsoleManager.DrawConsoleBonusLabel(spriteService, hits);
-                                if (WaitManager.WaitFor(1500, timestamp, WaitManager.WaitStep.enStep.ShowBonus))
-                                {
-                                    await ConsoleManager.DrawConsoleBonus(spriteService,hits);
-                                    if (WaitManager.WaitFor(2000, timestamp, WaitManager.WaitStep.enStep.Pause3))
-                                    {
-                                        Score += hits == 40 ? 10000 : hits * 100;
-                                        await ConsoleManager.ClearConsoleLevelText(spriteService);
-                                        MoveToNextLevel(timestamp);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    MoveToNextLevel(timestamp);
-                }
-            }
+            await DoLevelIncrementAsync(bugs,timestamp);
 
             //animate explosions
             if (timestamp - EnemyGridManager.LastEnemyGridMoveTimeStamp > 35)
@@ -468,8 +403,6 @@ namespace BlazorGalaga.Services
                 //ship mission collision with bug
                 hits += ShipManager.CheckMissileCollisions(bugs, animationService);
 
-                Utils.dOut("hits", hits);
-
                 //bug or missile collision with ship
                 if (!shipinvincable)
                 {
@@ -517,6 +450,9 @@ namespace BlazorGalaga.Services
                 }
                 WaitManager.DoOnce(async () =>
                 {
+                    if (infinitelives)
+                        Lives += 1;
+
                     if (Lives >= 1)
                     {   //display ready for next life
                         await ConsoleManager.DrawConsoleReady(spriteService);
@@ -536,7 +472,7 @@ namespace BlazorGalaga.Services
                     if (!animationService.Animatables.Any(a => a.Sprite.SpriteType == Sprite.SpriteTypes.BugMissle) &&
                         !bugs.Any(a=>a.CaptureState == Bug.enCaptureState.Started) && !bugs.Any(a=>a.IsDiving))
                     {
-                        Lives -= 1;
+                        if(infinitelives) Lives -= 1;
                         Ship.HasExploded = false;
                         Ship.IsExploding = false;
                         if (Lives >= 0)
@@ -552,8 +488,15 @@ namespace BlazorGalaga.Services
                 }
             }
 
+            //this should never happen
+            if (infinitelives && gameover)
+            {
+                throw new Exception("game over");
+            }
+
             if (showdebugdetails)
             {
+                Utils.dOut("hits", hits);
                 Utils.dOut("Ship.IsExploding", Ship.IsExploding);
                 Utils.dOut("Ship.HasExploded", Ship.HasExploded);
                 Utils.dOut("Ship.Disabled", Ship.Disabled);
@@ -562,143 +505,10 @@ namespace BlazorGalaga.Services
                 Utils.dOut("Level", Level);
                 Utils.dOut("LevelOffset", LevelOffset);
                 Utils.dOut("Score", Score);
+                Utils.dOut("nextextralifescore", nextextralifescore);
             }
 
-            //for debugging purposes
-            if (MouseHelper.MouseIsDown)
-            {
-                bugs.ForEach(a => a.OutputDebugInfo = false);
-                bugs.ForEach(a => {
-                    var bugrect = new RectangleF(a.Location.X, a.Location.Y, 32, 32);
-                    var mouserect = new RectangleF(MouseHelper.Position.X, MouseHelper.Position.Y, 10, 10);
-                    if (bugrect.IntersectsWith(mouserect)) a.OutputDebugInfo = true;
-                });
-            }
-
-            //for debugging purposes
-            if (glo.captureship)
-            {
-                bugs.ForEach(a => {
-                    a.Location = BugFactory.EnemyGrid.GetPointByRowCol(a.HomePoint.X, a.HomePoint.Y);
-                    a.CurPathPointIndex = 0;
-                    a.PathPoints.Clear();
-                    a.Paths.Clear();
-                    a.IsMoving = false;
-                    a.StartDelay = 0;
-                    a.Started = true;
-                });
-                var bug = bugs.FirstOrDefault(a => a.Sprite.SpriteType == Sprite.SpriteTypes.GreenBug);
-                EnemyDiveManager.DoEnemyDive(bugs, animationService, Ship, Constants.BugDiveSpeed, bug, true);
-            }
-
-            //for debugging purposes
-            if (glo.morphbug)
-            {
-                Ship.Sprite = new Sprite(Sprite.SpriteTypes.DoubleShip);
-                bugs.Where(a=>a.IsInIntro).ToList().ForEach(a => {
-                    a.Location = BugFactory.EnemyGrid.GetPointByRowCol(a.HomePoint.X, a.HomePoint.Y);
-                    a.CurPathPointIndex = 0;
-                    a.PathPoints.Clear();
-                    a.Paths.Clear();
-                    a.IsMoving = false;
-                    a.StartDelay = 0;
-                    a.Started = true;
-                });
-                var redblubugs = bugs.Where(a => (a.Sprite.SpriteType == Sprite.SpriteTypes.BlueBug || a.Sprite.SpriteType == Sprite.SpriteTypes.RedBug) && a.MorphState != Bug.enMorphState.Started && !a.IsDiving).ToList();
-                var bug = redblubugs[Utils.Rnd(0, redblubugs.Count - 1)];
-                bug.MorphState = Bug.enMorphState.Started;
-            }
-
-            //for debugging purposes
-            if (glo.killbugs)
-            {
-                bugs.All(a => a.IsExploding = true);
-                hits = bugs.Count();
-            }
-        }
-
-        private Bug aibug;
-        private bool aifred = false;
-        private bool aidodgeing = false;
-
-        private void AIFire()
-        {
-            if (!aifred)
-            {
-                Ship.IsFiring = true;
-                aifred = true;
-                Task.Delay(Utils.Rnd(100, 350)).ContinueWith((task) =>
-                {
-                    aifred = false;
-                });
-            }
-        }
-
-        private void AI(List<Bug> bugs)
-        {
-            if (aidodgeing) return;
-
-            foreach (var missile in animationService.Animatables.Where(a => a.Sprite.SpriteType == Sprite.SpriteTypes.BugMissle).OrderByDescending(a=>a.Location.Y))
-            {
-                var missilerect = new RectangleF(missile.Location.X, missile.Location.Y, 100, 400);
-                var shiprect = new RectangleF(Ship.Location.X, Ship.Location.Y, 80, 80);
-                if (shiprect.IntersectsWith(missilerect))
-                {
-                    if (Ship.Location.X <= missile.Location.X)
-                    {
-                        Ship.Speed = Constants.ShipMoveSpeed * -1;
-                    }
-                    else
-                        Ship.Speed = Constants.ShipMoveSpeed;
-                    aidodgeing = true;
-                    break;
-                }
-            }
-
-            if (bugs == null || bugs.Count == 0 || !bugs.Any(a => a.Started)) return;
-
-            bugs = bugs.Where(a => a.Started).ToList();
-
-            if (aibug == null || !bugs.Contains(aibug)) aibug = bugs[Utils.Rnd(0, bugs.Count - 1)];
-
-            //always choose a diving bug when there is one
-            if (!aibug.IsDiving && bugs.Any(a => a.IsDiving)) aibug = bugs.OrderByDescending(a => a.Location.Y).FirstOrDefault(a => a.IsDiving);
-
-            foreach (var b in bugs.OrderByDescending(a=>a.Location.Y))
-            {
-                var bugrect = new RectangleF(b.Location.X, b.Location.Y, 100, 200);
-                var shiprect = new RectangleF(Ship.Location.X, Ship.Location.Y, 80, 80);
-                if (shiprect.IntersectsWith(bugrect))
-                {
-                    if (Ship.Location.X <= b.Location.X)
-                        Ship.Speed = Constants.ShipMoveSpeed * -1;
-                    else
-                        Ship.Speed = Constants.ShipMoveSpeed;
-                    aidodgeing = true;
-                    break;
-                }
-            }
-
-            if (aidodgeing)
-            {
-                AIFire();
-                Task.Delay(250).ContinueWith((task) =>
-                {
-                    aidodgeing = false;
-                });
-                return;
-            }
-
-            if (Ship.Location.X <= aibug.Location.X)
-                Ship.Speed = Constants.ShipMoveSpeed;
-            else if (Ship.Location.X >= aibug.Location.X + 16 + Constants.ShipMoveSpeed)
-                Ship.Speed = Constants.ShipMoveSpeed * -1;
-            else
-            {
-                AIFire();
-                Ship.Speed = 0;
-            }
-               
+            DebugManager.DoDebugLogic(glo, bugs, animationService,Ship);
         }
 
         private void SoundManager_OnEnd(Howler.Blazor.Components.Events.HowlEventArgs e)
