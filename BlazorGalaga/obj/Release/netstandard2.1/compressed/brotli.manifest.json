@@ -11,7 +11,7 @@
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/Blazor.Extensions.Canvas.JS.dll.br"
     },
     {
-      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\Ea1Q_39LQ9Jwdb69vUHactXPtVprLxtf5t9DZ64OyPY=.hash",
+      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\jLUVwo4KOGq5HCLhJ6q5PRq3fdvd7f67efb7Lwpmxb8=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Release\\netstandard2.1\\blazor\\linker\\BlazorGalaga.dll",
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/BlazorGalaga.dll.br"
     },
@@ -21,17 +21,17 @@
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/Howler.Blazor.dll.br"
     },
     {
-      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\50XV353dgRmO1VsoLVxd0wrQKwjeGtZ5eLKzVyilNJQ=.hash",
+      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\roqBU0qlrAyuZh4m7FUyfUaYaT7TbzDXXyBT4WnEfuA=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Release\\netstandard2.1\\blazor\\linker\\Microsoft.AspNetCore.Components.dll",
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.AspNetCore.Components.dll.br"
     },
     {
-      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\_WiBWGNRo_tqYWO7-_bjPf5G7q7VZpXgOx0yvOHagI8=.hash",
+      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\zOIHrey2ZuVYKcjZ03uIyi0lqstR2hLm6FebQGrdBYA=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Release\\netstandard2.1\\blazor\\linker\\Microsoft.AspNetCore.Components.Web.dll",
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.AspNetCore.Components.Web.dll.br"
     },
     {
-      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\hpPAOgReBl6yS_es1x8CrLSZMvlRu7X5IO-WdVYrcEg=.hash",
+      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\RHsZPQpQ_fZ_ICbVKMnv3R8adUjFjGzzd1Zt5NGdkKk=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Release\\netstandard2.1\\blazor\\linker\\Microsoft.AspNetCore.Components.WebAssembly.dll",
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.AspNetCore.Components.WebAssembly.dll.br"
     },
@@ -41,47 +41,47 @@
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.Bcl.AsyncInterfaces.dll.br"
     },
     {
-      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\Vw26qkheZt6wtUsmhyAe_m3Ak9zTbwQHSbw1y3NvVI8=.hash",
+      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\2XyVi0YQ-PkhKdLk4w0lO2PaBgTNMI0wk1OYSkA0yYw=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Release\\netstandard2.1\\blazor\\linker\\Microsoft.Extensions.Configuration.Abstractions.dll",
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.Extensions.Configuration.Abstractions.dll.br"
     },
     {
-      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\S25Ofg2EtzoqiASEzRrjdZ5Hug0VPOZthiw0YIzGybk=.hash",
+      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\zUNqsb2sRfrdKF1NNmLwbkfAV8TKyLww4AQQNU0SHjA=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Release\\netstandard2.1\\blazor\\linker\\Microsoft.Extensions.Configuration.dll",
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.Extensions.Configuration.dll.br"
     },
     {
-      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\wW6EntmNpkvNbFxb_ehXkIBfvcs5LB3RwYIm6NWwKEU=.hash",
+      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\mxazDb2TOyEgosypbJFW_RXM-F2XIfgBaJqIg4TzQvQ=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Release\\netstandard2.1\\blazor\\linker\\Microsoft.Extensions.Configuration.Json.dll",
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.Extensions.Configuration.Json.dll.br"
     },
     {
-      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\4T-iA3I2baSQjws_LZ7uAItrZXmoybagqYk_IC78o88=.hash",
+      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\m2vDeoMkaBazJlQFKYvsMaPQXzG-s3SoMsouvQSZQnU=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Release\\netstandard2.1\\blazor\\linker\\Microsoft.Extensions.DependencyInjection.Abstractions.dll",
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.Extensions.DependencyInjection.Abstractions.dll.br"
     },
     {
-      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\yl-DYpOUG-yj5QiF4u9VFDmzYBCAefUw3sotcNNddTc=.hash",
+      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\YUjcGpTB4xF1y9n4rpMI8_l2_5Y_ewKyxwewJFHx8_c=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Release\\netstandard2.1\\blazor\\linker\\Microsoft.Extensions.DependencyInjection.dll",
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.Extensions.DependencyInjection.dll.br"
     },
     {
-      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\nMvfYZX5T4O2Zm5CoTw9Dv7OyPhXS8jZNNgRBznd33E=.hash",
+      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\K39siISGNGAgi0pYv7yO7-c7ncq7r1AIHSP343cw414=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Release\\netstandard2.1\\blazor\\linker\\Microsoft.Extensions.Logging.Abstractions.dll",
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.Extensions.Logging.Abstractions.dll.br"
     },
     {
-      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\1pb_iydCqfjZ7eMUYWzbMrOxU4FPf5wDUhg0GdMnsqY=.hash",
+      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\5uXDblob1hYjkJnWi4Td1okQ8JR-Z36FqcZgMn0xHwU=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Release\\netstandard2.1\\blazor\\linker\\Microsoft.Extensions.Logging.dll",
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.Extensions.Logging.dll.br"
     },
     {
-      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\P47ivpyFHIgdlPC5yXJ5tL9Bmhafn_yUgRjHhY7AZ20=.hash",
+      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\YZkte8nUu4ka-4lCi-31zq4-Q3RdnEFUM3hysfklB14=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Release\\netstandard2.1\\blazor\\linker\\Microsoft.Extensions.Options.dll",
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.Extensions.Options.dll.br"
     },
     {
-      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\U2PgJCVOEk8HcjIaZndVWjGzYHxxjE_bGS4Y27Eh4dM=.hash",
+      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\kaB0aHAV-bFrlW76qHcrGbJsdBoKQXZx1ZVKaM7LXtU=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Release\\netstandard2.1\\blazor\\linker\\Microsoft.Extensions.Primitives.dll",
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.Extensions.Primitives.dll.br"
     },
@@ -96,57 +96,57 @@
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/Microsoft.JSInterop.WebAssembly.dll.br"
     },
     {
-      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\hNCZqZHYXZpp4z1ciDvBjNL7KjTsXvdYJ8ljE9dDTeM=.hash",
+      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\HEGrAa1DfuOXnvtH1QiteScDAAmpubJRxhvp14dUfIQ=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Release\\netstandard2.1\\blazor\\linker\\mscorlib.dll",
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/mscorlib.dll.br"
     },
     {
-      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\hxDNbqjDtTL_ZxSAA-IOpU8UbL1aU0a9XOfYOyDkoCE=.hash",
+      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\TwfwEbZqdrnUXZQ8hsW_Ankff9bQQfD01_4sk-q__Dc=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Release\\netstandard2.1\\blazor\\linker\\System.Core.dll",
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/System.Core.dll.br"
     },
     {
-      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\AfXOtkvCWEoFTexHSV5cb_gv7EVzJ_G_0Nv1pE6D-I8=.hash",
+      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\f4qKoHlkVzQQz9iv8actKSd7uwGg6zTXvVUHKw6USds=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Release\\netstandard2.1\\blazor\\linker\\System.dll",
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/System.dll.br"
     },
     {
-      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\V-UGvWwRusb8q9b6GbVNW5u54-riFuzwMHh30sWkcfI=.hash",
+      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\UjPQfkrn5Tf5AUkg7UFToc9x3OFEfSq5cTxeHt0I768=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Release\\netstandard2.1\\blazor\\linker\\System.Drawing.Common.dll",
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/System.Drawing.Common.dll.br"
     },
     {
-      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\3S-aGavYjZ5JYKXlO3-w8b8HV90rn6TgEEiCKKmrs9Q=.hash",
+      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\sZssHM9GcUyGHApVkRAvi7wikBW5Lmz2asl7goOWVek=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Release\\netstandard2.1\\blazor\\linker\\System.Net.Http.dll",
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/System.Net.Http.dll.br"
     },
     {
-      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\Jxq418WbXAyUzg8aKrvCV4rW_ulzZiFXE4t6nqEvZSE=.hash",
+      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\sTBUmjI8-2KGbOE2RzRBamFueO-1xv8deZrdAODwFZw=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Release\\netstandard2.1\\blazor\\linker\\System.Net.Http.WebAssemblyHttpHandler.dll",
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/System.Net.Http.WebAssemblyHttpHandler.dll.br"
     },
     {
-      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\CkiHD1GalVxS80eLYwRlO-J09e4828aNnm3w77_qdRk=.hash",
+      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\VQ-m5EQ2b2hu42q0CkTTGT61b6m4EHuUSYx1KscbzX0=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Release\\netstandard2.1\\blazor\\linker\\System.Numerics.dll",
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/System.Numerics.dll.br"
     },
     {
-      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\Om_ubfQqtZ3PUH9XzdaN_nrdFZsV8OiRtzem8yZKGPE=.hash",
+      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\39r2JcDVvaLXJ8U2mcGbm25geL7tlKvxNic64Lj_Lk4=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Release\\netstandard2.1\\blazor\\linker\\System.Runtime.CompilerServices.Unsafe.dll",
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/System.Runtime.CompilerServices.Unsafe.dll.br"
     },
     {
-      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\GvrquuNesOLwZakteUg5mN6eQFSqXa6rP2UQd_bR4_E=.hash",
+      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\r2agnwhZAwLZuFTC0IR8Q_ByvIDTmH1_VUOGz9JRSqk=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Release\\netstandard2.1\\blazor\\linker\\System.Text.Encodings.Web.dll",
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/System.Text.Encodings.Web.dll.br"
     },
     {
-      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\x5KfYdB-Eix69p9qjAbRC2Ckj-GVq_SeNhBs8Uqu92w=.hash",
+      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\XzPXl3trXvXebbpKNA4AH-OBh9Elv9_4tYnsSOKfBIo=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Release\\netstandard2.1\\blazor\\linker\\System.Text.Json.dll",
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/System.Text.Json.dll.br"
     },
     {
-      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\45Ls1mPGQtlU6634MjsT0lvMyszSCFMGynPqGmzT158=.hash",
+      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\aJXAuNcUHNye5gD_78dX594Kjrh-HczGDW8O1YBFHk0=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Release\\netstandard2.1\\blazor\\linker\\WebAssembly.Bindings.dll",
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/_bin\/WebAssembly.Bindings.dll.br"
     },
@@ -171,7 +171,7 @@
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/blazor.webassembly.js.br"
     },
     {
-      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\VjSezD48k3xjGlXwZnZ391sHH8TeOPISNI7GFK1uICk=.hash",
+      "InputSource": "obj\\Release\\netstandard2.1\\integrity\\hhPr2k7ypmTK3Ycb7fMTeCb2Lh8ZfXDGFZSyDgA9oRE=.hash",
       "Source": "C:\\Users\\bcollins\\Desktop\\BlazorGalaga\\BlazorGalaga\\obj\\Release\\netstandard2.1\\blazor\\blazor.boot.json",
       "Target": "obj\\Release\\netstandard2.1\\compressed\\_framework\/blazor.boot.json.br"
     }

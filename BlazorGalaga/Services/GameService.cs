@@ -53,11 +53,11 @@ namespace BlazorGalaga.Services
         //for debugging
         public bool debugmode = false;
         private bool skipintro = false;
-        private bool soundoff = true;
+        private bool soundoff = false;
         private bool aion = false;
         private bool shipinvincable = false;
         private bool showdebugdetails = true;
-        private bool infinitelives = true;
+        private bool infinitelives = false;
 
         #endregion
 
