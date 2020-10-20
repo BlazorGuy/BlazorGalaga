@@ -51,10 +51,10 @@ namespace BlazorGalaga.Services
         private int nextextralifescore;
 
         //for debugging
-        public bool debugmode = true;
+        public bool debugmode = false;
         private bool skipintro = false;
         private bool soundoff = true;
-        private bool aion = true;
+        private bool aion = false;
         private bool shipinvincable = false;
         private bool showdebugdetails = true;
         private bool infinitelives = true;
@@ -265,7 +265,7 @@ namespace BlazorGalaga.Services
                 {
                     SoundManager.PlaySound(SoundManager.SoundManagerSounds.coin, true);
                     await ConsoleManager.ClearConsole(spriteService);
-                    await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level + LevelOffset);
+                    await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level + LevelOffset,Score, HighScore);
                     Started = true;
                 }
                 else
@@ -320,7 +320,7 @@ namespace BlazorGalaga.Services
                     nextextralifescore += 30000;
                     SoundManager.PlaySound(SoundManager.SoundManagerSounds.extralife);
                     await ConsoleManager.ClearConsole(spriteService);
-                    await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level + LevelOffset);
+                    await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level + LevelOffset,Score,HighScore);
                 }
                 if (Score > HighScore) HighScore = Score;
                 await ConsoleManager.DrawScore(spriteService, Score, HighScore);
@@ -428,7 +428,7 @@ namespace BlazorGalaga.Services
                 Lives -= 1;
                 if (Lives < 0) gameover = true;
                 await ConsoleManager.ClearConsole(spriteService);
-                await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level + LevelOffset);
+                await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level + LevelOffset,Score, HighScore);
             }
 
             //if morphed bugs go offscreen, destroy them immediately
@@ -480,7 +480,7 @@ namespace BlazorGalaga.Services
                             Ship.Visible = true;
                             Ship.Disabled = false;
                             await ConsoleManager.ClearConsole(spriteService);
-                            await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level + LevelOffset);
+                            await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level + LevelOffset,Score, HighScore);
                             await ConsoleManager.ClearConsoleLevelText(spriteService);
                         }
                         WaitManager.ClearSteps();

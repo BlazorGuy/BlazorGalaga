@@ -72,7 +72,7 @@ namespace BlazorGalaga.Services
                     hits = 0;
                     wave = 1;
                     GalagaCaptureManager.Reset();
-                    await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level - 1 + LevelOffset);
+                    await ConsoleManager.DrawConsole(Lives, spriteService, Ship, true, Level - 1 + LevelOffset,Score, HighScore);
                     await ConsoleManager.ClearConsoleLevelText(spriteService);
                     await ConsoleManager.DrawConsoleLevelText(spriteService, Level + LevelOffset, IsChallengeLevel());
                     SoundManager.StopAllSounds();

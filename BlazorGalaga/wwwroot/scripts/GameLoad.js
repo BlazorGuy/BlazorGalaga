@@ -4,12 +4,55 @@ let spriteSheetLoaded = false;
 let killBugs = false;
 let captureShip = false;
 let morphBug = false;
+let hammertime = null;
+let mobilemoving = false;
+let mobileOptions = { time: 50 };
 
 window.initFromBlazor = (instance) => {
 
     resizeCanvas();
 
     window.instance = instance;
+
+    hammertime = new Hammer(document.getElementById("theCanvas"));
+
+    //mobile support
+
+    hammertime.on('tap', function (ev) {
+
+        if (mobilemoving) {
+            mobilemoving = false;
+            if (ev.srcEvent.offsetX <= 260)
+                DotNet.invokeMethodAsync('BlazorGalaga', 'OnKeyUp', "ArrowLeft");
+            else
+                DotNet.invokeMethodAsync('BlazorGalaga', 'OnKeyUp', "ArrowRight");
+        }
+        else {
+            DotNet.invokeMethodAsync('BlazorGalaga', 'OnKeyDown', "Space");
+            mobilemoving = true;
+            if (ev.srcEvent.offsetY <= 350) {
+                return;
+            }
+            if (ev.srcEvent.offsetX <= 260)
+                DotNet.invokeMethodAsync('BlazorGalaga', 'OnKeyDown', "ArrowLeft");
+            else
+                DotNet.invokeMethodAsync('BlazorGalaga', 'OnKeyDown', "ArrowRight");
+        }
+    });
+
+    hammertime.on('press', function (ev, mobileOptions) {
+        if (ev.srcEvent.offsetX <= 260)
+            DotNet.invokeMethodAsync('BlazorGalaga', 'OnKeyDown', "ArrowLeft");
+        else
+            DotNet.invokeMethodAsync('BlazorGalaga', 'OnKeyDown', "ArrowRight");
+    });
+    hammertime.on('pressup', function (ev, mobileOptions) {
+        if (ev.srcEvent.offsetX <= 260)
+            DotNet.invokeMethodAsync('BlazorGalaga', 'OnKeyUp', "ArrowLeft");
+        else
+            DotNet.invokeMethodAsync('BlazorGalaga', 'OnKeyUp', "ArrowRight");
+    });
+
 
     document.getElementById("imgSpriteSheet").addEventListener('load', function (e) {
 

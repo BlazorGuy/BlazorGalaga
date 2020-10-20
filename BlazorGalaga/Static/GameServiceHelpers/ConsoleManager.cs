@@ -9,7 +9,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
 {
     public static class ConsoleManager
     {
-        public static async Task DrawConsole(int lives, SpriteService spriteService, Ship ship, bool drawships, int level)
+        public static async Task DrawConsole(int lives, SpriteService spriteService, Ship ship, bool drawships, int level, int score, int highscore)
         {
             //draw top black block
             await spriteService.StaticCtx.SetFillStyleAsync("Black");
@@ -108,7 +108,8 @@ namespace BlazorGalaga.Static.GameServiceHelpers
             await spriteService.StaticCtx.FillTextAsync("HIGH SCORE", 220, 30);
 
             await spriteService.StaticCtx.SetFillStyleAsync("White");
-            await spriteService.StaticCtx.FillTextAsync("00", 50, 60);
+            await spriteService.StaticCtx.FillTextAsync(score == 0 ? "00" : score.ToString(), 50, 60);
+            await spriteService.StaticCtx.FillTextAsync(highscore.ToString(), 300, 60);
         }
 
         public static async Task DrawIntroScreen(SpriteService spriteService, Ship ship)
@@ -162,7 +163,7 @@ namespace BlazorGalaga.Static.GameServiceHelpers
         public static async Task DrawScore(SpriteService spriteService, int score, int highscore)
         {
             await spriteService.StaticCtx.SetFillStyleAsync("White");
-            await spriteService.StaticCtx.ClearRectAsync(40, 30, 150, 50);
+            await spriteService.StaticCtx.ClearRectAsync(40, 30, 800, 50);
             await spriteService.StaticCtx.FillTextAsync(score == 0 ? "00" : score.ToString(), 50, 60);
             await spriteService.StaticCtx.FillTextAsync(highscore.ToString(), 300, 60);
         }
