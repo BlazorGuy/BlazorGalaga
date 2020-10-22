@@ -12,7 +12,7 @@ namespace BlazorGalaga.Services
     {
         public async Task DoLevelIncrementAsync(List<Bug> bugs, float timestamp)
         {
-            if (bugs.Count == 0 && !Ship.Disabled)
+            if (bugs.Count == 0)
             {
                 WaitManager.DoOnce(() =>
                 {
